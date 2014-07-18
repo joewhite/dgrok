@@ -27,6 +27,7 @@ namespace DGrok.Tests
                 "  Package: PackageSemikeyword |package|",
                 "  Name: Identifier |Foo|",
                 "  Semicolon: Semicolon |;|",
+                "  AttributeList: ListNode",
                 "  RequiresClause: (none)",
                 "  ContainsClause: (none)",
                 "  End: EndKeyword |end|",

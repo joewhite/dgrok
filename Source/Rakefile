@@ -72,6 +72,7 @@ task :image => :default do
   mkdir_p IMAGE_DIR
   sh %Q|svn export . "#{IMAGE_SOURCE}"|
   cp "DGrok.Framework/DelphiNodes/GeneratedNodes.cs", File.join(IMAGE_SOURCE, "DGrok.Framework/DelphiNodes")
+  cp "DGrok.Framework/Framework/GeneratedVisitor.cs", File.join(IMAGE_SOURCE, "DGrok.Framework/Framework")
   cp ["Grammar.html", "Grammar.css", "README.html"], IMAGE_DIR
   cp_r Dir["Bin/*"], IMAGE_DIR
 end

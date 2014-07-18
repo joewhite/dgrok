@@ -115,11 +115,16 @@ namespace DGrok.Framework
             DefineDirectiveAsFalse("IFNDEF " + symbol);
             DefineDirectiveAsFalse("IF not Defined(" + symbol + ")");
         }
-        public bool IsTrue(string compilerDirective)
+        public bool IsTrue(string compilerDirective, Location location)
         {
             if (_dictionary.ContainsKey(compilerDirective))
                 return _dictionary[compilerDirective];
-            return false;
+            if (compilerDirective.StartsWith("IFDEF ", StringComparison.InvariantCultureIgnoreCase))
+                return false;
+            if (compilerDirective.StartsWith("IFNDEF ", StringComparison.InvariantCultureIgnoreCase))
+                return true;
+            throw new PreprocessorException("Compiler directive '" + compilerDirective +
+                "' has not been defined as either true or false", location);
         }
         public void UndefineSymbol(string symbol)
         {

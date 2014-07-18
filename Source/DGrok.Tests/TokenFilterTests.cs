@@ -252,7 +252,7 @@ namespace DGrok.Tests
                 "Identifier |Foo|"));
         }
         [ExpectedException(typeof(LexException))]
-        public void TestThrowOnUnrecognized()
+        public void TestThrowOnUnrecognizedDirective()
         {
             Lexer lexer = new Lexer("{$FOO}", "");
             TokenFilter filter = new TokenFilter(lexer.Tokens, _defines, _fileLoader);

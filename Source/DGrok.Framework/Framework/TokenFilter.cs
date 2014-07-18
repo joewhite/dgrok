@@ -79,6 +79,7 @@ namespace DGrok.Framework
             _directiveTypes["IMPLICITBUILD"] = DirectiveType.Ignored;
             _directiveTypes["IMPORTEDDATA"] = DirectiveType.Ignored;
             _directiveTypes["INCLUDE"] = DirectiveType.Include;
+            _directiveTypes["INLINE"] = DirectiveType.Ignored; // undocumented
             _directiveTypes["IOCHECKS"] = DirectiveType.Ignored;
             _directiveTypes["LIBPREFIX"] = DirectiveType.Ignored;
             _directiveTypes["LIBSUFFIX"] = DirectiveType.Ignored;
@@ -104,12 +105,13 @@ namespace DGrok.Framework
             _directiveTypes["RUNONLY"] = DirectiveType.Ignored;
             _directiveTypes["SAFEDIVIDE"] = DirectiveType.Ignored;
             _directiveTypes["SETPEFLAGS"] = DirectiveType.Ignored;
+            _directiveTypes["STACKCHECKS"] = DirectiveType.Ignored; // undocumented
             _directiveTypes["STACKFRAMES"] = DirectiveType.Ignored;
             _directiveTypes["TYPEDADDRESS"] = DirectiveType.Ignored;
             _directiveTypes["TYPEINFO"] = DirectiveType.Ignored;
             _directiveTypes["UNDEF"] = DirectiveType.Undefine;
             _directiveTypes["UNSAFECODE"] = DirectiveType.Ignored;
-            _directiveTypes["VARPROPSETTER"] = DirectiveType.Ignored;
+            _directiveTypes["VARPROPSETTER"] = DirectiveType.Ignored; // undocumented
             _directiveTypes["VARSTRINGCHECKS"] = DirectiveType.Ignored;
             _directiveTypes["WARN"] = DirectiveType.Ignored;
             _directiveTypes["WARNINGS"] = DirectiveType.Ignored;
@@ -224,7 +226,7 @@ namespace DGrok.Framework
                     break;
 
                 case DirectiveType.If:
-                    HandleIf(ifDefStack, directive);
+                    HandleIf(ifDefStack, directive, token.Location);
                     break;
 
                 case DirectiveType.Else:
@@ -232,7 +234,7 @@ namespace DGrok.Framework
                     break;
 
                 case DirectiveType.ElseIf:
-                    HandleElseIf(ifDefStack, directive);
+                    HandleElseIf(ifDefStack, directive, token.Location);
                     break;
 
                 case DirectiveType.EndIf:
@@ -248,7 +250,7 @@ namespace DGrok.Framework
             else
                 ifDefStack.Push(IfDefTruth.ForeverFalse);
         }
-        private void HandleElseIf(Stack<IfDefTruth> ifDefStack, string directive)
+        private void HandleElseIf(Stack<IfDefTruth> ifDefStack, string directive, Location location)
         {
             IfDefTruth truth = ifDefStack.Pop();
             if (truth == IfDefTruth.True || truth == IfDefTruth.ForeverFalse)
@@ -256,17 +258,17 @@ namespace DGrok.Framework
             else
             {
                 string trimmedDirective = directive.Substring(4);
-                if (_compilerDefines.IsTrue(trimmedDirective))
+                if (_compilerDefines.IsTrue(trimmedDirective, location))
                     ifDefStack.Push(IfDefTruth.True);
                 else
                     ifDefStack.Push(IfDefTruth.InitiallyFalse);
             }
         }
-        private void HandleIf(Stack<IfDefTruth> ifDefStack, string directive)
+        private void HandleIf(Stack<IfDefTruth> ifDefStack, string directive, Location location)
         {
             if (ifDefStack.Peek() == IfDefTruth.True)
             {
-                if (_compilerDefines.IsTrue(directive))
+                if (_compilerDefines.IsTrue(directive, location))
                     ifDefStack.Push(IfDefTruth.True);
                 else
                     ifDefStack.Push(IfDefTruth.InitiallyFalse);

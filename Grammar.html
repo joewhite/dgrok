@@ -14,14 +14,14 @@ I've written a working parser for. Solid underline means
 that rule is completely implemented in my parser; broken
 underline means partly implemented; no underline means
 something I haven't started yet.</p>
-<p><b>Current status:</b> Completed 98 rules of 98 = 100% complete.</p>
-<p>Last updated Mon Oct 01 23:12:00 Central Daylight Time 2007.</p>
+<p><b>Current status:</b> Completed 97 rules of 98 = 98% complete.</p>
+<p>Last updated Tue Oct 02 21:44:19 Central Daylight Time 2007.</p>
 <p>&mdash; <a href='http://www.excastle.com/blog/'>Joe White</a></p>
 <h2><a name='toc'>Table of Contents</a></h2>
 <div class="toc">
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
 <tr><td><a href="#AddOp" class="complete">AddOp</a></td><td><a href="#ExceptionItem" class="complete">ExceptionItem</a></td><td><a href="#GotoStatement" class="complete">GotoStatement</a></td><td><a href="#OpenArray" class="complete">OpenArray</a></td><td><a href="#RecordType" class="complete">RecordType</a></td><td><a href="#UnaryOperator" class="complete">UnaryOperator</a></td></tr>
-<tr><td><a href="#ArrayType" class="complete">ArrayType</a></td><td><a href="#ExportsItem" class="complete">ExportsItem</a></td><td><a href="#Ident" class="complete">Ident</a></td><td><a href="#Package" class="complete">Package</a></td><td><a href="#RelOp" class="complete">RelOp</a></td><td><a href="#Unit" class="complete">Unit</a></td></tr>
+<tr><td><a href="#ArrayType" class="complete">ArrayType</a></td><td><a href="#ExportsItem" class="complete">ExportsItem</a></td><td><a href="#Ident" class="complete">Ident</a></td><td><a href="#Package" class="started">Package</a></td><td><a href="#RelOp" class="complete">RelOp</a></td><td><a href="#Unit" class="complete">Unit</a></td></tr>
 <tr><td><a href="#AssemblerStatement" class="complete">AssemblerStatement</a></td><td><a href="#ExportsSpecifier" class="complete">ExportsSpecifier</a></td><td><a href="#IdentList" class="complete">IdentList</a></td><td><a href="#PackedType" class="complete">PackedType</a></td><td><a href="#RepeatStatement" class="complete">RepeatStatement</a></td><td><a href="#UsedUnit" class="complete">UsedUnit</a></td></tr>
 <tr><td><a href="#AssemblyAttribute" class="complete">AssemblyAttribute</a></td><td><a href="#ExportsStatement" class="complete">ExportsStatement</a></td><td><a href="#IfStatement" class="complete">IfStatement</a></td><td><a href="#Parameter" class="complete">Parameter</a></td><td><a href="#RequiresClause" class="complete">RequiresClause</a></td><td><a href="#UsesClause" class="complete">UsesClause</a></td></tr>
 <tr><td><a href="#Atom" class="complete">Atom</a></td><td><a href="#Expression" class="complete">Expression</a></td><td><a href="#ImplementationDecl" class="complete">ImplementationDecl</a></td><td><a href="#ParameterExpression" class="complete">ParameterExpression</a></td><td><a href="#SetLiteral" class="complete">SetLiteral</a></td><td><a href="#VarDecl" class="complete">VarDecl</a></td></tr>
@@ -39,13 +39,13 @@ something I haven't started yet.</p>
 <tr><td><a href="#EnumeratedTypeElement" class="complete">EnumeratedTypeElement</a></td><td><a href="#Goal" class="complete">Goal</a></td><td><a href="#MulOp" class="complete">MulOp</a></td><td><a href="#RecordHelperType" class="complete">RecordHelperType</a></td><td><a href="#TypeSection" class="complete">TypeSection</a></td></tr>
 </table>
 </div>
-<h2>Likely Targets (0)</h2>
+<h2>Likely Targets (1)</h2>
 <p>These rules look like their dependencies are met,
 and are likely targets to be implemented next. Numbers
 in parentheses show how many places the rule is used.</p>
 <div class="toc">
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
-<tr></tr>
+<tr><td><a href="#Package" class="started">Package (1)</a></td></tr>
 </table>
 </div>
 <h2 class="complete"><a name="AddOp"></a><a href="#AddOp" class="black">AddOp</a> <a href="#toc" class="backtotop">[^]</a>
@@ -63,7 +63,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> &lt;assemblylanguage&gt;</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> END</div>
 <h2 class="complete"><a name="AssemblyAttribute"></a><a href="#AssemblyAttribute" class="black">AssemblyAttribute</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#ImplementationDecl" class="complete">ImplementationDecl</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#ImplementationDecl" class="complete">ImplementationDecl</a>, <a href="#Package" class="started">Package</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> '<tt class=literal><b>[</b></tt>' ASSEMBLY '<tt class=literal><b>:</b></tt>' <a href="#Expression" class="complete">Expression</a> '<tt class=literal><b>]</b></tt>'</div>
 <h2 class="complete"><a name="Atom"></a><a href="#Atom" class="black">Atom</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Factor" class="complete">Factor</a></div></h2>
@@ -213,7 +213,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> FOR <a href="#Ident" class="complete">Ident</a> IN <a href="#Expression" class="complete">Expression</a> DO [<a href="#Statement" class="complete">Statement</a>]</div>
 <h2 class="complete"><a name="Goal"></a><a href="#Goal" class="black">Goal</a> <a href="#toc" class="backtotop">[^]</a></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Program" class="complete">Program</a></div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Package" class="complete">Package</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Package" class="started">Package</a></div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Unit" class="complete">Unit</a></div>
 <h2 class="complete"><a name="GotoStatement"></a><a href="#GotoStatement" class="black">GotoStatement</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#SimpleStatement" class="complete">SimpleStatement</a></div></h2>
@@ -322,9 +322,10 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ARRAY OF STRING</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ARRAY OF FILE</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ARRAY OF CONST</div>
-<h2 class="complete"><a name="Package"></a><a href="#Package" class="black">Package</a> <a href="#toc" class="backtotop">[^]</a>
+<h2 class="started"><a name="Package"></a><a href="#Package" class="black">Package</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Goal" class="complete">Goal</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> PACKAGE <a href="#QualifiedIdent" class="complete">QualifiedIdent</a> '<tt class=literal><b>;</b></tt>'</div>
+<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#AssemblyAttribute" class="complete">AssemblyAttribute</a>)*</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [<a href="#RequiresClause" class="complete">RequiresClause</a>]</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [<a href="#UsesClause" class="complete">UsesClause</a>]</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> END '<tt class=literal><b>.</b></tt>'</div>
@@ -404,7 +405,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> WRITE <a href="#Expression" class="complete">Expression</a></div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> WRITEONLY</div>
 <h2 class="complete"><a name="QualifiedIdent"></a><a href="#QualifiedIdent" class="black">QualifiedIdent</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#ClassHelperType" class="complete">ClassHelperType</a>, <a href="#ClassOfType" class="complete">ClassOfType</a>, <a href="#ClassType" class="complete">ClassType</a>, <a href="#ExceptionItem" class="complete">ExceptionItem</a>, <a href="#FileType" class="complete">FileType</a>, <a href="#InterfaceType" class="complete">InterfaceType</a>, <a href="#MethodHeading" class="complete">MethodHeading</a>, <a href="#MethodReturnType" class="complete">MethodReturnType</a>, <a href="#OpenArray" class="complete">OpenArray</a>, <a href="#Package" class="complete">Package</a>, <a href="#ParameterType" class="complete">ParameterType</a>, <a href="#PropertyDirective" class="complete">PropertyDirective</a>, <a href="#RecordHelperType" class="complete">RecordHelperType</a>, <a href="#RequiresClause" class="complete">RequiresClause</a>, <a href="#TypedConstant" class="complete">TypedConstant</a>, <a href="#VariantSection" class="complete">VariantSection</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#ClassHelperType" class="complete">ClassHelperType</a>, <a href="#ClassOfType" class="complete">ClassOfType</a>, <a href="#ClassType" class="complete">ClassType</a>, <a href="#ExceptionItem" class="complete">ExceptionItem</a>, <a href="#FileType" class="complete">FileType</a>, <a href="#InterfaceType" class="complete">InterfaceType</a>, <a href="#MethodHeading" class="complete">MethodHeading</a>, <a href="#MethodReturnType" class="complete">MethodReturnType</a>, <a href="#OpenArray" class="complete">OpenArray</a>, <a href="#Package" class="started">Package</a>, <a href="#ParameterType" class="complete">ParameterType</a>, <a href="#PropertyDirective" class="complete">PropertyDirective</a>, <a href="#RecordHelperType" class="complete">RecordHelperType</a>, <a href="#RequiresClause" class="complete">RequiresClause</a>, <a href="#TypedConstant" class="complete">TypedConstant</a>, <a href="#VariantSection" class="complete">VariantSection</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Ident" class="complete">Ident</a> ('<tt class=literal><b>.</b></tt>' <a href="#ExtendedIdent" class="complete">ExtendedIdent</a>)*</div>
 <h2 class="complete"><a name="RaiseStatement"></a><a href="#RaiseStatement" class="black">RaiseStatement</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#SimpleStatement" class="complete">SimpleStatement</a></div></h2>
@@ -435,7 +436,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="backlinks">Backlinks: <a href="#SimpleStatement" class="complete">SimpleStatement</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> REPEAT [<a href="#StatementList" class="complete">StatementList</a>] UNTIL <a href="#Expression" class="complete">Expression</a></div>
 <h2 class="complete"><a name="RequiresClause"></a><a href="#RequiresClause" class="black">RequiresClause</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#Package" class="complete">Package</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#Package" class="started">Package</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> REQUIRES (<a href="#QualifiedIdent" class="complete">QualifiedIdent</a> ['<tt class=literal><b>,</b></tt>'])+ '<tt class=literal><b>;</b></tt>'</div>
 <h2 class="complete"><a name="SetLiteral"></a><a href="#SetLiteral" class="black">SetLiteral</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Particle" class="complete">Particle</a></div></h2>
@@ -534,7 +535,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Ident" class="complete">Ident</a></div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Ident" class="complete">Ident</a> IN &lt;stringliteral&gt;</div>
 <h2 class="complete"><a name="UsesClause"></a><a href="#UsesClause" class="black">UsesClause</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#ImplementationSection" class="complete">ImplementationSection</a>, <a href="#InterfaceSection" class="complete">InterfaceSection</a>, <a href="#Package" class="complete">Package</a>, <a href="#Program" class="complete">Program</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#ImplementationSection" class="complete">ImplementationSection</a>, <a href="#InterfaceSection" class="complete">InterfaceSection</a>, <a href="#Package" class="started">Package</a>, <a href="#Program" class="complete">Program</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> (USES | CONTAINS)</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#UsedUnit" class="complete">UsedUnit</a> ['<tt class=literal><b>,</b></tt>'])+ '<tt class=literal><b>;</b></tt>'</div>
 <h2 class="complete"><a name="VarDecl"></a><a href="#VarDecl" class="black">VarDecl</a> <a href="#toc" class="backtotop">[^]</a>

@@ -27,6 +27,7 @@ namespace DGrok.Tests
                 "  Package: PackageSemikeyword |package|",
                 "  Name: Identifier |Foo|",
                 "  Semicolon: Semicolon |;|",
+                "  AttributeList: ListNode",
                 "  RequiresClause: (none)",
                 "  ContainsClause: (none)",
                 "  End: EndKeyword |end|",
@@ -42,6 +43,7 @@ namespace DGrok.Tests
                 "    Operator: Dot |.|",
                 "    Right: Identifier |Bar|",
                 "  Semicolon: Semicolon |;|",
+                "  AttributeList: ListNode",
                 "  RequiresClause: (none)",
                 "  ContainsClause: (none)",
                 "  End: EndKeyword |end|",
@@ -54,6 +56,7 @@ namespace DGrok.Tests
                 "  Package: PackageSemikeyword |package|",
                 "  Name: Identifier |Foo|",
                 "  Semicolon: Semicolon |;|",
+                "  AttributeList: ListNode",
                 "  RequiresClause: RequiresClauseNode",
                 "    Requires: RequiresSemikeyword |requires|",
                 "    PackageList: ListNode",
@@ -71,6 +74,32 @@ namespace DGrok.Tests
                 "          FileName: (none)",
                 "        Delimiter: (none)",
                 "    Semicolon: Semicolon |;|",
+                "  End: EndKeyword |end|",
+                "  Dot: Dot |.|"));
+        }
+        public void TestAttribute()
+        {
+            Assert.That("package Foo; [assembly: AssemblyVersion('0.0.0.0')] end.", ParsesAs(
+                "PackageNode",
+                "  Package: PackageSemikeyword |package|",
+                "  Name: Identifier |Foo|",
+                "  Semicolon: Semicolon |;|",
+                "  AttributeList: ListNode",
+                "    Items[0]: AttributeNode",
+                "      OpenBracket: OpenBracket |[|",
+                "      Scope: AssemblySemikeyword |assembly|",
+                "      Colon: Colon |:|",
+                "      Value: ParameterizedNode",
+                "        Left: Identifier |AssemblyVersion|",
+                "        OpenDelimiter: OpenParenthesis |(|",
+                "        ParameterList: ListNode",
+                "          Items[0]: DelimitedItemNode",
+                "            Item: StringLiteral |'0.0.0.0'|",
+                "            Delimiter: (none)",
+                "        CloseDelimiter: CloseParenthesis |)|",
+                "      CloseBracket: CloseBracket |]|",
+                "  RequiresClause: (none)",
+                "  ContainsClause: (none)",
                 "  End: EndKeyword |end|",
                 "  Dot: Dot |.|"));
         }

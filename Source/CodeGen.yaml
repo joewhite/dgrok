@@ -196,6 +196,7 @@ NodeTypes:
     - {Name: Package, Type: Token}
     - {Name: Name, Type: AstNode}
     - {Name: Semicolon, Type: Token}
+    - {Name: AttributeList, Type: ListNode<AttributeNode>}
     - {Name: RequiresClause, Type: RequiresClauseNode}
     - {Name: ContainsClause, Type: UsesClauseNode}
     - {Name: End, Type: Token}

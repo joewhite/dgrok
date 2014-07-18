@@ -852,6 +852,8 @@ namespace DGrok.Framework
                 Token package = ParseToken(TokenType.PackageSemikeyword);
                 AstNode name = ParseRule(RuleType.QualifiedIdent);
                 Token semicolon = ParseToken(TokenType.Semicolon);
+                ListNode<AttributeNode> attributeList =
+                    ParseOptionalRuleList<AttributeNode>(RuleType.AssemblyAttribute);
                 RequiresClauseNode requiresClause = null;
                 if (CanParseRule(RuleType.RequiresClause))
                     requiresClause = (RequiresClauseNode) ParseRule(RuleType.RequiresClause);
@@ -860,7 +862,7 @@ namespace DGrok.Framework
                     containsClause = (UsesClauseNode) ParseRule(RuleType.UsesClause);
                 Token end = ParseToken(TokenType.EndKeyword);
                 Token dot = ParseToken(TokenType.Dot);
-                return new PackageNode(package, name, semicolon,
+                return new PackageNode(package, name, semicolon, attributeList,
                     requiresClause, containsClause, end, dot);
             });
             #endregion
