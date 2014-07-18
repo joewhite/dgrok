@@ -3,24 +3,15 @@ DGrok Delphi parser
 
 DGrok is all about parsing Delphi source code. It has three parts:
 
-* A Delphi grammar: The "DGrok Delphi grammar" documents the grammar for the Delphi language.
-* A parser: The "DGrok Delphi parser" is an open-source Delphi parser written in C#. It reads Delphi source files and turns them into parse trees.
-* A set of tools: The "DGrok tools" are a set of open-source tools built on top of the parser.
+* A Delphi grammar: Grammar.html documents the grammar for the Delphi language.
+* A parser: DGrok.Framework.dll is an open-source Delphi parser written in C#. It reads Delphi source files and turns them into parse trees.
+* A set of tools: DGrok.Demo.exe is a set of open-source tools built on top of the parser.
 
 The current parser has full support for Delphi 2007 source code (to the best of my knowledge), but
 no support for Delphi 2009 features like generics. There's also no symbol table support, so the
 tools can't do refactorings or Find References.
 
 More information is available on the [DGrok website](http://dgrok.excastle.com/).
-
-What's included
----------------
-
-**Grammar.html** documents the Delphi grammar.
-
-Everything else is in the Source directory. **DGrok.Framework.dll** is the main parser.
-**DGrok.Demo.exe** provides a GUI you can use to parse snippets of code or directory trees on disk,
-and run some predefined analyses on the resulting parse tree.
 
 Compiling DGrok
 ---------------
