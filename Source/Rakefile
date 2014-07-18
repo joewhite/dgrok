@@ -12,14 +12,14 @@ file 'Grammar.html' => ['Grammar.yaml', 'MakePrettyGrammarHtml.rb'] do
 end
 
 task :verify_license_headers => :codegen do
-  notice = IO.read("gpl-notice.txt")
+  notice = IO.read("mit-notice.txt")
   files_to_check = FileList.new("**/*.cs")
   files_to_check.exclude("**/*.Designer.*")
   files_to_check.exclude("Releases/**")
   files_to_check.each do |filename|
     contents = IO.read(filename)
     if !contents.include?(notice)
-      fail "File '#{filename}' does not include GPL license header"
+      fail "File '#{filename}' does not include MIT license header"
     end
   end
 end
