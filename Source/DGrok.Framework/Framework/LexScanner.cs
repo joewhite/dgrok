@@ -58,7 +58,7 @@ namespace DGrok.Framework
 
         private Location Location
         {
-            get { return new Location(_fileName, _index); }
+            get { return new Location(_fileName, _source, _index); }
         }
 
         private void AddWordTypes(IEnumerable<TokenType> tokenTypes, int suffixLength)

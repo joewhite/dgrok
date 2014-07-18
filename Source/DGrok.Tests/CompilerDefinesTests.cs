@@ -25,7 +25,7 @@ namespace DGrok.Tests
 
         private bool DefineIsTrue(string compilerDirective)
         {
-            return _defines.IsTrue(compilerDirective, new Location("", 0));
+            return _defines.IsTrue(compilerDirective, new Location("", "", 0));
         }
 
         public void TestFalseIfUndefinedIfDef()

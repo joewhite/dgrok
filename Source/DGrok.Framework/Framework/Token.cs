@@ -31,7 +31,7 @@ namespace DGrok.Framework
         }
         public Location EndLocation
         {
-            get { return new Location(Location.FileName, Location.Offset + Text.Length); }
+            get { return new Location(Location.FileName, Location.FileSource, Location.Offset + Text.Length); }
         }
         public Location Location
         {

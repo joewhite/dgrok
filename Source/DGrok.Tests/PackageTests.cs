@@ -27,9 +27,9 @@ namespace DGrok.Tests
                 "  Package: PackageSemikeyword |package|",
                 "  Name: Identifier |Foo|",
                 "  Semicolon: Semicolon |;|",
-                "  AttributeList: ListNode",
                 "  RequiresClause: (none)",
                 "  ContainsClause: (none)",
+                "  AttributeList: ListNode",
                 "  End: EndKeyword |end|",
                 "  Dot: Dot |.|"));
         }
@@ -43,9 +43,9 @@ namespace DGrok.Tests
                 "    Operator: Dot |.|",
                 "    Right: Identifier |Bar|",
                 "  Semicolon: Semicolon |;|",
-                "  AttributeList: ListNode",
                 "  RequiresClause: (none)",
                 "  ContainsClause: (none)",
+                "  AttributeList: ListNode",
                 "  End: EndKeyword |end|",
                 "  Dot: Dot |.|"));
         }
@@ -56,7 +56,6 @@ namespace DGrok.Tests
                 "  Package: PackageSemikeyword |package|",
                 "  Name: Identifier |Foo|",
                 "  Semicolon: Semicolon |;|",
-                "  AttributeList: ListNode",
                 "  RequiresClause: RequiresClauseNode",
                 "    Requires: RequiresSemikeyword |requires|",
                 "    PackageList: ListNode",
@@ -74,6 +73,7 @@ namespace DGrok.Tests
                 "          FileName: (none)",
                 "        Delimiter: (none)",
                 "    Semicolon: Semicolon |;|",
+                "  AttributeList: ListNode",
                 "  End: EndKeyword |end|",
                 "  Dot: Dot |.|"));
         }
@@ -84,6 +84,8 @@ namespace DGrok.Tests
                 "  Package: PackageSemikeyword |package|",
                 "  Name: Identifier |Foo|",
                 "  Semicolon: Semicolon |;|",
+                "  RequiresClause: (none)",
+                "  ContainsClause: (none)",
                 "  AttributeList: ListNode",
                 "    Items[0]: AttributeNode",
                 "      OpenBracket: OpenBracket |[|",
@@ -98,8 +100,6 @@ namespace DGrok.Tests
                 "            Delimiter: (none)",
                 "        CloseDelimiter: CloseParenthesis |)|",
                 "      CloseBracket: CloseBracket |]|",
-                "  RequiresClause: (none)",
-                "  ContainsClause: (none)",
                 "  End: EndKeyword |end|",
                 "  Dot: Dot |.|"));
         }

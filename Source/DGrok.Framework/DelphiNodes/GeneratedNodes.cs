@@ -1844,14 +1844,14 @@ namespace DGrok.DelphiNodes
         private RequiresClauseNode _requiresClause;
         private Token _semicolon;
 
-        public PackageNode(Token package, AstNode name, Token semicolon, ListNode<AttributeNode> attributeList, RequiresClauseNode requiresClause, UsesClauseNode containsClause, Token end, Token dot)
+        public PackageNode(Token package, AstNode name, Token semicolon, RequiresClauseNode requiresClause, UsesClauseNode containsClause, ListNode<AttributeNode> attributeList, Token end, Token dot)
         {
             _package = package;
             _name = name;
             _semicolon = semicolon;
-            _attributeList = attributeList;
             _requiresClause = requiresClause;
             _containsClause = containsClause;
+            _attributeList = attributeList;
             _end = end;
             _dot = dot;
         }
@@ -1896,9 +1896,9 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Package", Package);
                 yield return new KeyValuePair<string, AstNode>("Name", Name);
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
-                yield return new KeyValuePair<string, AstNode>("AttributeList", AttributeList);
                 yield return new KeyValuePair<string, AstNode>("RequiresClause", RequiresClause);
                 yield return new KeyValuePair<string, AstNode>("ContainsClause", ContainsClause);
+                yield return new KeyValuePair<string, AstNode>("AttributeList", AttributeList);
                 yield return new KeyValuePair<string, AstNode>("End", End);
                 yield return new KeyValuePair<string, AstNode>("Dot", Dot);
             }

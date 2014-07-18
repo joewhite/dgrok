@@ -195,5 +195,13 @@ namespace DGrok.Tests
                 "      Delimiter: (none)",
                 "  CloseParenthesis: CloseParenthesis |)|"));
         }
+        public void TestEmptyParentheses()
+        {
+            Assert.That("()", ParsesAs(
+                "ConstantListNode",
+                "  OpenParenthesis: OpenParenthesis |(|",
+                "  ItemList: ListNode",
+                "  CloseParenthesis: CloseParenthesis |)|"));
+        }
     }
 }

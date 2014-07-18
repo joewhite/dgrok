@@ -277,9 +277,9 @@ OpenArray:
 Package:
   Doc: |
     ! -> PACKAGE QualifiedIdent ';'
-    .    (AssemblyAttribute)*
     !    [RequiresClause]
     !    [UsesClause]
+    !    (AssemblyAttribute)*
     !    END '.'
 PackedType:
   Doc: |
@@ -458,8 +458,9 @@ Type:
 TypedConstant:
   Doc: |
     ! -> Expression
-    ! -> '(' (QualifiedIdent ':' TypedConstant [';'])* ')'
+    ! -> '(' (QualifiedIdent ':' TypedConstant [';'])+ ')'
     ! -> '(' (TypedConstant [','])+ ')'
+    ! -> '(' ')'
 TypeDecl:
   Doc: |
     ! -> Ident '=' [TYPE] Type (PortabilityDirective)* ';'

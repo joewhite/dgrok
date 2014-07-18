@@ -18,7 +18,12 @@ namespace DGrok.Tests
     {
         private Token MakeToken(TokenType type, string text)
         {
-            return new Token(type, new Location("", 0), text, "");
+            return new Token(type, new Location("", "", 0), text, "");
+        }
+        private AstNode Parse(string text, RuleType ruleType)
+        {
+            Parser parser = Parser.FromText(text, "", CompilerDefines.CreateEmpty(), new MemoryFileLoader());
+            return parser.ParseRule(ruleType);
         }
 
         public void TestInspectToken()
@@ -55,6 +60,31 @@ namespace DGrok.Tests
                 "    Right: Number |3|\r\n" +
                 "  Operator: TimesSign |*|\r\n" +
                 "  Right: Number |9|"));
+        }
+        public void TestTokenToCode()
+        {
+            AstNode token = Parse("Foo", RuleType.Expression);
+            Assert.That(token.ToCode(), Is.EqualTo("Foo"));
+        }
+        public void TestBinaryOperationToCode()
+        {
+            AstNode parseTree = Parse("Foo.Bar", RuleType.Expression);
+            Assert.That(parseTree.ToCode(), Is.EqualTo("Foo.Bar"));
+        }
+        public void TestComplexTree()
+        {
+            AstNode parseTree = Parse("(1 + 2) * (3 - 4)", RuleType.Expression);
+            Assert.That(parseTree.ToCode(), Is.EqualTo("(1 + 2) * (3 - 4)"));
+        }
+        public void TestFirstChildIsNull()
+        {
+            AstNode parseTree = Parse("procedure Foo;", RuleType.MethodHeading);
+            Assert.That(parseTree.ToCode(), Is.EqualTo("procedure Foo;"));
+        }
+        public void TestLastChildIsNull()
+        {
+            AstNode parseTree = Parse("42:", RuleType.Statement);
+            Assert.That(parseTree.ToCode(), Is.EqualTo("42:"));
         }
     }
 }

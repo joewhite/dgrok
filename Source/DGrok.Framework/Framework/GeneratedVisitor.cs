@@ -286,9 +286,9 @@ namespace DGrok.Framework
             Visit(node.Package);
             Visit(node.Name);
             Visit(node.Semicolon);
-            Visit(node.AttributeList);
             Visit(node.RequiresClause);
             Visit(node.ContainsClause);
+            Visit(node.AttributeList);
             Visit(node.End);
             Visit(node.Dot);
         }

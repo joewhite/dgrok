@@ -852,18 +852,18 @@ namespace DGrok.Framework
                 Token package = ParseToken(TokenType.PackageSemikeyword);
                 AstNode name = ParseRule(RuleType.QualifiedIdent);
                 Token semicolon = ParseToken(TokenType.Semicolon);
-                ListNode<AttributeNode> attributeList =
-                    ParseOptionalRuleList<AttributeNode>(RuleType.AssemblyAttribute);
                 RequiresClauseNode requiresClause = null;
                 if (CanParseRule(RuleType.RequiresClause))
                     requiresClause = (RequiresClauseNode) ParseRule(RuleType.RequiresClause);
                 UsesClauseNode containsClause = null;
                 if (CanParseRule(RuleType.UsesClause))
                     containsClause = (UsesClauseNode) ParseRule(RuleType.UsesClause);
+                ListNode<AttributeNode> attributeList =
+                    ParseOptionalRuleList<AttributeNode>(RuleType.AssemblyAttribute);
                 Token end = ParseToken(TokenType.EndKeyword);
                 Token dot = ParseToken(TokenType.Dot);
-                return new PackageNode(package, name, semicolon, attributeList,
-                    requiresClause, containsClause, end, dot);
+                return new PackageNode(package, name, semicolon,
+                    requiresClause, containsClause, attributeList, end, dot);
             });
             #endregion
             #region PackedType
@@ -1414,7 +1414,10 @@ namespace DGrok.Framework
                 {
                     _nextFrame = originalFrame;
                     openParenthesis = ParseToken(TokenType.OpenParenthesis);
-                    itemList = ParseDelimitedList<AstNode>(RuleType.RecordFieldConstant, TokenType.Semicolon);
+                    if (!CanParseToken(TokenType.CloseParenthesis))
+                        itemList = ParseDelimitedList<AstNode>(RuleType.RecordFieldConstant, TokenType.Semicolon);
+                    else
+                        itemList = CreateEmptyListNode<DelimitedItemNode<AstNode>>();
                     closeParenthesis = ParseToken(TokenType.CloseParenthesis);
                 }
                 return new ConstantListNode(openParenthesis, itemList, closeParenthesis);
@@ -1638,7 +1641,7 @@ namespace DGrok.Framework
 
         private static IFrame FrameFromTokens(IEnumerable<Token> tokens)
         {
-            IFrame firstFrame = new EofFrame(new Location("", 0));
+            IFrame firstFrame = new EofFrame(new Location("", "", 0));
             IFrame previousFrame = null;
             foreach (Token token in tokens)
             {

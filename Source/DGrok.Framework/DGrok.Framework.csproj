@@ -38,8 +38,16 @@
     <Compile Include="DelphiNodes\DirectiveNode.cs" />
     <Compile Include="DelphiNodes\GeneratedNodes.cs" />
     <Compile Include="DelphiNodes\MethodHeadingNode.cs" />
+    <Compile Include="Framework\CancelException.cs" />
+    <Compile Include="Framework\Catalog.cs" />
+    <Compile Include="Framework\CodeBase.cs" />
+    <Compile Include="Framework\CodeBaseActionAttribute.cs" />
+    <Compile Include="Framework\CodeBaseActionProxy.cs" />
+    <Compile Include="Framework\CodeBaseOptions.cs" />
+    <Compile Include="Framework\CodeBaseWorker.cs" />
     <Compile Include="Framework\DelimitedItemNode.cs" />
     <Compile Include="Framework\GeneratedVisitor.cs" />
+    <Compile Include="Framework\ICodeBaseAction.cs" />
     <Compile Include="Framework\IFileLoader.cs" />
     <Compile Include="Framework\FileLoader.cs" />
     <Compile Include="Framework\Location.cs" />
@@ -70,6 +78,10 @@
     <Compile Include="Framework\TokenType.cs" />
     <Compile Include="Framework\Rule.cs" />
     <Compile Include="Framework\RuleDelegate.cs" />
+    <Compile Include="Framework\Hit.cs" />
+    <Compile Include="Visitors\FindGlobalVariables.cs" />
+    <Compile Include="Visitors\FindNestedMethods.cs" />
+    <Compile Include="Visitors\FindWithStatements.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

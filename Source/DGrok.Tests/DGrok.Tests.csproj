@@ -145,6 +145,10 @@
     <Compile Include="VisibilitySectionContentTests.cs" />
     <Compile Include="VisibilitySectionTests.cs" />
     <Compile Include="VisibilityTests.cs" />
+    <Compile Include="Visitors\CodeBaseActionTestCase.cs" />
+    <Compile Include="Visitors\FindGlobalVariablesTests.cs" />
+    <Compile Include="Visitors\FindNestedMethodsTests.cs" />
+    <Compile Include="Visitors\FindWithStatementTests.cs" />
     <Compile Include="WhileStatementTests.cs" />
     <Compile Include="WithStatementTests.cs" />
   </ItemGroup>

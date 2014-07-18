@@ -60,8 +60,6 @@
     <Compile Include="ParseSourceTreeControl.Designer.cs">
       <DependentUpon>ParseSourceTreeControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ParseSourceTreeRunner.cs" />
-    <Compile Include="ParseSourceTreeStatus.cs" />
     <Compile Include="ParseTextControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

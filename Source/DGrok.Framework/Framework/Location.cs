@@ -14,11 +14,13 @@ namespace DGrok.Framework
     public class Location
     {
         private string _fileName;
+        private string _fileSource;
         private int _offset;
 
-        public Location(string fileName, int offset)
+        public Location(string fileName, string fileSource, int offset)
         {
             _fileName = fileName;
+            _fileSource = fileSource;
             _offset = offset;
         }
 
@@ -34,6 +36,10 @@ namespace DGrok.Framework
         public string FileName
         {
             get { return _fileName; }
+        }
+        public string FileSource
+        {
+            get { return _fileSource; }
         }
         public int Offset
         {

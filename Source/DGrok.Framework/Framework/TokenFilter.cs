@@ -105,6 +105,9 @@ namespace DGrok.Framework
             _directiveTypes["RUNONLY"] = DirectiveType.Ignored;
             _directiveTypes["SAFEDIVIDE"] = DirectiveType.Ignored;
             _directiveTypes["SETPEFLAGS"] = DirectiveType.Ignored;
+            _directiveTypes["SOPREFIX"] = DirectiveType.Ignored; // undocumented
+            _directiveTypes["SOSUFFIX"] = DirectiveType.Ignored; // undocumented
+            _directiveTypes["SOVERSION"] = DirectiveType.Ignored; // undocumented
             _directiveTypes["STACKCHECKS"] = DirectiveType.Ignored; // undocumented
             _directiveTypes["STACKFRAMES"] = DirectiveType.Ignored;
             _directiveTypes["TYPEDADDRESS"] = DirectiveType.Ignored;
