@@ -28,9 +28,9 @@ namespace DGrok.Tests
         {
             Assert.That("Foo := 42", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Identifier |Foo|",
-                "  Operator: ColonEquals |:=|",
-                "  Right: Number |42|"));
+                "  LeftNode: Identifier |Foo|",
+                "  OperatorNode: ColonEquals |:=|",
+                "  RightNode: Number |42|"));
         }
     }
 }

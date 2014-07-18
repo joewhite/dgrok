@@ -24,20 +24,20 @@ namespace DGrok.Tests
         {
             Assert.That("Foo: 42", ParsesAs(
                 "RecordFieldConstantNode",
-                "  Name: Identifier |Foo|",
-                "  Colon: Colon |:|",
-                "  Value: Number |42|"));
+                "  NameNode: Identifier |Foo|",
+                "  ColonNode: Colon |:|",
+                "  ValueNode: Number |42|"));
         }
         public void TestDottedName()
         {
             Assert.That("Foo.Bar: 42", ParsesAs(
                 "RecordFieldConstantNode",
-                "  Name: BinaryOperationNode",
-                "    Left: Identifier |Foo|",
-                "    Operator: Dot |.|",
-                "    Right: Identifier |Bar|",
-                "  Colon: Colon |:|",
-                "  Value: Number |42|"));
+                "  NameNode: BinaryOperationNode",
+                "    LeftNode: Identifier |Foo|",
+                "    OperatorNode: Dot |.|",
+                "    RightNode: Identifier |Bar|",
+                "  ColonNode: Colon |:|",
+                "  ValueNode: Number |42|"));
         }
     }
 }

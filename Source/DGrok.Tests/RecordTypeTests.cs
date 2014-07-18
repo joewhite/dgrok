@@ -24,59 +24,59 @@ namespace DGrok.Tests
         {
             Assert.That("record end", ParsesAs(
                 "RecordTypeNode",
-                "  Record: RecordKeyword |record|",
-                "  Contents: ListNode",
-                "  VariantSection: (none)",
-                "  End: EndKeyword |end|"));
+                "  RecordKeywordNode: RecordKeyword |record|",
+                "  ContentListNode: ListNode",
+                "  VariantSectionNode: (none)",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestContents()
         {
             Assert.That("record procedure Foo; end", ParsesAs(
                 "RecordTypeNode",
-                "  Record: RecordKeyword |record|",
-                "  Contents: ListNode",
+                "  RecordKeywordNode: RecordKeyword |record|",
+                "  ContentListNode: ListNode",
                 "    Items[0]: VisibilitySectionNode",
-                "      Visibility: (none)",
-                "      Contents: ListNode",
+                "      VisibilityNode: (none)",
+                "      ContentListNode: ListNode",
                 "        Items[0]: MethodHeadingNode",
-                "          Class: (none)",
-                "          MethodType: ProcedureKeyword |procedure|",
-                "          Name: Identifier |Foo|",
-                "          OpenParenthesis: (none)",
-                "          ParameterList: ListNode",
-                "          CloseParenthesis: (none)",
-                "          Colon: (none)",
-                "          ReturnType: (none)",
-                "          DirectiveList: ListNode",
-                "          Semicolon: Semicolon |;|",
-                "  VariantSection: (none)",
-                "  End: EndKeyword |end|"));
+                "          ClassKeywordNode: (none)",
+                "          MethodTypeNode: ProcedureKeyword |procedure|",
+                "          NameNode: Identifier |Foo|",
+                "          OpenParenthesisNode: (none)",
+                "          ParameterListNode: ListNode",
+                "          CloseParenthesisNode: (none)",
+                "          ColonNode: (none)",
+                "          ReturnTypeNode: (none)",
+                "          DirectiveListNode: ListNode",
+                "          SemicolonNode: Semicolon |;|",
+                "  VariantSectionNode: (none)",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestVariantSection()
         {
             Assert.That("record case Integer of 1: (); end", ParsesAs(
                 "RecordTypeNode",
-                "  Record: RecordKeyword |record|",
-                "  Contents: ListNode",
-                "  VariantSection: VariantSectionNode",
-                "    Case: CaseKeyword |case|",
-                "    Name: (none)",
-                "    Colon: (none)",
-                "    Type: Identifier |Integer|",
-                "    Of: OfKeyword |of|",
-                "    VariantGroupList: ListNode",
+                "  RecordKeywordNode: RecordKeyword |record|",
+                "  ContentListNode: ListNode",
+                "  VariantSectionNode: VariantSectionNode",
+                "    CaseKeywordNode: CaseKeyword |case|",
+                "    NameNode: (none)",
+                "    ColonNode: (none)",
+                "    TypeNode: Identifier |Integer|",
+                "    OfKeywordNode: OfKeyword |of|",
+                "    VariantGroupListNode: ListNode",
                 "      Items[0]: VariantGroupNode",
-                "        ValueList: ListNode",
+                "        ValueListNode: ListNode",
                 "          Items[0]: DelimitedItemNode",
-                "            Item: Number |1|",
-                "            Delimiter: (none)",
-                "        Colon: Colon |:|",
-                "        OpenParenthesis: OpenParenthesis |(|",
-                "        FieldDeclList: ListNode",
-                "        VariantSection: (none)",
-                "        CloseParenthesis: CloseParenthesis |)|",
-                "        Semicolon: Semicolon |;|",
-                "  End: EndKeyword |end|"));
+                "            ItemNode: Number |1|",
+                "            DelimiterNode: (none)",
+                "        ColonNode: Colon |:|",
+                "        OpenParenthesisNode: OpenParenthesis |(|",
+                "        FieldDeclListNode: ListNode",
+                "        VariantSectionNode: (none)",
+                "        CloseParenthesisNode: CloseParenthesis |)|",
+                "        SemicolonNode: Semicolon |;|",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
     }
 }

@@ -24,42 +24,42 @@ namespace DGrok.Tests
         {
             Assert.That("Foo: Integer;", ParsesAs(
                 "FieldDeclNode",
-                "  NameList: ListNode",
+                "  NameListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |Integer|",
-                "  PortabilityDirectiveList: ListNode",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |Integer|",
+                "  PortabilityDirectiveListNode: ListNode",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestWithoutSemicolon()
         {
             Assert.That("Foo: Integer", ParsesAs(
                 "FieldDeclNode",
-                "  NameList: ListNode",
+                "  NameListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |Integer|",
-                "  PortabilityDirectiveList: ListNode",
-                "  Semicolon: (none)"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |Integer|",
+                "  PortabilityDirectiveListNode: ListNode",
+                "  SemicolonNode: (none)"));
         }
         public void TestPortabilityDirectives()
         {
             Assert.That("Foo: Integer library deprecated;", ParsesAs(
                 "FieldDeclNode",
-                "  NameList: ListNode",
+                "  NameListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |Integer|",
-                "  PortabilityDirectiveList: ListNode",
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |Integer|",
+                "  PortabilityDirectiveListNode: ListNode",
                 "    Items[0]: LibraryKeyword |library|",
                 "    Items[1]: DeprecatedSemikeyword |deprecated|",
-                "  Semicolon: Semicolon |;|"));
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestLookaheadRejectsVisibilitySpecifier()
         {

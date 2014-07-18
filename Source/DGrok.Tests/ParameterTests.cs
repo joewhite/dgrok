@@ -24,102 +24,102 @@ namespace DGrok.Tests
         {
             Assert.That("Foo: TBar", ParsesAs(
                 "ParameterNode",
-                "  Modifier: (none)",
-                "  Names: ListNode",
+                "  ModifierNode: (none)",
+                "  NameListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |TBar|",
-                "  EqualSign: (none)",
-                "  DefaultValue: (none)"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |TBar|",
+                "  EqualSignNode: (none)",
+                "  DefaultValueNode: (none)"));
         }
         public void TestTwo()
         {
             Assert.That("Foo, Bar: TBaz", ParsesAs(
                 "ParameterNode",
-                "  Modifier: (none)",
-                "  Names: ListNode",
+                "  ModifierNode: (none)",
+                "  NameListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Identifier |Bar|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |TBaz|",
-                "  EqualSign: (none)",
-                "  DefaultValue: (none)"));
+                "      ItemNode: Identifier |Bar|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |TBaz|",
+                "  EqualSignNode: (none)",
+                "  DefaultValueNode: (none)"));
         }
         public void TestVarParameter()
         {
             Assert.That("var Foo: TBar", ParsesAs(
                 "ParameterNode",
-                "  Modifier: VarKeyword |var|",
-                "  Names: ListNode",
+                "  ModifierNode: VarKeyword |var|",
+                "  NameListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |TBar|",
-                "  EqualSign: (none)",
-                "  DefaultValue: (none)"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |TBar|",
+                "  EqualSignNode: (none)",
+                "  DefaultValueNode: (none)"));
         }
         public void TestConstParameter()
         {
             Assert.That("const Foo: TBar", ParsesAs(
                 "ParameterNode",
-                "  Modifier: ConstKeyword |const|",
-                "  Names: ListNode",
+                "  ModifierNode: ConstKeyword |const|",
+                "  NameListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |TBar|",
-                "  EqualSign: (none)",
-                "  DefaultValue: (none)"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |TBar|",
+                "  EqualSignNode: (none)",
+                "  DefaultValueNode: (none)"));
         }
         public void TestOutParameter()
         {
             Assert.That("out Foo: TBar", ParsesAs(
                 "ParameterNode",
-                "  Modifier: OutSemikeyword |out|",
-                "  Names: ListNode",
+                "  ModifierNode: OutSemikeyword |out|",
+                "  NameListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |TBar|",
-                "  EqualSign: (none)",
-                "  DefaultValue: (none)"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |TBar|",
+                "  EqualSignNode: (none)",
+                "  DefaultValueNode: (none)"));
         }
         public void TestUntypedVar()
         {
             Assert.That("var Foo", ParsesAs(
                 "ParameterNode",
-                "  Modifier: VarKeyword |var|",
-                "  Names: ListNode",
+                "  ModifierNode: VarKeyword |var|",
+                "  NameListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Colon: (none)",
-                "  Type: (none)",
-                "  EqualSign: (none)",
-                "  DefaultValue: (none)"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: (none)",
+                "  TypeNode: (none)",
+                "  EqualSignNode: (none)",
+                "  DefaultValueNode: (none)"));
         }
         public void TestDefaultParameter()
         {
             Assert.That("Foo: TBar = 42", ParsesAs(
                 "ParameterNode",
-                "  Modifier: (none)",
-                "  Names: ListNode",
+                "  ModifierNode: (none)",
+                "  NameListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |TBar|",
-                "  EqualSign: EqualSign |=|",
-                "  DefaultValue: Number |42|"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |TBar|",
+                "  EqualSignNode: EqualSign |=|",
+                "  DefaultValueNode: Number |42|"));
         }
     }
 }

@@ -24,20 +24,20 @@ namespace DGrok.Tests
         {
             Assert.That("(nil)", ParsesAs(
                 "ParenthesizedExpressionNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  Expression: NilKeyword |nil|",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ExpressionNode: NilKeyword |nil|",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
         public void TestExpression()
         {
             Assert.That("(6 * 9)", ParsesAs(
                 "ParenthesizedExpressionNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  Expression: BinaryOperationNode",
-                "    Left: Number |6|",
-                "    Operator: TimesSign |*|",
-                "    Right: Number |9|",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ExpressionNode: BinaryOperationNode",
+                "    LeftNode: Number |6|",
+                "    OperatorNode: TimesSign |*|",
+                "    RightNode: Number |9|",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
     }
 }

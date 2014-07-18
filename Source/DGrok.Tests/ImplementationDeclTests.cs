@@ -24,130 +24,130 @@ namespace DGrok.Tests
         {
             Assert.That("label 42;", ParsesAs(
                 "LabelDeclSectionNode",
-                "  Label: LabelKeyword |label|",
-                "  LabelList: ListNode",
+                "  LabelKeywordNode: LabelKeyword |label|",
+                "  LabelListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |42|",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: Number |42|",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestConstSection()
         {
             Assert.That("const Foo = 24; Bar = 42;", ParsesAs(
                 "ConstSectionNode",
-                "  Const: ConstKeyword |const|",
-                "  ConstList: ListNode",
+                "  ConstKeywordNode: ConstKeyword |const|",
+                "  ConstListNode: ListNode",
                 "    Items[0]: ConstantDeclNode",
-                "      Name: Identifier |Foo|",
-                "      Colon: (none)",
-                "      Type: (none)",
-                "      EqualSign: EqualSign |=|",
-                "      Value: Number |24|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|",
+                "      NameNode: Identifier |Foo|",
+                "      ColonNode: (none)",
+                "      TypeNode: (none)",
+                "      EqualSignNode: EqualSign |=|",
+                "      ValueNode: Number |24|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|",
                 "    Items[1]: ConstantDeclNode",
-                "      Name: Identifier |Bar|",
-                "      Colon: (none)",
-                "      Type: (none)",
-                "      EqualSign: EqualSign |=|",
-                "      Value: Number |42|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|"));
+                "      NameNode: Identifier |Bar|",
+                "      ColonNode: (none)",
+                "      TypeNode: (none)",
+                "      EqualSignNode: EqualSign |=|",
+                "      ValueNode: Number |42|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestTypeSection()
         {
             Assert.That("type TFoo = Integer; TBar = Byte;", ParsesAs(
                 "TypeSectionNode",
-                "  Type: TypeKeyword |type|",
-                "  TypeList: ListNode",
+                "  TypeKeywordNode: TypeKeyword |type|",
+                "  TypeListNode: ListNode",
                 "    Items[0]: TypeDeclNode",
-                "      Name: Identifier |TFoo|",
-                "      EqualSign: EqualSign |=|",
-                "      TypeKeyword: (none)",
-                "      Type: Identifier |Integer|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|",
+                "      NameNode: Identifier |TFoo|",
+                "      EqualSignNode: EqualSign |=|",
+                "      TypeKeywordNode: (none)",
+                "      TypeNode: Identifier |Integer|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|",
                 "    Items[1]: TypeDeclNode",
-                "      Name: Identifier |TBar|",
-                "      EqualSign: EqualSign |=|",
-                "      TypeKeyword: (none)",
-                "      Type: Identifier |Byte|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|"));
+                "      NameNode: Identifier |TBar|",
+                "      EqualSignNode: EqualSign |=|",
+                "      TypeKeywordNode: (none)",
+                "      TypeNode: Identifier |Byte|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestVarSection()
         {
             Assert.That("var Foo: Integer;", ParsesAs(
                 "VarSectionNode",
-                "  Var: VarKeyword |var|",
-                "  VarList: ListNode",
+                "  VarKeywordNode: VarKeyword |var|",
+                "  VarListNode: ListNode",
                 "    Items[0]: VarDeclNode",
-                "      Names: ListNode",
+                "      NameListNode: ListNode",
                 "        Items[0]: DelimitedItemNode",
-                "          Item: Identifier |Foo|",
-                "          Delimiter: (none)",
-                "      Colon: Colon |:|",
-                "      Type: Identifier |Integer|",
-                "      FirstPortabilityDirectives: ListNode",
-                "      Absolute: (none)",
-                "      AbsoluteAddress: (none)",
-                "      EqualSign: (none)",
-                "      Value: (none)",
-                "      SecondPortabilityDirectives: ListNode",
-                "      Semicolon: Semicolon |;|"));
+                "          ItemNode: Identifier |Foo|",
+                "          DelimiterNode: (none)",
+                "      ColonNode: Colon |:|",
+                "      TypeNode: Identifier |Integer|",
+                "      FirstPortabilityDirectiveListNode: ListNode",
+                "      AbsoluteSemikeywordNode: (none)",
+                "      AbsoluteAddressNode: (none)",
+                "      EqualSignNode: (none)",
+                "      ValueNode: (none)",
+                "      SecondPortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestMethodImplementation()
         {
             Assert.That("procedure Foo; begin end;", ParsesAs(
                 "MethodImplementationNode",
-                "  MethodHeading: MethodHeadingNode",
-                "    Class: (none)",
-                "    MethodType: ProcedureKeyword |procedure|",
-                "    Name: Identifier |Foo|",
-                "    OpenParenthesis: (none)",
-                "    ParameterList: ListNode",
-                "    CloseParenthesis: (none)",
-                "    Colon: (none)",
-                "    ReturnType: (none)",
-                "    DirectiveList: ListNode",
-                "    Semicolon: Semicolon |;|",
-                "  FancyBlock: FancyBlockNode",
-                "    DeclList: ListNode",
-                "    Block: BlockNode",
-                "      Begin: BeginKeyword |begin|",
-                "      StatementList: ListNode",
-                "      End: EndKeyword |end|",
-                "  Semicolon: Semicolon |;|"));
+                "  MethodHeadingNode: MethodHeadingNode",
+                "    ClassKeywordNode: (none)",
+                "    MethodTypeNode: ProcedureKeyword |procedure|",
+                "    NameNode: Identifier |Foo|",
+                "    OpenParenthesisNode: (none)",
+                "    ParameterListNode: ListNode",
+                "    CloseParenthesisNode: (none)",
+                "    ColonNode: (none)",
+                "    ReturnTypeNode: (none)",
+                "    DirectiveListNode: ListNode",
+                "    SemicolonNode: Semicolon |;|",
+                "  FancyBlockNode: FancyBlockNode",
+                "    DeclListNode: ListNode",
+                "    BlockNode: BlockNode",
+                "      BeginKeywordNode: BeginKeyword |begin|",
+                "      StatementListNode: ListNode",
+                "      EndKeywordNode: EndKeyword |end|",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestExportsStatement()
         {
             Assert.That("exports Foo;", ParsesAs(
                 "ExportsStatementNode",
-                "  Exports: ExportsKeyword |exports|",
-                "  ItemList: ListNode",
+                "  ExportsKeywordNode: ExportsKeyword |exports|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: ExportsItemNode",
-                "        Name: Identifier |Foo|",
-                "        SpecifierList: ListNode",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: ExportsItemNode",
+                "        NameNode: Identifier |Foo|",
+                "        SpecifierListNode: ListNode",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestAssemblyAttribute()
         {
             Assert.That("[assembly: AssemblyVersion('0.0.0.0')]", ParsesAs(
                 "AttributeNode",
-                "  OpenBracket: OpenBracket |[|",
-                "  Scope: AssemblySemikeyword |assembly|",
-                "  Colon: Colon |:|",
-                "  Value: ParameterizedNode",
-                "    Left: Identifier |AssemblyVersion|",
-                "    OpenDelimiter: OpenParenthesis |(|",
-                "    ParameterList: ListNode",
+                "  OpenBracketNode: OpenBracket |[|",
+                "  ScopeNode: AssemblySemikeyword |assembly|",
+                "  ColonNode: Colon |:|",
+                "  ValueNode: ParameterizedNode",
+                "    LeftNode: Identifier |AssemblyVersion|",
+                "    OpenDelimiterNode: OpenParenthesis |(|",
+                "    ParameterListNode: ListNode",
                 "      Items[0]: DelimitedItemNode",
-                "        Item: StringLiteral |'0.0.0.0'|",
-                "        Delimiter: (none)",
-                "    CloseDelimiter: CloseParenthesis |)|",
-                "  CloseBracket: CloseBracket |]|"));
+                "        ItemNode: StringLiteral |'0.0.0.0'|",
+                "        DelimiterNode: (none)",
+                "    CloseDelimiterNode: CloseParenthesis |)|",
+                "  CloseBracketNode: CloseBracket |]|"));
         }
     }
 }

@@ -16,58 +16,76 @@ namespace DGrok.DelphiNodes
 {
     public partial class ArrayTypeNode : NonterminalNode
     {
-        private Token _array;
-        private Token _closeBracket;
-        private ListNode<DelimitedItemNode<AstNode>> _indexList;
-        private Token _of;
-        private Token _openBracket;
-        private AstNode _type;
+        private Token _arrayKeywordNode;
+        private Token _closeBracketNode;
+        private ListNode<DelimitedItemNode<AstNode>> _indexListNode;
+        private Token _ofKeywordNode;
+        private Token _openBracketNode;
+        private AstNode _typeNode;
 
-        public ArrayTypeNode(Token array, Token openBracket, ListNode<DelimitedItemNode<AstNode>> indexList, Token closeBracket, Token of, AstNode type)
+        public ArrayTypeNode(Token arrayKeywordNode, Token openBracketNode, ListNode<DelimitedItemNode<AstNode>> indexListNode, Token closeBracketNode, Token ofKeywordNode, AstNode typeNode)
         {
-            _array = array;
-            _openBracket = openBracket;
-            _indexList = indexList;
-            _closeBracket = closeBracket;
-            _of = of;
-            _type = type;
-        }
-
-        public Token Array
-        {
-            get { return _array; }
-        }
-        public Token CloseBracket
-        {
-            get { return _closeBracket; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> IndexList
-        {
-            get { return _indexList; }
-        }
-        public Token Of
-        {
-            get { return _of; }
-        }
-        public Token OpenBracket
-        {
-            get { return _openBracket; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
+            _arrayKeywordNode = arrayKeywordNode;
+            _openBracketNode = openBracketNode;
+            _indexListNode = indexListNode;
+            _closeBracketNode = closeBracketNode;
+            _ofKeywordNode = ofKeywordNode;
+            _typeNode = typeNode;
         }
 
+        public Token ArrayKeywordNode
+        {
+            get { return _arrayKeywordNode; }
+        }
+        public Token CloseBracketNode
+        {
+            get { return _closeBracketNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> IndexListNode
+        {
+            get { return _indexListNode; }
+        }
+        public Token OfKeywordNode
+        {
+            get { return _ofKeywordNode; }
+        }
+        public Token OpenBracketNode
+        {
+            get { return _openBracketNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ArrayKeywordNode != null)
+                    yield return ArrayKeywordNode;
+                if (OpenBracketNode != null)
+                    yield return OpenBracketNode;
+                if (IndexListNode != null)
+                    yield return IndexListNode;
+                if (CloseBracketNode != null)
+                    yield return CloseBracketNode;
+                if (OfKeywordNode != null)
+                    yield return OfKeywordNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Array", Array);
-                yield return new KeyValuePair<string, AstNode>("OpenBracket", OpenBracket);
-                yield return new KeyValuePair<string, AstNode>("IndexList", IndexList);
-                yield return new KeyValuePair<string, AstNode>("CloseBracket", CloseBracket);
-                yield return new KeyValuePair<string, AstNode>("Of", Of);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
+                yield return new KeyValuePair<string, AstNode>("ArrayKeywordNode", ArrayKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("OpenBracketNode", OpenBracketNode);
+                yield return new KeyValuePair<string, AstNode>("IndexListNode", IndexListNode);
+                yield return new KeyValuePair<string, AstNode>("CloseBracketNode", CloseBracketNode);
+                yield return new KeyValuePair<string, AstNode>("OfKeywordNode", OfKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
             }
         }
 
@@ -78,30 +96,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class AssemblerStatementNode : NonterminalNode
     {
-        private Token _asm;
-        private Token _end;
+        private Token _asmKeywordNode;
+        private Token _endKeywordNode;
 
-        public AssemblerStatementNode(Token asm, Token end)
+        public AssemblerStatementNode(Token asmKeywordNode, Token endKeywordNode)
         {
-            _asm = asm;
-            _end = end;
+            _asmKeywordNode = asmKeywordNode;
+            _endKeywordNode = endKeywordNode;
         }
 
-        public Token Asm
+        public Token AsmKeywordNode
         {
-            get { return _asm; }
+            get { return _asmKeywordNode; }
         }
-        public Token End
+        public Token EndKeywordNode
         {
-            get { return _end; }
+            get { return _endKeywordNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (AsmKeywordNode != null)
+                    yield return AsmKeywordNode;
+                if (EndKeywordNode != null)
+                    yield return EndKeywordNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Asm", Asm);
-                yield return new KeyValuePair<string, AstNode>("End", End);
+                yield return new KeyValuePair<string, AstNode>("AsmKeywordNode", AsmKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("EndKeywordNode", EndKeywordNode);
             }
         }
 
@@ -112,51 +140,67 @@ namespace DGrok.DelphiNodes
     }
     public partial class AttributeNode : NonterminalNode
     {
-        private Token _closeBracket;
-        private Token _colon;
-        private Token _openBracket;
-        private Token _scope;
-        private AstNode _value;
+        private Token _closeBracketNode;
+        private Token _colonNode;
+        private Token _openBracketNode;
+        private Token _scopeNode;
+        private AstNode _valueNode;
 
-        public AttributeNode(Token openBracket, Token scope, Token colon, AstNode value, Token closeBracket)
+        public AttributeNode(Token openBracketNode, Token scopeNode, Token colonNode, AstNode valueNode, Token closeBracketNode)
         {
-            _openBracket = openBracket;
-            _scope = scope;
-            _colon = colon;
-            _value = value;
-            _closeBracket = closeBracket;
-        }
-
-        public Token CloseBracket
-        {
-            get { return _closeBracket; }
-        }
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public Token OpenBracket
-        {
-            get { return _openBracket; }
-        }
-        public Token Scope
-        {
-            get { return _scope; }
-        }
-        public AstNode Value
-        {
-            get { return _value; }
+            _openBracketNode = openBracketNode;
+            _scopeNode = scopeNode;
+            _colonNode = colonNode;
+            _valueNode = valueNode;
+            _closeBracketNode = closeBracketNode;
         }
 
+        public Token CloseBracketNode
+        {
+            get { return _closeBracketNode; }
+        }
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public Token OpenBracketNode
+        {
+            get { return _openBracketNode; }
+        }
+        public Token ScopeNode
+        {
+            get { return _scopeNode; }
+        }
+        public AstNode ValueNode
+        {
+            get { return _valueNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (OpenBracketNode != null)
+                    yield return OpenBracketNode;
+                if (ScopeNode != null)
+                    yield return ScopeNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (ValueNode != null)
+                    yield return ValueNode;
+                if (CloseBracketNode != null)
+                    yield return CloseBracketNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("OpenBracket", OpenBracket);
-                yield return new KeyValuePair<string, AstNode>("Scope", Scope);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("Value", Value);
-                yield return new KeyValuePair<string, AstNode>("CloseBracket", CloseBracket);
+                yield return new KeyValuePair<string, AstNode>("OpenBracketNode", OpenBracketNode);
+                yield return new KeyValuePair<string, AstNode>("ScopeNode", ScopeNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("ValueNode", ValueNode);
+                yield return new KeyValuePair<string, AstNode>("CloseBracketNode", CloseBracketNode);
             }
         }
 
@@ -167,37 +211,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class BinaryOperationNode : NonterminalNode
     {
-        private AstNode _left;
-        private Token _operator;
-        private AstNode _right;
+        private AstNode _leftNode;
+        private Token _operatorNode;
+        private AstNode _rightNode;
 
-        public BinaryOperationNode(AstNode left, Token theOperator, AstNode right)
+        public BinaryOperationNode(AstNode leftNode, Token operatorNode, AstNode rightNode)
         {
-            _left = left;
-            _operator = theOperator;
-            _right = right;
-        }
-
-        public AstNode Left
-        {
-            get { return _left; }
-        }
-        public Token Operator
-        {
-            get { return _operator; }
-        }
-        public AstNode Right
-        {
-            get { return _right; }
+            _leftNode = leftNode;
+            _operatorNode = operatorNode;
+            _rightNode = rightNode;
         }
 
+        public AstNode LeftNode
+        {
+            get { return _leftNode; }
+        }
+        public Token OperatorNode
+        {
+            get { return _operatorNode; }
+        }
+        public AstNode RightNode
+        {
+            get { return _rightNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (LeftNode != null)
+                    yield return LeftNode;
+                if (OperatorNode != null)
+                    yield return OperatorNode;
+                if (RightNode != null)
+                    yield return RightNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Left", Left);
-                yield return new KeyValuePair<string, AstNode>("Operator", Operator);
-                yield return new KeyValuePair<string, AstNode>("Right", Right);
+                yield return new KeyValuePair<string, AstNode>("LeftNode", LeftNode);
+                yield return new KeyValuePair<string, AstNode>("OperatorNode", OperatorNode);
+                yield return new KeyValuePair<string, AstNode>("RightNode", RightNode);
             }
         }
 
@@ -208,37 +264,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class BlockNode : NonterminalNode
     {
-        private Token _begin;
-        private Token _end;
-        private ListNode<DelimitedItemNode<AstNode>> _statementList;
+        private Token _beginKeywordNode;
+        private Token _endKeywordNode;
+        private ListNode<DelimitedItemNode<AstNode>> _statementListNode;
 
-        public BlockNode(Token begin, ListNode<DelimitedItemNode<AstNode>> statementList, Token end)
+        public BlockNode(Token beginKeywordNode, ListNode<DelimitedItemNode<AstNode>> statementListNode, Token endKeywordNode)
         {
-            _begin = begin;
-            _statementList = statementList;
-            _end = end;
-        }
-
-        public Token Begin
-        {
-            get { return _begin; }
-        }
-        public Token End
-        {
-            get { return _end; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> StatementList
-        {
-            get { return _statementList; }
+            _beginKeywordNode = beginKeywordNode;
+            _statementListNode = statementListNode;
+            _endKeywordNode = endKeywordNode;
         }
 
+        public Token BeginKeywordNode
+        {
+            get { return _beginKeywordNode; }
+        }
+        public Token EndKeywordNode
+        {
+            get { return _endKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> StatementListNode
+        {
+            get { return _statementListNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (BeginKeywordNode != null)
+                    yield return BeginKeywordNode;
+                if (StatementListNode != null)
+                    yield return StatementListNode;
+                if (EndKeywordNode != null)
+                    yield return EndKeywordNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Begin", Begin);
-                yield return new KeyValuePair<string, AstNode>("StatementList", StatementList);
-                yield return new KeyValuePair<string, AstNode>("End", End);
+                yield return new KeyValuePair<string, AstNode>("BeginKeywordNode", BeginKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("StatementListNode", StatementListNode);
+                yield return new KeyValuePair<string, AstNode>("EndKeywordNode", EndKeywordNode);
             }
         }
 
@@ -249,44 +317,58 @@ namespace DGrok.DelphiNodes
     }
     public partial class CaseSelectorNode : NonterminalNode
     {
-        private Token _colon;
-        private Token _semicolon;
-        private AstNode _statement;
-        private ListNode<DelimitedItemNode<AstNode>> _values;
+        private Token _colonNode;
+        private Token _semicolonNode;
+        private AstNode _statementNode;
+        private ListNode<DelimitedItemNode<AstNode>> _valueListNode;
 
-        public CaseSelectorNode(ListNode<DelimitedItemNode<AstNode>> values, Token colon, AstNode statement, Token semicolon)
+        public CaseSelectorNode(ListNode<DelimitedItemNode<AstNode>> valueListNode, Token colonNode, AstNode statementNode, Token semicolonNode)
         {
-            _values = values;
-            _colon = colon;
-            _statement = statement;
-            _semicolon = semicolon;
-        }
-
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public AstNode Statement
-        {
-            get { return _statement; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> Values
-        {
-            get { return _values; }
+            _valueListNode = valueListNode;
+            _colonNode = colonNode;
+            _statementNode = statementNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public AstNode StatementNode
+        {
+            get { return _statementNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> ValueListNode
+        {
+            get { return _valueListNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ValueListNode != null)
+                    yield return ValueListNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (StatementNode != null)
+                    yield return StatementNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Values", Values);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("Statement", Statement);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("ValueListNode", ValueListNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("StatementNode", StatementNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -297,65 +379,85 @@ namespace DGrok.DelphiNodes
     }
     public partial class CaseStatementNode : NonterminalNode
     {
-        private Token _case;
-        private Token _else;
-        private ListNode<DelimitedItemNode<AstNode>> _elseStatements;
-        private Token _end;
-        private AstNode _expression;
-        private Token _of;
-        private ListNode<CaseSelectorNode> _selectorList;
+        private Token _caseKeywordNode;
+        private Token _elseKeywordNode;
+        private ListNode<DelimitedItemNode<AstNode>> _elseStatementListNode;
+        private Token _endKeywordNode;
+        private AstNode _expressionNode;
+        private Token _ofKeywordNode;
+        private ListNode<CaseSelectorNode> _selectorListNode;
 
-        public CaseStatementNode(Token theCase, AstNode expression, Token of, ListNode<CaseSelectorNode> selectorList, Token theElse, ListNode<DelimitedItemNode<AstNode>> elseStatements, Token end)
+        public CaseStatementNode(Token caseKeywordNode, AstNode expressionNode, Token ofKeywordNode, ListNode<CaseSelectorNode> selectorListNode, Token elseKeywordNode, ListNode<DelimitedItemNode<AstNode>> elseStatementListNode, Token endKeywordNode)
         {
-            _case = theCase;
-            _expression = expression;
-            _of = of;
-            _selectorList = selectorList;
-            _else = theElse;
-            _elseStatements = elseStatements;
-            _end = end;
-        }
-
-        public Token Case
-        {
-            get { return _case; }
-        }
-        public Token Else
-        {
-            get { return _else; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> ElseStatements
-        {
-            get { return _elseStatements; }
-        }
-        public Token End
-        {
-            get { return _end; }
-        }
-        public AstNode Expression
-        {
-            get { return _expression; }
-        }
-        public Token Of
-        {
-            get { return _of; }
-        }
-        public ListNode<CaseSelectorNode> SelectorList
-        {
-            get { return _selectorList; }
+            _caseKeywordNode = caseKeywordNode;
+            _expressionNode = expressionNode;
+            _ofKeywordNode = ofKeywordNode;
+            _selectorListNode = selectorListNode;
+            _elseKeywordNode = elseKeywordNode;
+            _elseStatementListNode = elseStatementListNode;
+            _endKeywordNode = endKeywordNode;
         }
 
+        public Token CaseKeywordNode
+        {
+            get { return _caseKeywordNode; }
+        }
+        public Token ElseKeywordNode
+        {
+            get { return _elseKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> ElseStatementListNode
+        {
+            get { return _elseStatementListNode; }
+        }
+        public Token EndKeywordNode
+        {
+            get { return _endKeywordNode; }
+        }
+        public AstNode ExpressionNode
+        {
+            get { return _expressionNode; }
+        }
+        public Token OfKeywordNode
+        {
+            get { return _ofKeywordNode; }
+        }
+        public ListNode<CaseSelectorNode> SelectorListNode
+        {
+            get { return _selectorListNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (CaseKeywordNode != null)
+                    yield return CaseKeywordNode;
+                if (ExpressionNode != null)
+                    yield return ExpressionNode;
+                if (OfKeywordNode != null)
+                    yield return OfKeywordNode;
+                if (SelectorListNode != null)
+                    yield return SelectorListNode;
+                if (ElseKeywordNode != null)
+                    yield return ElseKeywordNode;
+                if (ElseStatementListNode != null)
+                    yield return ElseStatementListNode;
+                if (EndKeywordNode != null)
+                    yield return EndKeywordNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Case", Case);
-                yield return new KeyValuePair<string, AstNode>("Expression", Expression);
-                yield return new KeyValuePair<string, AstNode>("Of", Of);
-                yield return new KeyValuePair<string, AstNode>("SelectorList", SelectorList);
-                yield return new KeyValuePair<string, AstNode>("Else", Else);
-                yield return new KeyValuePair<string, AstNode>("ElseStatements", ElseStatements);
-                yield return new KeyValuePair<string, AstNode>("End", End);
+                yield return new KeyValuePair<string, AstNode>("CaseKeywordNode", CaseKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ExpressionNode", ExpressionNode);
+                yield return new KeyValuePair<string, AstNode>("OfKeywordNode", OfKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("SelectorListNode", SelectorListNode);
+                yield return new KeyValuePair<string, AstNode>("ElseKeywordNode", ElseKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ElseStatementListNode", ElseStatementListNode);
+                yield return new KeyValuePair<string, AstNode>("EndKeywordNode", EndKeywordNode);
             }
         }
 
@@ -366,37 +468,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class ClassOfNode : NonterminalNode
     {
-        private Token _class;
-        private Token _of;
-        private AstNode _type;
+        private Token _classKeywordNode;
+        private Token _ofKeywordNode;
+        private AstNode _typeNode;
 
-        public ClassOfNode(Token theClass, Token of, AstNode type)
+        public ClassOfNode(Token classKeywordNode, Token ofKeywordNode, AstNode typeNode)
         {
-            _class = theClass;
-            _of = of;
-            _type = type;
-        }
-
-        public Token Class
-        {
-            get { return _class; }
-        }
-        public Token Of
-        {
-            get { return _of; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
+            _classKeywordNode = classKeywordNode;
+            _ofKeywordNode = ofKeywordNode;
+            _typeNode = typeNode;
         }
 
+        public Token ClassKeywordNode
+        {
+            get { return _classKeywordNode; }
+        }
+        public Token OfKeywordNode
+        {
+            get { return _ofKeywordNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ClassKeywordNode != null)
+                    yield return ClassKeywordNode;
+                if (OfKeywordNode != null)
+                    yield return OfKeywordNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Class", Class);
-                yield return new KeyValuePair<string, AstNode>("Of", Of);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
+                yield return new KeyValuePair<string, AstNode>("ClassKeywordNode", ClassKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("OfKeywordNode", OfKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
             }
         }
 
@@ -407,65 +521,85 @@ namespace DGrok.DelphiNodes
     }
     public partial class ClassTypeNode : NonterminalNode
     {
-        private Token _class;
-        private Token _closeParenthesis;
-        private ListNode<VisibilitySectionNode> _contents;
-        private Token _disposition;
-        private Token _end;
-        private ListNode<DelimitedItemNode<AstNode>> _inheritanceList;
-        private Token _openParenthesis;
+        private Token _classKeywordNode;
+        private Token _closeParenthesisNode;
+        private ListNode<VisibilitySectionNode> _contentListNode;
+        private Token _dispositionNode;
+        private Token _endKeywordNode;
+        private ListNode<DelimitedItemNode<AstNode>> _inheritanceListNode;
+        private Token _openParenthesisNode;
 
-        public ClassTypeNode(Token theClass, Token disposition, Token openParenthesis, ListNode<DelimitedItemNode<AstNode>> inheritanceList, Token closeParenthesis, ListNode<VisibilitySectionNode> contents, Token end)
+        public ClassTypeNode(Token classKeywordNode, Token dispositionNode, Token openParenthesisNode, ListNode<DelimitedItemNode<AstNode>> inheritanceListNode, Token closeParenthesisNode, ListNode<VisibilitySectionNode> contentListNode, Token endKeywordNode)
         {
-            _class = theClass;
-            _disposition = disposition;
-            _openParenthesis = openParenthesis;
-            _inheritanceList = inheritanceList;
-            _closeParenthesis = closeParenthesis;
-            _contents = contents;
-            _end = end;
-        }
-
-        public Token Class
-        {
-            get { return _class; }
-        }
-        public Token CloseParenthesis
-        {
-            get { return _closeParenthesis; }
-        }
-        public ListNode<VisibilitySectionNode> Contents
-        {
-            get { return _contents; }
-        }
-        public Token Disposition
-        {
-            get { return _disposition; }
-        }
-        public Token End
-        {
-            get { return _end; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> InheritanceList
-        {
-            get { return _inheritanceList; }
-        }
-        public Token OpenParenthesis
-        {
-            get { return _openParenthesis; }
+            _classKeywordNode = classKeywordNode;
+            _dispositionNode = dispositionNode;
+            _openParenthesisNode = openParenthesisNode;
+            _inheritanceListNode = inheritanceListNode;
+            _closeParenthesisNode = closeParenthesisNode;
+            _contentListNode = contentListNode;
+            _endKeywordNode = endKeywordNode;
         }
 
+        public Token ClassKeywordNode
+        {
+            get { return _classKeywordNode; }
+        }
+        public Token CloseParenthesisNode
+        {
+            get { return _closeParenthesisNode; }
+        }
+        public ListNode<VisibilitySectionNode> ContentListNode
+        {
+            get { return _contentListNode; }
+        }
+        public Token DispositionNode
+        {
+            get { return _dispositionNode; }
+        }
+        public Token EndKeywordNode
+        {
+            get { return _endKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> InheritanceListNode
+        {
+            get { return _inheritanceListNode; }
+        }
+        public Token OpenParenthesisNode
+        {
+            get { return _openParenthesisNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ClassKeywordNode != null)
+                    yield return ClassKeywordNode;
+                if (DispositionNode != null)
+                    yield return DispositionNode;
+                if (OpenParenthesisNode != null)
+                    yield return OpenParenthesisNode;
+                if (InheritanceListNode != null)
+                    yield return InheritanceListNode;
+                if (CloseParenthesisNode != null)
+                    yield return CloseParenthesisNode;
+                if (ContentListNode != null)
+                    yield return ContentListNode;
+                if (EndKeywordNode != null)
+                    yield return EndKeywordNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Class", Class);
-                yield return new KeyValuePair<string, AstNode>("Disposition", Disposition);
-                yield return new KeyValuePair<string, AstNode>("OpenParenthesis", OpenParenthesis);
-                yield return new KeyValuePair<string, AstNode>("InheritanceList", InheritanceList);
-                yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
-                yield return new KeyValuePair<string, AstNode>("Contents", Contents);
-                yield return new KeyValuePair<string, AstNode>("End", End);
+                yield return new KeyValuePair<string, AstNode>("ClassKeywordNode", ClassKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("DispositionNode", DispositionNode);
+                yield return new KeyValuePair<string, AstNode>("OpenParenthesisNode", OpenParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("InheritanceListNode", InheritanceListNode);
+                yield return new KeyValuePair<string, AstNode>("CloseParenthesisNode", CloseParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("ContentListNode", ContentListNode);
+                yield return new KeyValuePair<string, AstNode>("EndKeywordNode", EndKeywordNode);
             }
         }
 
@@ -476,65 +610,85 @@ namespace DGrok.DelphiNodes
     }
     public partial class ConstantDeclNode : NonterminalNode
     {
-        private Token _colon;
-        private Token _equalSign;
-        private Token _name;
-        private ListNode<Token> _portabilityDirectiveList;
-        private Token _semicolon;
-        private AstNode _type;
-        private AstNode _value;
+        private Token _colonNode;
+        private Token _equalSignNode;
+        private Token _nameNode;
+        private ListNode<Token> _portabilityDirectiveListNode;
+        private Token _semicolonNode;
+        private AstNode _typeNode;
+        private AstNode _valueNode;
 
-        public ConstantDeclNode(Token name, Token colon, AstNode type, Token equalSign, AstNode value, ListNode<Token> portabilityDirectiveList, Token semicolon)
+        public ConstantDeclNode(Token nameNode, Token colonNode, AstNode typeNode, Token equalSignNode, AstNode valueNode, ListNode<Token> portabilityDirectiveListNode, Token semicolonNode)
         {
-            _name = name;
-            _colon = colon;
-            _type = type;
-            _equalSign = equalSign;
-            _value = value;
-            _portabilityDirectiveList = portabilityDirectiveList;
-            _semicolon = semicolon;
-        }
-
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public Token EqualSign
-        {
-            get { return _equalSign; }
-        }
-        public Token Name
-        {
-            get { return _name; }
-        }
-        public ListNode<Token> PortabilityDirectiveList
-        {
-            get { return _portabilityDirectiveList; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
-        }
-        public AstNode Value
-        {
-            get { return _value; }
+            _nameNode = nameNode;
+            _colonNode = colonNode;
+            _typeNode = typeNode;
+            _equalSignNode = equalSignNode;
+            _valueNode = valueNode;
+            _portabilityDirectiveListNode = portabilityDirectiveListNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public Token EqualSignNode
+        {
+            get { return _equalSignNode; }
+        }
+        public Token NameNode
+        {
+            get { return _nameNode; }
+        }
+        public ListNode<Token> PortabilityDirectiveListNode
+        {
+            get { return _portabilityDirectiveListNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+        public AstNode ValueNode
+        {
+            get { return _valueNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (NameNode != null)
+                    yield return NameNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+                if (EqualSignNode != null)
+                    yield return EqualSignNode;
+                if (ValueNode != null)
+                    yield return ValueNode;
+                if (PortabilityDirectiveListNode != null)
+                    yield return PortabilityDirectiveListNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
-                yield return new KeyValuePair<string, AstNode>("EqualSign", EqualSign);
-                yield return new KeyValuePair<string, AstNode>("Value", Value);
-                yield return new KeyValuePair<string, AstNode>("PortabilityDirectiveList", PortabilityDirectiveList);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
+                yield return new KeyValuePair<string, AstNode>("EqualSignNode", EqualSignNode);
+                yield return new KeyValuePair<string, AstNode>("ValueNode", ValueNode);
+                yield return new KeyValuePair<string, AstNode>("PortabilityDirectiveListNode", PortabilityDirectiveListNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -545,37 +699,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class ConstantListNode : NonterminalNode
     {
-        private Token _closeParenthesis;
-        private ListNode<DelimitedItemNode<AstNode>> _itemList;
-        private Token _openParenthesis;
+        private Token _closeParenthesisNode;
+        private ListNode<DelimitedItemNode<AstNode>> _itemListNode;
+        private Token _openParenthesisNode;
 
-        public ConstantListNode(Token openParenthesis, ListNode<DelimitedItemNode<AstNode>> itemList, Token closeParenthesis)
+        public ConstantListNode(Token openParenthesisNode, ListNode<DelimitedItemNode<AstNode>> itemListNode, Token closeParenthesisNode)
         {
-            _openParenthesis = openParenthesis;
-            _itemList = itemList;
-            _closeParenthesis = closeParenthesis;
-        }
-
-        public Token CloseParenthesis
-        {
-            get { return _closeParenthesis; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> ItemList
-        {
-            get { return _itemList; }
-        }
-        public Token OpenParenthesis
-        {
-            get { return _openParenthesis; }
+            _openParenthesisNode = openParenthesisNode;
+            _itemListNode = itemListNode;
+            _closeParenthesisNode = closeParenthesisNode;
         }
 
+        public Token CloseParenthesisNode
+        {
+            get { return _closeParenthesisNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> ItemListNode
+        {
+            get { return _itemListNode; }
+        }
+        public Token OpenParenthesisNode
+        {
+            get { return _openParenthesisNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (OpenParenthesisNode != null)
+                    yield return OpenParenthesisNode;
+                if (ItemListNode != null)
+                    yield return ItemListNode;
+                if (CloseParenthesisNode != null)
+                    yield return CloseParenthesisNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("OpenParenthesis", OpenParenthesis);
-                yield return new KeyValuePair<string, AstNode>("ItemList", ItemList);
-                yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
+                yield return new KeyValuePair<string, AstNode>("OpenParenthesisNode", OpenParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("ItemListNode", ItemListNode);
+                yield return new KeyValuePair<string, AstNode>("CloseParenthesisNode", CloseParenthesisNode);
             }
         }
 
@@ -586,30 +752,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class ConstSectionNode : NonterminalNode
     {
-        private Token _const;
-        private ListNode<ConstantDeclNode> _constList;
+        private Token _constKeywordNode;
+        private ListNode<ConstantDeclNode> _constListNode;
 
-        public ConstSectionNode(Token theConst, ListNode<ConstantDeclNode> constList)
+        public ConstSectionNode(Token constKeywordNode, ListNode<ConstantDeclNode> constListNode)
         {
-            _const = theConst;
-            _constList = constList;
+            _constKeywordNode = constKeywordNode;
+            _constListNode = constListNode;
         }
 
-        public Token Const
+        public Token ConstKeywordNode
         {
-            get { return _const; }
+            get { return _constKeywordNode; }
         }
-        public ListNode<ConstantDeclNode> ConstList
+        public ListNode<ConstantDeclNode> ConstListNode
         {
-            get { return _constList; }
+            get { return _constListNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ConstKeywordNode != null)
+                    yield return ConstKeywordNode;
+                if (ConstListNode != null)
+                    yield return ConstListNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Const", Const);
-                yield return new KeyValuePair<string, AstNode>("ConstList", ConstList);
+                yield return new KeyValuePair<string, AstNode>("ConstKeywordNode", ConstKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ConstListNode", ConstListNode);
             }
         }
 
@@ -620,44 +796,58 @@ namespace DGrok.DelphiNodes
     }
     public partial class DirectiveNode : NonterminalNode
     {
-        private AstNode _data;
-        private Token _directive;
-        private Token _semicolon;
-        private AstNode _value;
+        private AstNode _dataNode;
+        private Token _keywordNode;
+        private Token _semicolonNode;
+        private AstNode _valueNode;
 
-        public DirectiveNode(Token semicolon, Token directive, AstNode value, AstNode data)
+        public DirectiveNode(Token semicolonNode, Token keywordNode, AstNode valueNode, AstNode dataNode)
         {
-            _semicolon = semicolon;
-            _directive = directive;
-            _value = value;
-            _data = data;
-        }
-
-        public AstNode Data
-        {
-            get { return _data; }
-        }
-        public Token Directive
-        {
-            get { return _directive; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public AstNode Value
-        {
-            get { return _value; }
+            _semicolonNode = semicolonNode;
+            _keywordNode = keywordNode;
+            _valueNode = valueNode;
+            _dataNode = dataNode;
         }
 
+        public AstNode DataNode
+        {
+            get { return _dataNode; }
+        }
+        public Token KeywordNode
+        {
+            get { return _keywordNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public AstNode ValueNode
+        {
+            get { return _valueNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+                if (KeywordNode != null)
+                    yield return KeywordNode;
+                if (ValueNode != null)
+                    yield return ValueNode;
+                if (DataNode != null)
+                    yield return DataNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
-                yield return new KeyValuePair<string, AstNode>("Directive", Directive);
-                yield return new KeyValuePair<string, AstNode>("Value", Value);
-                yield return new KeyValuePair<string, AstNode>("Data", Data);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
+                yield return new KeyValuePair<string, AstNode>("KeywordNode", KeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ValueNode", ValueNode);
+                yield return new KeyValuePair<string, AstNode>("DataNode", DataNode);
             }
         }
 
@@ -668,37 +858,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class EnumeratedTypeElementNode : NonterminalNode
     {
-        private Token _equalSign;
-        private Token _name;
-        private AstNode _value;
+        private Token _equalSignNode;
+        private Token _nameNode;
+        private AstNode _valueNode;
 
-        public EnumeratedTypeElementNode(Token name, Token equalSign, AstNode value)
+        public EnumeratedTypeElementNode(Token nameNode, Token equalSignNode, AstNode valueNode)
         {
-            _name = name;
-            _equalSign = equalSign;
-            _value = value;
-        }
-
-        public Token EqualSign
-        {
-            get { return _equalSign; }
-        }
-        public Token Name
-        {
-            get { return _name; }
-        }
-        public AstNode Value
-        {
-            get { return _value; }
+            _nameNode = nameNode;
+            _equalSignNode = equalSignNode;
+            _valueNode = valueNode;
         }
 
+        public Token EqualSignNode
+        {
+            get { return _equalSignNode; }
+        }
+        public Token NameNode
+        {
+            get { return _nameNode; }
+        }
+        public AstNode ValueNode
+        {
+            get { return _valueNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (NameNode != null)
+                    yield return NameNode;
+                if (EqualSignNode != null)
+                    yield return EqualSignNode;
+                if (ValueNode != null)
+                    yield return ValueNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("EqualSign", EqualSign);
-                yield return new KeyValuePair<string, AstNode>("Value", Value);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("EqualSignNode", EqualSignNode);
+                yield return new KeyValuePair<string, AstNode>("ValueNode", ValueNode);
             }
         }
 
@@ -709,37 +911,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class EnumeratedTypeNode : NonterminalNode
     {
-        private Token _closeParenthesis;
-        private ListNode<DelimitedItemNode<EnumeratedTypeElementNode>> _itemList;
-        private Token _openParenthesis;
+        private Token _closeParenthesisNode;
+        private ListNode<DelimitedItemNode<EnumeratedTypeElementNode>> _itemListNode;
+        private Token _openParenthesisNode;
 
-        public EnumeratedTypeNode(Token openParenthesis, ListNode<DelimitedItemNode<EnumeratedTypeElementNode>> itemList, Token closeParenthesis)
+        public EnumeratedTypeNode(Token openParenthesisNode, ListNode<DelimitedItemNode<EnumeratedTypeElementNode>> itemListNode, Token closeParenthesisNode)
         {
-            _openParenthesis = openParenthesis;
-            _itemList = itemList;
-            _closeParenthesis = closeParenthesis;
-        }
-
-        public Token CloseParenthesis
-        {
-            get { return _closeParenthesis; }
-        }
-        public ListNode<DelimitedItemNode<EnumeratedTypeElementNode>> ItemList
-        {
-            get { return _itemList; }
-        }
-        public Token OpenParenthesis
-        {
-            get { return _openParenthesis; }
+            _openParenthesisNode = openParenthesisNode;
+            _itemListNode = itemListNode;
+            _closeParenthesisNode = closeParenthesisNode;
         }
 
+        public Token CloseParenthesisNode
+        {
+            get { return _closeParenthesisNode; }
+        }
+        public ListNode<DelimitedItemNode<EnumeratedTypeElementNode>> ItemListNode
+        {
+            get { return _itemListNode; }
+        }
+        public Token OpenParenthesisNode
+        {
+            get { return _openParenthesisNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (OpenParenthesisNode != null)
+                    yield return OpenParenthesisNode;
+                if (ItemListNode != null)
+                    yield return ItemListNode;
+                if (CloseParenthesisNode != null)
+                    yield return CloseParenthesisNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("OpenParenthesis", OpenParenthesis);
-                yield return new KeyValuePair<string, AstNode>("ItemList", ItemList);
-                yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
+                yield return new KeyValuePair<string, AstNode>("OpenParenthesisNode", OpenParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("ItemListNode", ItemListNode);
+                yield return new KeyValuePair<string, AstNode>("CloseParenthesisNode", CloseParenthesisNode);
             }
         }
 
@@ -750,65 +964,85 @@ namespace DGrok.DelphiNodes
     }
     public partial class ExceptionItemNode : NonterminalNode
     {
-        private Token _colon;
-        private Token _do;
-        private Token _name;
-        private Token _on;
-        private Token _semicolon;
-        private AstNode _statement;
-        private AstNode _type;
+        private Token _colonNode;
+        private Token _doKeywordNode;
+        private Token _nameNode;
+        private Token _onSemikeywordNode;
+        private Token _semicolonNode;
+        private AstNode _statementNode;
+        private AstNode _typeNode;
 
-        public ExceptionItemNode(Token on, Token name, Token colon, AstNode type, Token theDo, AstNode statement, Token semicolon)
+        public ExceptionItemNode(Token onSemikeywordNode, Token nameNode, Token colonNode, AstNode typeNode, Token doKeywordNode, AstNode statementNode, Token semicolonNode)
         {
-            _on = on;
-            _name = name;
-            _colon = colon;
-            _type = type;
-            _do = theDo;
-            _statement = statement;
-            _semicolon = semicolon;
-        }
-
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public Token Do
-        {
-            get { return _do; }
-        }
-        public Token Name
-        {
-            get { return _name; }
-        }
-        public Token On
-        {
-            get { return _on; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public AstNode Statement
-        {
-            get { return _statement; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
+            _onSemikeywordNode = onSemikeywordNode;
+            _nameNode = nameNode;
+            _colonNode = colonNode;
+            _typeNode = typeNode;
+            _doKeywordNode = doKeywordNode;
+            _statementNode = statementNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public Token DoKeywordNode
+        {
+            get { return _doKeywordNode; }
+        }
+        public Token NameNode
+        {
+            get { return _nameNode; }
+        }
+        public Token OnSemikeywordNode
+        {
+            get { return _onSemikeywordNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public AstNode StatementNode
+        {
+            get { return _statementNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (OnSemikeywordNode != null)
+                    yield return OnSemikeywordNode;
+                if (NameNode != null)
+                    yield return NameNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+                if (DoKeywordNode != null)
+                    yield return DoKeywordNode;
+                if (StatementNode != null)
+                    yield return StatementNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("On", On);
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
-                yield return new KeyValuePair<string, AstNode>("Do", Do);
-                yield return new KeyValuePair<string, AstNode>("Statement", Statement);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("OnSemikeywordNode", OnSemikeywordNode);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
+                yield return new KeyValuePair<string, AstNode>("DoKeywordNode", DoKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("StatementNode", StatementNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -819,30 +1053,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class ExportsItemNode : NonterminalNode
     {
-        private AstNode _name;
-        private ListNode<ExportsSpecifierNode> _specifierList;
+        private AstNode _nameNode;
+        private ListNode<ExportsSpecifierNode> _specifierListNode;
 
-        public ExportsItemNode(AstNode name, ListNode<ExportsSpecifierNode> specifierList)
+        public ExportsItemNode(AstNode nameNode, ListNode<ExportsSpecifierNode> specifierListNode)
         {
-            _name = name;
-            _specifierList = specifierList;
+            _nameNode = nameNode;
+            _specifierListNode = specifierListNode;
         }
 
-        public AstNode Name
+        public AstNode NameNode
         {
-            get { return _name; }
+            get { return _nameNode; }
         }
-        public ListNode<ExportsSpecifierNode> SpecifierList
+        public ListNode<ExportsSpecifierNode> SpecifierListNode
         {
-            get { return _specifierList; }
+            get { return _specifierListNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (NameNode != null)
+                    yield return NameNode;
+                if (SpecifierListNode != null)
+                    yield return SpecifierListNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("SpecifierList", SpecifierList);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("SpecifierListNode", SpecifierListNode);
             }
         }
 
@@ -853,30 +1097,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class ExportsSpecifierNode : NonterminalNode
     {
-        private Token _keyword;
-        private AstNode _value;
+        private Token _keywordNode;
+        private AstNode _valueNode;
 
-        public ExportsSpecifierNode(Token keyword, AstNode value)
+        public ExportsSpecifierNode(Token keywordNode, AstNode valueNode)
         {
-            _keyword = keyword;
-            _value = value;
+            _keywordNode = keywordNode;
+            _valueNode = valueNode;
         }
 
-        public Token Keyword
+        public Token KeywordNode
         {
-            get { return _keyword; }
+            get { return _keywordNode; }
         }
-        public AstNode Value
+        public AstNode ValueNode
         {
-            get { return _value; }
+            get { return _valueNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (KeywordNode != null)
+                    yield return KeywordNode;
+                if (ValueNode != null)
+                    yield return ValueNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Keyword", Keyword);
-                yield return new KeyValuePair<string, AstNode>("Value", Value);
+                yield return new KeyValuePair<string, AstNode>("KeywordNode", KeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ValueNode", ValueNode);
             }
         }
 
@@ -887,37 +1141,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class ExportsStatementNode : NonterminalNode
     {
-        private Token _exports;
-        private ListNode<DelimitedItemNode<ExportsItemNode>> _itemList;
-        private Token _semicolon;
+        private Token _exportsKeywordNode;
+        private ListNode<DelimitedItemNode<ExportsItemNode>> _itemListNode;
+        private Token _semicolonNode;
 
-        public ExportsStatementNode(Token exports, ListNode<DelimitedItemNode<ExportsItemNode>> itemList, Token semicolon)
+        public ExportsStatementNode(Token exportsKeywordNode, ListNode<DelimitedItemNode<ExportsItemNode>> itemListNode, Token semicolonNode)
         {
-            _exports = exports;
-            _itemList = itemList;
-            _semicolon = semicolon;
-        }
-
-        public Token Exports
-        {
-            get { return _exports; }
-        }
-        public ListNode<DelimitedItemNode<ExportsItemNode>> ItemList
-        {
-            get { return _itemList; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
+            _exportsKeywordNode = exportsKeywordNode;
+            _itemListNode = itemListNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token ExportsKeywordNode
+        {
+            get { return _exportsKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<ExportsItemNode>> ItemListNode
+        {
+            get { return _itemListNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ExportsKeywordNode != null)
+                    yield return ExportsKeywordNode;
+                if (ItemListNode != null)
+                    yield return ItemListNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Exports", Exports);
-                yield return new KeyValuePair<string, AstNode>("ItemList", ItemList);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("ExportsKeywordNode", ExportsKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ItemListNode", ItemListNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -928,30 +1194,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class FancyBlockNode : NonterminalNode
     {
-        private AstNode _block;
-        private ListNode<AstNode> _declList;
+        private AstNode _blockNode;
+        private ListNode<AstNode> _declListNode;
 
-        public FancyBlockNode(ListNode<AstNode> declList, AstNode block)
+        public FancyBlockNode(ListNode<AstNode> declListNode, AstNode blockNode)
         {
-            _declList = declList;
-            _block = block;
+            _declListNode = declListNode;
+            _blockNode = blockNode;
         }
 
-        public AstNode Block
+        public AstNode BlockNode
         {
-            get { return _block; }
+            get { return _blockNode; }
         }
-        public ListNode<AstNode> DeclList
+        public ListNode<AstNode> DeclListNode
         {
-            get { return _declList; }
+            get { return _declListNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (DeclListNode != null)
+                    yield return DeclListNode;
+                if (BlockNode != null)
+                    yield return BlockNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("DeclList", DeclList);
-                yield return new KeyValuePair<string, AstNode>("Block", Block);
+                yield return new KeyValuePair<string, AstNode>("DeclListNode", DeclListNode);
+                yield return new KeyValuePair<string, AstNode>("BlockNode", BlockNode);
             }
         }
 
@@ -962,51 +1238,67 @@ namespace DGrok.DelphiNodes
     }
     public partial class FieldDeclNode : NonterminalNode
     {
-        private Token _colon;
-        private ListNode<DelimitedItemNode<Token>> _nameList;
-        private ListNode<Token> _portabilityDirectiveList;
-        private Token _semicolon;
-        private AstNode _type;
+        private Token _colonNode;
+        private ListNode<DelimitedItemNode<Token>> _nameListNode;
+        private ListNode<Token> _portabilityDirectiveListNode;
+        private Token _semicolonNode;
+        private AstNode _typeNode;
 
-        public FieldDeclNode(ListNode<DelimitedItemNode<Token>> nameList, Token colon, AstNode type, ListNode<Token> portabilityDirectiveList, Token semicolon)
+        public FieldDeclNode(ListNode<DelimitedItemNode<Token>> nameListNode, Token colonNode, AstNode typeNode, ListNode<Token> portabilityDirectiveListNode, Token semicolonNode)
         {
-            _nameList = nameList;
-            _colon = colon;
-            _type = type;
-            _portabilityDirectiveList = portabilityDirectiveList;
-            _semicolon = semicolon;
-        }
-
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public ListNode<DelimitedItemNode<Token>> NameList
-        {
-            get { return _nameList; }
-        }
-        public ListNode<Token> PortabilityDirectiveList
-        {
-            get { return _portabilityDirectiveList; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
+            _nameListNode = nameListNode;
+            _colonNode = colonNode;
+            _typeNode = typeNode;
+            _portabilityDirectiveListNode = portabilityDirectiveListNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public ListNode<DelimitedItemNode<Token>> NameListNode
+        {
+            get { return _nameListNode; }
+        }
+        public ListNode<Token> PortabilityDirectiveListNode
+        {
+            get { return _portabilityDirectiveListNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (NameListNode != null)
+                    yield return NameListNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+                if (PortabilityDirectiveListNode != null)
+                    yield return PortabilityDirectiveListNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("NameList", NameList);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
-                yield return new KeyValuePair<string, AstNode>("PortabilityDirectiveList", PortabilityDirectiveList);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("NameListNode", NameListNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
+                yield return new KeyValuePair<string, AstNode>("PortabilityDirectiveListNode", PortabilityDirectiveListNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -1017,37 +1309,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class FieldSectionNode : NonterminalNode
     {
-        private Token _class;
-        private ListNode<FieldDeclNode> _fieldList;
-        private Token _var;
+        private Token _classKeywordNode;
+        private ListNode<FieldDeclNode> _fieldListNode;
+        private Token _varKeywordNode;
 
-        public FieldSectionNode(Token theClass, Token var, ListNode<FieldDeclNode> fieldList)
+        public FieldSectionNode(Token classKeywordNode, Token varKeywordNode, ListNode<FieldDeclNode> fieldListNode)
         {
-            _class = theClass;
-            _var = var;
-            _fieldList = fieldList;
-        }
-
-        public Token Class
-        {
-            get { return _class; }
-        }
-        public ListNode<FieldDeclNode> FieldList
-        {
-            get { return _fieldList; }
-        }
-        public Token Var
-        {
-            get { return _var; }
+            _classKeywordNode = classKeywordNode;
+            _varKeywordNode = varKeywordNode;
+            _fieldListNode = fieldListNode;
         }
 
+        public Token ClassKeywordNode
+        {
+            get { return _classKeywordNode; }
+        }
+        public ListNode<FieldDeclNode> FieldListNode
+        {
+            get { return _fieldListNode; }
+        }
+        public Token VarKeywordNode
+        {
+            get { return _varKeywordNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ClassKeywordNode != null)
+                    yield return ClassKeywordNode;
+                if (VarKeywordNode != null)
+                    yield return VarKeywordNode;
+                if (FieldListNode != null)
+                    yield return FieldListNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Class", Class);
-                yield return new KeyValuePair<string, AstNode>("Var", Var);
-                yield return new KeyValuePair<string, AstNode>("FieldList", FieldList);
+                yield return new KeyValuePair<string, AstNode>("ClassKeywordNode", ClassKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("VarKeywordNode", VarKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("FieldListNode", FieldListNode);
             }
         }
 
@@ -1058,37 +1362,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class FileTypeNode : NonterminalNode
     {
-        private Token _file;
-        private Token _of;
-        private AstNode _type;
+        private Token _fileKeywordNode;
+        private Token _ofKeywordNode;
+        private AstNode _typeNode;
 
-        public FileTypeNode(Token file, Token of, AstNode type)
+        public FileTypeNode(Token fileKeywordNode, Token ofKeywordNode, AstNode typeNode)
         {
-            _file = file;
-            _of = of;
-            _type = type;
-        }
-
-        public Token File
-        {
-            get { return _file; }
-        }
-        public Token Of
-        {
-            get { return _of; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
+            _fileKeywordNode = fileKeywordNode;
+            _ofKeywordNode = ofKeywordNode;
+            _typeNode = typeNode;
         }
 
+        public Token FileKeywordNode
+        {
+            get { return _fileKeywordNode; }
+        }
+        public Token OfKeywordNode
+        {
+            get { return _ofKeywordNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (FileKeywordNode != null)
+                    yield return FileKeywordNode;
+                if (OfKeywordNode != null)
+                    yield return OfKeywordNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("File", File);
-                yield return new KeyValuePair<string, AstNode>("Of", Of);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
+                yield return new KeyValuePair<string, AstNode>("FileKeywordNode", FileKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("OfKeywordNode", OfKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
             }
         }
 
@@ -1099,58 +1415,76 @@ namespace DGrok.DelphiNodes
     }
     public partial class ForInStatementNode : NonterminalNode
     {
-        private Token _do;
-        private AstNode _expression;
-        private Token _for;
-        private Token _in;
-        private Token _loopVariable;
-        private AstNode _statement;
+        private Token _doKeywordNode;
+        private AstNode _expressionNode;
+        private Token _forKeywordNode;
+        private Token _inKeywordNode;
+        private Token _loopVariableNode;
+        private AstNode _statementNode;
 
-        public ForInStatementNode(Token theFor, Token loopVariable, Token theIn, AstNode expression, Token theDo, AstNode statement)
+        public ForInStatementNode(Token forKeywordNode, Token loopVariableNode, Token inKeywordNode, AstNode expressionNode, Token doKeywordNode, AstNode statementNode)
         {
-            _for = theFor;
-            _loopVariable = loopVariable;
-            _in = theIn;
-            _expression = expression;
-            _do = theDo;
-            _statement = statement;
-        }
-
-        public Token Do
-        {
-            get { return _do; }
-        }
-        public AstNode Expression
-        {
-            get { return _expression; }
-        }
-        public Token For
-        {
-            get { return _for; }
-        }
-        public Token In
-        {
-            get { return _in; }
-        }
-        public Token LoopVariable
-        {
-            get { return _loopVariable; }
-        }
-        public AstNode Statement
-        {
-            get { return _statement; }
+            _forKeywordNode = forKeywordNode;
+            _loopVariableNode = loopVariableNode;
+            _inKeywordNode = inKeywordNode;
+            _expressionNode = expressionNode;
+            _doKeywordNode = doKeywordNode;
+            _statementNode = statementNode;
         }
 
+        public Token DoKeywordNode
+        {
+            get { return _doKeywordNode; }
+        }
+        public AstNode ExpressionNode
+        {
+            get { return _expressionNode; }
+        }
+        public Token ForKeywordNode
+        {
+            get { return _forKeywordNode; }
+        }
+        public Token InKeywordNode
+        {
+            get { return _inKeywordNode; }
+        }
+        public Token LoopVariableNode
+        {
+            get { return _loopVariableNode; }
+        }
+        public AstNode StatementNode
+        {
+            get { return _statementNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ForKeywordNode != null)
+                    yield return ForKeywordNode;
+                if (LoopVariableNode != null)
+                    yield return LoopVariableNode;
+                if (InKeywordNode != null)
+                    yield return InKeywordNode;
+                if (ExpressionNode != null)
+                    yield return ExpressionNode;
+                if (DoKeywordNode != null)
+                    yield return DoKeywordNode;
+                if (StatementNode != null)
+                    yield return StatementNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("For", For);
-                yield return new KeyValuePair<string, AstNode>("LoopVariable", LoopVariable);
-                yield return new KeyValuePair<string, AstNode>("In", In);
-                yield return new KeyValuePair<string, AstNode>("Expression", Expression);
-                yield return new KeyValuePair<string, AstNode>("Do", Do);
-                yield return new KeyValuePair<string, AstNode>("Statement", Statement);
+                yield return new KeyValuePair<string, AstNode>("ForKeywordNode", ForKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("LoopVariableNode", LoopVariableNode);
+                yield return new KeyValuePair<string, AstNode>("InKeywordNode", InKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ExpressionNode", ExpressionNode);
+                yield return new KeyValuePair<string, AstNode>("DoKeywordNode", DoKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("StatementNode", StatementNode);
             }
         }
 
@@ -1161,72 +1495,94 @@ namespace DGrok.DelphiNodes
     }
     public partial class ForStatementNode : NonterminalNode
     {
-        private Token _colonEquals;
-        private Token _direction;
-        private Token _do;
-        private AstNode _endingValue;
-        private Token _for;
-        private Token _loopVariable;
-        private AstNode _startingValue;
-        private AstNode _statement;
+        private Token _colonEqualsNode;
+        private Token _directionNode;
+        private Token _doKeywordNode;
+        private AstNode _endingValueNode;
+        private Token _forKeywordNode;
+        private Token _loopVariableNode;
+        private AstNode _startingValueNode;
+        private AstNode _statementNode;
 
-        public ForStatementNode(Token theFor, Token loopVariable, Token colonEquals, AstNode startingValue, Token direction, AstNode endingValue, Token theDo, AstNode statement)
+        public ForStatementNode(Token forKeywordNode, Token loopVariableNode, Token colonEqualsNode, AstNode startingValueNode, Token directionNode, AstNode endingValueNode, Token doKeywordNode, AstNode statementNode)
         {
-            _for = theFor;
-            _loopVariable = loopVariable;
-            _colonEquals = colonEquals;
-            _startingValue = startingValue;
-            _direction = direction;
-            _endingValue = endingValue;
-            _do = theDo;
-            _statement = statement;
-        }
-
-        public Token ColonEquals
-        {
-            get { return _colonEquals; }
-        }
-        public Token Direction
-        {
-            get { return _direction; }
-        }
-        public Token Do
-        {
-            get { return _do; }
-        }
-        public AstNode EndingValue
-        {
-            get { return _endingValue; }
-        }
-        public Token For
-        {
-            get { return _for; }
-        }
-        public Token LoopVariable
-        {
-            get { return _loopVariable; }
-        }
-        public AstNode StartingValue
-        {
-            get { return _startingValue; }
-        }
-        public AstNode Statement
-        {
-            get { return _statement; }
+            _forKeywordNode = forKeywordNode;
+            _loopVariableNode = loopVariableNode;
+            _colonEqualsNode = colonEqualsNode;
+            _startingValueNode = startingValueNode;
+            _directionNode = directionNode;
+            _endingValueNode = endingValueNode;
+            _doKeywordNode = doKeywordNode;
+            _statementNode = statementNode;
         }
 
+        public Token ColonEqualsNode
+        {
+            get { return _colonEqualsNode; }
+        }
+        public Token DirectionNode
+        {
+            get { return _directionNode; }
+        }
+        public Token DoKeywordNode
+        {
+            get { return _doKeywordNode; }
+        }
+        public AstNode EndingValueNode
+        {
+            get { return _endingValueNode; }
+        }
+        public Token ForKeywordNode
+        {
+            get { return _forKeywordNode; }
+        }
+        public Token LoopVariableNode
+        {
+            get { return _loopVariableNode; }
+        }
+        public AstNode StartingValueNode
+        {
+            get { return _startingValueNode; }
+        }
+        public AstNode StatementNode
+        {
+            get { return _statementNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ForKeywordNode != null)
+                    yield return ForKeywordNode;
+                if (LoopVariableNode != null)
+                    yield return LoopVariableNode;
+                if (ColonEqualsNode != null)
+                    yield return ColonEqualsNode;
+                if (StartingValueNode != null)
+                    yield return StartingValueNode;
+                if (DirectionNode != null)
+                    yield return DirectionNode;
+                if (EndingValueNode != null)
+                    yield return EndingValueNode;
+                if (DoKeywordNode != null)
+                    yield return DoKeywordNode;
+                if (StatementNode != null)
+                    yield return StatementNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("For", For);
-                yield return new KeyValuePair<string, AstNode>("LoopVariable", LoopVariable);
-                yield return new KeyValuePair<string, AstNode>("ColonEquals", ColonEquals);
-                yield return new KeyValuePair<string, AstNode>("StartingValue", StartingValue);
-                yield return new KeyValuePair<string, AstNode>("Direction", Direction);
-                yield return new KeyValuePair<string, AstNode>("EndingValue", EndingValue);
-                yield return new KeyValuePair<string, AstNode>("Do", Do);
-                yield return new KeyValuePair<string, AstNode>("Statement", Statement);
+                yield return new KeyValuePair<string, AstNode>("ForKeywordNode", ForKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("LoopVariableNode", LoopVariableNode);
+                yield return new KeyValuePair<string, AstNode>("ColonEqualsNode", ColonEqualsNode);
+                yield return new KeyValuePair<string, AstNode>("StartingValueNode", StartingValueNode);
+                yield return new KeyValuePair<string, AstNode>("DirectionNode", DirectionNode);
+                yield return new KeyValuePair<string, AstNode>("EndingValueNode", EndingValueNode);
+                yield return new KeyValuePair<string, AstNode>("DoKeywordNode", DoKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("StatementNode", StatementNode);
             }
         }
 
@@ -1237,30 +1593,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class GotoStatementNode : NonterminalNode
     {
-        private Token _goto;
-        private Token _labelId;
+        private Token _gotoKeywordNode;
+        private Token _labelIdNode;
 
-        public GotoStatementNode(Token theGoto, Token labelId)
+        public GotoStatementNode(Token gotoKeywordNode, Token labelIdNode)
         {
-            _goto = theGoto;
-            _labelId = labelId;
+            _gotoKeywordNode = gotoKeywordNode;
+            _labelIdNode = labelIdNode;
         }
 
-        public Token Goto
+        public Token GotoKeywordNode
         {
-            get { return _goto; }
+            get { return _gotoKeywordNode; }
         }
-        public Token LabelId
+        public Token LabelIdNode
         {
-            get { return _labelId; }
+            get { return _labelIdNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (GotoKeywordNode != null)
+                    yield return GotoKeywordNode;
+                if (LabelIdNode != null)
+                    yield return LabelIdNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Goto", Goto);
-                yield return new KeyValuePair<string, AstNode>("LabelId", LabelId);
+                yield return new KeyValuePair<string, AstNode>("GotoKeywordNode", GotoKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("LabelIdNode", LabelIdNode);
             }
         }
 
@@ -1271,58 +1637,76 @@ namespace DGrok.DelphiNodes
     }
     public partial class IfStatementNode : NonterminalNode
     {
-        private AstNode _condition;
-        private Token _else;
-        private AstNode _elseStatement;
-        private Token _if;
-        private Token _then;
-        private AstNode _thenStatement;
+        private AstNode _conditionNode;
+        private Token _elseKeywordNode;
+        private AstNode _elseStatementNode;
+        private Token _ifKeywordNode;
+        private Token _thenKeywordNode;
+        private AstNode _thenStatementNode;
 
-        public IfStatementNode(Token theIf, AstNode condition, Token then, AstNode thenStatement, Token theElse, AstNode elseStatement)
+        public IfStatementNode(Token ifKeywordNode, AstNode conditionNode, Token thenKeywordNode, AstNode thenStatementNode, Token elseKeywordNode, AstNode elseStatementNode)
         {
-            _if = theIf;
-            _condition = condition;
-            _then = then;
-            _thenStatement = thenStatement;
-            _else = theElse;
-            _elseStatement = elseStatement;
-        }
-
-        public AstNode Condition
-        {
-            get { return _condition; }
-        }
-        public Token Else
-        {
-            get { return _else; }
-        }
-        public AstNode ElseStatement
-        {
-            get { return _elseStatement; }
-        }
-        public Token If
-        {
-            get { return _if; }
-        }
-        public Token Then
-        {
-            get { return _then; }
-        }
-        public AstNode ThenStatement
-        {
-            get { return _thenStatement; }
+            _ifKeywordNode = ifKeywordNode;
+            _conditionNode = conditionNode;
+            _thenKeywordNode = thenKeywordNode;
+            _thenStatementNode = thenStatementNode;
+            _elseKeywordNode = elseKeywordNode;
+            _elseStatementNode = elseStatementNode;
         }
 
+        public AstNode ConditionNode
+        {
+            get { return _conditionNode; }
+        }
+        public Token ElseKeywordNode
+        {
+            get { return _elseKeywordNode; }
+        }
+        public AstNode ElseStatementNode
+        {
+            get { return _elseStatementNode; }
+        }
+        public Token IfKeywordNode
+        {
+            get { return _ifKeywordNode; }
+        }
+        public Token ThenKeywordNode
+        {
+            get { return _thenKeywordNode; }
+        }
+        public AstNode ThenStatementNode
+        {
+            get { return _thenStatementNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (IfKeywordNode != null)
+                    yield return IfKeywordNode;
+                if (ConditionNode != null)
+                    yield return ConditionNode;
+                if (ThenKeywordNode != null)
+                    yield return ThenKeywordNode;
+                if (ThenStatementNode != null)
+                    yield return ThenStatementNode;
+                if (ElseKeywordNode != null)
+                    yield return ElseKeywordNode;
+                if (ElseStatementNode != null)
+                    yield return ElseStatementNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("If", If);
-                yield return new KeyValuePair<string, AstNode>("Condition", Condition);
-                yield return new KeyValuePair<string, AstNode>("Then", Then);
-                yield return new KeyValuePair<string, AstNode>("ThenStatement", ThenStatement);
-                yield return new KeyValuePair<string, AstNode>("Else", Else);
-                yield return new KeyValuePair<string, AstNode>("ElseStatement", ElseStatement);
+                yield return new KeyValuePair<string, AstNode>("IfKeywordNode", IfKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ConditionNode", ConditionNode);
+                yield return new KeyValuePair<string, AstNode>("ThenKeywordNode", ThenKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ThenStatementNode", ThenStatementNode);
+                yield return new KeyValuePair<string, AstNode>("ElseKeywordNode", ElseKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ElseStatementNode", ElseStatementNode);
             }
         }
 
@@ -1333,51 +1717,67 @@ namespace DGrok.DelphiNodes
     }
     public partial class InitSectionNode : NonterminalNode
     {
-        private Token _end;
-        private Token _finalizationHeader;
-        private ListNode<DelimitedItemNode<AstNode>> _finalizationStatements;
-        private Token _initializationHeader;
-        private ListNode<DelimitedItemNode<AstNode>> _initializationStatements;
+        private Token _endKeywordNode;
+        private Token _finalizationKeywordNode;
+        private ListNode<DelimitedItemNode<AstNode>> _finalizationStatementListNode;
+        private Token _initializationKeywordNode;
+        private ListNode<DelimitedItemNode<AstNode>> _initializationStatementListNode;
 
-        public InitSectionNode(Token initializationHeader, ListNode<DelimitedItemNode<AstNode>> initializationStatements, Token finalizationHeader, ListNode<DelimitedItemNode<AstNode>> finalizationStatements, Token end)
+        public InitSectionNode(Token initializationKeywordNode, ListNode<DelimitedItemNode<AstNode>> initializationStatementListNode, Token finalizationKeywordNode, ListNode<DelimitedItemNode<AstNode>> finalizationStatementListNode, Token endKeywordNode)
         {
-            _initializationHeader = initializationHeader;
-            _initializationStatements = initializationStatements;
-            _finalizationHeader = finalizationHeader;
-            _finalizationStatements = finalizationStatements;
-            _end = end;
-        }
-
-        public Token End
-        {
-            get { return _end; }
-        }
-        public Token FinalizationHeader
-        {
-            get { return _finalizationHeader; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> FinalizationStatements
-        {
-            get { return _finalizationStatements; }
-        }
-        public Token InitializationHeader
-        {
-            get { return _initializationHeader; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> InitializationStatements
-        {
-            get { return _initializationStatements; }
+            _initializationKeywordNode = initializationKeywordNode;
+            _initializationStatementListNode = initializationStatementListNode;
+            _finalizationKeywordNode = finalizationKeywordNode;
+            _finalizationStatementListNode = finalizationStatementListNode;
+            _endKeywordNode = endKeywordNode;
         }
 
+        public Token EndKeywordNode
+        {
+            get { return _endKeywordNode; }
+        }
+        public Token FinalizationKeywordNode
+        {
+            get { return _finalizationKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> FinalizationStatementListNode
+        {
+            get { return _finalizationStatementListNode; }
+        }
+        public Token InitializationKeywordNode
+        {
+            get { return _initializationKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> InitializationStatementListNode
+        {
+            get { return _initializationStatementListNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (InitializationKeywordNode != null)
+                    yield return InitializationKeywordNode;
+                if (InitializationStatementListNode != null)
+                    yield return InitializationStatementListNode;
+                if (FinalizationKeywordNode != null)
+                    yield return FinalizationKeywordNode;
+                if (FinalizationStatementListNode != null)
+                    yield return FinalizationStatementListNode;
+                if (EndKeywordNode != null)
+                    yield return EndKeywordNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("InitializationHeader", InitializationHeader);
-                yield return new KeyValuePair<string, AstNode>("InitializationStatements", InitializationStatements);
-                yield return new KeyValuePair<string, AstNode>("FinalizationHeader", FinalizationHeader);
-                yield return new KeyValuePair<string, AstNode>("FinalizationStatements", FinalizationStatements);
-                yield return new KeyValuePair<string, AstNode>("End", End);
+                yield return new KeyValuePair<string, AstNode>("InitializationKeywordNode", InitializationKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("InitializationStatementListNode", InitializationStatementListNode);
+                yield return new KeyValuePair<string, AstNode>("FinalizationKeywordNode", FinalizationKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("FinalizationStatementListNode", FinalizationStatementListNode);
+                yield return new KeyValuePair<string, AstNode>("EndKeywordNode", EndKeywordNode);
             }
         }
 
@@ -1388,79 +1788,103 @@ namespace DGrok.DelphiNodes
     }
     public partial class InterfaceTypeNode : NonterminalNode
     {
-        private AstNode _baseInterface;
-        private Token _closeBracket;
-        private Token _closeParenthesis;
-        private Token _end;
-        private AstNode _guid;
-        private Token _interface;
-        private ListNode<AstNode> _methodAndPropertyList;
-        private Token _openBracket;
-        private Token _openParenthesis;
+        private AstNode _baseInterfaceNode;
+        private Token _closeBracketNode;
+        private Token _closeParenthesisNode;
+        private Token _endKeywordNode;
+        private AstNode _guidNode;
+        private Token _interfaceKeywordNode;
+        private ListNode<AstNode> _methodAndPropertyListNode;
+        private Token _openBracketNode;
+        private Token _openParenthesisNode;
 
-        public InterfaceTypeNode(Token theInterface, Token openParenthesis, AstNode baseInterface, Token closeParenthesis, Token openBracket, AstNode guid, Token closeBracket, ListNode<AstNode> methodAndPropertyList, Token end)
+        public InterfaceTypeNode(Token interfaceKeywordNode, Token openParenthesisNode, AstNode baseInterfaceNode, Token closeParenthesisNode, Token openBracketNode, AstNode guidNode, Token closeBracketNode, ListNode<AstNode> methodAndPropertyListNode, Token endKeywordNode)
         {
-            _interface = theInterface;
-            _openParenthesis = openParenthesis;
-            _baseInterface = baseInterface;
-            _closeParenthesis = closeParenthesis;
-            _openBracket = openBracket;
-            _guid = guid;
-            _closeBracket = closeBracket;
-            _methodAndPropertyList = methodAndPropertyList;
-            _end = end;
-        }
-
-        public AstNode BaseInterface
-        {
-            get { return _baseInterface; }
-        }
-        public Token CloseBracket
-        {
-            get { return _closeBracket; }
-        }
-        public Token CloseParenthesis
-        {
-            get { return _closeParenthesis; }
-        }
-        public Token End
-        {
-            get { return _end; }
-        }
-        public AstNode Guid
-        {
-            get { return _guid; }
-        }
-        public Token Interface
-        {
-            get { return _interface; }
-        }
-        public ListNode<AstNode> MethodAndPropertyList
-        {
-            get { return _methodAndPropertyList; }
-        }
-        public Token OpenBracket
-        {
-            get { return _openBracket; }
-        }
-        public Token OpenParenthesis
-        {
-            get { return _openParenthesis; }
+            _interfaceKeywordNode = interfaceKeywordNode;
+            _openParenthesisNode = openParenthesisNode;
+            _baseInterfaceNode = baseInterfaceNode;
+            _closeParenthesisNode = closeParenthesisNode;
+            _openBracketNode = openBracketNode;
+            _guidNode = guidNode;
+            _closeBracketNode = closeBracketNode;
+            _methodAndPropertyListNode = methodAndPropertyListNode;
+            _endKeywordNode = endKeywordNode;
         }
 
+        public AstNode BaseInterfaceNode
+        {
+            get { return _baseInterfaceNode; }
+        }
+        public Token CloseBracketNode
+        {
+            get { return _closeBracketNode; }
+        }
+        public Token CloseParenthesisNode
+        {
+            get { return _closeParenthesisNode; }
+        }
+        public Token EndKeywordNode
+        {
+            get { return _endKeywordNode; }
+        }
+        public AstNode GuidNode
+        {
+            get { return _guidNode; }
+        }
+        public Token InterfaceKeywordNode
+        {
+            get { return _interfaceKeywordNode; }
+        }
+        public ListNode<AstNode> MethodAndPropertyListNode
+        {
+            get { return _methodAndPropertyListNode; }
+        }
+        public Token OpenBracketNode
+        {
+            get { return _openBracketNode; }
+        }
+        public Token OpenParenthesisNode
+        {
+            get { return _openParenthesisNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (InterfaceKeywordNode != null)
+                    yield return InterfaceKeywordNode;
+                if (OpenParenthesisNode != null)
+                    yield return OpenParenthesisNode;
+                if (BaseInterfaceNode != null)
+                    yield return BaseInterfaceNode;
+                if (CloseParenthesisNode != null)
+                    yield return CloseParenthesisNode;
+                if (OpenBracketNode != null)
+                    yield return OpenBracketNode;
+                if (GuidNode != null)
+                    yield return GuidNode;
+                if (CloseBracketNode != null)
+                    yield return CloseBracketNode;
+                if (MethodAndPropertyListNode != null)
+                    yield return MethodAndPropertyListNode;
+                if (EndKeywordNode != null)
+                    yield return EndKeywordNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Interface", Interface);
-                yield return new KeyValuePair<string, AstNode>("OpenParenthesis", OpenParenthesis);
-                yield return new KeyValuePair<string, AstNode>("BaseInterface", BaseInterface);
-                yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
-                yield return new KeyValuePair<string, AstNode>("OpenBracket", OpenBracket);
-                yield return new KeyValuePair<string, AstNode>("Guid", Guid);
-                yield return new KeyValuePair<string, AstNode>("CloseBracket", CloseBracket);
-                yield return new KeyValuePair<string, AstNode>("MethodAndPropertyList", MethodAndPropertyList);
-                yield return new KeyValuePair<string, AstNode>("End", End);
+                yield return new KeyValuePair<string, AstNode>("InterfaceKeywordNode", InterfaceKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("OpenParenthesisNode", OpenParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("BaseInterfaceNode", BaseInterfaceNode);
+                yield return new KeyValuePair<string, AstNode>("CloseParenthesisNode", CloseParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("OpenBracketNode", OpenBracketNode);
+                yield return new KeyValuePair<string, AstNode>("GuidNode", GuidNode);
+                yield return new KeyValuePair<string, AstNode>("CloseBracketNode", CloseBracketNode);
+                yield return new KeyValuePair<string, AstNode>("MethodAndPropertyListNode", MethodAndPropertyListNode);
+                yield return new KeyValuePair<string, AstNode>("EndKeywordNode", EndKeywordNode);
             }
         }
 
@@ -1471,37 +1895,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class LabelDeclSectionNode : NonterminalNode
     {
-        private Token _label;
-        private ListNode<DelimitedItemNode<Token>> _labelList;
-        private Token _semicolon;
+        private Token _labelKeywordNode;
+        private ListNode<DelimitedItemNode<Token>> _labelListNode;
+        private Token _semicolonNode;
 
-        public LabelDeclSectionNode(Token label, ListNode<DelimitedItemNode<Token>> labelList, Token semicolon)
+        public LabelDeclSectionNode(Token labelKeywordNode, ListNode<DelimitedItemNode<Token>> labelListNode, Token semicolonNode)
         {
-            _label = label;
-            _labelList = labelList;
-            _semicolon = semicolon;
-        }
-
-        public Token Label
-        {
-            get { return _label; }
-        }
-        public ListNode<DelimitedItemNode<Token>> LabelList
-        {
-            get { return _labelList; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
+            _labelKeywordNode = labelKeywordNode;
+            _labelListNode = labelListNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token LabelKeywordNode
+        {
+            get { return _labelKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<Token>> LabelListNode
+        {
+            get { return _labelListNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (LabelKeywordNode != null)
+                    yield return LabelKeywordNode;
+                if (LabelListNode != null)
+                    yield return LabelListNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Label", Label);
-                yield return new KeyValuePair<string, AstNode>("LabelList", LabelList);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("LabelKeywordNode", LabelKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("LabelListNode", LabelListNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -1512,37 +1948,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class LabeledStatementNode : NonterminalNode
     {
-        private Token _colon;
-        private Token _label;
-        private AstNode _statement;
+        private Token _colonNode;
+        private Token _labelIdNode;
+        private AstNode _statementNode;
 
-        public LabeledStatementNode(Token label, Token colon, AstNode statement)
+        public LabeledStatementNode(Token labelIdNode, Token colonNode, AstNode statementNode)
         {
-            _label = label;
-            _colon = colon;
-            _statement = statement;
-        }
-
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public Token Label
-        {
-            get { return _label; }
-        }
-        public AstNode Statement
-        {
-            get { return _statement; }
+            _labelIdNode = labelIdNode;
+            _colonNode = colonNode;
+            _statementNode = statementNode;
         }
 
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public Token LabelIdNode
+        {
+            get { return _labelIdNode; }
+        }
+        public AstNode StatementNode
+        {
+            get { return _statementNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (LabelIdNode != null)
+                    yield return LabelIdNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (StatementNode != null)
+                    yield return StatementNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Label", Label);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("Statement", Statement);
+                yield return new KeyValuePair<string, AstNode>("LabelIdNode", LabelIdNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("StatementNode", StatementNode);
             }
         }
 
@@ -1553,86 +2001,112 @@ namespace DGrok.DelphiNodes
     }
     public partial class MethodHeadingNode : NonterminalNode
     {
-        private Token _class;
-        private Token _closeParenthesis;
-        private Token _colon;
-        private ListNode<DirectiveNode> _directiveList;
-        private Token _methodType;
-        private AstNode _name;
-        private Token _openParenthesis;
-        private ListNode<DelimitedItemNode<ParameterNode>> _parameterList;
-        private AstNode _returnType;
-        private Token _semicolon;
+        private Token _classKeywordNode;
+        private Token _closeParenthesisNode;
+        private Token _colonNode;
+        private ListNode<DirectiveNode> _directiveListNode;
+        private Token _methodTypeNode;
+        private AstNode _nameNode;
+        private Token _openParenthesisNode;
+        private ListNode<DelimitedItemNode<ParameterNode>> _parameterListNode;
+        private AstNode _returnTypeNode;
+        private Token _semicolonNode;
 
-        public MethodHeadingNode(Token theClass, Token methodType, AstNode name, Token openParenthesis, ListNode<DelimitedItemNode<ParameterNode>> parameterList, Token closeParenthesis, Token colon, AstNode returnType, ListNode<DirectiveNode> directiveList, Token semicolon)
+        public MethodHeadingNode(Token classKeywordNode, Token methodTypeNode, AstNode nameNode, Token openParenthesisNode, ListNode<DelimitedItemNode<ParameterNode>> parameterListNode, Token closeParenthesisNode, Token colonNode, AstNode returnTypeNode, ListNode<DirectiveNode> directiveListNode, Token semicolonNode)
         {
-            _class = theClass;
-            _methodType = methodType;
-            _name = name;
-            _openParenthesis = openParenthesis;
-            _parameterList = parameterList;
-            _closeParenthesis = closeParenthesis;
-            _colon = colon;
-            _returnType = returnType;
-            _directiveList = directiveList;
-            _semicolon = semicolon;
-        }
-
-        public Token Class
-        {
-            get { return _class; }
-        }
-        public Token CloseParenthesis
-        {
-            get { return _closeParenthesis; }
-        }
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public ListNode<DirectiveNode> DirectiveList
-        {
-            get { return _directiveList; }
-        }
-        public Token MethodType
-        {
-            get { return _methodType; }
-        }
-        public AstNode Name
-        {
-            get { return _name; }
-        }
-        public Token OpenParenthesis
-        {
-            get { return _openParenthesis; }
-        }
-        public ListNode<DelimitedItemNode<ParameterNode>> ParameterList
-        {
-            get { return _parameterList; }
-        }
-        public AstNode ReturnType
-        {
-            get { return _returnType; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
+            _classKeywordNode = classKeywordNode;
+            _methodTypeNode = methodTypeNode;
+            _nameNode = nameNode;
+            _openParenthesisNode = openParenthesisNode;
+            _parameterListNode = parameterListNode;
+            _closeParenthesisNode = closeParenthesisNode;
+            _colonNode = colonNode;
+            _returnTypeNode = returnTypeNode;
+            _directiveListNode = directiveListNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token ClassKeywordNode
+        {
+            get { return _classKeywordNode; }
+        }
+        public Token CloseParenthesisNode
+        {
+            get { return _closeParenthesisNode; }
+        }
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public ListNode<DirectiveNode> DirectiveListNode
+        {
+            get { return _directiveListNode; }
+        }
+        public Token MethodTypeNode
+        {
+            get { return _methodTypeNode; }
+        }
+        public AstNode NameNode
+        {
+            get { return _nameNode; }
+        }
+        public Token OpenParenthesisNode
+        {
+            get { return _openParenthesisNode; }
+        }
+        public ListNode<DelimitedItemNode<ParameterNode>> ParameterListNode
+        {
+            get { return _parameterListNode; }
+        }
+        public AstNode ReturnTypeNode
+        {
+            get { return _returnTypeNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ClassKeywordNode != null)
+                    yield return ClassKeywordNode;
+                if (MethodTypeNode != null)
+                    yield return MethodTypeNode;
+                if (NameNode != null)
+                    yield return NameNode;
+                if (OpenParenthesisNode != null)
+                    yield return OpenParenthesisNode;
+                if (ParameterListNode != null)
+                    yield return ParameterListNode;
+                if (CloseParenthesisNode != null)
+                    yield return CloseParenthesisNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (ReturnTypeNode != null)
+                    yield return ReturnTypeNode;
+                if (DirectiveListNode != null)
+                    yield return DirectiveListNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Class", Class);
-                yield return new KeyValuePair<string, AstNode>("MethodType", MethodType);
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("OpenParenthesis", OpenParenthesis);
-                yield return new KeyValuePair<string, AstNode>("ParameterList", ParameterList);
-                yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("ReturnType", ReturnType);
-                yield return new KeyValuePair<string, AstNode>("DirectiveList", DirectiveList);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("ClassKeywordNode", ClassKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("MethodTypeNode", MethodTypeNode);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("OpenParenthesisNode", OpenParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("ParameterListNode", ParameterListNode);
+                yield return new KeyValuePair<string, AstNode>("CloseParenthesisNode", CloseParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("ReturnTypeNode", ReturnTypeNode);
+                yield return new KeyValuePair<string, AstNode>("DirectiveListNode", DirectiveListNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -1643,37 +2117,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class MethodImplementationNode : NonterminalNode
     {
-        private FancyBlockNode _fancyBlock;
-        private MethodHeadingNode _methodHeading;
-        private Token _semicolon;
+        private FancyBlockNode _fancyBlockNode;
+        private MethodHeadingNode _methodHeadingNode;
+        private Token _semicolonNode;
 
-        public MethodImplementationNode(MethodHeadingNode methodHeading, FancyBlockNode fancyBlock, Token semicolon)
+        public MethodImplementationNode(MethodHeadingNode methodHeadingNode, FancyBlockNode fancyBlockNode, Token semicolonNode)
         {
-            _methodHeading = methodHeading;
-            _fancyBlock = fancyBlock;
-            _semicolon = semicolon;
-        }
-
-        public FancyBlockNode FancyBlock
-        {
-            get { return _fancyBlock; }
-        }
-        public MethodHeadingNode MethodHeading
-        {
-            get { return _methodHeading; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
+            _methodHeadingNode = methodHeadingNode;
+            _fancyBlockNode = fancyBlockNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public FancyBlockNode FancyBlockNode
+        {
+            get { return _fancyBlockNode; }
+        }
+        public MethodHeadingNode MethodHeadingNode
+        {
+            get { return _methodHeadingNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (MethodHeadingNode != null)
+                    yield return MethodHeadingNode;
+                if (FancyBlockNode != null)
+                    yield return FancyBlockNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("MethodHeading", MethodHeading);
-                yield return new KeyValuePair<string, AstNode>("FancyBlock", FancyBlock);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("MethodHeadingNode", MethodHeadingNode);
+                yield return new KeyValuePair<string, AstNode>("FancyBlockNode", FancyBlockNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -1684,51 +2170,67 @@ namespace DGrok.DelphiNodes
     }
     public partial class MethodResolutionNode : NonterminalNode
     {
-        private Token _equalSign;
-        private Token _implementationMethod;
-        private AstNode _interfaceMethod;
-        private Token _methodType;
-        private Token _semicolon;
+        private Token _equalSignNode;
+        private Token _implementationMethodNode;
+        private AstNode _interfaceMethodNode;
+        private Token _methodTypeNode;
+        private Token _semicolonNode;
 
-        public MethodResolutionNode(Token methodType, AstNode interfaceMethod, Token equalSign, Token implementationMethod, Token semicolon)
+        public MethodResolutionNode(Token methodTypeNode, AstNode interfaceMethodNode, Token equalSignNode, Token implementationMethodNode, Token semicolonNode)
         {
-            _methodType = methodType;
-            _interfaceMethod = interfaceMethod;
-            _equalSign = equalSign;
-            _implementationMethod = implementationMethod;
-            _semicolon = semicolon;
-        }
-
-        public Token EqualSign
-        {
-            get { return _equalSign; }
-        }
-        public Token ImplementationMethod
-        {
-            get { return _implementationMethod; }
-        }
-        public AstNode InterfaceMethod
-        {
-            get { return _interfaceMethod; }
-        }
-        public Token MethodType
-        {
-            get { return _methodType; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
+            _methodTypeNode = methodTypeNode;
+            _interfaceMethodNode = interfaceMethodNode;
+            _equalSignNode = equalSignNode;
+            _implementationMethodNode = implementationMethodNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token EqualSignNode
+        {
+            get { return _equalSignNode; }
+        }
+        public Token ImplementationMethodNode
+        {
+            get { return _implementationMethodNode; }
+        }
+        public AstNode InterfaceMethodNode
+        {
+            get { return _interfaceMethodNode; }
+        }
+        public Token MethodTypeNode
+        {
+            get { return _methodTypeNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (MethodTypeNode != null)
+                    yield return MethodTypeNode;
+                if (InterfaceMethodNode != null)
+                    yield return InterfaceMethodNode;
+                if (EqualSignNode != null)
+                    yield return EqualSignNode;
+                if (ImplementationMethodNode != null)
+                    yield return ImplementationMethodNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("MethodType", MethodType);
-                yield return new KeyValuePair<string, AstNode>("InterfaceMethod", InterfaceMethod);
-                yield return new KeyValuePair<string, AstNode>("EqualSign", EqualSign);
-                yield return new KeyValuePair<string, AstNode>("ImplementationMethod", ImplementationMethod);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("MethodTypeNode", MethodTypeNode);
+                yield return new KeyValuePair<string, AstNode>("InterfaceMethodNode", InterfaceMethodNode);
+                yield return new KeyValuePair<string, AstNode>("EqualSignNode", EqualSignNode);
+                yield return new KeyValuePair<string, AstNode>("ImplementationMethodNode", ImplementationMethodNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -1739,51 +2241,67 @@ namespace DGrok.DelphiNodes
     }
     public partial class NumberFormatNode : NonterminalNode
     {
-        private AstNode _precision;
-        private Token _precisionColon;
-        private AstNode _size;
-        private Token _sizeColon;
-        private AstNode _value;
+        private Token _precisionColonNode;
+        private AstNode _precisionNode;
+        private Token _sizeColonNode;
+        private AstNode _sizeNode;
+        private AstNode _valueNode;
 
-        public NumberFormatNode(AstNode value, Token sizeColon, AstNode size, Token precisionColon, AstNode precision)
+        public NumberFormatNode(AstNode valueNode, Token sizeColonNode, AstNode sizeNode, Token precisionColonNode, AstNode precisionNode)
         {
-            _value = value;
-            _sizeColon = sizeColon;
-            _size = size;
-            _precisionColon = precisionColon;
-            _precision = precision;
-        }
-
-        public AstNode Precision
-        {
-            get { return _precision; }
-        }
-        public Token PrecisionColon
-        {
-            get { return _precisionColon; }
-        }
-        public AstNode Size
-        {
-            get { return _size; }
-        }
-        public Token SizeColon
-        {
-            get { return _sizeColon; }
-        }
-        public AstNode Value
-        {
-            get { return _value; }
+            _valueNode = valueNode;
+            _sizeColonNode = sizeColonNode;
+            _sizeNode = sizeNode;
+            _precisionColonNode = precisionColonNode;
+            _precisionNode = precisionNode;
         }
 
+        public Token PrecisionColonNode
+        {
+            get { return _precisionColonNode; }
+        }
+        public AstNode PrecisionNode
+        {
+            get { return _precisionNode; }
+        }
+        public Token SizeColonNode
+        {
+            get { return _sizeColonNode; }
+        }
+        public AstNode SizeNode
+        {
+            get { return _sizeNode; }
+        }
+        public AstNode ValueNode
+        {
+            get { return _valueNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ValueNode != null)
+                    yield return ValueNode;
+                if (SizeColonNode != null)
+                    yield return SizeColonNode;
+                if (SizeNode != null)
+                    yield return SizeNode;
+                if (PrecisionColonNode != null)
+                    yield return PrecisionColonNode;
+                if (PrecisionNode != null)
+                    yield return PrecisionNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Value", Value);
-                yield return new KeyValuePair<string, AstNode>("SizeColon", SizeColon);
-                yield return new KeyValuePair<string, AstNode>("Size", Size);
-                yield return new KeyValuePair<string, AstNode>("PrecisionColon", PrecisionColon);
-                yield return new KeyValuePair<string, AstNode>("Precision", Precision);
+                yield return new KeyValuePair<string, AstNode>("ValueNode", ValueNode);
+                yield return new KeyValuePair<string, AstNode>("SizeColonNode", SizeColonNode);
+                yield return new KeyValuePair<string, AstNode>("SizeNode", SizeNode);
+                yield return new KeyValuePair<string, AstNode>("PrecisionColonNode", PrecisionColonNode);
+                yield return new KeyValuePair<string, AstNode>("PrecisionNode", PrecisionNode);
             }
         }
 
@@ -1794,37 +2312,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class OpenArrayNode : NonterminalNode
     {
-        private Token _array;
-        private Token _of;
-        private AstNode _type;
+        private Token _arrayKeywordNode;
+        private Token _ofKeywordNode;
+        private AstNode _typeNode;
 
-        public OpenArrayNode(Token array, Token of, AstNode type)
+        public OpenArrayNode(Token arrayKeywordNode, Token ofKeywordNode, AstNode typeNode)
         {
-            _array = array;
-            _of = of;
-            _type = type;
-        }
-
-        public Token Array
-        {
-            get { return _array; }
-        }
-        public Token Of
-        {
-            get { return _of; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
+            _arrayKeywordNode = arrayKeywordNode;
+            _ofKeywordNode = ofKeywordNode;
+            _typeNode = typeNode;
         }
 
+        public Token ArrayKeywordNode
+        {
+            get { return _arrayKeywordNode; }
+        }
+        public Token OfKeywordNode
+        {
+            get { return _ofKeywordNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ArrayKeywordNode != null)
+                    yield return ArrayKeywordNode;
+                if (OfKeywordNode != null)
+                    yield return OfKeywordNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Array", Array);
-                yield return new KeyValuePair<string, AstNode>("Of", Of);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
+                yield return new KeyValuePair<string, AstNode>("ArrayKeywordNode", ArrayKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("OfKeywordNode", OfKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
             }
         }
 
@@ -1835,72 +2365,94 @@ namespace DGrok.DelphiNodes
     }
     public partial class PackageNode : NonterminalNode
     {
-        private ListNode<AttributeNode> _attributeList;
-        private UsesClauseNode _containsClause;
-        private Token _dot;
-        private Token _end;
-        private AstNode _name;
-        private Token _package;
-        private RequiresClauseNode _requiresClause;
-        private Token _semicolon;
+        private ListNode<AttributeNode> _attributeListNode;
+        private UsesClauseNode _containsClauseNode;
+        private Token _dotNode;
+        private Token _endKeywordNode;
+        private AstNode _nameNode;
+        private Token _packageKeywordNode;
+        private RequiresClauseNode _requiresClauseNode;
+        private Token _semicolonNode;
 
-        public PackageNode(Token package, AstNode name, Token semicolon, RequiresClauseNode requiresClause, UsesClauseNode containsClause, ListNode<AttributeNode> attributeList, Token end, Token dot)
+        public PackageNode(Token packageKeywordNode, AstNode nameNode, Token semicolonNode, RequiresClauseNode requiresClauseNode, UsesClauseNode containsClauseNode, ListNode<AttributeNode> attributeListNode, Token endKeywordNode, Token dotNode)
         {
-            _package = package;
-            _name = name;
-            _semicolon = semicolon;
-            _requiresClause = requiresClause;
-            _containsClause = containsClause;
-            _attributeList = attributeList;
-            _end = end;
-            _dot = dot;
-        }
-
-        public ListNode<AttributeNode> AttributeList
-        {
-            get { return _attributeList; }
-        }
-        public UsesClauseNode ContainsClause
-        {
-            get { return _containsClause; }
-        }
-        public Token Dot
-        {
-            get { return _dot; }
-        }
-        public Token End
-        {
-            get { return _end; }
-        }
-        public AstNode Name
-        {
-            get { return _name; }
-        }
-        public Token Package
-        {
-            get { return _package; }
-        }
-        public RequiresClauseNode RequiresClause
-        {
-            get { return _requiresClause; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
+            _packageKeywordNode = packageKeywordNode;
+            _nameNode = nameNode;
+            _semicolonNode = semicolonNode;
+            _requiresClauseNode = requiresClauseNode;
+            _containsClauseNode = containsClauseNode;
+            _attributeListNode = attributeListNode;
+            _endKeywordNode = endKeywordNode;
+            _dotNode = dotNode;
         }
 
+        public ListNode<AttributeNode> AttributeListNode
+        {
+            get { return _attributeListNode; }
+        }
+        public UsesClauseNode ContainsClauseNode
+        {
+            get { return _containsClauseNode; }
+        }
+        public Token DotNode
+        {
+            get { return _dotNode; }
+        }
+        public Token EndKeywordNode
+        {
+            get { return _endKeywordNode; }
+        }
+        public AstNode NameNode
+        {
+            get { return _nameNode; }
+        }
+        public Token PackageKeywordNode
+        {
+            get { return _packageKeywordNode; }
+        }
+        public RequiresClauseNode RequiresClauseNode
+        {
+            get { return _requiresClauseNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (PackageKeywordNode != null)
+                    yield return PackageKeywordNode;
+                if (NameNode != null)
+                    yield return NameNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+                if (RequiresClauseNode != null)
+                    yield return RequiresClauseNode;
+                if (ContainsClauseNode != null)
+                    yield return ContainsClauseNode;
+                if (AttributeListNode != null)
+                    yield return AttributeListNode;
+                if (EndKeywordNode != null)
+                    yield return EndKeywordNode;
+                if (DotNode != null)
+                    yield return DotNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Package", Package);
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
-                yield return new KeyValuePair<string, AstNode>("RequiresClause", RequiresClause);
-                yield return new KeyValuePair<string, AstNode>("ContainsClause", ContainsClause);
-                yield return new KeyValuePair<string, AstNode>("AttributeList", AttributeList);
-                yield return new KeyValuePair<string, AstNode>("End", End);
-                yield return new KeyValuePair<string, AstNode>("Dot", Dot);
+                yield return new KeyValuePair<string, AstNode>("PackageKeywordNode", PackageKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
+                yield return new KeyValuePair<string, AstNode>("RequiresClauseNode", RequiresClauseNode);
+                yield return new KeyValuePair<string, AstNode>("ContainsClauseNode", ContainsClauseNode);
+                yield return new KeyValuePair<string, AstNode>("AttributeListNode", AttributeListNode);
+                yield return new KeyValuePair<string, AstNode>("EndKeywordNode", EndKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("DotNode", DotNode);
             }
         }
 
@@ -1911,30 +2463,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class PackedTypeNode : NonterminalNode
     {
-        private Token _packed;
-        private AstNode _type;
+        private Token _packedKeywordNode;
+        private AstNode _typeNode;
 
-        public PackedTypeNode(Token packed, AstNode type)
+        public PackedTypeNode(Token packedKeywordNode, AstNode typeNode)
         {
-            _packed = packed;
-            _type = type;
+            _packedKeywordNode = packedKeywordNode;
+            _typeNode = typeNode;
         }
 
-        public Token Packed
+        public Token PackedKeywordNode
         {
-            get { return _packed; }
+            get { return _packedKeywordNode; }
         }
-        public AstNode Type
+        public AstNode TypeNode
         {
-            get { return _type; }
+            get { return _typeNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (PackedKeywordNode != null)
+                    yield return PackedKeywordNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Packed", Packed);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
+                yield return new KeyValuePair<string, AstNode>("PackedKeywordNode", PackedKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
             }
         }
 
@@ -1945,44 +2507,58 @@ namespace DGrok.DelphiNodes
     }
     public partial class ParameterizedNode : NonterminalNode
     {
-        private Token _closeDelimiter;
-        private AstNode _left;
-        private Token _openDelimiter;
-        private ListNode<DelimitedItemNode<AstNode>> _parameterList;
+        private Token _closeDelimiterNode;
+        private AstNode _leftNode;
+        private Token _openDelimiterNode;
+        private ListNode<DelimitedItemNode<AstNode>> _parameterListNode;
 
-        public ParameterizedNode(AstNode left, Token openDelimiter, ListNode<DelimitedItemNode<AstNode>> parameterList, Token closeDelimiter)
+        public ParameterizedNode(AstNode leftNode, Token openDelimiterNode, ListNode<DelimitedItemNode<AstNode>> parameterListNode, Token closeDelimiterNode)
         {
-            _left = left;
-            _openDelimiter = openDelimiter;
-            _parameterList = parameterList;
-            _closeDelimiter = closeDelimiter;
-        }
-
-        public Token CloseDelimiter
-        {
-            get { return _closeDelimiter; }
-        }
-        public AstNode Left
-        {
-            get { return _left; }
-        }
-        public Token OpenDelimiter
-        {
-            get { return _openDelimiter; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> ParameterList
-        {
-            get { return _parameterList; }
+            _leftNode = leftNode;
+            _openDelimiterNode = openDelimiterNode;
+            _parameterListNode = parameterListNode;
+            _closeDelimiterNode = closeDelimiterNode;
         }
 
+        public Token CloseDelimiterNode
+        {
+            get { return _closeDelimiterNode; }
+        }
+        public AstNode LeftNode
+        {
+            get { return _leftNode; }
+        }
+        public Token OpenDelimiterNode
+        {
+            get { return _openDelimiterNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> ParameterListNode
+        {
+            get { return _parameterListNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (LeftNode != null)
+                    yield return LeftNode;
+                if (OpenDelimiterNode != null)
+                    yield return OpenDelimiterNode;
+                if (ParameterListNode != null)
+                    yield return ParameterListNode;
+                if (CloseDelimiterNode != null)
+                    yield return CloseDelimiterNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Left", Left);
-                yield return new KeyValuePair<string, AstNode>("OpenDelimiter", OpenDelimiter);
-                yield return new KeyValuePair<string, AstNode>("ParameterList", ParameterList);
-                yield return new KeyValuePair<string, AstNode>("CloseDelimiter", CloseDelimiter);
+                yield return new KeyValuePair<string, AstNode>("LeftNode", LeftNode);
+                yield return new KeyValuePair<string, AstNode>("OpenDelimiterNode", OpenDelimiterNode);
+                yield return new KeyValuePair<string, AstNode>("ParameterListNode", ParameterListNode);
+                yield return new KeyValuePair<string, AstNode>("CloseDelimiterNode", CloseDelimiterNode);
             }
         }
 
@@ -1993,58 +2569,76 @@ namespace DGrok.DelphiNodes
     }
     public partial class ParameterNode : NonterminalNode
     {
-        private Token _colon;
-        private AstNode _defaultValue;
-        private Token _equalSign;
-        private Token _modifier;
-        private ListNode<DelimitedItemNode<Token>> _names;
-        private AstNode _type;
+        private Token _colonNode;
+        private AstNode _defaultValueNode;
+        private Token _equalSignNode;
+        private Token _modifierNode;
+        private ListNode<DelimitedItemNode<Token>> _nameListNode;
+        private AstNode _typeNode;
 
-        public ParameterNode(Token modifier, ListNode<DelimitedItemNode<Token>> names, Token colon, AstNode type, Token equalSign, AstNode defaultValue)
+        public ParameterNode(Token modifierNode, ListNode<DelimitedItemNode<Token>> nameListNode, Token colonNode, AstNode typeNode, Token equalSignNode, AstNode defaultValueNode)
         {
-            _modifier = modifier;
-            _names = names;
-            _colon = colon;
-            _type = type;
-            _equalSign = equalSign;
-            _defaultValue = defaultValue;
-        }
-
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public AstNode DefaultValue
-        {
-            get { return _defaultValue; }
-        }
-        public Token EqualSign
-        {
-            get { return _equalSign; }
-        }
-        public Token Modifier
-        {
-            get { return _modifier; }
-        }
-        public ListNode<DelimitedItemNode<Token>> Names
-        {
-            get { return _names; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
+            _modifierNode = modifierNode;
+            _nameListNode = nameListNode;
+            _colonNode = colonNode;
+            _typeNode = typeNode;
+            _equalSignNode = equalSignNode;
+            _defaultValueNode = defaultValueNode;
         }
 
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public AstNode DefaultValueNode
+        {
+            get { return _defaultValueNode; }
+        }
+        public Token EqualSignNode
+        {
+            get { return _equalSignNode; }
+        }
+        public Token ModifierNode
+        {
+            get { return _modifierNode; }
+        }
+        public ListNode<DelimitedItemNode<Token>> NameListNode
+        {
+            get { return _nameListNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ModifierNode != null)
+                    yield return ModifierNode;
+                if (NameListNode != null)
+                    yield return NameListNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+                if (EqualSignNode != null)
+                    yield return EqualSignNode;
+                if (DefaultValueNode != null)
+                    yield return DefaultValueNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Modifier", Modifier);
-                yield return new KeyValuePair<string, AstNode>("Names", Names);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
-                yield return new KeyValuePair<string, AstNode>("EqualSign", EqualSign);
-                yield return new KeyValuePair<string, AstNode>("DefaultValue", DefaultValue);
+                yield return new KeyValuePair<string, AstNode>("ModifierNode", ModifierNode);
+                yield return new KeyValuePair<string, AstNode>("NameListNode", NameListNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
+                yield return new KeyValuePair<string, AstNode>("EqualSignNode", EqualSignNode);
+                yield return new KeyValuePair<string, AstNode>("DefaultValueNode", DefaultValueNode);
             }
         }
 
@@ -2055,37 +2649,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class ParenthesizedExpressionNode : NonterminalNode
     {
-        private Token _closeParenthesis;
-        private AstNode _expression;
-        private Token _openParenthesis;
+        private Token _closeParenthesisNode;
+        private AstNode _expressionNode;
+        private Token _openParenthesisNode;
 
-        public ParenthesizedExpressionNode(Token openParenthesis, AstNode expression, Token closeParenthesis)
+        public ParenthesizedExpressionNode(Token openParenthesisNode, AstNode expressionNode, Token closeParenthesisNode)
         {
-            _openParenthesis = openParenthesis;
-            _expression = expression;
-            _closeParenthesis = closeParenthesis;
-        }
-
-        public Token CloseParenthesis
-        {
-            get { return _closeParenthesis; }
-        }
-        public AstNode Expression
-        {
-            get { return _expression; }
-        }
-        public Token OpenParenthesis
-        {
-            get { return _openParenthesis; }
+            _openParenthesisNode = openParenthesisNode;
+            _expressionNode = expressionNode;
+            _closeParenthesisNode = closeParenthesisNode;
         }
 
+        public Token CloseParenthesisNode
+        {
+            get { return _closeParenthesisNode; }
+        }
+        public AstNode ExpressionNode
+        {
+            get { return _expressionNode; }
+        }
+        public Token OpenParenthesisNode
+        {
+            get { return _openParenthesisNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (OpenParenthesisNode != null)
+                    yield return OpenParenthesisNode;
+                if (ExpressionNode != null)
+                    yield return ExpressionNode;
+                if (CloseParenthesisNode != null)
+                    yield return CloseParenthesisNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("OpenParenthesis", OpenParenthesis);
-                yield return new KeyValuePair<string, AstNode>("Expression", Expression);
-                yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
+                yield return new KeyValuePair<string, AstNode>("OpenParenthesisNode", OpenParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("ExpressionNode", ExpressionNode);
+                yield return new KeyValuePair<string, AstNode>("CloseParenthesisNode", CloseParenthesisNode);
             }
         }
 
@@ -2096,30 +2702,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class PointerDereferenceNode : NonterminalNode
     {
-        private Token _caret;
-        private AstNode _operand;
+        private Token _caretNode;
+        private AstNode _operandNode;
 
-        public PointerDereferenceNode(AstNode operand, Token caret)
+        public PointerDereferenceNode(AstNode operandNode, Token caretNode)
         {
-            _operand = operand;
-            _caret = caret;
+            _operandNode = operandNode;
+            _caretNode = caretNode;
         }
 
-        public Token Caret
+        public Token CaretNode
         {
-            get { return _caret; }
+            get { return _caretNode; }
         }
-        public AstNode Operand
+        public AstNode OperandNode
         {
-            get { return _operand; }
+            get { return _operandNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (OperandNode != null)
+                    yield return OperandNode;
+                if (CaretNode != null)
+                    yield return CaretNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Operand", Operand);
-                yield return new KeyValuePair<string, AstNode>("Caret", Caret);
+                yield return new KeyValuePair<string, AstNode>("OperandNode", OperandNode);
+                yield return new KeyValuePair<string, AstNode>("CaretNode", CaretNode);
             }
         }
 
@@ -2130,30 +2746,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class PointerTypeNode : NonterminalNode
     {
-        private Token _caret;
-        private AstNode _type;
+        private Token _caretNode;
+        private AstNode _typeNode;
 
-        public PointerTypeNode(Token caret, AstNode type)
+        public PointerTypeNode(Token caretNode, AstNode typeNode)
         {
-            _caret = caret;
-            _type = type;
+            _caretNode = caretNode;
+            _typeNode = typeNode;
         }
 
-        public Token Caret
+        public Token CaretNode
         {
-            get { return _caret; }
+            get { return _caretNode; }
         }
-        public AstNode Type
+        public AstNode TypeNode
         {
-            get { return _type; }
+            get { return _typeNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (CaretNode != null)
+                    yield return CaretNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Caret", Caret);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
+                yield return new KeyValuePair<string, AstNode>("CaretNode", CaretNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
             }
         }
 
@@ -2164,86 +2790,112 @@ namespace DGrok.DelphiNodes
     }
     public partial class ProcedureTypeNode : NonterminalNode
     {
-        private Token _closeParenthesis;
-        private Token _colon;
-        private ListNode<DirectiveNode> _firstDirectives;
-        private Token _methodType;
-        private Token _object;
-        private Token _of;
-        private Token _openParenthesis;
-        private ListNode<DelimitedItemNode<ParameterNode>> _parameterList;
-        private AstNode _returnType;
-        private ListNode<DirectiveNode> _secondDirectives;
+        private Token _closeParenthesisNode;
+        private Token _colonNode;
+        private ListNode<DirectiveNode> _firstDirectiveListNode;
+        private Token _methodTypeNode;
+        private Token _objectKeywordNode;
+        private Token _ofKeywordNode;
+        private Token _openParenthesisNode;
+        private ListNode<DelimitedItemNode<ParameterNode>> _parameterListNode;
+        private AstNode _returnTypeNode;
+        private ListNode<DirectiveNode> _secondDirectiveListNode;
 
-        public ProcedureTypeNode(Token methodType, Token openParenthesis, ListNode<DelimitedItemNode<ParameterNode>> parameterList, Token closeParenthesis, Token colon, AstNode returnType, ListNode<DirectiveNode> firstDirectives, Token of, Token theObject, ListNode<DirectiveNode> secondDirectives)
+        public ProcedureTypeNode(Token methodTypeNode, Token openParenthesisNode, ListNode<DelimitedItemNode<ParameterNode>> parameterListNode, Token closeParenthesisNode, Token colonNode, AstNode returnTypeNode, ListNode<DirectiveNode> firstDirectiveListNode, Token ofKeywordNode, Token objectKeywordNode, ListNode<DirectiveNode> secondDirectiveListNode)
         {
-            _methodType = methodType;
-            _openParenthesis = openParenthesis;
-            _parameterList = parameterList;
-            _closeParenthesis = closeParenthesis;
-            _colon = colon;
-            _returnType = returnType;
-            _firstDirectives = firstDirectives;
-            _of = of;
-            _object = theObject;
-            _secondDirectives = secondDirectives;
-        }
-
-        public Token CloseParenthesis
-        {
-            get { return _closeParenthesis; }
-        }
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public ListNode<DirectiveNode> FirstDirectives
-        {
-            get { return _firstDirectives; }
-        }
-        public Token MethodType
-        {
-            get { return _methodType; }
-        }
-        public Token Object
-        {
-            get { return _object; }
-        }
-        public Token Of
-        {
-            get { return _of; }
-        }
-        public Token OpenParenthesis
-        {
-            get { return _openParenthesis; }
-        }
-        public ListNode<DelimitedItemNode<ParameterNode>> ParameterList
-        {
-            get { return _parameterList; }
-        }
-        public AstNode ReturnType
-        {
-            get { return _returnType; }
-        }
-        public ListNode<DirectiveNode> SecondDirectives
-        {
-            get { return _secondDirectives; }
+            _methodTypeNode = methodTypeNode;
+            _openParenthesisNode = openParenthesisNode;
+            _parameterListNode = parameterListNode;
+            _closeParenthesisNode = closeParenthesisNode;
+            _colonNode = colonNode;
+            _returnTypeNode = returnTypeNode;
+            _firstDirectiveListNode = firstDirectiveListNode;
+            _ofKeywordNode = ofKeywordNode;
+            _objectKeywordNode = objectKeywordNode;
+            _secondDirectiveListNode = secondDirectiveListNode;
         }
 
+        public Token CloseParenthesisNode
+        {
+            get { return _closeParenthesisNode; }
+        }
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public ListNode<DirectiveNode> FirstDirectiveListNode
+        {
+            get { return _firstDirectiveListNode; }
+        }
+        public Token MethodTypeNode
+        {
+            get { return _methodTypeNode; }
+        }
+        public Token ObjectKeywordNode
+        {
+            get { return _objectKeywordNode; }
+        }
+        public Token OfKeywordNode
+        {
+            get { return _ofKeywordNode; }
+        }
+        public Token OpenParenthesisNode
+        {
+            get { return _openParenthesisNode; }
+        }
+        public ListNode<DelimitedItemNode<ParameterNode>> ParameterListNode
+        {
+            get { return _parameterListNode; }
+        }
+        public AstNode ReturnTypeNode
+        {
+            get { return _returnTypeNode; }
+        }
+        public ListNode<DirectiveNode> SecondDirectiveListNode
+        {
+            get { return _secondDirectiveListNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (MethodTypeNode != null)
+                    yield return MethodTypeNode;
+                if (OpenParenthesisNode != null)
+                    yield return OpenParenthesisNode;
+                if (ParameterListNode != null)
+                    yield return ParameterListNode;
+                if (CloseParenthesisNode != null)
+                    yield return CloseParenthesisNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (ReturnTypeNode != null)
+                    yield return ReturnTypeNode;
+                if (FirstDirectiveListNode != null)
+                    yield return FirstDirectiveListNode;
+                if (OfKeywordNode != null)
+                    yield return OfKeywordNode;
+                if (ObjectKeywordNode != null)
+                    yield return ObjectKeywordNode;
+                if (SecondDirectiveListNode != null)
+                    yield return SecondDirectiveListNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("MethodType", MethodType);
-                yield return new KeyValuePair<string, AstNode>("OpenParenthesis", OpenParenthesis);
-                yield return new KeyValuePair<string, AstNode>("ParameterList", ParameterList);
-                yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("ReturnType", ReturnType);
-                yield return new KeyValuePair<string, AstNode>("FirstDirectives", FirstDirectives);
-                yield return new KeyValuePair<string, AstNode>("Of", Of);
-                yield return new KeyValuePair<string, AstNode>("Object", Object);
-                yield return new KeyValuePair<string, AstNode>("SecondDirectives", SecondDirectives);
+                yield return new KeyValuePair<string, AstNode>("MethodTypeNode", MethodTypeNode);
+                yield return new KeyValuePair<string, AstNode>("OpenParenthesisNode", OpenParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("ParameterListNode", ParameterListNode);
+                yield return new KeyValuePair<string, AstNode>("CloseParenthesisNode", CloseParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("ReturnTypeNode", ReturnTypeNode);
+                yield return new KeyValuePair<string, AstNode>("FirstDirectiveListNode", FirstDirectiveListNode);
+                yield return new KeyValuePair<string, AstNode>("OfKeywordNode", OfKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ObjectKeywordNode", ObjectKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("SecondDirectiveListNode", SecondDirectiveListNode);
             }
         }
 
@@ -2254,86 +2906,112 @@ namespace DGrok.DelphiNodes
     }
     public partial class ProgramNode : NonterminalNode
     {
-        private ListNode<AstNode> _declarationList;
-        private Token _dot;
-        private InitSectionNode _initSection;
-        private Token _name;
-        private Token _noiseCloseParenthesis;
-        private ListNode<DelimitedItemNode<Token>> _noiseContents;
-        private Token _noiseOpenParenthesis;
-        private Token _program;
-        private Token _semicolon;
-        private UsesClauseNode _usesClause;
+        private ListNode<AstNode> _declarationListNode;
+        private Token _dotNode;
+        private InitSectionNode _initSectionNode;
+        private Token _nameNode;
+        private Token _noiseCloseParenthesisNode;
+        private ListNode<DelimitedItemNode<Token>> _noiseContentListNode;
+        private Token _noiseOpenParenthesisNode;
+        private Token _programKeywordNode;
+        private Token _semicolonNode;
+        private UsesClauseNode _usesClauseNode;
 
-        public ProgramNode(Token program, Token name, Token noiseOpenParenthesis, ListNode<DelimitedItemNode<Token>> noiseContents, Token noiseCloseParenthesis, Token semicolon, UsesClauseNode usesClause, ListNode<AstNode> declarationList, InitSectionNode initSection, Token dot)
+        public ProgramNode(Token programKeywordNode, Token nameNode, Token noiseOpenParenthesisNode, ListNode<DelimitedItemNode<Token>> noiseContentListNode, Token noiseCloseParenthesisNode, Token semicolonNode, UsesClauseNode usesClauseNode, ListNode<AstNode> declarationListNode, InitSectionNode initSectionNode, Token dotNode)
         {
-            _program = program;
-            _name = name;
-            _noiseOpenParenthesis = noiseOpenParenthesis;
-            _noiseContents = noiseContents;
-            _noiseCloseParenthesis = noiseCloseParenthesis;
-            _semicolon = semicolon;
-            _usesClause = usesClause;
-            _declarationList = declarationList;
-            _initSection = initSection;
-            _dot = dot;
-        }
-
-        public ListNode<AstNode> DeclarationList
-        {
-            get { return _declarationList; }
-        }
-        public Token Dot
-        {
-            get { return _dot; }
-        }
-        public InitSectionNode InitSection
-        {
-            get { return _initSection; }
-        }
-        public Token Name
-        {
-            get { return _name; }
-        }
-        public Token NoiseCloseParenthesis
-        {
-            get { return _noiseCloseParenthesis; }
-        }
-        public ListNode<DelimitedItemNode<Token>> NoiseContents
-        {
-            get { return _noiseContents; }
-        }
-        public Token NoiseOpenParenthesis
-        {
-            get { return _noiseOpenParenthesis; }
-        }
-        public Token Program
-        {
-            get { return _program; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public UsesClauseNode UsesClause
-        {
-            get { return _usesClause; }
+            _programKeywordNode = programKeywordNode;
+            _nameNode = nameNode;
+            _noiseOpenParenthesisNode = noiseOpenParenthesisNode;
+            _noiseContentListNode = noiseContentListNode;
+            _noiseCloseParenthesisNode = noiseCloseParenthesisNode;
+            _semicolonNode = semicolonNode;
+            _usesClauseNode = usesClauseNode;
+            _declarationListNode = declarationListNode;
+            _initSectionNode = initSectionNode;
+            _dotNode = dotNode;
         }
 
+        public ListNode<AstNode> DeclarationListNode
+        {
+            get { return _declarationListNode; }
+        }
+        public Token DotNode
+        {
+            get { return _dotNode; }
+        }
+        public InitSectionNode InitSectionNode
+        {
+            get { return _initSectionNode; }
+        }
+        public Token NameNode
+        {
+            get { return _nameNode; }
+        }
+        public Token NoiseCloseParenthesisNode
+        {
+            get { return _noiseCloseParenthesisNode; }
+        }
+        public ListNode<DelimitedItemNode<Token>> NoiseContentListNode
+        {
+            get { return _noiseContentListNode; }
+        }
+        public Token NoiseOpenParenthesisNode
+        {
+            get { return _noiseOpenParenthesisNode; }
+        }
+        public Token ProgramKeywordNode
+        {
+            get { return _programKeywordNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public UsesClauseNode UsesClauseNode
+        {
+            get { return _usesClauseNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ProgramKeywordNode != null)
+                    yield return ProgramKeywordNode;
+                if (NameNode != null)
+                    yield return NameNode;
+                if (NoiseOpenParenthesisNode != null)
+                    yield return NoiseOpenParenthesisNode;
+                if (NoiseContentListNode != null)
+                    yield return NoiseContentListNode;
+                if (NoiseCloseParenthesisNode != null)
+                    yield return NoiseCloseParenthesisNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+                if (UsesClauseNode != null)
+                    yield return UsesClauseNode;
+                if (DeclarationListNode != null)
+                    yield return DeclarationListNode;
+                if (InitSectionNode != null)
+                    yield return InitSectionNode;
+                if (DotNode != null)
+                    yield return DotNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Program", Program);
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("NoiseOpenParenthesis", NoiseOpenParenthesis);
-                yield return new KeyValuePair<string, AstNode>("NoiseContents", NoiseContents);
-                yield return new KeyValuePair<string, AstNode>("NoiseCloseParenthesis", NoiseCloseParenthesis);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
-                yield return new KeyValuePair<string, AstNode>("UsesClause", UsesClause);
-                yield return new KeyValuePair<string, AstNode>("DeclarationList", DeclarationList);
-                yield return new KeyValuePair<string, AstNode>("InitSection", InitSection);
-                yield return new KeyValuePair<string, AstNode>("Dot", Dot);
+                yield return new KeyValuePair<string, AstNode>("ProgramKeywordNode", ProgramKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("NoiseOpenParenthesisNode", NoiseOpenParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("NoiseContentListNode", NoiseContentListNode);
+                yield return new KeyValuePair<string, AstNode>("NoiseCloseParenthesisNode", NoiseCloseParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
+                yield return new KeyValuePair<string, AstNode>("UsesClauseNode", UsesClauseNode);
+                yield return new KeyValuePair<string, AstNode>("DeclarationListNode", DeclarationListNode);
+                yield return new KeyValuePair<string, AstNode>("InitSectionNode", InitSectionNode);
+                yield return new KeyValuePair<string, AstNode>("DotNode", DotNode);
             }
         }
 
@@ -2344,86 +3022,112 @@ namespace DGrok.DelphiNodes
     }
     public partial class PropertyNode : NonterminalNode
     {
-        private Token _class;
-        private Token _closeBracket;
-        private Token _colon;
-        private ListNode<DirectiveNode> _directiveList;
-        private Token _name;
-        private Token _openBracket;
-        private ListNode<DelimitedItemNode<ParameterNode>> _parameterList;
-        private Token _property;
-        private Token _semicolon;
-        private AstNode _type;
+        private Token _classKeywordNode;
+        private Token _closeBracketNode;
+        private Token _colonNode;
+        private ListNode<DirectiveNode> _directiveListNode;
+        private Token _nameNode;
+        private Token _openBracketNode;
+        private ListNode<DelimitedItemNode<ParameterNode>> _parameterListNode;
+        private Token _propertyKeywordNode;
+        private Token _semicolonNode;
+        private AstNode _typeNode;
 
-        public PropertyNode(Token theClass, Token property, Token name, Token openBracket, ListNode<DelimitedItemNode<ParameterNode>> parameterList, Token closeBracket, Token colon, AstNode type, ListNode<DirectiveNode> directiveList, Token semicolon)
+        public PropertyNode(Token classKeywordNode, Token propertyKeywordNode, Token nameNode, Token openBracketNode, ListNode<DelimitedItemNode<ParameterNode>> parameterListNode, Token closeBracketNode, Token colonNode, AstNode typeNode, ListNode<DirectiveNode> directiveListNode, Token semicolonNode)
         {
-            _class = theClass;
-            _property = property;
-            _name = name;
-            _openBracket = openBracket;
-            _parameterList = parameterList;
-            _closeBracket = closeBracket;
-            _colon = colon;
-            _type = type;
-            _directiveList = directiveList;
-            _semicolon = semicolon;
-        }
-
-        public Token Class
-        {
-            get { return _class; }
-        }
-        public Token CloseBracket
-        {
-            get { return _closeBracket; }
-        }
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public ListNode<DirectiveNode> DirectiveList
-        {
-            get { return _directiveList; }
-        }
-        public Token Name
-        {
-            get { return _name; }
-        }
-        public Token OpenBracket
-        {
-            get { return _openBracket; }
-        }
-        public ListNode<DelimitedItemNode<ParameterNode>> ParameterList
-        {
-            get { return _parameterList; }
-        }
-        public Token Property
-        {
-            get { return _property; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
+            _classKeywordNode = classKeywordNode;
+            _propertyKeywordNode = propertyKeywordNode;
+            _nameNode = nameNode;
+            _openBracketNode = openBracketNode;
+            _parameterListNode = parameterListNode;
+            _closeBracketNode = closeBracketNode;
+            _colonNode = colonNode;
+            _typeNode = typeNode;
+            _directiveListNode = directiveListNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token ClassKeywordNode
+        {
+            get { return _classKeywordNode; }
+        }
+        public Token CloseBracketNode
+        {
+            get { return _closeBracketNode; }
+        }
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public ListNode<DirectiveNode> DirectiveListNode
+        {
+            get { return _directiveListNode; }
+        }
+        public Token NameNode
+        {
+            get { return _nameNode; }
+        }
+        public Token OpenBracketNode
+        {
+            get { return _openBracketNode; }
+        }
+        public ListNode<DelimitedItemNode<ParameterNode>> ParameterListNode
+        {
+            get { return _parameterListNode; }
+        }
+        public Token PropertyKeywordNode
+        {
+            get { return _propertyKeywordNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ClassKeywordNode != null)
+                    yield return ClassKeywordNode;
+                if (PropertyKeywordNode != null)
+                    yield return PropertyKeywordNode;
+                if (NameNode != null)
+                    yield return NameNode;
+                if (OpenBracketNode != null)
+                    yield return OpenBracketNode;
+                if (ParameterListNode != null)
+                    yield return ParameterListNode;
+                if (CloseBracketNode != null)
+                    yield return CloseBracketNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+                if (DirectiveListNode != null)
+                    yield return DirectiveListNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Class", Class);
-                yield return new KeyValuePair<string, AstNode>("Property", Property);
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("OpenBracket", OpenBracket);
-                yield return new KeyValuePair<string, AstNode>("ParameterList", ParameterList);
-                yield return new KeyValuePair<string, AstNode>("CloseBracket", CloseBracket);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
-                yield return new KeyValuePair<string, AstNode>("DirectiveList", DirectiveList);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("ClassKeywordNode", ClassKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("PropertyKeywordNode", PropertyKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("OpenBracketNode", OpenBracketNode);
+                yield return new KeyValuePair<string, AstNode>("ParameterListNode", ParameterListNode);
+                yield return new KeyValuePair<string, AstNode>("CloseBracketNode", CloseBracketNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
+                yield return new KeyValuePair<string, AstNode>("DirectiveListNode", DirectiveListNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -2434,44 +3138,58 @@ namespace DGrok.DelphiNodes
     }
     public partial class RaiseStatementNode : NonterminalNode
     {
-        private AstNode _address;
-        private Token _at;
-        private AstNode _exception;
-        private Token _raise;
+        private AstNode _addressNode;
+        private Token _atSemikeywordNode;
+        private AstNode _exceptionNode;
+        private Token _raiseKeywordNode;
 
-        public RaiseStatementNode(Token raise, AstNode exception, Token at, AstNode address)
+        public RaiseStatementNode(Token raiseKeywordNode, AstNode exceptionNode, Token atSemikeywordNode, AstNode addressNode)
         {
-            _raise = raise;
-            _exception = exception;
-            _at = at;
-            _address = address;
-        }
-
-        public AstNode Address
-        {
-            get { return _address; }
-        }
-        public Token At
-        {
-            get { return _at; }
-        }
-        public AstNode Exception
-        {
-            get { return _exception; }
-        }
-        public Token Raise
-        {
-            get { return _raise; }
+            _raiseKeywordNode = raiseKeywordNode;
+            _exceptionNode = exceptionNode;
+            _atSemikeywordNode = atSemikeywordNode;
+            _addressNode = addressNode;
         }
 
+        public AstNode AddressNode
+        {
+            get { return _addressNode; }
+        }
+        public Token AtSemikeywordNode
+        {
+            get { return _atSemikeywordNode; }
+        }
+        public AstNode ExceptionNode
+        {
+            get { return _exceptionNode; }
+        }
+        public Token RaiseKeywordNode
+        {
+            get { return _raiseKeywordNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (RaiseKeywordNode != null)
+                    yield return RaiseKeywordNode;
+                if (ExceptionNode != null)
+                    yield return ExceptionNode;
+                if (AtSemikeywordNode != null)
+                    yield return AtSemikeywordNode;
+                if (AddressNode != null)
+                    yield return AddressNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Raise", Raise);
-                yield return new KeyValuePair<string, AstNode>("Exception", Exception);
-                yield return new KeyValuePair<string, AstNode>("At", At);
-                yield return new KeyValuePair<string, AstNode>("Address", Address);
+                yield return new KeyValuePair<string, AstNode>("RaiseKeywordNode", RaiseKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ExceptionNode", ExceptionNode);
+                yield return new KeyValuePair<string, AstNode>("AtSemikeywordNode", AtSemikeywordNode);
+                yield return new KeyValuePair<string, AstNode>("AddressNode", AddressNode);
             }
         }
 
@@ -2482,37 +3200,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class RecordFieldConstantNode : NonterminalNode
     {
-        private Token _colon;
-        private AstNode _name;
-        private AstNode _value;
+        private Token _colonNode;
+        private AstNode _nameNode;
+        private AstNode _valueNode;
 
-        public RecordFieldConstantNode(AstNode name, Token colon, AstNode value)
+        public RecordFieldConstantNode(AstNode nameNode, Token colonNode, AstNode valueNode)
         {
-            _name = name;
-            _colon = colon;
-            _value = value;
-        }
-
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public AstNode Name
-        {
-            get { return _name; }
-        }
-        public AstNode Value
-        {
-            get { return _value; }
+            _nameNode = nameNode;
+            _colonNode = colonNode;
+            _valueNode = valueNode;
         }
 
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public AstNode NameNode
+        {
+            get { return _nameNode; }
+        }
+        public AstNode ValueNode
+        {
+            get { return _valueNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (NameNode != null)
+                    yield return NameNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (ValueNode != null)
+                    yield return ValueNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("Value", Value);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("ValueNode", ValueNode);
             }
         }
 
@@ -2523,44 +3253,58 @@ namespace DGrok.DelphiNodes
     }
     public partial class RecordTypeNode : NonterminalNode
     {
-        private ListNode<VisibilitySectionNode> _contents;
-        private Token _end;
-        private Token _record;
-        private VariantSectionNode _variantSection;
+        private ListNode<VisibilitySectionNode> _contentListNode;
+        private Token _endKeywordNode;
+        private Token _recordKeywordNode;
+        private VariantSectionNode _variantSectionNode;
 
-        public RecordTypeNode(Token record, ListNode<VisibilitySectionNode> contents, VariantSectionNode variantSection, Token end)
+        public RecordTypeNode(Token recordKeywordNode, ListNode<VisibilitySectionNode> contentListNode, VariantSectionNode variantSectionNode, Token endKeywordNode)
         {
-            _record = record;
-            _contents = contents;
-            _variantSection = variantSection;
-            _end = end;
-        }
-
-        public ListNode<VisibilitySectionNode> Contents
-        {
-            get { return _contents; }
-        }
-        public Token End
-        {
-            get { return _end; }
-        }
-        public Token Record
-        {
-            get { return _record; }
-        }
-        public VariantSectionNode VariantSection
-        {
-            get { return _variantSection; }
+            _recordKeywordNode = recordKeywordNode;
+            _contentListNode = contentListNode;
+            _variantSectionNode = variantSectionNode;
+            _endKeywordNode = endKeywordNode;
         }
 
+        public ListNode<VisibilitySectionNode> ContentListNode
+        {
+            get { return _contentListNode; }
+        }
+        public Token EndKeywordNode
+        {
+            get { return _endKeywordNode; }
+        }
+        public Token RecordKeywordNode
+        {
+            get { return _recordKeywordNode; }
+        }
+        public VariantSectionNode VariantSectionNode
+        {
+            get { return _variantSectionNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (RecordKeywordNode != null)
+                    yield return RecordKeywordNode;
+                if (ContentListNode != null)
+                    yield return ContentListNode;
+                if (VariantSectionNode != null)
+                    yield return VariantSectionNode;
+                if (EndKeywordNode != null)
+                    yield return EndKeywordNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Record", Record);
-                yield return new KeyValuePair<string, AstNode>("Contents", Contents);
-                yield return new KeyValuePair<string, AstNode>("VariantSection", VariantSection);
-                yield return new KeyValuePair<string, AstNode>("End", End);
+                yield return new KeyValuePair<string, AstNode>("RecordKeywordNode", RecordKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ContentListNode", ContentListNode);
+                yield return new KeyValuePair<string, AstNode>("VariantSectionNode", VariantSectionNode);
+                yield return new KeyValuePair<string, AstNode>("EndKeywordNode", EndKeywordNode);
             }
         }
 
@@ -2571,44 +3315,58 @@ namespace DGrok.DelphiNodes
     }
     public partial class RepeatStatementNode : NonterminalNode
     {
-        private AstNode _condition;
-        private Token _repeat;
-        private ListNode<DelimitedItemNode<AstNode>> _statementList;
-        private Token _until;
+        private AstNode _conditionNode;
+        private Token _repeatKeywordNode;
+        private ListNode<DelimitedItemNode<AstNode>> _statementListNode;
+        private Token _untilKeywordNode;
 
-        public RepeatStatementNode(Token repeat, ListNode<DelimitedItemNode<AstNode>> statementList, Token until, AstNode condition)
+        public RepeatStatementNode(Token repeatKeywordNode, ListNode<DelimitedItemNode<AstNode>> statementListNode, Token untilKeywordNode, AstNode conditionNode)
         {
-            _repeat = repeat;
-            _statementList = statementList;
-            _until = until;
-            _condition = condition;
-        }
-
-        public AstNode Condition
-        {
-            get { return _condition; }
-        }
-        public Token Repeat
-        {
-            get { return _repeat; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> StatementList
-        {
-            get { return _statementList; }
-        }
-        public Token Until
-        {
-            get { return _until; }
+            _repeatKeywordNode = repeatKeywordNode;
+            _statementListNode = statementListNode;
+            _untilKeywordNode = untilKeywordNode;
+            _conditionNode = conditionNode;
         }
 
+        public AstNode ConditionNode
+        {
+            get { return _conditionNode; }
+        }
+        public Token RepeatKeywordNode
+        {
+            get { return _repeatKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> StatementListNode
+        {
+            get { return _statementListNode; }
+        }
+        public Token UntilKeywordNode
+        {
+            get { return _untilKeywordNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (RepeatKeywordNode != null)
+                    yield return RepeatKeywordNode;
+                if (StatementListNode != null)
+                    yield return StatementListNode;
+                if (UntilKeywordNode != null)
+                    yield return UntilKeywordNode;
+                if (ConditionNode != null)
+                    yield return ConditionNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Repeat", Repeat);
-                yield return new KeyValuePair<string, AstNode>("StatementList", StatementList);
-                yield return new KeyValuePair<string, AstNode>("Until", Until);
-                yield return new KeyValuePair<string, AstNode>("Condition", Condition);
+                yield return new KeyValuePair<string, AstNode>("RepeatKeywordNode", RepeatKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("StatementListNode", StatementListNode);
+                yield return new KeyValuePair<string, AstNode>("UntilKeywordNode", UntilKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ConditionNode", ConditionNode);
             }
         }
 
@@ -2619,37 +3377,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class RequiresClauseNode : NonterminalNode
     {
-        private ListNode<DelimitedItemNode<AstNode>> _packageList;
-        private Token _requires;
-        private Token _semicolon;
+        private ListNode<DelimitedItemNode<AstNode>> _packageListNode;
+        private Token _requiresSemikeywordNode;
+        private Token _semicolonNode;
 
-        public RequiresClauseNode(Token requires, ListNode<DelimitedItemNode<AstNode>> packageList, Token semicolon)
+        public RequiresClauseNode(Token requiresSemikeywordNode, ListNode<DelimitedItemNode<AstNode>> packageListNode, Token semicolonNode)
         {
-            _requires = requires;
-            _packageList = packageList;
-            _semicolon = semicolon;
-        }
-
-        public ListNode<DelimitedItemNode<AstNode>> PackageList
-        {
-            get { return _packageList; }
-        }
-        public Token Requires
-        {
-            get { return _requires; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
+            _requiresSemikeywordNode = requiresSemikeywordNode;
+            _packageListNode = packageListNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public ListNode<DelimitedItemNode<AstNode>> PackageListNode
+        {
+            get { return _packageListNode; }
+        }
+        public Token RequiresSemikeywordNode
+        {
+            get { return _requiresSemikeywordNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (RequiresSemikeywordNode != null)
+                    yield return RequiresSemikeywordNode;
+                if (PackageListNode != null)
+                    yield return PackageListNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Requires", Requires);
-                yield return new KeyValuePair<string, AstNode>("PackageList", PackageList);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("RequiresSemikeywordNode", RequiresSemikeywordNode);
+                yield return new KeyValuePair<string, AstNode>("PackageListNode", PackageListNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -2660,37 +3430,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class SetLiteralNode : NonterminalNode
     {
-        private Token _closeBracket;
-        private ListNode<DelimitedItemNode<AstNode>> _itemList;
-        private Token _openBracket;
+        private Token _closeBracketNode;
+        private ListNode<DelimitedItemNode<AstNode>> _itemListNode;
+        private Token _openBracketNode;
 
-        public SetLiteralNode(Token openBracket, ListNode<DelimitedItemNode<AstNode>> itemList, Token closeBracket)
+        public SetLiteralNode(Token openBracketNode, ListNode<DelimitedItemNode<AstNode>> itemListNode, Token closeBracketNode)
         {
-            _openBracket = openBracket;
-            _itemList = itemList;
-            _closeBracket = closeBracket;
-        }
-
-        public Token CloseBracket
-        {
-            get { return _closeBracket; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> ItemList
-        {
-            get { return _itemList; }
-        }
-        public Token OpenBracket
-        {
-            get { return _openBracket; }
+            _openBracketNode = openBracketNode;
+            _itemListNode = itemListNode;
+            _closeBracketNode = closeBracketNode;
         }
 
+        public Token CloseBracketNode
+        {
+            get { return _closeBracketNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> ItemListNode
+        {
+            get { return _itemListNode; }
+        }
+        public Token OpenBracketNode
+        {
+            get { return _openBracketNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (OpenBracketNode != null)
+                    yield return OpenBracketNode;
+                if (ItemListNode != null)
+                    yield return ItemListNode;
+                if (CloseBracketNode != null)
+                    yield return CloseBracketNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("OpenBracket", OpenBracket);
-                yield return new KeyValuePair<string, AstNode>("ItemList", ItemList);
-                yield return new KeyValuePair<string, AstNode>("CloseBracket", CloseBracket);
+                yield return new KeyValuePair<string, AstNode>("OpenBracketNode", OpenBracketNode);
+                yield return new KeyValuePair<string, AstNode>("ItemListNode", ItemListNode);
+                yield return new KeyValuePair<string, AstNode>("CloseBracketNode", CloseBracketNode);
             }
         }
 
@@ -2701,37 +3483,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class SetOfNode : NonterminalNode
     {
-        private Token _of;
-        private Token _set;
-        private AstNode _type;
+        private Token _ofKeywordNode;
+        private Token _setKeywordNode;
+        private AstNode _typeNode;
 
-        public SetOfNode(Token set, Token of, AstNode type)
+        public SetOfNode(Token setKeywordNode, Token ofKeywordNode, AstNode typeNode)
         {
-            _set = set;
-            _of = of;
-            _type = type;
-        }
-
-        public Token Of
-        {
-            get { return _of; }
-        }
-        public Token Set
-        {
-            get { return _set; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
+            _setKeywordNode = setKeywordNode;
+            _ofKeywordNode = ofKeywordNode;
+            _typeNode = typeNode;
         }
 
+        public Token OfKeywordNode
+        {
+            get { return _ofKeywordNode; }
+        }
+        public Token SetKeywordNode
+        {
+            get { return _setKeywordNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (SetKeywordNode != null)
+                    yield return SetKeywordNode;
+                if (OfKeywordNode != null)
+                    yield return OfKeywordNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Set", Set);
-                yield return new KeyValuePair<string, AstNode>("Of", Of);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
+                yield return new KeyValuePair<string, AstNode>("SetKeywordNode", SetKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("OfKeywordNode", OfKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
             }
         }
 
@@ -2742,44 +3536,58 @@ namespace DGrok.DelphiNodes
     }
     public partial class StringOfLengthNode : NonterminalNode
     {
-        private Token _closeBracket;
-        private AstNode _length;
-        private Token _openBracket;
-        private Token _string;
+        private Token _closeBracketNode;
+        private AstNode _lengthNode;
+        private Token _openBracketNode;
+        private Token _stringKeywordNode;
 
-        public StringOfLengthNode(Token theString, Token openBracket, AstNode length, Token closeBracket)
+        public StringOfLengthNode(Token stringKeywordNode, Token openBracketNode, AstNode lengthNode, Token closeBracketNode)
         {
-            _string = theString;
-            _openBracket = openBracket;
-            _length = length;
-            _closeBracket = closeBracket;
-        }
-
-        public Token CloseBracket
-        {
-            get { return _closeBracket; }
-        }
-        public AstNode Length
-        {
-            get { return _length; }
-        }
-        public Token OpenBracket
-        {
-            get { return _openBracket; }
-        }
-        public Token String
-        {
-            get { return _string; }
+            _stringKeywordNode = stringKeywordNode;
+            _openBracketNode = openBracketNode;
+            _lengthNode = lengthNode;
+            _closeBracketNode = closeBracketNode;
         }
 
+        public Token CloseBracketNode
+        {
+            get { return _closeBracketNode; }
+        }
+        public AstNode LengthNode
+        {
+            get { return _lengthNode; }
+        }
+        public Token OpenBracketNode
+        {
+            get { return _openBracketNode; }
+        }
+        public Token StringKeywordNode
+        {
+            get { return _stringKeywordNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (StringKeywordNode != null)
+                    yield return StringKeywordNode;
+                if (OpenBracketNode != null)
+                    yield return OpenBracketNode;
+                if (LengthNode != null)
+                    yield return LengthNode;
+                if (CloseBracketNode != null)
+                    yield return CloseBracketNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("String", String);
-                yield return new KeyValuePair<string, AstNode>("OpenBracket", OpenBracket);
-                yield return new KeyValuePair<string, AstNode>("Length", Length);
-                yield return new KeyValuePair<string, AstNode>("CloseBracket", CloseBracket);
+                yield return new KeyValuePair<string, AstNode>("StringKeywordNode", StringKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("OpenBracketNode", OpenBracketNode);
+                yield return new KeyValuePair<string, AstNode>("LengthNode", LengthNode);
+                yield return new KeyValuePair<string, AstNode>("CloseBracketNode", CloseBracketNode);
             }
         }
 
@@ -2790,65 +3598,85 @@ namespace DGrok.DelphiNodes
     }
     public partial class TryExceptNode : NonterminalNode
     {
-        private Token _else;
-        private ListNode<DelimitedItemNode<AstNode>> _elseStatements;
-        private Token _end;
-        private Token _except;
-        private ListNode<ExceptionItemNode> _exceptionItemList;
-        private Token _try;
-        private ListNode<DelimitedItemNode<AstNode>> _tryStatements;
+        private Token _elseKeywordNode;
+        private ListNode<DelimitedItemNode<AstNode>> _elseStatementListNode;
+        private Token _endKeywordNode;
+        private ListNode<ExceptionItemNode> _exceptionItemListNode;
+        private Token _exceptKeywordNode;
+        private Token _tryKeywordNode;
+        private ListNode<DelimitedItemNode<AstNode>> _tryStatementListNode;
 
-        public TryExceptNode(Token theTry, ListNode<DelimitedItemNode<AstNode>> tryStatements, Token except, ListNode<ExceptionItemNode> exceptionItemList, Token theElse, ListNode<DelimitedItemNode<AstNode>> elseStatements, Token end)
+        public TryExceptNode(Token tryKeywordNode, ListNode<DelimitedItemNode<AstNode>> tryStatementListNode, Token exceptKeywordNode, ListNode<ExceptionItemNode> exceptionItemListNode, Token elseKeywordNode, ListNode<DelimitedItemNode<AstNode>> elseStatementListNode, Token endKeywordNode)
         {
-            _try = theTry;
-            _tryStatements = tryStatements;
-            _except = except;
-            _exceptionItemList = exceptionItemList;
-            _else = theElse;
-            _elseStatements = elseStatements;
-            _end = end;
-        }
-
-        public Token Else
-        {
-            get { return _else; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> ElseStatements
-        {
-            get { return _elseStatements; }
-        }
-        public Token End
-        {
-            get { return _end; }
-        }
-        public Token Except
-        {
-            get { return _except; }
-        }
-        public ListNode<ExceptionItemNode> ExceptionItemList
-        {
-            get { return _exceptionItemList; }
-        }
-        public Token Try
-        {
-            get { return _try; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> TryStatements
-        {
-            get { return _tryStatements; }
+            _tryKeywordNode = tryKeywordNode;
+            _tryStatementListNode = tryStatementListNode;
+            _exceptKeywordNode = exceptKeywordNode;
+            _exceptionItemListNode = exceptionItemListNode;
+            _elseKeywordNode = elseKeywordNode;
+            _elseStatementListNode = elseStatementListNode;
+            _endKeywordNode = endKeywordNode;
         }
 
+        public Token ElseKeywordNode
+        {
+            get { return _elseKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> ElseStatementListNode
+        {
+            get { return _elseStatementListNode; }
+        }
+        public Token EndKeywordNode
+        {
+            get { return _endKeywordNode; }
+        }
+        public ListNode<ExceptionItemNode> ExceptionItemListNode
+        {
+            get { return _exceptionItemListNode; }
+        }
+        public Token ExceptKeywordNode
+        {
+            get { return _exceptKeywordNode; }
+        }
+        public Token TryKeywordNode
+        {
+            get { return _tryKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> TryStatementListNode
+        {
+            get { return _tryStatementListNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (TryKeywordNode != null)
+                    yield return TryKeywordNode;
+                if (TryStatementListNode != null)
+                    yield return TryStatementListNode;
+                if (ExceptKeywordNode != null)
+                    yield return ExceptKeywordNode;
+                if (ExceptionItemListNode != null)
+                    yield return ExceptionItemListNode;
+                if (ElseKeywordNode != null)
+                    yield return ElseKeywordNode;
+                if (ElseStatementListNode != null)
+                    yield return ElseStatementListNode;
+                if (EndKeywordNode != null)
+                    yield return EndKeywordNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Try", Try);
-                yield return new KeyValuePair<string, AstNode>("TryStatements", TryStatements);
-                yield return new KeyValuePair<string, AstNode>("Except", Except);
-                yield return new KeyValuePair<string, AstNode>("ExceptionItemList", ExceptionItemList);
-                yield return new KeyValuePair<string, AstNode>("Else", Else);
-                yield return new KeyValuePair<string, AstNode>("ElseStatements", ElseStatements);
-                yield return new KeyValuePair<string, AstNode>("End", End);
+                yield return new KeyValuePair<string, AstNode>("TryKeywordNode", TryKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("TryStatementListNode", TryStatementListNode);
+                yield return new KeyValuePair<string, AstNode>("ExceptKeywordNode", ExceptKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ExceptionItemListNode", ExceptionItemListNode);
+                yield return new KeyValuePair<string, AstNode>("ElseKeywordNode", ElseKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ElseStatementListNode", ElseStatementListNode);
+                yield return new KeyValuePair<string, AstNode>("EndKeywordNode", EndKeywordNode);
             }
         }
 
@@ -2859,51 +3687,67 @@ namespace DGrok.DelphiNodes
     }
     public partial class TryFinallyNode : NonterminalNode
     {
-        private Token _end;
-        private Token _finally;
-        private ListNode<DelimitedItemNode<AstNode>> _finallyStatements;
-        private Token _try;
-        private ListNode<DelimitedItemNode<AstNode>> _tryStatements;
+        private Token _endKeywordNode;
+        private Token _finallyKeywordNode;
+        private ListNode<DelimitedItemNode<AstNode>> _finallyStatementListNode;
+        private Token _tryKeywordNode;
+        private ListNode<DelimitedItemNode<AstNode>> _tryStatementListNode;
 
-        public TryFinallyNode(Token theTry, ListNode<DelimitedItemNode<AstNode>> tryStatements, Token theFinally, ListNode<DelimitedItemNode<AstNode>> finallyStatements, Token end)
+        public TryFinallyNode(Token tryKeywordNode, ListNode<DelimitedItemNode<AstNode>> tryStatementListNode, Token finallyKeywordNode, ListNode<DelimitedItemNode<AstNode>> finallyStatementListNode, Token endKeywordNode)
         {
-            _try = theTry;
-            _tryStatements = tryStatements;
-            _finally = theFinally;
-            _finallyStatements = finallyStatements;
-            _end = end;
-        }
-
-        public Token End
-        {
-            get { return _end; }
-        }
-        public Token Finally
-        {
-            get { return _finally; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> FinallyStatements
-        {
-            get { return _finallyStatements; }
-        }
-        public Token Try
-        {
-            get { return _try; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> TryStatements
-        {
-            get { return _tryStatements; }
+            _tryKeywordNode = tryKeywordNode;
+            _tryStatementListNode = tryStatementListNode;
+            _finallyKeywordNode = finallyKeywordNode;
+            _finallyStatementListNode = finallyStatementListNode;
+            _endKeywordNode = endKeywordNode;
         }
 
+        public Token EndKeywordNode
+        {
+            get { return _endKeywordNode; }
+        }
+        public Token FinallyKeywordNode
+        {
+            get { return _finallyKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> FinallyStatementListNode
+        {
+            get { return _finallyStatementListNode; }
+        }
+        public Token TryKeywordNode
+        {
+            get { return _tryKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> TryStatementListNode
+        {
+            get { return _tryStatementListNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (TryKeywordNode != null)
+                    yield return TryKeywordNode;
+                if (TryStatementListNode != null)
+                    yield return TryStatementListNode;
+                if (FinallyKeywordNode != null)
+                    yield return FinallyKeywordNode;
+                if (FinallyStatementListNode != null)
+                    yield return FinallyStatementListNode;
+                if (EndKeywordNode != null)
+                    yield return EndKeywordNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Try", Try);
-                yield return new KeyValuePair<string, AstNode>("TryStatements", TryStatements);
-                yield return new KeyValuePair<string, AstNode>("Finally", Finally);
-                yield return new KeyValuePair<string, AstNode>("FinallyStatements", FinallyStatements);
-                yield return new KeyValuePair<string, AstNode>("End", End);
+                yield return new KeyValuePair<string, AstNode>("TryKeywordNode", TryKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("TryStatementListNode", TryStatementListNode);
+                yield return new KeyValuePair<string, AstNode>("FinallyKeywordNode", FinallyKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("FinallyStatementListNode", FinallyStatementListNode);
+                yield return new KeyValuePair<string, AstNode>("EndKeywordNode", EndKeywordNode);
             }
         }
 
@@ -2914,58 +3758,76 @@ namespace DGrok.DelphiNodes
     }
     public partial class TypeDeclNode : NonterminalNode
     {
-        private Token _equalSign;
-        private Token _name;
-        private ListNode<Token> _portabilityDirectiveList;
-        private Token _semicolon;
-        private AstNode _type;
-        private Token _typeKeyword;
+        private Token _equalSignNode;
+        private Token _nameNode;
+        private ListNode<Token> _portabilityDirectiveListNode;
+        private Token _semicolonNode;
+        private Token _typeKeywordNode;
+        private AstNode _typeNode;
 
-        public TypeDeclNode(Token name, Token equalSign, Token typeKeyword, AstNode type, ListNode<Token> portabilityDirectiveList, Token semicolon)
+        public TypeDeclNode(Token nameNode, Token equalSignNode, Token typeKeywordNode, AstNode typeNode, ListNode<Token> portabilityDirectiveListNode, Token semicolonNode)
         {
-            _name = name;
-            _equalSign = equalSign;
-            _typeKeyword = typeKeyword;
-            _type = type;
-            _portabilityDirectiveList = portabilityDirectiveList;
-            _semicolon = semicolon;
-        }
-
-        public Token EqualSign
-        {
-            get { return _equalSign; }
-        }
-        public Token Name
-        {
-            get { return _name; }
-        }
-        public ListNode<Token> PortabilityDirectiveList
-        {
-            get { return _portabilityDirectiveList; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
-        }
-        public Token TypeKeyword
-        {
-            get { return _typeKeyword; }
+            _nameNode = nameNode;
+            _equalSignNode = equalSignNode;
+            _typeKeywordNode = typeKeywordNode;
+            _typeNode = typeNode;
+            _portabilityDirectiveListNode = portabilityDirectiveListNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token EqualSignNode
+        {
+            get { return _equalSignNode; }
+        }
+        public Token NameNode
+        {
+            get { return _nameNode; }
+        }
+        public ListNode<Token> PortabilityDirectiveListNode
+        {
+            get { return _portabilityDirectiveListNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public Token TypeKeywordNode
+        {
+            get { return _typeKeywordNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (NameNode != null)
+                    yield return NameNode;
+                if (EqualSignNode != null)
+                    yield return EqualSignNode;
+                if (TypeKeywordNode != null)
+                    yield return TypeKeywordNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+                if (PortabilityDirectiveListNode != null)
+                    yield return PortabilityDirectiveListNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("EqualSign", EqualSign);
-                yield return new KeyValuePair<string, AstNode>("TypeKeyword", TypeKeyword);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
-                yield return new KeyValuePair<string, AstNode>("PortabilityDirectiveList", PortabilityDirectiveList);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("EqualSignNode", EqualSignNode);
+                yield return new KeyValuePair<string, AstNode>("TypeKeywordNode", TypeKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
+                yield return new KeyValuePair<string, AstNode>("PortabilityDirectiveListNode", PortabilityDirectiveListNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -2976,44 +3838,58 @@ namespace DGrok.DelphiNodes
     }
     public partial class TypeForwardDeclarationNode : NonterminalNode
     {
-        private Token _equalSign;
-        private Token _name;
-        private Token _semicolon;
-        private Token _type;
+        private Token _equalSignNode;
+        private Token _nameNode;
+        private Token _semicolonNode;
+        private Token _typeNode;
 
-        public TypeForwardDeclarationNode(Token name, Token equalSign, Token type, Token semicolon)
+        public TypeForwardDeclarationNode(Token nameNode, Token equalSignNode, Token typeNode, Token semicolonNode)
         {
-            _name = name;
-            _equalSign = equalSign;
-            _type = type;
-            _semicolon = semicolon;
-        }
-
-        public Token EqualSign
-        {
-            get { return _equalSign; }
-        }
-        public Token Name
-        {
-            get { return _name; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public Token Type
-        {
-            get { return _type; }
+            _nameNode = nameNode;
+            _equalSignNode = equalSignNode;
+            _typeNode = typeNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token EqualSignNode
+        {
+            get { return _equalSignNode; }
+        }
+        public Token NameNode
+        {
+            get { return _nameNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public Token TypeNode
+        {
+            get { return _typeNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (NameNode != null)
+                    yield return NameNode;
+                if (EqualSignNode != null)
+                    yield return EqualSignNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("EqualSign", EqualSign);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("EqualSignNode", EqualSignNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -3024,79 +3900,103 @@ namespace DGrok.DelphiNodes
     }
     public partial class TypeHelperNode : NonterminalNode
     {
-        private AstNode _baseHelperType;
-        private Token _closeParenthesis;
-        private ListNode<VisibilitySectionNode> _contents;
-        private Token _end;
-        private Token _for;
-        private Token _helper;
-        private Token _openParenthesis;
-        private AstNode _type;
-        private Token _typeKeyword;
+        private AstNode _baseHelperTypeNode;
+        private Token _closeParenthesisNode;
+        private ListNode<VisibilitySectionNode> _contentListNode;
+        private Token _endKeywordNode;
+        private Token _forKeywordNode;
+        private Token _helperSemikeywordNode;
+        private Token _openParenthesisNode;
+        private Token _typeKeywordNode;
+        private AstNode _typeNode;
 
-        public TypeHelperNode(Token typeKeyword, Token helper, Token openParenthesis, AstNode baseHelperType, Token closeParenthesis, Token theFor, AstNode type, ListNode<VisibilitySectionNode> contents, Token end)
+        public TypeHelperNode(Token typeKeywordNode, Token helperSemikeywordNode, Token openParenthesisNode, AstNode baseHelperTypeNode, Token closeParenthesisNode, Token forKeywordNode, AstNode typeNode, ListNode<VisibilitySectionNode> contentListNode, Token endKeywordNode)
         {
-            _typeKeyword = typeKeyword;
-            _helper = helper;
-            _openParenthesis = openParenthesis;
-            _baseHelperType = baseHelperType;
-            _closeParenthesis = closeParenthesis;
-            _for = theFor;
-            _type = type;
-            _contents = contents;
-            _end = end;
-        }
-
-        public AstNode BaseHelperType
-        {
-            get { return _baseHelperType; }
-        }
-        public Token CloseParenthesis
-        {
-            get { return _closeParenthesis; }
-        }
-        public ListNode<VisibilitySectionNode> Contents
-        {
-            get { return _contents; }
-        }
-        public Token End
-        {
-            get { return _end; }
-        }
-        public Token For
-        {
-            get { return _for; }
-        }
-        public Token Helper
-        {
-            get { return _helper; }
-        }
-        public Token OpenParenthesis
-        {
-            get { return _openParenthesis; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
-        }
-        public Token TypeKeyword
-        {
-            get { return _typeKeyword; }
+            _typeKeywordNode = typeKeywordNode;
+            _helperSemikeywordNode = helperSemikeywordNode;
+            _openParenthesisNode = openParenthesisNode;
+            _baseHelperTypeNode = baseHelperTypeNode;
+            _closeParenthesisNode = closeParenthesisNode;
+            _forKeywordNode = forKeywordNode;
+            _typeNode = typeNode;
+            _contentListNode = contentListNode;
+            _endKeywordNode = endKeywordNode;
         }
 
+        public AstNode BaseHelperTypeNode
+        {
+            get { return _baseHelperTypeNode; }
+        }
+        public Token CloseParenthesisNode
+        {
+            get { return _closeParenthesisNode; }
+        }
+        public ListNode<VisibilitySectionNode> ContentListNode
+        {
+            get { return _contentListNode; }
+        }
+        public Token EndKeywordNode
+        {
+            get { return _endKeywordNode; }
+        }
+        public Token ForKeywordNode
+        {
+            get { return _forKeywordNode; }
+        }
+        public Token HelperSemikeywordNode
+        {
+            get { return _helperSemikeywordNode; }
+        }
+        public Token OpenParenthesisNode
+        {
+            get { return _openParenthesisNode; }
+        }
+        public Token TypeKeywordNode
+        {
+            get { return _typeKeywordNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (TypeKeywordNode != null)
+                    yield return TypeKeywordNode;
+                if (HelperSemikeywordNode != null)
+                    yield return HelperSemikeywordNode;
+                if (OpenParenthesisNode != null)
+                    yield return OpenParenthesisNode;
+                if (BaseHelperTypeNode != null)
+                    yield return BaseHelperTypeNode;
+                if (CloseParenthesisNode != null)
+                    yield return CloseParenthesisNode;
+                if (ForKeywordNode != null)
+                    yield return ForKeywordNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+                if (ContentListNode != null)
+                    yield return ContentListNode;
+                if (EndKeywordNode != null)
+                    yield return EndKeywordNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("TypeKeyword", TypeKeyword);
-                yield return new KeyValuePair<string, AstNode>("Helper", Helper);
-                yield return new KeyValuePair<string, AstNode>("OpenParenthesis", OpenParenthesis);
-                yield return new KeyValuePair<string, AstNode>("BaseHelperType", BaseHelperType);
-                yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
-                yield return new KeyValuePair<string, AstNode>("For", For);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
-                yield return new KeyValuePair<string, AstNode>("Contents", Contents);
-                yield return new KeyValuePair<string, AstNode>("End", End);
+                yield return new KeyValuePair<string, AstNode>("TypeKeywordNode", TypeKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("HelperSemikeywordNode", HelperSemikeywordNode);
+                yield return new KeyValuePair<string, AstNode>("OpenParenthesisNode", OpenParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("BaseHelperTypeNode", BaseHelperTypeNode);
+                yield return new KeyValuePair<string, AstNode>("CloseParenthesisNode", CloseParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("ForKeywordNode", ForKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
+                yield return new KeyValuePair<string, AstNode>("ContentListNode", ContentListNode);
+                yield return new KeyValuePair<string, AstNode>("EndKeywordNode", EndKeywordNode);
             }
         }
 
@@ -3107,30 +4007,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class TypeSectionNode : NonterminalNode
     {
-        private Token _type;
-        private ListNode<AstNode> _typeList;
+        private Token _typeKeywordNode;
+        private ListNode<AstNode> _typeListNode;
 
-        public TypeSectionNode(Token type, ListNode<AstNode> typeList)
+        public TypeSectionNode(Token typeKeywordNode, ListNode<AstNode> typeListNode)
         {
-            _type = type;
-            _typeList = typeList;
+            _typeKeywordNode = typeKeywordNode;
+            _typeListNode = typeListNode;
         }
 
-        public Token Type
+        public Token TypeKeywordNode
         {
-            get { return _type; }
+            get { return _typeKeywordNode; }
         }
-        public ListNode<AstNode> TypeList
+        public ListNode<AstNode> TypeListNode
         {
-            get { return _typeList; }
+            get { return _typeListNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (TypeKeywordNode != null)
+                    yield return TypeKeywordNode;
+                if (TypeListNode != null)
+                    yield return TypeListNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
-                yield return new KeyValuePair<string, AstNode>("TypeList", TypeList);
+                yield return new KeyValuePair<string, AstNode>("TypeKeywordNode", TypeKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("TypeListNode", TypeListNode);
             }
         }
 
@@ -3141,30 +4051,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class UnaryOperationNode : NonterminalNode
     {
-        private AstNode _operand;
-        private Token _operator;
+        private AstNode _operandNode;
+        private Token _operatorNode;
 
-        public UnaryOperationNode(Token theOperator, AstNode operand)
+        public UnaryOperationNode(Token operatorNode, AstNode operandNode)
         {
-            _operator = theOperator;
-            _operand = operand;
+            _operatorNode = operatorNode;
+            _operandNode = operandNode;
         }
 
-        public AstNode Operand
+        public AstNode OperandNode
         {
-            get { return _operand; }
+            get { return _operandNode; }
         }
-        public Token Operator
+        public Token OperatorNode
         {
-            get { return _operator; }
+            get { return _operatorNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (OperatorNode != null)
+                    yield return OperatorNode;
+                if (OperandNode != null)
+                    yield return OperandNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Operator", Operator);
-                yield return new KeyValuePair<string, AstNode>("Operand", Operand);
+                yield return new KeyValuePair<string, AstNode>("OperatorNode", OperatorNode);
+                yield return new KeyValuePair<string, AstNode>("OperandNode", OperandNode);
             }
         }
 
@@ -3175,72 +4095,94 @@ namespace DGrok.DelphiNodes
     }
     public partial class UnitNode : NonterminalNode
     {
-        private Token _dot;
-        private UnitSectionNode _implementationSection;
-        private InitSectionNode _initSection;
-        private UnitSectionNode _interfaceSection;
-        private ListNode<Token> _portabilityDirectives;
-        private Token _semicolon;
-        private Token _unit;
-        private Token _unitName;
+        private Token _dotNode;
+        private UnitSectionNode _implementationSectionNode;
+        private InitSectionNode _initSectionNode;
+        private UnitSectionNode _interfaceSectionNode;
+        private ListNode<Token> _portabilityDirectiveListNode;
+        private Token _semicolonNode;
+        private Token _unitKeywordNode;
+        private Token _unitNameNode;
 
-        public UnitNode(Token unit, Token unitName, ListNode<Token> portabilityDirectives, Token semicolon, UnitSectionNode interfaceSection, UnitSectionNode implementationSection, InitSectionNode initSection, Token dot)
+        public UnitNode(Token unitKeywordNode, Token unitNameNode, ListNode<Token> portabilityDirectiveListNode, Token semicolonNode, UnitSectionNode interfaceSectionNode, UnitSectionNode implementationSectionNode, InitSectionNode initSectionNode, Token dotNode)
         {
-            _unit = unit;
-            _unitName = unitName;
-            _portabilityDirectives = portabilityDirectives;
-            _semicolon = semicolon;
-            _interfaceSection = interfaceSection;
-            _implementationSection = implementationSection;
-            _initSection = initSection;
-            _dot = dot;
-        }
-
-        public Token Dot
-        {
-            get { return _dot; }
-        }
-        public UnitSectionNode ImplementationSection
-        {
-            get { return _implementationSection; }
-        }
-        public InitSectionNode InitSection
-        {
-            get { return _initSection; }
-        }
-        public UnitSectionNode InterfaceSection
-        {
-            get { return _interfaceSection; }
-        }
-        public ListNode<Token> PortabilityDirectives
-        {
-            get { return _portabilityDirectives; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public Token Unit
-        {
-            get { return _unit; }
-        }
-        public Token UnitName
-        {
-            get { return _unitName; }
+            _unitKeywordNode = unitKeywordNode;
+            _unitNameNode = unitNameNode;
+            _portabilityDirectiveListNode = portabilityDirectiveListNode;
+            _semicolonNode = semicolonNode;
+            _interfaceSectionNode = interfaceSectionNode;
+            _implementationSectionNode = implementationSectionNode;
+            _initSectionNode = initSectionNode;
+            _dotNode = dotNode;
         }
 
+        public Token DotNode
+        {
+            get { return _dotNode; }
+        }
+        public UnitSectionNode ImplementationSectionNode
+        {
+            get { return _implementationSectionNode; }
+        }
+        public InitSectionNode InitSectionNode
+        {
+            get { return _initSectionNode; }
+        }
+        public UnitSectionNode InterfaceSectionNode
+        {
+            get { return _interfaceSectionNode; }
+        }
+        public ListNode<Token> PortabilityDirectiveListNode
+        {
+            get { return _portabilityDirectiveListNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public Token UnitKeywordNode
+        {
+            get { return _unitKeywordNode; }
+        }
+        public Token UnitNameNode
+        {
+            get { return _unitNameNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (UnitKeywordNode != null)
+                    yield return UnitKeywordNode;
+                if (UnitNameNode != null)
+                    yield return UnitNameNode;
+                if (PortabilityDirectiveListNode != null)
+                    yield return PortabilityDirectiveListNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+                if (InterfaceSectionNode != null)
+                    yield return InterfaceSectionNode;
+                if (ImplementationSectionNode != null)
+                    yield return ImplementationSectionNode;
+                if (InitSectionNode != null)
+                    yield return InitSectionNode;
+                if (DotNode != null)
+                    yield return DotNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Unit", Unit);
-                yield return new KeyValuePair<string, AstNode>("UnitName", UnitName);
-                yield return new KeyValuePair<string, AstNode>("PortabilityDirectives", PortabilityDirectives);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
-                yield return new KeyValuePair<string, AstNode>("InterfaceSection", InterfaceSection);
-                yield return new KeyValuePair<string, AstNode>("ImplementationSection", ImplementationSection);
-                yield return new KeyValuePair<string, AstNode>("InitSection", InitSection);
-                yield return new KeyValuePair<string, AstNode>("Dot", Dot);
+                yield return new KeyValuePair<string, AstNode>("UnitKeywordNode", UnitKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("UnitNameNode", UnitNameNode);
+                yield return new KeyValuePair<string, AstNode>("PortabilityDirectiveListNode", PortabilityDirectiveListNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
+                yield return new KeyValuePair<string, AstNode>("InterfaceSectionNode", InterfaceSectionNode);
+                yield return new KeyValuePair<string, AstNode>("ImplementationSectionNode", ImplementationSectionNode);
+                yield return new KeyValuePair<string, AstNode>("InitSectionNode", InitSectionNode);
+                yield return new KeyValuePair<string, AstNode>("DotNode", DotNode);
             }
         }
 
@@ -3251,37 +4193,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class UnitSectionNode : NonterminalNode
     {
-        private ListNode<AstNode> _contents;
-        private Token _headerKeyword;
-        private UsesClauseNode _usesClause;
+        private ListNode<AstNode> _contentListNode;
+        private Token _headerKeywordNode;
+        private UsesClauseNode _usesClauseNode;
 
-        public UnitSectionNode(Token headerKeyword, UsesClauseNode usesClause, ListNode<AstNode> contents)
+        public UnitSectionNode(Token headerKeywordNode, UsesClauseNode usesClauseNode, ListNode<AstNode> contentListNode)
         {
-            _headerKeyword = headerKeyword;
-            _usesClause = usesClause;
-            _contents = contents;
-        }
-
-        public ListNode<AstNode> Contents
-        {
-            get { return _contents; }
-        }
-        public Token HeaderKeyword
-        {
-            get { return _headerKeyword; }
-        }
-        public UsesClauseNode UsesClause
-        {
-            get { return _usesClause; }
+            _headerKeywordNode = headerKeywordNode;
+            _usesClauseNode = usesClauseNode;
+            _contentListNode = contentListNode;
         }
 
+        public ListNode<AstNode> ContentListNode
+        {
+            get { return _contentListNode; }
+        }
+        public Token HeaderKeywordNode
+        {
+            get { return _headerKeywordNode; }
+        }
+        public UsesClauseNode UsesClauseNode
+        {
+            get { return _usesClauseNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (HeaderKeywordNode != null)
+                    yield return HeaderKeywordNode;
+                if (UsesClauseNode != null)
+                    yield return UsesClauseNode;
+                if (ContentListNode != null)
+                    yield return ContentListNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("HeaderKeyword", HeaderKeyword);
-                yield return new KeyValuePair<string, AstNode>("UsesClause", UsesClause);
-                yield return new KeyValuePair<string, AstNode>("Contents", Contents);
+                yield return new KeyValuePair<string, AstNode>("HeaderKeywordNode", HeaderKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("UsesClauseNode", UsesClauseNode);
+                yield return new KeyValuePair<string, AstNode>("ContentListNode", ContentListNode);
             }
         }
 
@@ -3292,37 +4246,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class UsedUnitNode : NonterminalNode
     {
-        private Token _fileName;
-        private Token _in;
-        private AstNode _name;
+        private Token _fileNameNode;
+        private Token _inKeywordNode;
+        private AstNode _nameNode;
 
-        public UsedUnitNode(AstNode name, Token theIn, Token fileName)
+        public UsedUnitNode(AstNode nameNode, Token inKeywordNode, Token fileNameNode)
         {
-            _name = name;
-            _in = theIn;
-            _fileName = fileName;
-        }
-
-        public Token FileName
-        {
-            get { return _fileName; }
-        }
-        public Token In
-        {
-            get { return _in; }
-        }
-        public AstNode Name
-        {
-            get { return _name; }
+            _nameNode = nameNode;
+            _inKeywordNode = inKeywordNode;
+            _fileNameNode = fileNameNode;
         }
 
+        public Token FileNameNode
+        {
+            get { return _fileNameNode; }
+        }
+        public Token InKeywordNode
+        {
+            get { return _inKeywordNode; }
+        }
+        public AstNode NameNode
+        {
+            get { return _nameNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (NameNode != null)
+                    yield return NameNode;
+                if (InKeywordNode != null)
+                    yield return InKeywordNode;
+                if (FileNameNode != null)
+                    yield return FileNameNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("In", In);
-                yield return new KeyValuePair<string, AstNode>("FileName", FileName);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("InKeywordNode", InKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("FileNameNode", FileNameNode);
             }
         }
 
@@ -3333,37 +4299,49 @@ namespace DGrok.DelphiNodes
     }
     public partial class UsesClauseNode : NonterminalNode
     {
-        private Token _semicolon;
-        private ListNode<DelimitedItemNode<UsedUnitNode>> _unitList;
-        private Token _uses;
+        private Token _semicolonNode;
+        private ListNode<DelimitedItemNode<UsedUnitNode>> _unitListNode;
+        private Token _usesKeywordNode;
 
-        public UsesClauseNode(Token uses, ListNode<DelimitedItemNode<UsedUnitNode>> unitList, Token semicolon)
+        public UsesClauseNode(Token usesKeywordNode, ListNode<DelimitedItemNode<UsedUnitNode>> unitListNode, Token semicolonNode)
         {
-            _uses = uses;
-            _unitList = unitList;
-            _semicolon = semicolon;
-        }
-
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public ListNode<DelimitedItemNode<UsedUnitNode>> UnitList
-        {
-            get { return _unitList; }
-        }
-        public Token Uses
-        {
-            get { return _uses; }
+            _usesKeywordNode = usesKeywordNode;
+            _unitListNode = unitListNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public ListNode<DelimitedItemNode<UsedUnitNode>> UnitListNode
+        {
+            get { return _unitListNode; }
+        }
+        public Token UsesKeywordNode
+        {
+            get { return _usesKeywordNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (UsesKeywordNode != null)
+                    yield return UsesKeywordNode;
+                if (UnitListNode != null)
+                    yield return UnitListNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Uses", Uses);
-                yield return new KeyValuePair<string, AstNode>("UnitList", UnitList);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("UsesKeywordNode", UsesKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("UnitListNode", UnitListNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -3374,86 +4352,112 @@ namespace DGrok.DelphiNodes
     }
     public partial class VarDeclNode : NonterminalNode
     {
-        private Token _absolute;
-        private AstNode _absoluteAddress;
-        private Token _colon;
-        private Token _equalSign;
-        private ListNode<Token> _firstPortabilityDirectives;
-        private ListNode<DelimitedItemNode<Token>> _names;
-        private ListNode<Token> _secondPortabilityDirectives;
-        private Token _semicolon;
-        private AstNode _type;
-        private AstNode _value;
+        private AstNode _absoluteAddressNode;
+        private Token _absoluteSemikeywordNode;
+        private Token _colonNode;
+        private Token _equalSignNode;
+        private ListNode<Token> _firstPortabilityDirectiveListNode;
+        private ListNode<DelimitedItemNode<Token>> _nameListNode;
+        private ListNode<Token> _secondPortabilityDirectiveListNode;
+        private Token _semicolonNode;
+        private AstNode _typeNode;
+        private AstNode _valueNode;
 
-        public VarDeclNode(ListNode<DelimitedItemNode<Token>> names, Token colon, AstNode type, ListNode<Token> firstPortabilityDirectives, Token absolute, AstNode absoluteAddress, Token equalSign, AstNode value, ListNode<Token> secondPortabilityDirectives, Token semicolon)
+        public VarDeclNode(ListNode<DelimitedItemNode<Token>> nameListNode, Token colonNode, AstNode typeNode, ListNode<Token> firstPortabilityDirectiveListNode, Token absoluteSemikeywordNode, AstNode absoluteAddressNode, Token equalSignNode, AstNode valueNode, ListNode<Token> secondPortabilityDirectiveListNode, Token semicolonNode)
         {
-            _names = names;
-            _colon = colon;
-            _type = type;
-            _firstPortabilityDirectives = firstPortabilityDirectives;
-            _absolute = absolute;
-            _absoluteAddress = absoluteAddress;
-            _equalSign = equalSign;
-            _value = value;
-            _secondPortabilityDirectives = secondPortabilityDirectives;
-            _semicolon = semicolon;
-        }
-
-        public Token Absolute
-        {
-            get { return _absolute; }
-        }
-        public AstNode AbsoluteAddress
-        {
-            get { return _absoluteAddress; }
-        }
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public Token EqualSign
-        {
-            get { return _equalSign; }
-        }
-        public ListNode<Token> FirstPortabilityDirectives
-        {
-            get { return _firstPortabilityDirectives; }
-        }
-        public ListNode<DelimitedItemNode<Token>> Names
-        {
-            get { return _names; }
-        }
-        public ListNode<Token> SecondPortabilityDirectives
-        {
-            get { return _secondPortabilityDirectives; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
-        }
-        public AstNode Value
-        {
-            get { return _value; }
+            _nameListNode = nameListNode;
+            _colonNode = colonNode;
+            _typeNode = typeNode;
+            _firstPortabilityDirectiveListNode = firstPortabilityDirectiveListNode;
+            _absoluteSemikeywordNode = absoluteSemikeywordNode;
+            _absoluteAddressNode = absoluteAddressNode;
+            _equalSignNode = equalSignNode;
+            _valueNode = valueNode;
+            _secondPortabilityDirectiveListNode = secondPortabilityDirectiveListNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public AstNode AbsoluteAddressNode
+        {
+            get { return _absoluteAddressNode; }
+        }
+        public Token AbsoluteSemikeywordNode
+        {
+            get { return _absoluteSemikeywordNode; }
+        }
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public Token EqualSignNode
+        {
+            get { return _equalSignNode; }
+        }
+        public ListNode<Token> FirstPortabilityDirectiveListNode
+        {
+            get { return _firstPortabilityDirectiveListNode; }
+        }
+        public ListNode<DelimitedItemNode<Token>> NameListNode
+        {
+            get { return _nameListNode; }
+        }
+        public ListNode<Token> SecondPortabilityDirectiveListNode
+        {
+            get { return _secondPortabilityDirectiveListNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+        public AstNode ValueNode
+        {
+            get { return _valueNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (NameListNode != null)
+                    yield return NameListNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+                if (FirstPortabilityDirectiveListNode != null)
+                    yield return FirstPortabilityDirectiveListNode;
+                if (AbsoluteSemikeywordNode != null)
+                    yield return AbsoluteSemikeywordNode;
+                if (AbsoluteAddressNode != null)
+                    yield return AbsoluteAddressNode;
+                if (EqualSignNode != null)
+                    yield return EqualSignNode;
+                if (ValueNode != null)
+                    yield return ValueNode;
+                if (SecondPortabilityDirectiveListNode != null)
+                    yield return SecondPortabilityDirectiveListNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Names", Names);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
-                yield return new KeyValuePair<string, AstNode>("FirstPortabilityDirectives", FirstPortabilityDirectives);
-                yield return new KeyValuePair<string, AstNode>("Absolute", Absolute);
-                yield return new KeyValuePair<string, AstNode>("AbsoluteAddress", AbsoluteAddress);
-                yield return new KeyValuePair<string, AstNode>("EqualSign", EqualSign);
-                yield return new KeyValuePair<string, AstNode>("Value", Value);
-                yield return new KeyValuePair<string, AstNode>("SecondPortabilityDirectives", SecondPortabilityDirectives);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("NameListNode", NameListNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
+                yield return new KeyValuePair<string, AstNode>("FirstPortabilityDirectiveListNode", FirstPortabilityDirectiveListNode);
+                yield return new KeyValuePair<string, AstNode>("AbsoluteSemikeywordNode", AbsoluteSemikeywordNode);
+                yield return new KeyValuePair<string, AstNode>("AbsoluteAddressNode", AbsoluteAddressNode);
+                yield return new KeyValuePair<string, AstNode>("EqualSignNode", EqualSignNode);
+                yield return new KeyValuePair<string, AstNode>("ValueNode", ValueNode);
+                yield return new KeyValuePair<string, AstNode>("SecondPortabilityDirectiveListNode", SecondPortabilityDirectiveListNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -3464,65 +4468,85 @@ namespace DGrok.DelphiNodes
     }
     public partial class VariantGroupNode : NonterminalNode
     {
-        private Token _closeParenthesis;
-        private Token _colon;
-        private ListNode<FieldDeclNode> _fieldDeclList;
-        private Token _openParenthesis;
-        private Token _semicolon;
-        private ListNode<DelimitedItemNode<AstNode>> _valueList;
-        private VariantSectionNode _variantSection;
+        private Token _closeParenthesisNode;
+        private Token _colonNode;
+        private ListNode<FieldDeclNode> _fieldDeclListNode;
+        private Token _openParenthesisNode;
+        private Token _semicolonNode;
+        private ListNode<DelimitedItemNode<AstNode>> _valueListNode;
+        private VariantSectionNode _variantSectionNode;
 
-        public VariantGroupNode(ListNode<DelimitedItemNode<AstNode>> valueList, Token colon, Token openParenthesis, ListNode<FieldDeclNode> fieldDeclList, VariantSectionNode variantSection, Token closeParenthesis, Token semicolon)
+        public VariantGroupNode(ListNode<DelimitedItemNode<AstNode>> valueListNode, Token colonNode, Token openParenthesisNode, ListNode<FieldDeclNode> fieldDeclListNode, VariantSectionNode variantSectionNode, Token closeParenthesisNode, Token semicolonNode)
         {
-            _valueList = valueList;
-            _colon = colon;
-            _openParenthesis = openParenthesis;
-            _fieldDeclList = fieldDeclList;
-            _variantSection = variantSection;
-            _closeParenthesis = closeParenthesis;
-            _semicolon = semicolon;
-        }
-
-        public Token CloseParenthesis
-        {
-            get { return _closeParenthesis; }
-        }
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public ListNode<FieldDeclNode> FieldDeclList
-        {
-            get { return _fieldDeclList; }
-        }
-        public Token OpenParenthesis
-        {
-            get { return _openParenthesis; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> ValueList
-        {
-            get { return _valueList; }
-        }
-        public VariantSectionNode VariantSection
-        {
-            get { return _variantSection; }
+            _valueListNode = valueListNode;
+            _colonNode = colonNode;
+            _openParenthesisNode = openParenthesisNode;
+            _fieldDeclListNode = fieldDeclListNode;
+            _variantSectionNode = variantSectionNode;
+            _closeParenthesisNode = closeParenthesisNode;
+            _semicolonNode = semicolonNode;
         }
 
+        public Token CloseParenthesisNode
+        {
+            get { return _closeParenthesisNode; }
+        }
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public ListNode<FieldDeclNode> FieldDeclListNode
+        {
+            get { return _fieldDeclListNode; }
+        }
+        public Token OpenParenthesisNode
+        {
+            get { return _openParenthesisNode; }
+        }
+        public Token SemicolonNode
+        {
+            get { return _semicolonNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> ValueListNode
+        {
+            get { return _valueListNode; }
+        }
+        public VariantSectionNode VariantSectionNode
+        {
+            get { return _variantSectionNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (ValueListNode != null)
+                    yield return ValueListNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (OpenParenthesisNode != null)
+                    yield return OpenParenthesisNode;
+                if (FieldDeclListNode != null)
+                    yield return FieldDeclListNode;
+                if (VariantSectionNode != null)
+                    yield return VariantSectionNode;
+                if (CloseParenthesisNode != null)
+                    yield return CloseParenthesisNode;
+                if (SemicolonNode != null)
+                    yield return SemicolonNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("ValueList", ValueList);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("OpenParenthesis", OpenParenthesis);
-                yield return new KeyValuePair<string, AstNode>("FieldDeclList", FieldDeclList);
-                yield return new KeyValuePair<string, AstNode>("VariantSection", VariantSection);
-                yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("ValueListNode", ValueListNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("OpenParenthesisNode", OpenParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("FieldDeclListNode", FieldDeclListNode);
+                yield return new KeyValuePair<string, AstNode>("VariantSectionNode", VariantSectionNode);
+                yield return new KeyValuePair<string, AstNode>("CloseParenthesisNode", CloseParenthesisNode);
+                yield return new KeyValuePair<string, AstNode>("SemicolonNode", SemicolonNode);
             }
         }
 
@@ -3533,58 +4557,76 @@ namespace DGrok.DelphiNodes
     }
     public partial class VariantSectionNode : NonterminalNode
     {
-        private Token _case;
-        private Token _colon;
-        private Token _name;
-        private Token _of;
-        private AstNode _type;
-        private ListNode<VariantGroupNode> _variantGroupList;
+        private Token _caseKeywordNode;
+        private Token _colonNode;
+        private Token _nameNode;
+        private Token _ofKeywordNode;
+        private AstNode _typeNode;
+        private ListNode<VariantGroupNode> _variantGroupListNode;
 
-        public VariantSectionNode(Token theCase, Token name, Token colon, AstNode type, Token of, ListNode<VariantGroupNode> variantGroupList)
+        public VariantSectionNode(Token caseKeywordNode, Token nameNode, Token colonNode, AstNode typeNode, Token ofKeywordNode, ListNode<VariantGroupNode> variantGroupListNode)
         {
-            _case = theCase;
-            _name = name;
-            _colon = colon;
-            _type = type;
-            _of = of;
-            _variantGroupList = variantGroupList;
-        }
-
-        public Token Case
-        {
-            get { return _case; }
-        }
-        public Token Colon
-        {
-            get { return _colon; }
-        }
-        public Token Name
-        {
-            get { return _name; }
-        }
-        public Token Of
-        {
-            get { return _of; }
-        }
-        public AstNode Type
-        {
-            get { return _type; }
-        }
-        public ListNode<VariantGroupNode> VariantGroupList
-        {
-            get { return _variantGroupList; }
+            _caseKeywordNode = caseKeywordNode;
+            _nameNode = nameNode;
+            _colonNode = colonNode;
+            _typeNode = typeNode;
+            _ofKeywordNode = ofKeywordNode;
+            _variantGroupListNode = variantGroupListNode;
         }
 
+        public Token CaseKeywordNode
+        {
+            get { return _caseKeywordNode; }
+        }
+        public Token ColonNode
+        {
+            get { return _colonNode; }
+        }
+        public Token NameNode
+        {
+            get { return _nameNode; }
+        }
+        public Token OfKeywordNode
+        {
+            get { return _ofKeywordNode; }
+        }
+        public AstNode TypeNode
+        {
+            get { return _typeNode; }
+        }
+        public ListNode<VariantGroupNode> VariantGroupListNode
+        {
+            get { return _variantGroupListNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (CaseKeywordNode != null)
+                    yield return CaseKeywordNode;
+                if (NameNode != null)
+                    yield return NameNode;
+                if (ColonNode != null)
+                    yield return ColonNode;
+                if (TypeNode != null)
+                    yield return TypeNode;
+                if (OfKeywordNode != null)
+                    yield return OfKeywordNode;
+                if (VariantGroupListNode != null)
+                    yield return VariantGroupListNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Case", Case);
-                yield return new KeyValuePair<string, AstNode>("Name", Name);
-                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
-                yield return new KeyValuePair<string, AstNode>("Type", Type);
-                yield return new KeyValuePair<string, AstNode>("Of", Of);
-                yield return new KeyValuePair<string, AstNode>("VariantGroupList", VariantGroupList);
+                yield return new KeyValuePair<string, AstNode>("CaseKeywordNode", CaseKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("NameNode", NameNode);
+                yield return new KeyValuePair<string, AstNode>("ColonNode", ColonNode);
+                yield return new KeyValuePair<string, AstNode>("TypeNode", TypeNode);
+                yield return new KeyValuePair<string, AstNode>("OfKeywordNode", OfKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("VariantGroupListNode", VariantGroupListNode);
             }
         }
 
@@ -3595,30 +4637,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class VarSectionNode : NonterminalNode
     {
-        private Token _var;
-        private ListNode<VarDeclNode> _varList;
+        private Token _varKeywordNode;
+        private ListNode<VarDeclNode> _varListNode;
 
-        public VarSectionNode(Token var, ListNode<VarDeclNode> varList)
+        public VarSectionNode(Token varKeywordNode, ListNode<VarDeclNode> varListNode)
         {
-            _var = var;
-            _varList = varList;
+            _varKeywordNode = varKeywordNode;
+            _varListNode = varListNode;
         }
 
-        public Token Var
+        public Token VarKeywordNode
         {
-            get { return _var; }
+            get { return _varKeywordNode; }
         }
-        public ListNode<VarDeclNode> VarList
+        public ListNode<VarDeclNode> VarListNode
         {
-            get { return _varList; }
+            get { return _varListNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (VarKeywordNode != null)
+                    yield return VarKeywordNode;
+                if (VarListNode != null)
+                    yield return VarListNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Var", Var);
-                yield return new KeyValuePair<string, AstNode>("VarList", VarList);
+                yield return new KeyValuePair<string, AstNode>("VarKeywordNode", VarKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("VarListNode", VarListNode);
             }
         }
 
@@ -3629,30 +4681,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class VisibilityNode : NonterminalNode
     {
-        private Token _strict;
-        private Token _visibility;
+        private Token _strictSemikeywordNode;
+        private Token _visibilityKeywordNode;
 
-        public VisibilityNode(Token strict, Token visibility)
+        public VisibilityNode(Token strictSemikeywordNode, Token visibilityKeywordNode)
         {
-            _strict = strict;
-            _visibility = visibility;
+            _strictSemikeywordNode = strictSemikeywordNode;
+            _visibilityKeywordNode = visibilityKeywordNode;
         }
 
-        public Token Strict
+        public Token StrictSemikeywordNode
         {
-            get { return _strict; }
+            get { return _strictSemikeywordNode; }
         }
-        public Token Visibility
+        public Token VisibilityKeywordNode
         {
-            get { return _visibility; }
+            get { return _visibilityKeywordNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (StrictSemikeywordNode != null)
+                    yield return StrictSemikeywordNode;
+                if (VisibilityKeywordNode != null)
+                    yield return VisibilityKeywordNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Strict", Strict);
-                yield return new KeyValuePair<string, AstNode>("Visibility", Visibility);
+                yield return new KeyValuePair<string, AstNode>("StrictSemikeywordNode", StrictSemikeywordNode);
+                yield return new KeyValuePair<string, AstNode>("VisibilityKeywordNode", VisibilityKeywordNode);
             }
         }
 
@@ -3663,30 +4725,40 @@ namespace DGrok.DelphiNodes
     }
     public partial class VisibilitySectionNode : NonterminalNode
     {
-        private ListNode<AstNode> _contents;
-        private VisibilityNode _visibility;
+        private ListNode<AstNode> _contentListNode;
+        private VisibilityNode _visibilityNode;
 
-        public VisibilitySectionNode(VisibilityNode visibility, ListNode<AstNode> contents)
+        public VisibilitySectionNode(VisibilityNode visibilityNode, ListNode<AstNode> contentListNode)
         {
-            _visibility = visibility;
-            _contents = contents;
+            _visibilityNode = visibilityNode;
+            _contentListNode = contentListNode;
         }
 
-        public ListNode<AstNode> Contents
+        public ListNode<AstNode> ContentListNode
         {
-            get { return _contents; }
+            get { return _contentListNode; }
         }
-        public VisibilityNode Visibility
+        public VisibilityNode VisibilityNode
         {
-            get { return _visibility; }
+            get { return _visibilityNode; }
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (VisibilityNode != null)
+                    yield return VisibilityNode;
+                if (ContentListNode != null)
+                    yield return ContentListNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Visibility", Visibility);
-                yield return new KeyValuePair<string, AstNode>("Contents", Contents);
+                yield return new KeyValuePair<string, AstNode>("VisibilityNode", VisibilityNode);
+                yield return new KeyValuePair<string, AstNode>("ContentListNode", ContentListNode);
             }
         }
 
@@ -3697,44 +4769,58 @@ namespace DGrok.DelphiNodes
     }
     public partial class WhileStatementNode : NonterminalNode
     {
-        private AstNode _condition;
-        private Token _do;
-        private AstNode _statement;
-        private Token _while;
+        private AstNode _conditionNode;
+        private Token _doKeywordNode;
+        private AstNode _statementNode;
+        private Token _whileKeywordNode;
 
-        public WhileStatementNode(Token theWhile, AstNode condition, Token theDo, AstNode statement)
+        public WhileStatementNode(Token whileKeywordNode, AstNode conditionNode, Token doKeywordNode, AstNode statementNode)
         {
-            _while = theWhile;
-            _condition = condition;
-            _do = theDo;
-            _statement = statement;
-        }
-
-        public AstNode Condition
-        {
-            get { return _condition; }
-        }
-        public Token Do
-        {
-            get { return _do; }
-        }
-        public AstNode Statement
-        {
-            get { return _statement; }
-        }
-        public Token While
-        {
-            get { return _while; }
+            _whileKeywordNode = whileKeywordNode;
+            _conditionNode = conditionNode;
+            _doKeywordNode = doKeywordNode;
+            _statementNode = statementNode;
         }
 
+        public AstNode ConditionNode
+        {
+            get { return _conditionNode; }
+        }
+        public Token DoKeywordNode
+        {
+            get { return _doKeywordNode; }
+        }
+        public AstNode StatementNode
+        {
+            get { return _statementNode; }
+        }
+        public Token WhileKeywordNode
+        {
+            get { return _whileKeywordNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (WhileKeywordNode != null)
+                    yield return WhileKeywordNode;
+                if (ConditionNode != null)
+                    yield return ConditionNode;
+                if (DoKeywordNode != null)
+                    yield return DoKeywordNode;
+                if (StatementNode != null)
+                    yield return StatementNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("While", While);
-                yield return new KeyValuePair<string, AstNode>("Condition", Condition);
-                yield return new KeyValuePair<string, AstNode>("Do", Do);
-                yield return new KeyValuePair<string, AstNode>("Statement", Statement);
+                yield return new KeyValuePair<string, AstNode>("WhileKeywordNode", WhileKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ConditionNode", ConditionNode);
+                yield return new KeyValuePair<string, AstNode>("DoKeywordNode", DoKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("StatementNode", StatementNode);
             }
         }
 
@@ -3745,44 +4831,58 @@ namespace DGrok.DelphiNodes
     }
     public partial class WithStatementNode : NonterminalNode
     {
-        private Token _do;
-        private ListNode<DelimitedItemNode<AstNode>> _expressionList;
-        private AstNode _statement;
-        private Token _with;
+        private Token _doKeywordNode;
+        private ListNode<DelimitedItemNode<AstNode>> _expressionListNode;
+        private AstNode _statementNode;
+        private Token _withKeywordNode;
 
-        public WithStatementNode(Token with, ListNode<DelimitedItemNode<AstNode>> expressionList, Token theDo, AstNode statement)
+        public WithStatementNode(Token withKeywordNode, ListNode<DelimitedItemNode<AstNode>> expressionListNode, Token doKeywordNode, AstNode statementNode)
         {
-            _with = with;
-            _expressionList = expressionList;
-            _do = theDo;
-            _statement = statement;
-        }
-
-        public Token Do
-        {
-            get { return _do; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> ExpressionList
-        {
-            get { return _expressionList; }
-        }
-        public AstNode Statement
-        {
-            get { return _statement; }
-        }
-        public Token With
-        {
-            get { return _with; }
+            _withKeywordNode = withKeywordNode;
+            _expressionListNode = expressionListNode;
+            _doKeywordNode = doKeywordNode;
+            _statementNode = statementNode;
         }
 
+        public Token DoKeywordNode
+        {
+            get { return _doKeywordNode; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> ExpressionListNode
+        {
+            get { return _expressionListNode; }
+        }
+        public AstNode StatementNode
+        {
+            get { return _statementNode; }
+        }
+        public Token WithKeywordNode
+        {
+            get { return _withKeywordNode; }
+        }
+
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                if (WithKeywordNode != null)
+                    yield return WithKeywordNode;
+                if (ExpressionListNode != null)
+                    yield return ExpressionListNode;
+                if (DoKeywordNode != null)
+                    yield return DoKeywordNode;
+                if (StatementNode != null)
+                    yield return StatementNode;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("With", With);
-                yield return new KeyValuePair<string, AstNode>("ExpressionList", ExpressionList);
-                yield return new KeyValuePair<string, AstNode>("Do", Do);
-                yield return new KeyValuePair<string, AstNode>("Statement", Statement);
+                yield return new KeyValuePair<string, AstNode>("WithKeywordNode", WithKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("ExpressionListNode", ExpressionListNode);
+                yield return new KeyValuePair<string, AstNode>("DoKeywordNode", DoKeywordNode);
+                yield return new KeyValuePair<string, AstNode>("StatementNode", StatementNode);
             }
         }
 

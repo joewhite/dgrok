@@ -24,77 +24,77 @@ namespace DGrok.Tests
         {
             Assert.That("Foo: Integer; Bar: Boolean;", ParsesAs(
                 "FieldSectionNode",
-                "  Class: (none)",
-                "  Var: (none)",
-                "  FieldList: ListNode",
+                "  ClassKeywordNode: (none)",
+                "  VarKeywordNode: (none)",
+                "  FieldListNode: ListNode",
                 "    Items[0]: FieldDeclNode",
-                "      NameList: ListNode",
+                "      NameListNode: ListNode",
                 "        Items[0]: DelimitedItemNode",
-                "          Item: Identifier |Foo|",
-                "          Delimiter: (none)",
-                "      Colon: Colon |:|",
-                "      Type: Identifier |Integer|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|",
+                "          ItemNode: Identifier |Foo|",
+                "          DelimiterNode: (none)",
+                "      ColonNode: Colon |:|",
+                "      TypeNode: Identifier |Integer|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|",
                 "    Items[1]: FieldDeclNode",
-                "      NameList: ListNode",
+                "      NameListNode: ListNode",
                 "        Items[0]: DelimitedItemNode",
-                "          Item: Identifier |Bar|",
-                "          Delimiter: (none)",
-                "      Colon: Colon |:|",
-                "      Type: Identifier |Boolean|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|"));
+                "          ItemNode: Identifier |Bar|",
+                "          DelimiterNode: (none)",
+                "      ColonNode: Colon |:|",
+                "      TypeNode: Identifier |Boolean|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestVarWithField()
         {
             Assert.That("var Foo: Integer;", ParsesAs(
                 "FieldSectionNode",
-                "  Class: (none)",
-                "  Var: VarKeyword |var|",
-                "  FieldList: ListNode",
+                "  ClassKeywordNode: (none)",
+                "  VarKeywordNode: VarKeyword |var|",
+                "  FieldListNode: ListNode",
                 "    Items[0]: FieldDeclNode",
-                "      NameList: ListNode",
+                "      NameListNode: ListNode",
                 "        Items[0]: DelimitedItemNode",
-                "          Item: Identifier |Foo|",
-                "          Delimiter: (none)",
-                "      Colon: Colon |:|",
-                "      Type: Identifier |Integer|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|"));
+                "          ItemNode: Identifier |Foo|",
+                "          DelimiterNode: (none)",
+                "      ColonNode: Colon |:|",
+                "      TypeNode: Identifier |Integer|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestClassVarWithField()
         {
             Assert.That("class var Foo: Integer;", ParsesAs(
                 "FieldSectionNode",
-                "  Class: ClassKeyword |class|",
-                "  Var: VarKeyword |var|",
-                "  FieldList: ListNode",
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  VarKeywordNode: VarKeyword |var|",
+                "  FieldListNode: ListNode",
                 "    Items[0]: FieldDeclNode",
-                "      NameList: ListNode",
+                "      NameListNode: ListNode",
                 "        Items[0]: DelimitedItemNode",
-                "          Item: Identifier |Foo|",
-                "          Delimiter: (none)",
-                "      Colon: Colon |:|",
-                "      Type: Identifier |Integer|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|"));
+                "          ItemNode: Identifier |Foo|",
+                "          DelimiterNode: (none)",
+                "      ColonNode: Colon |:|",
+                "      TypeNode: Identifier |Integer|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestEmptyVarSection()
         {
             Assert.That("var", ParsesAs(
                 "FieldSectionNode",
-                "  Class: (none)",
-                "  Var: VarKeyword |var|",
-                "  FieldList: ListNode"));
+                "  ClassKeywordNode: (none)",
+                "  VarKeywordNode: VarKeyword |var|",
+                "  FieldListNode: ListNode"));
         }
         public void TestEmptyClassVarSection()
         {
             Assert.That("class var", ParsesAs(
                 "FieldSectionNode",
-                "  Class: ClassKeyword |class|",
-                "  Var: VarKeyword |var|",
-                "  FieldList: ListNode"));
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  VarKeywordNode: VarKeyword |var|",
+                "  FieldListNode: ListNode"));
         }
         public void TestClassAloneDoesNotParse()
         {

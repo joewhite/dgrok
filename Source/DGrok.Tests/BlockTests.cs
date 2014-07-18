@@ -24,30 +24,30 @@ namespace DGrok.Tests
         {
             Assert.That("begin end", ParsesAs(
                 "BlockNode",
-                "  Begin: BeginKeyword |begin|",
-                "  StatementList: ListNode",
-                "  End: EndKeyword |end|"));
+                "  BeginKeywordNode: BeginKeyword |begin|",
+                "  StatementListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestStatements()
         {
             Assert.That("begin Foo; Bar; end", ParsesAs(
                 "BlockNode",
-                "  Begin: BeginKeyword |begin|",
-                "  StatementList: ListNode",
+                "  BeginKeywordNode: BeginKeyword |begin|",
+                "  StatementListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: Semicolon |;|",
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: Semicolon |;|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Identifier |Bar|",
-                "      Delimiter: Semicolon |;|",
-                "  End: EndKeyword |end|"));
+                "      ItemNode: Identifier |Bar|",
+                "      DelimiterNode: Semicolon |;|",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestAsmBlock()
         {
             Assert.That("asm end", ParsesAs(
                 "AssemblerStatementNode",
-                "  Asm: AsmKeyword |asm|",
-                "  End: EndKeyword |end|"));
+                "  AsmKeywordNode: AsmKeyword |asm|",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
     }
 }

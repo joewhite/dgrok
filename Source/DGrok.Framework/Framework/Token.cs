@@ -25,21 +25,25 @@ namespace DGrok.Framework
             _parsedText = parsedText;
         }
 
-        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        public override IEnumerable<AstNode> ChildNodes
         {
             get { yield break; }
         }
-        public Location EndLocation
+        public override Location EndLocation
         {
             get { return new Location(Location.FileName, Location.FileSource, Location.Offset + Text.Length); }
         }
-        public Location Location
+        public override Location Location
         {
             get { return _location; }
         }
         public string ParsedText
         {
             get { return _parsedText; }
+        }
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get { yield break; }
         }
         public string Text
         {

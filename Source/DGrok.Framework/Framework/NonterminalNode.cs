@@ -12,6 +12,34 @@ namespace DGrok.Framework
 {
     public abstract class NonterminalNode : AstNode
     {
+        public override Location EndLocation
+        {
+            get
+            {
+                List<AstNode> childNodeList = new List<AstNode>(ChildNodes);
+                for (int i = childNodeList.Count - 1; i >= 0; --i)
+                {
+                    Location childEndLocation = childNodeList[i].EndLocation;
+                    if (childEndLocation != null)
+                        return childEndLocation;
+                }
+                return null;
+            }
+        }
+        public override Location Location
+        {
+            get
+            {
+                foreach (AstNode childNode in ChildNodes)
+                {
+                    Location childLocation = childNode.Location;
+                    if (childLocation != null)
+                        return childLocation;
+                }
+                return null;
+            }
+        }
+
         public override void InspectTo(StringBuilder builder, int currentIndentCount)
         {
             string mangledTypeName = GetType().Name;

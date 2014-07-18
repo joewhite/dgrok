@@ -13,17 +13,43 @@ namespace DGrok.Framework
 {
     public class Catalog
     {
-        private List<CodeBaseActionProxy> _items = new List<CodeBaseActionProxy>();
+        private List<Category> _categories;
+        private Dictionary<CategoryType, Category> _categoriesByType =
+            new Dictionary<CategoryType, Category>();
 
         private Catalog()
         {
         }
 
-        public IList<CodeBaseActionProxy> Items
+        public IList<Category> Categories
         {
-            get { return _items; }
+            get { return _categories; }
         }
 
+        private void Add(CodeBaseActionProxy action, CategoryType categoryType)
+        {
+            Category category;
+            if (_categoriesByType.ContainsKey(categoryType))
+                category = _categoriesByType[categoryType];
+            else
+            {
+                category = new Category(categoryType);
+                _categoriesByType[categoryType] = category;
+            }
+            category.Items.Add(action);
+        }
+        private void BuildSortedList()
+        {
+            _categories = new List<Category>(_categoriesByType.Values);
+            _categories.Sort(delegate(Category a, Category b)
+            {
+                string aName = a.CategoryType.ToString();
+                string bName = b.CategoryType.ToString();
+                return String.Compare(aName, bName, StringComparison.CurrentCultureIgnoreCase);
+            });
+            foreach (Category category in _categories)
+                category.Sort();
+        }
         public static Catalog Load()
         {
             Catalog catalog = new Catalog();
@@ -36,18 +62,14 @@ namespace DGrok.Framework
                     object[] attributes =
                         type.GetCustomAttributes(typeof(CodeBaseActionAttribute), false);
                     if (attributes.Length > 0)
-                        catalog.Items.Add(new CodeBaseActionProxy(type));
+                    {
+                        CodeBaseActionAttribute attribute = (CodeBaseActionAttribute) attributes[0];
+                        catalog.Add(new CodeBaseActionProxy(type), attribute.Category);
+                    }
                 }
             }
-            catalog.Sort();
+            catalog.BuildSortedList();
             return catalog;
-        }
-        public void Sort()
-        {
-            _items.Sort(delegate(CodeBaseActionProxy a, CodeBaseActionProxy b)
-            {
-                return String.Compare(a.Name, b.Name, StringComparison.CurrentCultureIgnoreCase);
-            });
         }
     }
 }

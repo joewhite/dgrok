@@ -24,17 +24,17 @@ namespace DGrok.Tests
         {
             Assert.That("Foo", ParsesAs(
                 "EnumeratedTypeElementNode",
-                "  Name: Identifier |Foo|",
-                "  EqualSign: (none)",
-                "  Value: (none)"));
+                "  NameNode: Identifier |Foo|",
+                "  EqualSignNode: (none)",
+                "  ValueNode: (none)"));
         }
         public void TestValue()
         {
             Assert.That("Foo = 42", ParsesAs(
                 "EnumeratedTypeElementNode",
-                "  Name: Identifier |Foo|",
-                "  EqualSign: EqualSign |=|",
-                "  Value: Number |42|"));
+                "  NameNode: Identifier |Foo|",
+                "  EqualSignNode: EqualSign |=|",
+                "  ValueNode: Number |42|"));
         }
     }
 }

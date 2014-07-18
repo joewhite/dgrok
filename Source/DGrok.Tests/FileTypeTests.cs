@@ -24,28 +24,28 @@ namespace DGrok.Tests
         {
             Assert.That("file", ParsesAs(
                 "FileTypeNode",
-                "  File: FileKeyword |file|",
-                "  Of: (none)",
-                "  Type: (none)"));
+                "  FileKeywordNode: FileKeyword |file|",
+                "  OfKeywordNode: (none)",
+                "  TypeNode: (none)"));
         }
         public void TestIdentifier()
         {
             Assert.That("file of Integer", ParsesAs(
                 "FileTypeNode",
-                "  File: FileKeyword |file|",
-                "  Of: OfKeyword |of|",
-                "  Type: Identifier |Integer|"));
+                "  FileKeywordNode: FileKeyword |file|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: Identifier |Integer|"));
         }
         public void TestQualified()
         {
             Assert.That("file of Foo.TBar", ParsesAs(
                 "FileTypeNode",
-                "  File: FileKeyword |file|",
-                "  Of: OfKeyword |of|",
-                "  Type: BinaryOperationNode",
-                "    Left: Identifier |Foo|",
-                "    Operator: Dot |.|",
-                "    Right: Identifier |TBar|"));
+                "  FileKeywordNode: FileKeyword |file|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: BinaryOperationNode",
+                "    LeftNode: Identifier |Foo|",
+                "    OperatorNode: Dot |.|",
+                "    RightNode: Identifier |TBar|"));
         }
     }
 }

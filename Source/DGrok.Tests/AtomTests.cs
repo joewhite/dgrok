@@ -32,44 +32,44 @@ namespace DGrok.Tests
         {
             Assert.That("Foo.Bar", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Identifier |Foo|",
-                "  Operator: Dot |.|",
-                "  Right: Identifier |Bar|"));
+                "  LeftNode: Identifier |Foo|",
+                "  OperatorNode: Dot |.|",
+                "  RightNode: Identifier |Bar|"));
         }
         public void TestTwoDotOperators()
         {
             Assert.That("Foo.Bar.Baz", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: BinaryOperationNode",
-                "    Left: Identifier |Foo|",
-                "    Operator: Dot |.|",
-                "    Right: Identifier |Bar|",
-                "  Operator: Dot |.|",
-                "  Right: Identifier |Baz|"));
+                "  LeftNode: BinaryOperationNode",
+                "    LeftNode: Identifier |Foo|",
+                "    OperatorNode: Dot |.|",
+                "    RightNode: Identifier |Bar|",
+                "  OperatorNode: Dot |.|",
+                "  RightNode: Identifier |Baz|"));
         }
         public void TestDotFollowedByKeyword()
         {
             Assert.That("Should.Not", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Identifier |Should|",
-                "  Operator: Dot |.|",
-                "  Right: Identifier |Not|"));
+                "  LeftNode: Identifier |Should|",
+                "  OperatorNode: Dot |.|",
+                "  RightNode: Identifier |Not|"));
         }
         public void TestCaret()
         {
             Assert.That("Foo^", ParsesAs(
                 "PointerDereferenceNode",
-                "  Operand: Identifier |Foo|",
-                "  Caret: Caret |^|"));
+                "  OperandNode: Identifier |Foo|",
+                "  CaretNode: Caret |^|"));
         }
         public void TestTwoCarets()
         {
             Assert.That("Foo^^", ParsesAs(
                 "PointerDereferenceNode",
-                "  Operand: PointerDereferenceNode",
-                "    Operand: Identifier |Foo|",
-                "    Caret: Caret |^|",
-                "  Caret: Caret |^|"));
+                "  OperandNode: PointerDereferenceNode",
+                "    OperandNode: Identifier |Foo|",
+                "    CaretNode: Caret |^|",
+                "  CaretNode: Caret |^|"));
         }
         public void TestEmptyArrayIndexDoesNotParse()
         {
@@ -79,108 +79,108 @@ namespace DGrok.Tests
         {
             Assert.That("Foo[42]", ParsesAs(
                 "ParameterizedNode",
-                "  Left: Identifier |Foo|",
-                "  OpenDelimiter: OpenBracket |[|",
-                "  ParameterList: ListNode",
+                "  LeftNode: Identifier |Foo|",
+                "  OpenDelimiterNode: OpenBracket |[|",
+                "  ParameterListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |42|",
-                "      Delimiter: (none)",
-                "  CloseDelimiter: CloseBracket |]|"));
+                "      ItemNode: Number |42|",
+                "      DelimiterNode: (none)",
+                "  CloseDelimiterNode: CloseBracket |]|"));
         }
         public void TestTwoArrayIndexes()
         {
             Assert.That("Foo[24, 42]", ParsesAs(
                 "ParameterizedNode",
-                "  Left: Identifier |Foo|",
-                "  OpenDelimiter: OpenBracket |[|",
-                "  ParameterList: ListNode",
+                "  LeftNode: Identifier |Foo|",
+                "  OpenDelimiterNode: OpenBracket |[|",
+                "  ParameterListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |24|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: Number |24|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Number |42|",
-                "      Delimiter: (none)",
-                "  CloseDelimiter: CloseBracket |]|"));
+                "      ItemNode: Number |42|",
+                "      DelimiterNode: (none)",
+                "  CloseDelimiterNode: CloseBracket |]|"));
         }
         public void TestNoParameters()
         {
             Assert.That("Foo()", ParsesAs(
                 "ParameterizedNode",
-                "  Left: Identifier |Foo|",
-                "  OpenDelimiter: OpenParenthesis |(|",
-                "  ParameterList: ListNode",
-                "  CloseDelimiter: CloseParenthesis |)|"));
+                "  LeftNode: Identifier |Foo|",
+                "  OpenDelimiterNode: OpenParenthesis |(|",
+                "  ParameterListNode: ListNode",
+                "  CloseDelimiterNode: CloseParenthesis |)|"));
         }
         public void TestOneParameter()
         {
             Assert.That("Foo(42)", ParsesAs(
                 "ParameterizedNode",
-                "  Left: Identifier |Foo|",
-                "  OpenDelimiter: OpenParenthesis |(|",
-                "  ParameterList: ListNode",
+                "  LeftNode: Identifier |Foo|",
+                "  OpenDelimiterNode: OpenParenthesis |(|",
+                "  ParameterListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |42|",
-                "      Delimiter: (none)",
-                "  CloseDelimiter: CloseParenthesis |)|"));
+                "      ItemNode: Number |42|",
+                "      DelimiterNode: (none)",
+                "  CloseDelimiterNode: CloseParenthesis |)|"));
         }
         public void TestTwoParameters()
         {
             Assert.That("Foo(24, 42)", ParsesAs(
                 "ParameterizedNode",
-                "  Left: Identifier |Foo|",
-                "  OpenDelimiter: OpenParenthesis |(|",
-                "  ParameterList: ListNode",
+                "  LeftNode: Identifier |Foo|",
+                "  OpenDelimiterNode: OpenParenthesis |(|",
+                "  ParameterListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |24|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: Number |24|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Number |42|",
-                "      Delimiter: (none)",
-                "  CloseDelimiter: CloseParenthesis |)|"));
+                "      ItemNode: Number |42|",
+                "      DelimiterNode: (none)",
+                "  CloseDelimiterNode: CloseParenthesis |)|"));
         }
         public void TestStringCast()
         {
             Assert.That("string('0')", ParsesAs(
                 "ParameterizedNode",
-                "  Left: StringKeyword |string|",
-                "  OpenDelimiter: OpenParenthesis |(|",
-                "  ParameterList: ListNode",
+                "  LeftNode: StringKeyword |string|",
+                "  OpenDelimiterNode: OpenParenthesis |(|",
+                "  ParameterListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: StringLiteral |'0'|",
-                "      Delimiter: (none)",
-                "  CloseDelimiter: CloseParenthesis |)|"));
+                "      ItemNode: StringLiteral |'0'|",
+                "      DelimiterNode: (none)",
+                "  CloseDelimiterNode: CloseParenthesis |)|"));
         }
         public void TestFileCast()
         {
             Assert.That("file(AUntypedVarParameter)", ParsesAs(
                 "ParameterizedNode",
-                "  Left: FileKeyword |file|",
-                "  OpenDelimiter: OpenParenthesis |(|",
-                "  ParameterList: ListNode",
+                "  LeftNode: FileKeyword |file|",
+                "  OpenDelimiterNode: OpenParenthesis |(|",
+                "  ParameterListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |AUntypedVarParameter|",
-                "      Delimiter: (none)",
-                "  CloseDelimiter: CloseParenthesis |)|"));
+                "      ItemNode: Identifier |AUntypedVarParameter|",
+                "      DelimiterNode: (none)",
+                "  CloseDelimiterNode: CloseParenthesis |)|"));
         }
         public void TestColonSyntax()
         {
             Assert.That("Str(X:0, S)", ParsesAs(
                 "ParameterizedNode",
-                "  Left: Identifier |Str|",
-                "  OpenDelimiter: OpenParenthesis |(|",
-                "  ParameterList: ListNode",
+                "  LeftNode: Identifier |Str|",
+                "  OpenDelimiterNode: OpenParenthesis |(|",
+                "  ParameterListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: NumberFormatNode",
-                "        Value: Identifier |X|",
-                "        SizeColon: Colon |:|",
-                "        Size: Number |0|",
-                "        PrecisionColon: (none)",
-                "        Precision: (none)",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: NumberFormatNode",
+                "        ValueNode: Identifier |X|",
+                "        SizeColonNode: Colon |:|",
+                "        SizeNode: Number |0|",
+                "        PrecisionColonNode: (none)",
+                "        PrecisionNode: (none)",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Identifier |S|",
-                "      Delimiter: (none)",
-                "  CloseDelimiter: CloseParenthesis |)|"));
+                "      ItemNode: Identifier |S|",
+                "      DelimiterNode: (none)",
+                "  CloseDelimiterNode: CloseParenthesis |)|"));
         }
     }
 }

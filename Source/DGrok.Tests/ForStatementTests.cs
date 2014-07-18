@@ -24,62 +24,62 @@ namespace DGrok.Tests
         {
             Assert.That("for I := 1 to 42 do", ParsesAs(
                 "ForStatementNode",
-                "  For: ForKeyword |for|",
-                "  LoopVariable: Identifier |I|",
-                "  ColonEquals: ColonEquals |:=|",
-                "  StartingValue: Number |1|",
-                "  Direction: ToKeyword |to|",
-                "  EndingValue: Number |42|",
-                "  Do: DoKeyword |do|",
-                "  Statement: (none)"));
+                "  ForKeywordNode: ForKeyword |for|",
+                "  LoopVariableNode: Identifier |I|",
+                "  ColonEqualsNode: ColonEquals |:=|",
+                "  StartingValueNode: Number |1|",
+                "  DirectionNode: ToKeyword |to|",
+                "  EndingValueNode: Number |42|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: (none)"));
         }
         public void TestDownTo()
         {
             Assert.That("for I := 1 downto 42 do", ParsesAs(
                 "ForStatementNode",
-                "  For: ForKeyword |for|",
-                "  LoopVariable: Identifier |I|",
-                "  ColonEquals: ColonEquals |:=|",
-                "  StartingValue: Number |1|",
-                "  Direction: DownToKeyword |downto|",
-                "  EndingValue: Number |42|",
-                "  Do: DoKeyword |do|",
-                "  Statement: (none)"));
+                "  ForKeywordNode: ForKeyword |for|",
+                "  LoopVariableNode: Identifier |I|",
+                "  ColonEqualsNode: ColonEquals |:=|",
+                "  StartingValueNode: Number |1|",
+                "  DirectionNode: DownToKeyword |downto|",
+                "  EndingValueNode: Number |42|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: (none)"));
         }
         public void TestStatement()
         {
             Assert.That("for I := 1 to 42 do Foo", ParsesAs(
                 "ForStatementNode",
-                "  For: ForKeyword |for|",
-                "  LoopVariable: Identifier |I|",
-                "  ColonEquals: ColonEquals |:=|",
-                "  StartingValue: Number |1|",
-                "  Direction: ToKeyword |to|",
-                "  EndingValue: Number |42|",
-                "  Do: DoKeyword |do|",
-                "  Statement: Identifier |Foo|"));
+                "  ForKeywordNode: ForKeyword |for|",
+                "  LoopVariableNode: Identifier |I|",
+                "  ColonEqualsNode: ColonEquals |:=|",
+                "  StartingValueNode: Number |1|",
+                "  DirectionNode: ToKeyword |to|",
+                "  EndingValueNode: Number |42|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: Identifier |Foo|"));
         }
         public void TestForIn()
         {
             Assert.That("for Obj in List do", ParsesAs(
                 "ForInStatementNode",
-                "  For: ForKeyword |for|",
-                "  LoopVariable: Identifier |Obj|",
-                "  In: InKeyword |in|",
-                "  Expression: Identifier |List|",
-                "  Do: DoKeyword |do|",
-                "  Statement: (none)"));
+                "  ForKeywordNode: ForKeyword |for|",
+                "  LoopVariableNode: Identifier |Obj|",
+                "  InKeywordNode: InKeyword |in|",
+                "  ExpressionNode: Identifier |List|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: (none)"));
         }
         public void TestForInWithStatement()
         {
             Assert.That("for Obj in List do Foo", ParsesAs(
                 "ForInStatementNode",
-                "  For: ForKeyword |for|",
-                "  LoopVariable: Identifier |Obj|",
-                "  In: InKeyword |in|",
-                "  Expression: Identifier |List|",
-                "  Do: DoKeyword |do|",
-                "  Statement: Identifier |Foo|"));
+                "  ForKeywordNode: ForKeyword |for|",
+                "  LoopVariableNode: Identifier |Obj|",
+                "  InKeywordNode: InKeyword |in|",
+                "  ExpressionNode: Identifier |List|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: Identifier |Foo|"));
         }
     }
 }

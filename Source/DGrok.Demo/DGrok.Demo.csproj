@@ -48,6 +48,19 @@
     <Compile Include="AdHocParseControl.Designer.cs">
       <DependentUpon>AdHocParseControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Block.cs" />
+    <Compile Include="CompilerOptionsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CompilerOptionsControl.Designer.cs">
+      <DependentUpon>CompilerOptionsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FindDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FindDialog.Designer.cs">
+      <DependentUpon>FindDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +81,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ActionNode.cs" />
+    <Compile Include="ViewSourceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ViewSourceControl.Designer.cs">
+      <DependentUpon>ViewSourceControl.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DGrok.Framework\DGrok.Framework.csproj">
@@ -80,6 +100,14 @@
       <SubType>Designer</SubType>
       <DependentUpon>AdHocParseControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CompilerOptionsControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CompilerOptionsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FindDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FindDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -91,6 +119,10 @@
     <EmbeddedResource Include="ParseTextControl.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ParseTextControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewSourceControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ViewSourceControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

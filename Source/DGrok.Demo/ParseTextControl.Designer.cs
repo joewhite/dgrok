@@ -29,11 +29,11 @@ namespace DGrok.Demo
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.edtSource = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.edtResults = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnParse = new System.Windows.Forms.Button();
+            this.viewSourceControl1 = new DGrok.Demo.ViewSourceControl();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -49,7 +49,7 @@ namespace DGrok.Demo
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.edtSource);
+            this.splitContainer1.Panel1.Controls.Add(this.viewSourceControl1);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             // 
             // splitContainer1.Panel2
@@ -60,18 +60,6 @@ namespace DGrok.Demo
             this.splitContainer1.SplitterDistance = 146;
             this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // edtSource
-            // 
-            this.edtSource.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.edtSource.Location = new System.Drawing.Point(0, 13);
-            this.edtSource.MaxLength = 0;
-            this.edtSource.Multiline = true;
-            this.edtSource.Name = "edtSource";
-            this.edtSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.edtSource.Size = new System.Drawing.Size(355, 133);
-            this.edtSource.TabIndex = 0;
-            this.edtSource.WordWrap = false;
             // 
             // label1
             // 
@@ -114,6 +102,16 @@ namespace DGrok.Demo
             this.btnParse.UseVisualStyleBackColor = true;
             this.btnParse.Click += new System.EventHandler(this.btnParse_Click);
             // 
+            // viewSourceControl1
+            // 
+            this.viewSourceControl1.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.viewSourceControl1.Location = new System.Drawing.Point(0, 13);
+            this.viewSourceControl1.Name = "viewSourceControl1";
+            this.viewSourceControl1.Size = new System.Drawing.Size(355, 133);
+            this.viewSourceControl1.TabIndex = 2;
+            // 
             // ParseTextControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -134,10 +132,10 @@ namespace DGrok.Demo
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TextBox edtSource;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox edtResults;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnParse;
+        private ViewSourceControl viewSourceControl1;
     }
 }

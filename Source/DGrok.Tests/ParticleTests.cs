@@ -44,26 +44,26 @@ namespace DGrok.Tests
         {
             Assert.That("(Foo)", ParsesAs(
                 "ParenthesizedExpressionNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  Expression: Identifier |Foo|",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ExpressionNode: Identifier |Foo|",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
         public void TestSetLiteral()
         {
             Assert.That("[1, 3..4]", ParsesAs(
                 "SetLiteralNode",
-                "  OpenBracket: OpenBracket |[|",
-                "  ItemList: ListNode",
+                "  OpenBracketNode: OpenBracket |[|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |1|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: Number |1|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: BinaryOperationNode",
-                "        Left: Number |3|",
-                "        Operator: DotDot |..|",
-                "        Right: Number |4|",
-                "      Delimiter: (none)",
-                "  CloseBracket: CloseBracket |]|"));
+                "      ItemNode: BinaryOperationNode",
+                "        LeftNode: Number |3|",
+                "        OperatorNode: DotDot |..|",
+                "        RightNode: Number |4|",
+                "      DelimiterNode: (none)",
+                "  CloseBracketNode: CloseBracket |]|"));
         }
         public void TestStringKeyword()
         {

@@ -24,9 +24,9 @@ namespace DGrok.Tests
         {
             Assert.That("set of Byte", ParsesAs(
                 "SetOfNode",
-                "  Set: SetKeyword |set|",
-                "  Of: OfKeyword |of|",
-                "  Type: Identifier |Byte|"));
+                "  SetKeywordNode: SetKeyword |set|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: Identifier |Byte|"));
         }
     }
 }

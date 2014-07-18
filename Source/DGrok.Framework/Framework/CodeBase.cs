@@ -15,21 +15,28 @@ namespace DGrok.Framework
     public class CodeBase
     {
         private CompilerDefines _compilerDefines;
-        private Dictionary<string, Exception> _errors;
+        private Dictionary<string, NamedContent<Exception>> _errors;
         private IFileLoader _fileLoader;
-        private Dictionary<string, AstNode> _parsedFiles;
-        private Dictionary<string, UnitNode> _units;
+        private Dictionary<string, NamedContent<AstNode>> _parsedFiles;
+        private TimeSpan _parseDuration;
+        private Dictionary<string, NamedContent<AstNode>> _projects;
+        private Dictionary<string, NamedContent<UnitNode>> _units;
 
         public CodeBase(CompilerDefines compilerDefines, IFileLoader fileLoader)
         {
             _compilerDefines = compilerDefines;
             _fileLoader = fileLoader;
-            _errors = new Dictionary<string, Exception>(StringComparer.InvariantCultureIgnoreCase);
-            _parsedFiles = new Dictionary<string, AstNode>(StringComparer.InvariantCultureIgnoreCase);
-            _units = new Dictionary<string, UnitNode>(StringComparer.InvariantCultureIgnoreCase);
+            _errors = new Dictionary<string, NamedContent<Exception>>(StringComparer.InvariantCultureIgnoreCase);
+            _parsedFiles = new Dictionary<string, NamedContent<AstNode>>(StringComparer.InvariantCultureIgnoreCase);
+            _projects = new Dictionary<string, NamedContent<AstNode>>(StringComparer.InvariantCultureIgnoreCase);
+            _units = new Dictionary<string, NamedContent<UnitNode>>(StringComparer.InvariantCultureIgnoreCase);
         }
 
-        public IEnumerable<KeyValuePair<string, Exception>> Errors
+        public int ErrorCount
+        {
+            get { return _errors.Count; }
+        }
+        public IEnumerable<NamedContent<Exception>> Errors
         {
             get { return SortedPairs(_errors); }
         }
@@ -41,18 +48,36 @@ namespace DGrok.Framework
         {
             get { return SortedKeys(_parsedFiles); }
         }
-        public IEnumerable<KeyValuePair<string, AstNode>> ParsedFiles
+        public IEnumerable<NamedContent<AstNode>> ParsedFiles
         {
             get { return SortedPairs(_parsedFiles); }
         }
-        public IEnumerable<KeyValuePair<string, UnitNode>> UnitsByName
+        public TimeSpan ParseDuration
+        {
+            get { return _parseDuration; }
+            set { _parseDuration = value; }
+        }
+        public int ProjectCount
+        {
+            get { return _projects.Count; }
+        }
+        public IEnumerable<NamedContent<AstNode>> Projects
+        {
+            get { return SortedPairs(_projects); }
+        }
+        public int UnitCount
+        {
+            get { return _units.Count; }
+        }
+        public IEnumerable<NamedContent<UnitNode>> Units
         {
             get { return SortedPairs(_units); }
         }
 
         public void AddError(string fileName, Exception exception)
         {
-            _errors.Add(fileName, exception);
+            NamedContent<Exception> namedError = new NamedContent<Exception>(fileName, exception);
+            _errors.Add(namedError.FileName, namedError);
         }
         public void AddFile(string fileName, string text)
         {
@@ -73,22 +98,40 @@ namespace DGrok.Framework
         {
             Parser parser = Parser.FromText(text, fileName, _compilerDefines, _fileLoader);
             AstNode parseTree = parser.ParseRule(RuleType.Goal);
-            AddParsedFile(fileName, parseTree);
+            AddParsedFile(fileName, text, parseTree);
         }
-        public void AddParsedFile(string fileName, AstNode parseTree)
+        public void AddParsedFile(string fileName, string fileSource, AstNode parseTree)
         {
-            _parsedFiles.Add(fileName, parseTree);
+            NamedContent<AstNode> namedParseTree = new NamedContent<AstNode>(fileName, parseTree);
             UnitNode unit = parseTree as UnitNode;
             if (unit != null)
-                _units.Add(Path.GetFileNameWithoutExtension(fileName), unit);
+                AddParsedFileToCollection(_units, fileName, fileSource, unit);
+            else
+                AddParsedFileToCollection(_projects, fileName, fileSource, parseTree);
+            _parsedFiles.Add(namedParseTree.FileName, namedParseTree);
+        }
+        private void AddParsedFileToCollection<T>(Dictionary<string, NamedContent<T>> collection,
+            string fileName, string fileSource, T content)
+            where T : AstNode
+        {
+            NamedContent<T> namedContent = new NamedContent<T>(fileName, content);
+            if (!collection.ContainsKey(namedContent.Name))
+                collection.Add(namedContent.Name, namedContent);
+            else
+            {
+                string message = "File '" + fileName + "' has the same name as '" +
+                    collection[namedContent.Name].FileName + "'";
+                Location location = new Location(fileName, fileSource, 0);
+                throw new DuplicateFileNameException(message, location);
+            }
         }
         public Exception ErrorByFileName(string fileName)
         {
-            return _errors[fileName];
+            return _errors[fileName].Content;
         }
         public AstNode ParsedFileByFileName(string fileName)
         {
-            return _parsedFiles[fileName];
+            return _parsedFiles[fileName].Content;
         }
         private IList<string> SortedKeys<T>(IDictionary<string, T> dictionary)
         {
@@ -96,14 +139,14 @@ namespace DGrok.Framework
             keys.Sort(StringComparer.InvariantCultureIgnoreCase);
             return keys;
         }
-        private IEnumerable<KeyValuePair<string, T>> SortedPairs<T>(IDictionary<string, T> dictionary)
+        private IEnumerable<T> SortedPairs<T>(IDictionary<string, T> dictionary)
         {
             foreach (string key in SortedKeys(dictionary))
-                yield return new KeyValuePair<string, T>(key, dictionary[key]);
+                yield return dictionary[key];
         }
         public UnitNode UnitByName(string name)
         {
-            return _units[name];
+            return _units[name].Content;
         }
     }
 }

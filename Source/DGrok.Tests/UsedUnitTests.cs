@@ -24,28 +24,28 @@ namespace DGrok.Tests
         {
             Assert.That("Foo", ParsesAs(
                 "UsedUnitNode",
-                "  Name: Identifier |Foo|",
-                "  In: (none)",
-                "  FileName: (none)"));
+                "  NameNode: Identifier |Foo|",
+                "  InKeywordNode: (none)",
+                "  FileNameNode: (none)"));
         }
         public void TestDottedName()
         {
             Assert.That("Foo.Bar", ParsesAs(
                 "UsedUnitNode",
-                "  Name: BinaryOperationNode",
-                "    Left: Identifier |Foo|",
-                "    Operator: Dot |.|",
-                "    Right: Identifier |Bar|",
-                "  In: (none)",
-                "  FileName: (none)"));
+                "  NameNode: BinaryOperationNode",
+                "    LeftNode: Identifier |Foo|",
+                "    OperatorNode: Dot |.|",
+                "    RightNode: Identifier |Bar|",
+                "  InKeywordNode: (none)",
+                "  FileNameNode: (none)"));
         }
         public void TestInClause()
         {
             Assert.That("Foo in 'Foo.pas'", ParsesAs(
                 "UsedUnitNode",
-                "  Name: Identifier |Foo|",
-                "  In: InKeyword |in|",
-                "  FileName: StringLiteral |'Foo.pas'|"));
+                "  NameNode: Identifier |Foo|",
+                "  InKeywordNode: InKeyword |in|",
+                "  FileNameNode: StringLiteral |'Foo.pas'|"));
         }
     }
 }

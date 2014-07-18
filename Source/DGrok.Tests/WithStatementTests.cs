@@ -24,25 +24,25 @@ namespace DGrok.Tests
         {
             Assert.That("with Foo do", ParsesAs(
                 "WithStatementNode",
-                "  With: WithKeyword |with|",
-                "  ExpressionList: ListNode",
+                "  WithKeywordNode: WithKeyword |with|",
+                "  ExpressionListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Do: DoKeyword |do|",
-                "  Statement: (none)"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: (none)"));
         }
         public void TestStatement()
         {
             Assert.That("with Foo do Bar", ParsesAs(
                 "WithStatementNode",
-                "  With: WithKeyword |with|",
-                "  ExpressionList: ListNode",
+                "  WithKeywordNode: WithKeyword |with|",
+                "  ExpressionListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Do: DoKeyword |do|",
-                "  Statement: Identifier |Bar|"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: Identifier |Bar|"));
         }
     }
 }

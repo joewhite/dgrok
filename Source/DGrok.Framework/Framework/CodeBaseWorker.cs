@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using DGrok.DelphiNodes;
@@ -45,7 +46,14 @@ namespace DGrok.Framework
                     option = SearchOption.TopDirectoryOnly;
                 }
                 foreach (string fileMask in _options.FileMasks.Split(';'))
-                    _fileList.AddRange(Directory.GetFiles(directory, fileMask, option));
+                {
+                    foreach (string fileName in Directory.GetFiles(directory, fileMask, option))
+                    {
+                        string extension = Path.GetExtension(fileName);
+                        if (!String.Equals(extension, ".dproj", StringComparison.InvariantCultureIgnoreCase))
+                            _fileList.Add(fileName);
+                    }
+                }
             }
         }
         private void CheckForCancel()
@@ -55,8 +63,10 @@ namespace DGrok.Framework
         }
         public static CodeBase Execute(CodeBaseOptions options, BackgroundWorker backgroundWorker)
         {
-            CodeBase codeBase = new CodeBase(options.CompilerDefines, new FileLoader());
+            CodeBase codeBase = new CodeBase(options.CreateCompilerDefines(), new FileLoader());
             CodeBaseWorker worker = new CodeBaseWorker(codeBase, options, backgroundWorker);
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             try
             {
                 worker.ExecuteInternal();
@@ -64,6 +74,8 @@ namespace DGrok.Framework
             catch (CancelException)
             {
             }
+            stopwatch.Stop();
+            codeBase.ParseDuration = stopwatch.Elapsed;
             return codeBase;
         }
         private void ExecuteInternal()

@@ -24,32 +24,32 @@ namespace DGrok.Tests
         {
             Assert.That("array of Integer", ParsesAs(
                 "ArrayTypeNode",
-                "  Array: ArrayKeyword |array|",
-                "  OpenBracket: (none)",
-                "  IndexList: ListNode",
-                "  CloseBracket: (none)",
-                "  Of: OfKeyword |of|",
-                "  Type: Identifier |Integer|"));
+                "  ArrayKeywordNode: ArrayKeyword |array|",
+                "  OpenBracketNode: (none)",
+                "  IndexListNode: ListNode",
+                "  CloseBracketNode: (none)",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: Identifier |Integer|"));
         }
         public void TestTwoDimensionalArray()
         {
             Assert.That("array [24..42, Byte] of Integer", ParsesAs(
                 "ArrayTypeNode",
-                "  Array: ArrayKeyword |array|",
-                "  OpenBracket: OpenBracket |[|",
-                "  IndexList: ListNode",
+                "  ArrayKeywordNode: ArrayKeyword |array|",
+                "  OpenBracketNode: OpenBracket |[|",
+                "  IndexListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: BinaryOperationNode",
-                "        Left: Number |24|",
-                "        Operator: DotDot |..|",
-                "        Right: Number |42|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: BinaryOperationNode",
+                "        LeftNode: Number |24|",
+                "        OperatorNode: DotDot |..|",
+                "        RightNode: Number |42|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Identifier |Byte|",
-                "      Delimiter: (none)",
-                "  CloseBracket: CloseBracket |]|",
-                "  Of: OfKeyword |of|",
-                "  Type: Identifier |Integer|"));
+                "      ItemNode: Identifier |Byte|",
+                "      DelimiterNode: (none)",
+                "  CloseBracketNode: CloseBracket |]|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: Identifier |Integer|"));
         }
     }
 }

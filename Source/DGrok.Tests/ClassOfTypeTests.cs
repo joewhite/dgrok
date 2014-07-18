@@ -24,9 +24,9 @@ namespace DGrok.Tests
         {
             Assert.That("class of TObject", ParsesAs(
                 "ClassOfNode",
-                "  Class: ClassKeyword |class|",
-                "  Of: OfKeyword |of|",
-                "  Type: Identifier |TObject|"));
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: Identifier |TObject|"));
         }
     }
 }

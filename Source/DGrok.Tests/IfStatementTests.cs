@@ -24,79 +24,79 @@ namespace DGrok.Tests
         {
             Assert.That("if Foo then", ParsesAs(
                 "IfStatementNode",
-                "  If: IfKeyword |if|",
-                "  Condition: Identifier |Foo|",
-                "  Then: ThenKeyword |then|",
-                "  ThenStatement: (none)",
-                "  Else: (none)",
-                "  ElseStatement: (none)"));
+                "  IfKeywordNode: IfKeyword |if|",
+                "  ConditionNode: Identifier |Foo|",
+                "  ThenKeywordNode: ThenKeyword |then|",
+                "  ThenStatementNode: (none)",
+                "  ElseKeywordNode: (none)",
+                "  ElseStatementNode: (none)"));
         }
         public void TestPopulatedThen()
         {
             Assert.That("if Foo then Bar", ParsesAs(
                 "IfStatementNode",
-                "  If: IfKeyword |if|",
-                "  Condition: Identifier |Foo|",
-                "  Then: ThenKeyword |then|",
-                "  ThenStatement: Identifier |Bar|",
-                "  Else: (none)",
-                "  ElseStatement: (none)"));
+                "  IfKeywordNode: IfKeyword |if|",
+                "  ConditionNode: Identifier |Foo|",
+                "  ThenKeywordNode: ThenKeyword |then|",
+                "  ThenStatementNode: Identifier |Bar|",
+                "  ElseKeywordNode: (none)",
+                "  ElseStatementNode: (none)"));
         }
         public void TestEmptyThenEmptyElse()
         {
             Assert.That("if Foo then else", ParsesAs(
                 "IfStatementNode",
-                "  If: IfKeyword |if|",
-                "  Condition: Identifier |Foo|",
-                "  Then: ThenKeyword |then|",
-                "  ThenStatement: (none)",
-                "  Else: ElseKeyword |else|",
-                "  ElseStatement: (none)"));
+                "  IfKeywordNode: IfKeyword |if|",
+                "  ConditionNode: Identifier |Foo|",
+                "  ThenKeywordNode: ThenKeyword |then|",
+                "  ThenStatementNode: (none)",
+                "  ElseKeywordNode: ElseKeyword |else|",
+                "  ElseStatementNode: (none)"));
         }
         public void TestPopulatedThenAndElse()
         {
             Assert.That("if Foo then Bar else Baz", ParsesAs(
                 "IfStatementNode",
-                "  If: IfKeyword |if|",
-                "  Condition: Identifier |Foo|",
-                "  Then: ThenKeyword |then|",
-                "  ThenStatement: Identifier |Bar|",
-                "  Else: ElseKeyword |else|",
-                "  ElseStatement: Identifier |Baz|"));
+                "  IfKeywordNode: IfKeyword |if|",
+                "  ConditionNode: Identifier |Foo|",
+                "  ThenKeywordNode: ThenKeyword |then|",
+                "  ThenStatementNode: Identifier |Bar|",
+                "  ElseKeywordNode: ElseKeyword |else|",
+                "  ElseStatementNode: Identifier |Baz|"));
         }
         public void TestIfThenIfThenElse()
         {
             Assert.That("if Foo then if Bar then else", ParsesAs(
                 "IfStatementNode",
-                "  If: IfKeyword |if|",
-                "  Condition: Identifier |Foo|",
-                "  Then: ThenKeyword |then|",
-                "  ThenStatement: IfStatementNode",
-                "    If: IfKeyword |if|",
-                "    Condition: Identifier |Bar|",
-                "    Then: ThenKeyword |then|",
-                "    ThenStatement: (none)",
-                "    Else: ElseKeyword |else|",
-                "    ElseStatement: (none)",
-                "  Else: (none)",
-                "  ElseStatement: (none)"));
+                "  IfKeywordNode: IfKeyword |if|",
+                "  ConditionNode: Identifier |Foo|",
+                "  ThenKeywordNode: ThenKeyword |then|",
+                "  ThenStatementNode: IfStatementNode",
+                "    IfKeywordNode: IfKeyword |if|",
+                "    ConditionNode: Identifier |Bar|",
+                "    ThenKeywordNode: ThenKeyword |then|",
+                "    ThenStatementNode: (none)",
+                "    ElseKeywordNode: ElseKeyword |else|",
+                "    ElseStatementNode: (none)",
+                "  ElseKeywordNode: (none)",
+                "  ElseStatementNode: (none)"));
         }
         public void TestIfThenIfThenElseElse()
         {
             Assert.That("if Foo then if Bar then else else", ParsesAs(
                 "IfStatementNode",
-                "  If: IfKeyword |if|",
-                "  Condition: Identifier |Foo|",
-                "  Then: ThenKeyword |then|",
-                "  ThenStatement: IfStatementNode",
-                "    If: IfKeyword |if|",
-                "    Condition: Identifier |Bar|",
-                "    Then: ThenKeyword |then|",
-                "    ThenStatement: (none)",
-                "    Else: ElseKeyword |else|",
-                "    ElseStatement: (none)",
-                "  Else: ElseKeyword |else|",
-                "  ElseStatement: (none)"));
+                "  IfKeywordNode: IfKeyword |if|",
+                "  ConditionNode: Identifier |Foo|",
+                "  ThenKeywordNode: ThenKeyword |then|",
+                "  ThenStatementNode: IfStatementNode",
+                "    IfKeywordNode: IfKeyword |if|",
+                "    ConditionNode: Identifier |Bar|",
+                "    ThenKeywordNode: ThenKeyword |then|",
+                "    ThenStatementNode: (none)",
+                "    ElseKeywordNode: ElseKeyword |else|",
+                "    ElseStatementNode: (none)",
+                "  ElseKeywordNode: ElseKeyword |else|",
+                "  ElseStatementNode: (none)"));
         }
     }
 }

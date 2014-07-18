@@ -11,7 +11,7 @@ using System.Text;
 
 namespace DGrok.Framework
 {
-    public class TokenSet : IEnumerable<TokenType>
+    public class TokenSet : ITokenSet, IEnumerable<TokenType>
     {
         private List<bool> _items = new List<bool>();
         private string _name;

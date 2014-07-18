@@ -13,36 +13,45 @@ namespace DGrok.Framework
     public class DelimitedItemNode<T> : NonterminalNode
         where T : AstNode
     {
-        private Token _delimiter;
-        private T _item;
+        private Token _delimiterNode;
+        private T _itemNode;
 
-        public DelimitedItemNode(T item, Token delimiter)
+        public DelimitedItemNode(T itemNode, Token delimiterNode)
         {
-            _item = item;
-            _delimiter = delimiter;
+            _itemNode = itemNode;
+            _delimiterNode = delimiterNode;
         }
 
-        public Token Delimiter
+        public override IEnumerable<AstNode> ChildNodes
         {
-            get { return _delimiter; }
+            get
+            {
+                if (ItemNode != null)
+                    yield return ItemNode;
+                if (DelimiterNode != null)
+                    yield return DelimiterNode;
+            }
         }
-        public T Item
+        public Token DelimiterNode
         {
-            get { return _item; }
+            get { return _delimiterNode; }
         }
-
+        public T ItemNode
+        {
+            get { return _itemNode; }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Item", Item);
-                yield return new KeyValuePair<string, AstNode>("Delimiter", Delimiter);
+                yield return new KeyValuePair<string, AstNode>("ItemNode", ItemNode);
+                yield return new KeyValuePair<string, AstNode>("DelimiterNode", DelimiterNode);
             }
         }
 
         public override void Accept(Visitor visitor)
         {
-            visitor.VisitDelimitedItemNode(this, Item, Delimiter);
+            visitor.VisitDelimitedItemNode(this, ItemNode, DelimiterNode);
         }
     }
 }

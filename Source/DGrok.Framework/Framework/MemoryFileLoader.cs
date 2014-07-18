@@ -6,6 +6,7 @@
 // http://www.opensource.org/licenses/osl-3.0.php
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace DGrok.Framework
@@ -26,7 +27,9 @@ namespace DGrok.Framework
         }
         public string Load(string fileName)
         {
-            return Files[fileName];
+            if (Files.ContainsKey(fileName))
+                return Files[fileName];
+            throw new IOException("File not found: " + fileName);
         }
     }
 }

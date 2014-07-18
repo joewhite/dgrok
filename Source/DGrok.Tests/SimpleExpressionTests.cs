@@ -28,58 +28,58 @@ namespace DGrok.Tests
         {
             Assert.That("6 * 9", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Number |6|",
-                "  Operator: TimesSign |*|",
-                "  Right: Number |9|"));
+                "  LeftNode: Number |6|",
+                "  OperatorNode: TimesSign |*|",
+                "  RightNode: Number |9|"));
         }
         public void TestAdd()
         {
             Assert.That("40 + 2", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Number |40|",
-                "  Operator: PlusSign |+|",
-                "  Right: Number |2|"));
+                "  LeftNode: Number |40|",
+                "  OperatorNode: PlusSign |+|",
+                "  RightNode: Number |2|"));
         }
         public void TestTwoAdds()
         {
             Assert.That("30 + 10 + 2", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: BinaryOperationNode",
-                "    Left: Number |30|",
-                "    Operator: PlusSign |+|",
-                "    Right: Number |10|",
-                "  Operator: PlusSign |+|",
-                "  Right: Number |2|"));
+                "  LeftNode: BinaryOperationNode",
+                "    LeftNode: Number |30|",
+                "    OperatorNode: PlusSign |+|",
+                "    RightNode: Number |10|",
+                "  OperatorNode: PlusSign |+|",
+                "  RightNode: Number |2|"));
         }
         public void TestMinus()
         {
             Assert.That("50 - 8", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Number |50|",
-                "  Operator: MinusSign |-|",
-                "  Right: Number |8|"));
+                "  LeftNode: Number |50|",
+                "  OperatorNode: MinusSign |-|",
+                "  RightNode: Number |8|"));
         }
         public void TestOrderOfOperations()
         {
             Assert.That("1 * 2 + 3 * 4", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: BinaryOperationNode",
-                "    Left: Number |1|",
-                "    Operator: TimesSign |*|",
-                "    Right: Number |2|",
-                "  Operator: PlusSign |+|",
-                "  Right: BinaryOperationNode",
-                "    Left: Number |3|",
-                "    Operator: TimesSign |*|",
-                "    Right: Number |4|"));
+                "  LeftNode: BinaryOperationNode",
+                "    LeftNode: Number |1|",
+                "    OperatorNode: TimesSign |*|",
+                "    RightNode: Number |2|",
+                "  OperatorNode: PlusSign |+|",
+                "  RightNode: BinaryOperationNode",
+                "    LeftNode: Number |3|",
+                "    OperatorNode: TimesSign |*|",
+                "    RightNode: Number |4|"));
         }
         public void TestSemikeywords()
         {
             Assert.That("Absolute + Index", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Identifier |Absolute|",
-                "  Operator: PlusSign |+|",
-                "  Right: Identifier |Index|"));
+                "  LeftNode: Identifier |Absolute|",
+                "  OperatorNode: PlusSign |+|",
+                "  RightNode: Identifier |Index|"));
         }
     }
 }

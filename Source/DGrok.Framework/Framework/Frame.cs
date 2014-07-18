@@ -51,11 +51,11 @@ namespace DGrok.Framework
             get { return _token.Type; }
         }
 
-        public bool CanParseToken(TokenSet tokenSet)
+        public bool CanParseToken(ITokenSet tokenSet)
         {
             return tokenSet.Contains(Token.Type);
         }
-        public Token ParseToken(TokenSet tokenSet)
+        public Token ParseToken(ITokenSet tokenSet)
         {
             if (CanParseToken(tokenSet))
                 return Token;

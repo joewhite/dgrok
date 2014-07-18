@@ -28,9 +28,9 @@ namespace DGrok.Tests
         {
             Assert.That("0..42", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Number |0|",
-                "  Operator: DotDot |..|",
-                "  Right: Number |42|"));
+                "  LeftNode: Number |0|",
+                "  OperatorNode: DotDot |..|",
+                "  RightNode: Number |42|"));
         }
     }
 }

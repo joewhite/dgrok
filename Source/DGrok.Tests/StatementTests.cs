@@ -28,17 +28,17 @@ namespace DGrok.Tests
         {
             Assert.That("Foo:", ParsesAs(
                 "LabeledStatementNode",
-                "  Label: Identifier |Foo|",
-                "  Colon: Colon |:|",
-                "  Statement: (none)"));
+                "  LabelIdNode: Identifier |Foo|",
+                "  ColonNode: Colon |:|",
+                "  StatementNode: (none)"));
         }
         public void TestLabeledStatement()
         {
             Assert.That("Foo: Bar", ParsesAs(
                 "LabeledStatementNode",
-                "  Label: Identifier |Foo|",
-                "  Colon: Colon |:|",
-                "  Statement: Identifier |Bar|"));
+                "  LabelIdNode: Identifier |Foo|",
+                "  ColonNode: Colon |:|",
+                "  StatementNode: Identifier |Bar|"));
         }
     }
 }

@@ -41,11 +41,11 @@ namespace DGrok.Framework
             get { return TokenType.EndOfFile; }
         }
 
-        public bool CanParseToken(TokenSet tokenSet)
+        public bool CanParseToken(ITokenSet tokenSet)
         {
             return false;
         }
-        public Token ParseToken(TokenSet tokenSet)
+        public Token ParseToken(ITokenSet tokenSet)
         {
             throw new ParseException("Expected " + tokenSet.Name + " but found end of file", Location);
         }

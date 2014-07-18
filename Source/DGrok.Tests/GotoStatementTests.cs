@@ -24,22 +24,22 @@ namespace DGrok.Tests
         {
             Assert.That("goto 42", ParsesAs(
                 "GotoStatementNode",
-                "  Goto: GotoKeyword |goto|",
-                "  LabelId: Number |42|"));
+                "  GotoKeywordNode: GotoKeyword |goto|",
+                "  LabelIdNode: Number |42|"));
         }
         public void TestIdentifier()
         {
             Assert.That("goto Foo", ParsesAs(
                 "GotoStatementNode",
-                "  Goto: GotoKeyword |goto|",
-                "  LabelId: Identifier |Foo|"));
+                "  GotoKeywordNode: GotoKeyword |goto|",
+                "  LabelIdNode: Identifier |Foo|"));
         }
         public void TestSemikeyword()
         {
             Assert.That("goto Absolute", ParsesAs(
                 "GotoStatementNode",
-                "  Goto: GotoKeyword |goto|",
-                "  LabelId: Identifier |Absolute|"));
+                "  GotoKeywordNode: GotoKeyword |goto|",
+                "  LabelIdNode: Identifier |Absolute|"));
         }
     }
 }

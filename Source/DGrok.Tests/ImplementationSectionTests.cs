@@ -24,45 +24,45 @@ namespace DGrok.Tests
         {
             Assert.That("implementation", ParsesAs(
                 "UnitSectionNode",
-                "  HeaderKeyword: ImplementationKeyword |implementation|",
-                "  UsesClause: (none)",
-                "  Contents: ListNode"));
+                "  HeaderKeywordNode: ImplementationKeyword |implementation|",
+                "  UsesClauseNode: (none)",
+                "  ContentListNode: ListNode"));
         }
         public void TestUses()
         {
             Assert.That("implementation uses Foo;", ParsesAs(
                 "UnitSectionNode",
-                "  HeaderKeyword: ImplementationKeyword |implementation|",
-                "  UsesClause: UsesClauseNode",
-                "    Uses: UsesKeyword |uses|",
-                "    UnitList: ListNode",
+                "  HeaderKeywordNode: ImplementationKeyword |implementation|",
+                "  UsesClauseNode: UsesClauseNode",
+                "    UsesKeywordNode: UsesKeyword |uses|",
+                "    UnitListNode: ListNode",
                 "      Items[0]: DelimitedItemNode",
-                "        Item: UsedUnitNode",
-                "          Name: Identifier |Foo|",
-                "          In: (none)",
-                "          FileName: (none)",
-                "        Delimiter: (none)",
-                "    Semicolon: Semicolon |;|",
-                "  Contents: ListNode"));
+                "        ItemNode: UsedUnitNode",
+                "          NameNode: Identifier |Foo|",
+                "          InKeywordNode: (none)",
+                "          FileNameNode: (none)",
+                "        DelimiterNode: (none)",
+                "    SemicolonNode: Semicolon |;|",
+                "  ContentListNode: ListNode"));
         }
         public void TestContents()
         {
             Assert.That("implementation const Foo = 42;", ParsesAs(
                 "UnitSectionNode",
-                "  HeaderKeyword: ImplementationKeyword |implementation|",
-                "  UsesClause: (none)",
-                "  Contents: ListNode",
+                "  HeaderKeywordNode: ImplementationKeyword |implementation|",
+                "  UsesClauseNode: (none)",
+                "  ContentListNode: ListNode",
                 "    Items[0]: ConstSectionNode",
-                "      Const: ConstKeyword |const|",
-                "      ConstList: ListNode",
+                "      ConstKeywordNode: ConstKeyword |const|",
+                "      ConstListNode: ListNode",
                 "        Items[0]: ConstantDeclNode",
-                "          Name: Identifier |Foo|",
-                "          Colon: (none)",
-                "          Type: (none)",
-                "          EqualSign: EqualSign |=|",
-                "          Value: Number |42|",
-                "          PortabilityDirectiveList: ListNode",
-                "          Semicolon: Semicolon |;|"));
+                "          NameNode: Identifier |Foo|",
+                "          ColonNode: (none)",
+                "          TypeNode: (none)",
+                "          EqualSignNode: EqualSign |=|",
+                "          ValueNode: Number |42|",
+                "          PortabilityDirectiveListNode: ListNode",
+                "          SemicolonNode: Semicolon |;|"));
         }
     }
 }

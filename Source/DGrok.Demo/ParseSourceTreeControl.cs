@@ -19,23 +19,60 @@ namespace DGrok.Demo
 {
     public partial class ParseSourceTreeControl : UserControl
     {
-        private delegate void Block();
         private delegate object DoWorkDelegate();
+        private class ActionResults
+        {
+            private CodeBaseActionProxy _action;
+            private IList<Hit> _hits;
+
+            public ActionResults(CodeBaseActionProxy action, IList<Hit> hits)
+            {
+                _action = action;
+                _hits = hits;
+            }
+
+            public CodeBaseActionProxy Action
+            {
+                get { return _action; }
+            }
+            public IList<Hit> Hits
+            {
+                get { return _hits; }
+            }
+        }
 
         private Catalog _catalog;
         private CodeBase _codeBase;
-        private DoWorkDelegate _doWork;
+        private CodeBaseOptions _codeBaseOptions;
 
         public ParseSourceTreeControl()
         {
             InitializeComponent();
+            CodeBaseOptions = new CodeBaseOptions();
             LoadCatalog();
             ShowRunnerStatus();
         }
 
+        private bool CanRunAction
+        {
+            get { return !backgroundWorker1.IsBusy && (_codeBase != null); }
+        }
+        [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public CodeBaseOptions CodeBaseOptions
+        {
+            get { return _codeBaseOptions; }
+            set
+            {
+                _codeBaseOptions = value;
+                edtStartingDirectory.Text = _codeBaseOptions.SearchPaths;
+                edtFileMasks.Text = _codeBaseOptions.FileMasks;
+            }
+        }
+
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            e.Result = _doWork();
+            DoWorkDelegate doWork = (DoWorkDelegate) e.Argument;
+            e.Result = doWork();
         }
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -43,52 +80,45 @@ namespace DGrok.Demo
         }
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            trvSummary.Nodes.Clear();
             CodeBase codeBase = e.Result as CodeBase;
             if (codeBase != null)
             {
                 _codeBase = codeBase;
                 ShowParseResultsInTree();
             }
-            IEnumerable<Hit> hits = e.Result as IEnumerable<Hit>;
-            if (hits != null)
-            {
-                trvSummary.Nodes.Clear();
-                trvSummary.BeginUpdate();
-                try
-                {
-                    List<Hit> sortedHits = new List<Hit>(hits);
-                    sortedHits.Sort(delegate(Hit a, Hit b)
-                    {
-                        int result = String.Compare(
-                            Path.GetFileName(a.Location.FileName),
-                            Path.GetFileName(b.Location.FileName),
-                            StringComparison.CurrentCultureIgnoreCase);
-                        if (result != 0)
-                            return result;
-                        if (a.Location.Offset < b.Location.Offset)
-                            return -1;
-                        if (a.Location.Offset > b.Location.Offset)
-                            return 1;
-                        return 0;
-                    });
-                    foreach (Hit hit in sortedHits)
-                    {
-                        TreeNode treeNode = CreateNodeForLocation(hit.Location);
-                        treeNode.Text = Path.GetFileName(hit.Location.FileName) +
-                            ":" + hit.Location.Offset + ": " + hit.Description;
-                        trvSummary.Nodes.Add(treeNode);
-                    }
-                }
-                finally
-                {
-                    trvSummary.EndUpdate();
-                }
-            }
+            ActionResults actionResults = e.Result as ActionResults;
+            if (actionResults != null)
+                ShowHitsInTree(actionResults);
             ShowRunnerStatus();
+        }
+        private void btnParseAll_Click(object sender, EventArgs e)
+        {
+            CodeBaseOptions options = _codeBaseOptions.Clone();
+            RunBackground(delegate
+            {
+                return CodeBaseWorker.Execute(options, backgroundWorker1);
+            });
+        }
+        private void btnRunAction_Click(object sender, EventArgs e)
+        {
+            RunSelectedAction();
         }
         private void btnStop_Click(object sender, EventArgs e)
         {
             backgroundWorker1.CancelAsync();
+        }
+        private ActionNode CreateActionNode(CodeBaseActionProxy action)
+        {
+            Block block = delegate {
+                CodeBase codeBase = _codeBase;
+                RunBackground(delegate
+                {
+                    IList<Hit> hits = action.Execute(codeBase);
+                    return new ActionResults(action, hits);
+                });
+            };
+            return new ActionNode(action.Name, action.Description, block);
         }
         private Form CreateEmptyWindowForFile(string fileName)
         {
@@ -111,6 +141,14 @@ namespace DGrok.Demo
             node.Tag = new Block(delegate { ShowWindowForPassingFile(fileName); });
             return node;
         }
+        private void edtFileMasks_TextChanged(object sender, EventArgs e)
+        {
+            _codeBaseOptions.FileMasks = edtFileMasks.Text;
+        }
+        private void edtStartingDirectory_TextChanged(object sender, EventArgs e)
+        {
+            _codeBaseOptions.SearchPaths = edtStartingDirectory.Text;
+        }
         private void ExecuteNodeAction(TreeNode node)
         {
             if (node == null)
@@ -119,53 +157,29 @@ namespace DGrok.Demo
             if (block != null)
                 block();
         }
-        private void lnkParseAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            CodeBaseOptions options = new CodeBaseOptions(edtStartingDirectory.Text,
-                edtFileMasks.Text, CompilerDefines.CreateStandard());
-            RunBackground(delegate
-            {
-                return CodeBaseWorker.Execute(options, backgroundWorker1);
-            });
-        }
-        private void lnkShowParseResults_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            ShowParseResultsInTree();
-        }
         private void LoadCatalog()
         {
+            trvActions.Nodes.Clear();
             _catalog = Catalog.Load();
 
-            int maxBottom = 0;
-            foreach (Control control in pnlActions.Controls)
-            {
-                if (control.Bottom > maxBottom)
-                    maxBottom = control.Bottom;
-            }
-            maxBottom += 10;
+            ActionNode showParseResults = new ActionNode("Show parse results",
+                "Re-displays the list of passing/failing files from the last 'Parse All'.",
+                ShowParseResultsInTree);
+            trvActions.Nodes.Add(showParseResults);
 
-            foreach (CodeBaseActionProxy item in _catalog.Items)
+            foreach (Category category in _catalog.Categories)
             {
-                LinkLabel link = new LinkLabel();
-                link.Top = maxBottom;
-                link.Left = lnkParseAll.Left;
-                link.Height = lnkParseAll.Height;
-                link.Text = item.Name;
-                link.AutoSize = true;
-                // Make sure we get the item for this iteration, not the variable
-                // that changes throughout the loop
-                CodeBaseActionProxy capturedItem = item;
-                link.Click += delegate
+                ActionNode categoryNode = new ActionNode(category.CategoryType.ToString(),
+                    category.Description, null);
+                trvActions.Nodes.Add(categoryNode);
+                foreach (CodeBaseActionProxy item in category.Items)
                 {
-                    CodeBase codeBase = _codeBase;
-                    RunBackground(delegate
-                    {
-                        return capturedItem.Execute(codeBase);
-                    });
-                };
-                pnlActions.Controls.Add(link);
-                maxBottom = link.Bottom;
+                    ActionNode itemNode = CreateActionNode(item);
+                    categoryNode.Nodes.Add(itemNode);
+                }
             }
+
+            trvActions.SelectedNode = trvActions.Nodes[0];
         }
         private void ParseFormKeyDown(object sender, KeyEventArgs e)
         {
@@ -174,9 +188,41 @@ namespace DGrok.Demo
         }
         private void RunBackground(DoWorkDelegate doWork)
         {
-            _doWork = doWork;
-            backgroundWorker1.RunWorkerAsync();
+            backgroundWorker1.RunWorkerAsync(doWork);
             ShowRunnerStatus();
+        }
+        private void RunSelectedAction()
+        {
+            if (!CanRunAction)
+                return;
+            ActionNode node = trvActions.SelectedNode as ActionNode;
+            if (node == null)
+                return;
+            node.Execute();
+        }
+        private void ShowHitsInTree(ActionResults actionResults)
+        {
+            trvSummary.BeginUpdate();
+            try
+            {
+                string summaryText = actionResults.Action.Name + ": " + actionResults.Hits.Count + " hit(s)";
+                TreeNode summaryNode = new TreeNode(summaryText);
+                trvSummary.Nodes.Add(summaryNode);
+
+                List<Hit> sortedHits = SortHits(actionResults.Hits);
+                foreach (Hit hit in sortedHits)
+                {
+                    TreeNode treeNode = CreateNodeForLocation(hit.Location);
+                    treeNode.Text = Path.GetFileName(hit.Location.FileName) +
+                        ":" + hit.Location.Offset + ": " + hit.Description;
+                    summaryNode.Nodes.Add(treeNode);
+                }
+                trvSummary.ExpandAll();
+            }
+            finally
+            {
+                trvSummary.EndUpdate();
+            }
         }
         private void ShowParseResultsInTree()
         {
@@ -184,13 +230,14 @@ namespace DGrok.Demo
             try
             {
                 trvSummary.Nodes.Clear();
+                trvSummary.Nodes.Add("Elapsed time: " + _codeBase.ParseDuration);
                 Dictionary<string, List<string>> failed = new Dictionary<string, List<string>>();
                 int failingCount = 0;
-                foreach (KeyValuePair<string, Exception> pair in _codeBase.Errors)
+                foreach (NamedContent<Exception> error in _codeBase.Errors)
                 {
-                    if (!failed.ContainsKey(pair.Value.Message))
-                        failed.Add(pair.Value.Message, new List<string>());
-                    failed[pair.Value.Message].Add(pair.Key);
+                    if (!failed.ContainsKey(error.Content.Message))
+                        failed.Add(error.Content.Message, new List<string>());
+                    failed[error.Content.Message].Add(error.FileName);
                     ++failingCount;
                 }
 
@@ -213,6 +260,7 @@ namespace DGrok.Demo
                         failureNode.Nodes.Add(CreateNodeForLocation(errorLocation));
                     }
                 }
+                failingNode.Expand();
             }
             finally
             {
@@ -221,13 +269,21 @@ namespace DGrok.Demo
         }
         private void ShowRunnerStatus()
         {
-            pnlActions.Enabled = !backgroundWorker1.IsBusy;
-            btnStop.Enabled = backgroundWorker1.IsBusy;
-            foreach (Control control in pnlActions.Controls)
+            btnParseAll.Enabled = !backgroundWorker1.IsBusy;
+            if (CanRunAction)
             {
-                if (control != lnkParseAll)
-                    control.Enabled = (_codeBase != null);
+                trvActions.BackColor = SystemColors.Window;
+                edtActionDescription.BackColor = SystemColors.Info;
+                edtActionDescription.ForeColor = SystemColors.InfoText;
             }
+            else
+            {
+                trvActions.BackColor = SystemColors.Control;
+                edtActionDescription.BackColor = SystemColors.Control;
+                edtActionDescription.ForeColor = SystemColors.GrayText;
+            }
+            btnRunAction.Enabled = CanRunAction;
+            btnStop.Enabled = backgroundWorker1.IsBusy;
         }
         private void ShowSingleTreeNode(string text)
         {
@@ -244,16 +300,12 @@ namespace DGrok.Demo
             try
             {
                 Form form = CreateEmptyWindowForFile(errorLocation.FileName);
-                TextBox textBox = new TextBox();
-                textBox.Multiline = true;
-                textBox.WordWrap = false;
-                textBox.ScrollBars = ScrollBars.Both;
-                textBox.Dock = DockStyle.Fill;
-                textBox.Text = File.ReadAllText(errorLocation.FileName);
-                textBox.SelectionStart = errorLocation.Offset;
-                form.Controls.Add(textBox);
+                ViewSourceControl viewSource = new ViewSourceControl();
+                viewSource.Text = errorLocation.FileSource;
+                viewSource.Dock = DockStyle.Fill;
+                form.Controls.Add(viewSource);
                 form.Show();
-                textBox.ScrollToCaret();
+                viewSource.ScrollToOffset(errorLocation.Offset);
             }
             finally
             {
@@ -279,6 +331,45 @@ namespace DGrok.Demo
             {
                 Cursor.Current = Cursors.Default;
             }
+        }
+        private static List<Hit> SortHits(IEnumerable<Hit> hits)
+        {
+            List<Hit> sortedHits = new List<Hit>(hits);
+            sortedHits.Sort(delegate(Hit a, Hit b)
+            {
+                int result = String.Compare(
+                    Path.GetFileName(a.Location.FileName),
+                    Path.GetFileName(b.Location.FileName),
+                    StringComparison.CurrentCultureIgnoreCase);
+                if (result != 0)
+                    return result;
+                if (a.Location.Offset < b.Location.Offset)
+                    return -1;
+                if (a.Location.Offset > b.Location.Offset)
+                    return 1;
+                return 0;
+            });
+            return sortedHits;
+        }
+        private void trvActions_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            ActionNode node = e.Node as ActionNode;
+            if (node == null)
+                edtActionDescription.Text = "";
+            else
+                edtActionDescription.Text = node.Description;
+        }
+        private void trvActions_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                e.Handled = true;
+                RunSelectedAction();
+            }
+        }
+        private void trvActions_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            RunSelectedAction();
         }
         private void trvSummary_KeyPress(object sender, KeyPressEventArgs e)
         {

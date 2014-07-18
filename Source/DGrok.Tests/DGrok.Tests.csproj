@@ -51,6 +51,8 @@
     <Compile Include="ClassHelperTypeTests.cs" />
     <Compile Include="ClassOfTypeTests.cs" />
     <Compile Include="ClassTypeTests.cs" />
+    <Compile Include="CodeBaseOptionsTests.cs" />
+    <Compile Include="CodeBaseTests.cs" />
     <Compile Include="CompilerDefinesTests.cs" />
     <Compile Include="ConstantDeclTests.cs" />
     <Compile Include="ConstSectionTests.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="InterfaceDeclTests.cs" />
     <Compile Include="InterfaceSectionTests.cs" />
     <Compile Include="InterfaceTypeTests.cs" />
+    <Compile Include="MemoryFileLoaderTests.cs" />
     <Compile Include="MethodHeadingTests.cs" />
     <Compile Include="MethodImplementationTests.cs" />
     <Compile Include="MethodOrPropertyTests.cs" />
@@ -86,6 +89,7 @@
     <Compile Include="ParameterTests.cs" />
     <Compile Include="ParameterTypeTests.cs" />
     <Compile Include="ParenthesizedExpressionTests.cs" />
+    <Compile Include="ParserTests.cs" />
     <Compile Include="ProcedureTypeTests.cs" />
     <Compile Include="ProgramTests.cs" />
     <Compile Include="PropertyDirectiveTests.cs" />
@@ -146,8 +150,10 @@
     <Compile Include="VisibilitySectionTests.cs" />
     <Compile Include="VisibilityTests.cs" />
     <Compile Include="Visitors\CodeBaseActionTestCase.cs" />
+    <Compile Include="Visitors\FindAsmBlocksTests.cs" />
     <Compile Include="Visitors\FindGlobalVariablesTests.cs" />
     <Compile Include="Visitors\FindNestedMethodsTests.cs" />
+    <Compile Include="Visitors\FindVariantRecordsTests.cs" />
     <Compile Include="Visitors\FindWithStatementTests.cs" />
     <Compile Include="WhileStatementTests.cs" />
     <Compile Include="WithStatementTests.cs" />

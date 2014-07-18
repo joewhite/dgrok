@@ -24,80 +24,80 @@ namespace DGrok.Tests
         {
             Assert.That("uses Foo;", ParsesAs(
                 "UsesClauseNode",
-                "  Uses: UsesKeyword |uses|",
-                "  UnitList: ListNode",
+                "  UsesKeywordNode: UsesKeyword |uses|",
+                "  UnitListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: UsedUnitNode",
-                "        Name: Identifier |Foo|",
-                "        In: (none)",
-                "        FileName: (none)",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: UsedUnitNode",
+                "        NameNode: Identifier |Foo|",
+                "        InKeywordNode: (none)",
+                "        FileNameNode: (none)",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestInClause()
         {
             Assert.That("uses Foo in 'Foo.pas';", ParsesAs(
                 "UsesClauseNode",
-                "  Uses: UsesKeyword |uses|",
-                "  UnitList: ListNode",
+                "  UsesKeywordNode: UsesKeyword |uses|",
+                "  UnitListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: UsedUnitNode",
-                "        Name: Identifier |Foo|",
-                "        In: InKeyword |in|",
-                "        FileName: StringLiteral |'Foo.pas'|",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: UsedUnitNode",
+                "        NameNode: Identifier |Foo|",
+                "        InKeywordNode: InKeyword |in|",
+                "        FileNameNode: StringLiteral |'Foo.pas'|",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestTwo()
         {
             Assert.That("uses Foo, Bar;", ParsesAs(
                 "UsesClauseNode",
-                "  Uses: UsesKeyword |uses|",
-                "  UnitList: ListNode",
+                "  UsesKeywordNode: UsesKeyword |uses|",
+                "  UnitListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: UsedUnitNode",
-                "        Name: Identifier |Foo|",
-                "        In: (none)",
-                "        FileName: (none)",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: UsedUnitNode",
+                "        NameNode: Identifier |Foo|",
+                "        InKeywordNode: (none)",
+                "        FileNameNode: (none)",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: UsedUnitNode",
-                "        Name: Identifier |Bar|",
-                "        In: (none)",
-                "        FileName: (none)",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: UsedUnitNode",
+                "        NameNode: Identifier |Bar|",
+                "        InKeywordNode: (none)",
+                "        FileNameNode: (none)",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestDottedName()
         {
             Assert.That("uses Foo.Bar;", ParsesAs(
                 "UsesClauseNode",
-                "  Uses: UsesKeyword |uses|",
-                "  UnitList: ListNode",
+                "  UsesKeywordNode: UsesKeyword |uses|",
+                "  UnitListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: UsedUnitNode",
-                "        Name: BinaryOperationNode",
-                "          Left: Identifier |Foo|",
-                "          Operator: Dot |.|",
-                "          Right: Identifier |Bar|",
-                "        In: (none)",
-                "        FileName: (none)",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: UsedUnitNode",
+                "        NameNode: BinaryOperationNode",
+                "          LeftNode: Identifier |Foo|",
+                "          OperatorNode: Dot |.|",
+                "          RightNode: Identifier |Bar|",
+                "        InKeywordNode: (none)",
+                "        FileNameNode: (none)",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestContains()
         {
             Assert.That("contains Foo;", ParsesAs(
                 "UsesClauseNode",
-                "  Uses: ContainsSemikeyword |contains|",
-                "  UnitList: ListNode",
+                "  UsesKeywordNode: ContainsSemikeyword |contains|",
+                "  UnitListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: UsedUnitNode",
-                "        Name: Identifier |Foo|",
-                "        In: (none)",
-                "        FileName: (none)",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: UsedUnitNode",
+                "        NameNode: Identifier |Foo|",
+                "        InKeywordNode: (none)",
+                "        FileNameNode: (none)",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
     }
 }

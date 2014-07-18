@@ -24,78 +24,78 @@ namespace DGrok.Tests
         {
             Assert.That("Foo = 42;", ParsesAs(
                 "ConstantDeclNode",
-                "  Name: Identifier |Foo|",
-                "  Colon: (none)",
-                "  Type: (none)",
-                "  EqualSign: EqualSign |=|",
-                "  Value: Number |42|",
-                "  PortabilityDirectiveList: ListNode",
-                "  Semicolon: Semicolon |;|"));
+                "  NameNode: Identifier |Foo|",
+                "  ColonNode: (none)",
+                "  TypeNode: (none)",
+                "  EqualSignNode: EqualSign |=|",
+                "  ValueNode: Number |42|",
+                "  PortabilityDirectiveListNode: ListNode",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestTyped()
         {
             Assert.That("Foo: Integer = 42;", ParsesAs(
                 "ConstantDeclNode",
-                "  Name: Identifier |Foo|",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |Integer|",
-                "  EqualSign: EqualSign |=|",
-                "  Value: Number |42|",
-                "  PortabilityDirectiveList: ListNode",
-                "  Semicolon: Semicolon |;|"));
+                "  NameNode: Identifier |Foo|",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |Integer|",
+                "  EqualSignNode: EqualSign |=|",
+                "  ValueNode: Number |42|",
+                "  PortabilityDirectiveListNode: ListNode",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestTypedConstantList()
         {
             Assert.That("Foo: TMyArray = (24, 42);", ParsesAs(
                 "ConstantDeclNode",
-                "  Name: Identifier |Foo|",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |TMyArray|",
-                "  EqualSign: EqualSign |=|",
-                "  Value: ConstantListNode",
-                "    OpenParenthesis: OpenParenthesis |(|",
-                "    ItemList: ListNode",
+                "  NameNode: Identifier |Foo|",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |TMyArray|",
+                "  EqualSignNode: EqualSign |=|",
+                "  ValueNode: ConstantListNode",
+                "    OpenParenthesisNode: OpenParenthesis |(|",
+                "    ItemListNode: ListNode",
                 "      Items[0]: DelimitedItemNode",
-                "        Item: Number |24|",
-                "        Delimiter: Comma |,|",
+                "        ItemNode: Number |24|",
+                "        DelimiterNode: Comma |,|",
                 "      Items[1]: DelimitedItemNode",
-                "        Item: Number |42|",
-                "        Delimiter: (none)",
-                "    CloseParenthesis: CloseParenthesis |)|",
-                "  PortabilityDirectiveList: ListNode",
-                "  Semicolon: Semicolon |;|"));
+                "        ItemNode: Number |42|",
+                "        DelimiterNode: (none)",
+                "    CloseParenthesisNode: CloseParenthesis |)|",
+                "  PortabilityDirectiveListNode: ListNode",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestTypedWhereTypeIsNotIdentifier()
         {
             Assert.That("Foo: set of Byte = [];", ParsesAs(
                 "ConstantDeclNode",
-                "  Name: Identifier |Foo|",
-                "  Colon: Colon |:|",
-                "  Type: SetOfNode",
-                "    Set: SetKeyword |set|",
-                "    Of: OfKeyword |of|",
-                "    Type: Identifier |Byte|",
-                "  EqualSign: EqualSign |=|",
-                "  Value: SetLiteralNode",
-                "    OpenBracket: OpenBracket |[|",
-                "    ItemList: ListNode",
-                "    CloseBracket: CloseBracket |]|",
-                "  PortabilityDirectiveList: ListNode",
-                "  Semicolon: Semicolon |;|"));
+                "  NameNode: Identifier |Foo|",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: SetOfNode",
+                "    SetKeywordNode: SetKeyword |set|",
+                "    OfKeywordNode: OfKeyword |of|",
+                "    TypeNode: Identifier |Byte|",
+                "  EqualSignNode: EqualSign |=|",
+                "  ValueNode: SetLiteralNode",
+                "    OpenBracketNode: OpenBracket |[|",
+                "    ItemListNode: ListNode",
+                "    CloseBracketNode: CloseBracket |]|",
+                "  PortabilityDirectiveListNode: ListNode",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestPortabilityDirectives()
         {
             Assert.That("Foo = 42 library experimental;", ParsesAs(
                 "ConstantDeclNode",
-                "  Name: Identifier |Foo|",
-                "  Colon: (none)",
-                "  Type: (none)",
-                "  EqualSign: EqualSign |=|",
-                "  Value: Number |42|",
-                "  PortabilityDirectiveList: ListNode",
+                "  NameNode: Identifier |Foo|",
+                "  ColonNode: (none)",
+                "  TypeNode: (none)",
+                "  EqualSignNode: EqualSign |=|",
+                "  ValueNode: Number |42|",
+                "  PortabilityDirectiveListNode: ListNode",
                 "    Items[0]: LibraryKeyword |library|",
                 "    Items[1]: ExperimentalSemikeyword |experimental|",
-                "  Semicolon: Semicolon |;|"));
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestLookaheadRejectsVisibilitySpecifier()
         {

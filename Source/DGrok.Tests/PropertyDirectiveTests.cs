@@ -24,109 +24,109 @@ namespace DGrok.Tests
         {
             Assert.That("; default", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: Semicolon |;|",
-                "  Directive: DefaultSemikeyword |default|",
-                "  Value: (none)",
-                "  Data: ListNode"));
+                "  SemicolonNode: Semicolon |;|",
+                "  KeywordNode: DefaultSemikeyword |default|",
+                "  ValueNode: (none)",
+                "  DataNode: ListNode"));
         }
         public void TestDefaultExpression()
         {
             Assert.That("default 42", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: DefaultSemikeyword |default|",
-                "  Value: Number |42|",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: DefaultSemikeyword |default|",
+                "  ValueNode: Number |42|",
+                "  DataNode: ListNode"));
         }
         public void TestDispId()
         {
             Assert.That("dispid 42", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: DispIdSemikeyword |dispid|",
-                "  Value: Number |42|",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: DispIdSemikeyword |dispid|",
+                "  ValueNode: Number |42|",
+                "  DataNode: ListNode"));
         }
         public void TestImplements()
         {
             Assert.That("implements IFoo.Bar, IBaz", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: ImplementsSemikeyword |implements|",
-                "  Value: ListNode",
+                "  SemicolonNode: (none)",
+                "  KeywordNode: ImplementsSemikeyword |implements|",
+                "  ValueNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: BinaryOperationNode",
-                "        Left: Identifier |IFoo|",
-                "        Operator: Dot |.|",
-                "        Right: Identifier |Bar|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: BinaryOperationNode",
+                "        LeftNode: Identifier |IFoo|",
+                "        OperatorNode: Dot |.|",
+                "        RightNode: Identifier |Bar|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Identifier |IBaz|",
-                "      Delimiter: (none)",
-                "  Data: ListNode"));
+                "      ItemNode: Identifier |IBaz|",
+                "      DelimiterNode: (none)",
+                "  DataNode: ListNode"));
         }
         public void TestIndex()
         {
             Assert.That("index 42", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: IndexSemikeyword |index|",
-                "  Value: Number |42|",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: IndexSemikeyword |index|",
+                "  ValueNode: Number |42|",
+                "  DataNode: ListNode"));
         }
         public void TestNoDefault()
         {
             Assert.That("nodefault", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: NoDefaultSemikeyword |nodefault|",
-                "  Value: (none)",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: NoDefaultSemikeyword |nodefault|",
+                "  ValueNode: (none)",
+                "  DataNode: ListNode"));
         }
         public void TestRead()
         {
             Assert.That("read FFoo", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: ReadSemikeyword |read|",
-                "  Value: Identifier |FFoo|",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: ReadSemikeyword |read|",
+                "  ValueNode: Identifier |FFoo|",
+                "  DataNode: ListNode"));
         }
         public void TestReadOnly()
         {
             Assert.That("readonly", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: ReadOnlySemikeyword |readonly|",
-                "  Value: (none)",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: ReadOnlySemikeyword |readonly|",
+                "  ValueNode: (none)",
+                "  DataNode: ListNode"));
         }
         public void TestStored()
         {
             Assert.That("stored GetStored", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: StoredSemikeyword |stored|",
-                "  Value: Identifier |GetStored|",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: StoredSemikeyword |stored|",
+                "  ValueNode: Identifier |GetStored|",
+                "  DataNode: ListNode"));
         }
         public void TestWrite()
         {
             Assert.That("write FFoo", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: WriteSemikeyword |write|",
-                "  Value: Identifier |FFoo|",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: WriteSemikeyword |write|",
+                "  ValueNode: Identifier |FFoo|",
+                "  DataNode: ListNode"));
         }
         public void TestWriteOnly()
         {
             Assert.That("writeonly", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: WriteOnlySemikeyword |writeonly|",
-                "  Value: (none)",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: WriteOnlySemikeyword |writeonly|",
+                "  ValueNode: (none)",
+                "  DataNode: ListNode"));
         }
         public void TestLookaheadRejectsLoneSemicolon()
         {

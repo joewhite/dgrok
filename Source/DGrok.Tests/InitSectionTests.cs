@@ -24,110 +24,110 @@ namespace DGrok.Tests
         {
             Assert.That("end", ParsesAs(
                 "InitSectionNode",
-                "  InitializationHeader: (none)",
-                "  InitializationStatements: ListNode",
-                "  FinalizationHeader: (none)",
-                "  FinalizationStatements: ListNode",
-                "  End: EndKeyword |end|"));
+                "  InitializationKeywordNode: (none)",
+                "  InitializationStatementListNode: ListNode",
+                "  FinalizationKeywordNode: (none)",
+                "  FinalizationStatementListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestEmptyInitialization()
         {
             Assert.That("initialization end", ParsesAs(
                 "InitSectionNode",
-                "  InitializationHeader: InitializationKeyword |initialization|",
-                "  InitializationStatements: ListNode",
-                "  FinalizationHeader: (none)",
-                "  FinalizationStatements: ListNode",
-                "  End: EndKeyword |end|"));
+                "  InitializationKeywordNode: InitializationKeyword |initialization|",
+                "  InitializationStatementListNode: ListNode",
+                "  FinalizationKeywordNode: (none)",
+                "  FinalizationStatementListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestEmptyInitializationFinalization()
         {
             Assert.That("initialization finalization end", ParsesAs(
                 "InitSectionNode",
-                "  InitializationHeader: InitializationKeyword |initialization|",
-                "  InitializationStatements: ListNode",
-                "  FinalizationHeader: FinalizationKeyword |finalization|",
-                "  FinalizationStatements: ListNode",
-                "  End: EndKeyword |end|"));
+                "  InitializationKeywordNode: InitializationKeyword |initialization|",
+                "  InitializationStatementListNode: ListNode",
+                "  FinalizationKeywordNode: FinalizationKeyword |finalization|",
+                "  FinalizationStatementListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestPopulatedInitialization()
         {
             Assert.That("initialization Foo; Bar; end", ParsesAs(
                 "InitSectionNode",
-                "  InitializationHeader: InitializationKeyword |initialization|",
-                "  InitializationStatements: ListNode",
+                "  InitializationKeywordNode: InitializationKeyword |initialization|",
+                "  InitializationStatementListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: Semicolon |;|",
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: Semicolon |;|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Identifier |Bar|",
-                "      Delimiter: Semicolon |;|",
-                "  FinalizationHeader: (none)",
-                "  FinalizationStatements: ListNode",
-                "  End: EndKeyword |end|"));
+                "      ItemNode: Identifier |Bar|",
+                "      DelimiterNode: Semicolon |;|",
+                "  FinalizationKeywordNode: (none)",
+                "  FinalizationStatementListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestPopulatedInitializationFinalization()
         {
             Assert.That("initialization Foo; Bar; finalization Baz; Quux; end", ParsesAs(
                 "InitSectionNode",
-                "  InitializationHeader: InitializationKeyword |initialization|",
-                "  InitializationStatements: ListNode",
+                "  InitializationKeywordNode: InitializationKeyword |initialization|",
+                "  InitializationStatementListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: Semicolon |;|",
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: Semicolon |;|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Identifier |Bar|",
-                "      Delimiter: Semicolon |;|",
-                "  FinalizationHeader: FinalizationKeyword |finalization|",
-                "  FinalizationStatements: ListNode",
+                "      ItemNode: Identifier |Bar|",
+                "      DelimiterNode: Semicolon |;|",
+                "  FinalizationKeywordNode: FinalizationKeyword |finalization|",
+                "  FinalizationStatementListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Baz|",
-                "      Delimiter: Semicolon |;|",
+                "      ItemNode: Identifier |Baz|",
+                "      DelimiterNode: Semicolon |;|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Identifier |Quux|",
-                "      Delimiter: Semicolon |;|",
-                "  End: EndKeyword |end|"));
+                "      ItemNode: Identifier |Quux|",
+                "      DelimiterNode: Semicolon |;|",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestEmptyBlock()
         {
             Assert.That("begin end", ParsesAs(
                 "InitSectionNode",
-                "  InitializationHeader: BeginKeyword |begin|",
-                "  InitializationStatements: ListNode",
-                "  FinalizationHeader: (none)",
-                "  FinalizationStatements: ListNode",
-                "  End: EndKeyword |end|"));
+                "  InitializationKeywordNode: BeginKeyword |begin|",
+                "  InitializationStatementListNode: ListNode",
+                "  FinalizationKeywordNode: (none)",
+                "  FinalizationStatementListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestPopulatedBlock()
         {
             Assert.That("begin Foo; Bar; end", ParsesAs(
                 "InitSectionNode",
-                "  InitializationHeader: BeginKeyword |begin|",
-                "  InitializationStatements: ListNode",
+                "  InitializationKeywordNode: BeginKeyword |begin|",
+                "  InitializationStatementListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: Semicolon |;|",
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: Semicolon |;|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Identifier |Bar|",
-                "      Delimiter: Semicolon |;|",
-                "  FinalizationHeader: (none)",
-                "  FinalizationStatements: ListNode",
-                "  End: EndKeyword |end|"));
+                "      ItemNode: Identifier |Bar|",
+                "      DelimiterNode: Semicolon |;|",
+                "  FinalizationKeywordNode: (none)",
+                "  FinalizationStatementListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestAsmBlock()
         {
             Assert.That("asm end", ParsesAs(
                 "InitSectionNode",
-                "  InitializationHeader: (none)",
-                "  InitializationStatements: ListNode",
+                "  InitializationKeywordNode: (none)",
+                "  InitializationStatementListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: AssemblerStatementNode",
-                "        Asm: AsmKeyword |asm|",
-                "        End: EndKeyword |end|",
-                "      Delimiter: (none)",
-                "  FinalizationHeader: (none)",
-                "  FinalizationStatements: ListNode",
-                "  End: (none)"));
+                "      ItemNode: AssemblerStatementNode",
+                "        AsmKeywordNode: AsmKeyword |asm|",
+                "        EndKeywordNode: EndKeyword |end|",
+                "      DelimiterNode: (none)",
+                "  FinalizationKeywordNode: (none)",
+                "  FinalizationStatementListNode: ListNode",
+                "  EndKeywordNode: (none)"));
         }
     }
 }

@@ -24,44 +24,44 @@ namespace DGrok.Tests
         {
             Assert.That("array of TFoo", ParsesAs(
                 "OpenArrayNode",
-                "  Array: ArrayKeyword |array|",
-                "  Of: OfKeyword |of|",
-                "  Type: Identifier |TFoo|"));
+                "  ArrayKeywordNode: ArrayKeyword |array|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: Identifier |TFoo|"));
         }
         public void TestArrayOfAtom()
         {
             Assert.That("array of Foo.TBar", ParsesAs(
                 "OpenArrayNode",
-                "  Array: ArrayKeyword |array|",
-                "  Of: OfKeyword |of|",
-                "  Type: BinaryOperationNode",
-                "    Left: Identifier |Foo|",
-                "    Operator: Dot |.|",
-                "    Right: Identifier |TBar|"));
+                "  ArrayKeywordNode: ArrayKeyword |array|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: BinaryOperationNode",
+                "    LeftNode: Identifier |Foo|",
+                "    OperatorNode: Dot |.|",
+                "    RightNode: Identifier |TBar|"));
         }
         public void TestArrayOfString()
         {
             Assert.That("array of string", ParsesAs(
                 "OpenArrayNode",
-                "  Array: ArrayKeyword |array|",
-                "  Of: OfKeyword |of|",
-                "  Type: StringKeyword |string|"));
+                "  ArrayKeywordNode: ArrayKeyword |array|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: StringKeyword |string|"));
         }
         public void TestArrayOfFile()
         {
             Assert.That("array of file", ParsesAs(
                 "OpenArrayNode",
-                "  Array: ArrayKeyword |array|",
-                "  Of: OfKeyword |of|",
-                "  Type: FileKeyword |file|"));
+                "  ArrayKeywordNode: ArrayKeyword |array|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: FileKeyword |file|"));
         }
         public void TestArrayOfConst()
         {
             Assert.That("array of const", ParsesAs(
                 "OpenArrayNode",
-                "  Array: ArrayKeyword |array|",
-                "  Of: OfKeyword |of|",
-                "  Type: ConstKeyword |const|"));
+                "  ArrayKeywordNode: ArrayKeyword |array|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: ConstKeyword |const|"));
         }
     }
 }

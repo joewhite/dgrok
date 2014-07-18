@@ -47,7 +47,7 @@ namespace DGrok.Demo
         {
             try
             {
-                Parser parser = Parser.FromText(edtSource.Text, "input", CompilerDefines.CreateStandard(),
+                Parser parser = Parser.FromText(viewSourceControl1.Text, "input", CompilerDefines.CreateStandard(),
                     new MemoryFileLoader());
                 AstNode tree = parser.ParseRule(_ruleType);
                 edtResults.Text = tree.Inspect();
@@ -57,15 +57,14 @@ namespace DGrok.Demo
                 edtResults.Text = "Filename: " + ex.Location.FileName + Environment.NewLine +
                     "Offset: " + ex.Location.Offset + Environment.NewLine +
                     ex.Message;
-                edtSource.SelectionStart = ex.Location.Offset;
-                edtSource.Focus();
-                edtSource.ScrollToCaret();
+                viewSourceControl1.Focus();
+                viewSourceControl1.ScrollToOffset(ex.Location.Offset);
                 return;
             }
         }
         public void ParseString(string s)
         {
-            edtSource.Text = s;
+            viewSourceControl1.Text = s;
             Parse();
         }
     }

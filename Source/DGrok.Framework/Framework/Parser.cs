@@ -11,14 +11,22 @@ using DGrok.DelphiNodes;
 
 namespace DGrok.Framework
 {
-    public class Parser
+    public partial class Parser
     {
         private ListNode<AstNode> _emptyList;
         private IFrame _nextFrame;
-        private Dictionary<RuleType, Rule> _rules = new Dictionary<RuleType, Rule>();
+        private Rule[] _rules;
 
         public Parser(IFrame frame)
         {
+            RuleType maxRuleType = 0;
+            foreach (RuleType ruleType in Enum.GetValues(typeof(RuleType)))
+            {
+                if (ruleType > maxRuleType)
+                    maxRuleType = ruleType;
+            }
+            _rules = new Rule[((int) maxRuleType) + 1];
+
             _nextFrame = frame;
             _emptyList = CreateEmptyListNode<AstNode>();
             #region AddOp
@@ -40,7 +48,7 @@ namespace DGrok.Framework
                 else
                     indexList = CreateEmptyListNode<DelimitedItemNode<AstNode>>();
                 Token of = ParseToken(TokenType.OfKeyword);
-                AstNode type = ParseRule(RuleType.Type);
+                AstNode type = ParseRuleInternal(RuleType.Type);
                 return new ArrayTypeNode(array, openBracket, indexList, closeBracket, of, type);
             });
             #endregion
@@ -60,7 +68,7 @@ namespace DGrok.Framework
                 Token openBracket = ParseToken(TokenType.OpenBracket);
                 Token scope = ParseToken(TokenType.AssemblySemikeyword);
                 Token colon = ParseToken(TokenType.Colon);
-                AstNode value = ParseRule(RuleType.Expression);
+                AstNode value = ParseRuleInternal(RuleType.Expression);
                 Token closeBracket = ParseToken(TokenType.CloseBracket);
                 return new AttributeNode(openBracket, scope, colon, value, closeBracket);
             });
@@ -71,13 +79,13 @@ namespace DGrok.Framework
                 return CanParseRule(RuleType.Particle);
             }, delegate
             {
-                AstNode node = ParseRule(RuleType.Particle);
+                AstNode node = ParseRuleInternal(RuleType.Particle);
                 while (true)
                 {
                     if (CanParseToken(TokenType.Dot))
                     {
                         Token dot = ParseToken(TokenType.Dot);
-                        AstNode right = ParseRule(RuleType.ExtendedIdent);
+                        AstNode right = ParseRuleInternal(RuleType.ExtendedIdent);
                         node = new BinaryOperationNode(node, dot, right);
                     }
                     else if (CanParseToken(TokenType.Caret))
@@ -89,7 +97,7 @@ namespace DGrok.Framework
                     {
                         Token openDelimiter = ParseToken(TokenType.OpenBracket);
                         ListNode<DelimitedItemNode<AstNode>> parameterList =
-                            (ListNode<DelimitedItemNode<AstNode>>) ParseRule(RuleType.ExpressionList);
+                            (ListNode<DelimitedItemNode<AstNode>>) ParseRuleInternal(RuleType.ExpressionList);
                         Token closeDelimiter = ParseToken(TokenType.CloseBracket);
                         node = new ParameterizedNode(node, openDelimiter, parameterList, closeDelimiter);
                     }
@@ -126,7 +134,7 @@ namespace DGrok.Framework
             AddRule(RuleType.Block, TokenSets.Block.LookAhead, delegate
             {
                 if (CanParseRule(RuleType.AssemblerStatement))
-                    return ParseRule(RuleType.AssemblerStatement);
+                    return ParseRuleInternal(RuleType.AssemblerStatement);
                 else
                 {
                     Token begin = ParseToken(TokenType.BeginKeyword);
@@ -147,7 +155,7 @@ namespace DGrok.Framework
                 Token colon = ParseToken(TokenType.Colon);
                 AstNode statement = null;
                 if (CanParseRule(RuleType.Statement))
-                    statement = ParseRule(RuleType.Statement);
+                    statement = ParseRuleInternal(RuleType.Statement);
                 Token semicolon = null;
                 if (CanParseToken(TokenType.Semicolon))
                     semicolon = ParseToken(TokenType.Semicolon);
@@ -158,7 +166,7 @@ namespace DGrok.Framework
             AddRule(RuleType.CaseStatement, LookAhead(TokenType.CaseKeyword), delegate
             {
                 Token theCase = ParseToken(TokenType.CaseKeyword);
-                AstNode expression = ParseRule(RuleType.Expression);
+                AstNode expression = ParseRuleInternal(RuleType.Expression);
                 Token of = ParseToken(TokenType.OfKeyword);
                 ListNode<CaseSelectorNode> selectorList =
                     ParseRequiredRuleList<CaseSelectorNode>(RuleType.CaseSelector);
@@ -189,11 +197,11 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.OpenParenthesis))
                 {
                     openParenthesis = ParseToken(TokenType.OpenParenthesis);
-                    baseHelperType = ParseRule(RuleType.QualifiedIdent);
+                    baseHelperType = ParseRuleInternal(RuleType.QualifiedIdent);
                     closeParenthesis = ParseToken(TokenType.CloseParenthesis);
                 }
                 Token theFor = ParseToken(TokenType.ForKeyword);
-                AstNode type = ParseRule(RuleType.QualifiedIdent);
+                AstNode type = ParseRuleInternal(RuleType.QualifiedIdent);
                 ListNode<VisibilitySectionNode> contents =
                     ParseOptionalRuleList<VisibilitySectionNode>(RuleType.VisibilitySection);
                 Token end = ParseToken(TokenType.EndKeyword);
@@ -210,7 +218,7 @@ namespace DGrok.Framework
             {
                 Token theClass = ParseToken(TokenType.ClassKeyword);
                 Token of = ParseToken(TokenType.OfKeyword);
-                AstNode type = ParseRule(RuleType.QualifiedIdent);
+                AstNode type = ParseRuleInternal(RuleType.QualifiedIdent);
                 return new ClassOfNode(theClass, of, type);
             });
             #endregion
@@ -254,10 +262,10 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.Colon))
                 {
                     colon = ParseToken(TokenType.Colon);
-                    type = ParseRule(RuleType.Type);
+                    type = ParseRuleInternal(RuleType.Type);
                 }
                 Token equalSign = ParseToken(TokenType.EqualSign);
-                AstNode value = ParseRule(RuleType.TypedConstant);
+                AstNode value = ParseRuleInternal(RuleType.TypedConstant);
                 ListNode<Token> portabilityDirectiveList =
                     ParseOptionalRuleList<Token>(RuleType.PortabilityDirective);
                 Token semicolon = ParseToken(TokenType.Semicolon);
@@ -293,14 +301,14 @@ namespace DGrok.Framework
                 if (CanParseToken(parameterizedDirectives))
                 {
                     directive = ParseToken(parameterizedDirectives);
-                    value = ParseRule(RuleType.Expression);
+                    value = ParseRuleInternal(RuleType.Expression);
                 }
                 else if (CanParseToken(TokenType.ExternalSemikeyword))
                 {
                     directive = ParseToken(TokenType.ExternalSemikeyword);
                     if (CanParseRule(RuleType.Expression))
                     {
-                        value = ParseRule(RuleType.Expression);
+                        value = ParseRuleInternal(RuleType.Expression);
                         data = ParseOptionalRuleList<ExportsSpecifierNode>(RuleType.ExportsSpecifier);
                     }
                 }
@@ -329,7 +337,7 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.EqualSign))
                 {
                     equalSign = ParseToken(TokenType.EqualSign);
-                    value = ParseRule(RuleType.Expression);
+                    value = ParseRuleInternal(RuleType.Expression);
                 }
                 return new EnumeratedTypeElementNode(name, equalSign, value);
             });
@@ -345,11 +353,11 @@ namespace DGrok.Framework
                     name = ParseIdent();
                     colon = ParseToken(TokenType.Colon);
                 }
-                AstNode type = ParseRule(RuleType.QualifiedIdent);
+                AstNode type = ParseRuleInternal(RuleType.QualifiedIdent);
                 Token theDo = ParseToken(TokenType.DoKeyword);
                 AstNode statement = null;
                 if (CanParseRule(RuleType.Statement))
-                    statement = ParseRule(RuleType.Statement);
+                    statement = ParseRuleInternal(RuleType.Statement);
                 Token semicolon = null;
                 if (CanParseToken(TokenType.Semicolon))
                     semicolon = ParseToken(TokenType.Semicolon);
@@ -359,7 +367,7 @@ namespace DGrok.Framework
             #region ExportsItem
             AddRule(RuleType.ExportsItem, TokenSets.Ident.LookAhead, delegate
             {
-                AstNode name = ParseRule(RuleType.QualifiedIdent);
+                AstNode name = ParseRuleInternal(RuleType.QualifiedIdent);
                 ListNode<ExportsSpecifierNode> specifierList =
                     ParseOptionalRuleList<ExportsSpecifierNode>(RuleType.ExportsSpecifier);
                 return new ExportsItemNode(name, specifierList);
@@ -369,7 +377,7 @@ namespace DGrok.Framework
             AddRule(RuleType.ExportsSpecifier, TokenSets.ExportsSpecifier.LookAhead, delegate
             {
                 Token keyword = ParseToken(TokenSets.ExportsSpecifier);
-                AstNode value = ParseRule(RuleType.Expression);
+                AstNode value = ParseRuleInternal(RuleType.Expression);
                 return new ExportsSpecifierNode(keyword, value);
             });
             #endregion
@@ -386,11 +394,11 @@ namespace DGrok.Framework
             #region Expression
             AddRule(RuleType.Expression, TokenSets.Expression.LookAhead, delegate
             {
-                AstNode node = ParseRule(RuleType.SimpleExpression);
+                AstNode node = ParseRuleInternal(RuleType.SimpleExpression);
                 while (CanParseRule(RuleType.RelOp))
                 {
-                    Token theOperator = (Token) ParseRule(RuleType.RelOp);
-                    AstNode right = ParseRule(RuleType.SimpleExpression);
+                    Token theOperator = (Token) ParseRuleInternal(RuleType.RelOp);
+                    AstNode right = ParseRuleInternal(RuleType.SimpleExpression);
                     node = new BinaryOperationNode(node, theOperator, right);
                 }
                 return node;
@@ -405,11 +413,11 @@ namespace DGrok.Framework
             #region ExpressionOrAssignment
             AddRule(RuleType.ExpressionOrAssignment, TokenSets.Expression.LookAhead, delegate
             {
-                AstNode node = ParseRule(RuleType.Expression);
+                AstNode node = ParseRuleInternal(RuleType.Expression);
                 if (CanParseToken(TokenType.ColonEquals))
                 {
                     Token theOperator = ParseToken(TokenType.ColonEquals);
-                    AstNode right = ParseRule(RuleType.Expression);
+                    AstNode right = ParseRuleInternal(RuleType.Expression);
                     return new BinaryOperationNode(node, theOperator, right);
                 }
                 else
@@ -419,11 +427,11 @@ namespace DGrok.Framework
             #region ExpressionOrRange
             AddRule(RuleType.ExpressionOrRange, TokenSets.Expression.LookAhead, delegate
             {
-                AstNode node = ParseRule(RuleType.SimpleExpression);
+                AstNode node = ParseRuleInternal(RuleType.SimpleExpression);
                 if (CanParseToken(TokenType.DotDot))
                 {
                     Token dotDot = ParseToken(TokenType.DotDot);
-                    AstNode right = ParseRule(RuleType.SimpleExpression);
+                    AstNode right = ParseRuleInternal(RuleType.SimpleExpression);
                     return new BinaryOperationNode(node, dotDot, right);
                 }
                 return node;
@@ -447,12 +455,12 @@ namespace DGrok.Framework
             {
                 if (CanParseRule(RuleType.UnaryOperator))
                 {
-                    Token theOperator = (Token) ParseRule(RuleType.UnaryOperator);
-                    AstNode operand = ParseRule(RuleType.Factor);
+                    Token theOperator = (Token) ParseRuleInternal(RuleType.UnaryOperator);
+                    AstNode operand = ParseRuleInternal(RuleType.Factor);
                     return new UnaryOperationNode(theOperator, operand);
                 }
                 else
-                    return ParseRule(RuleType.Atom);
+                    return ParseRuleInternal(RuleType.Atom);
             });
             #endregion
             #region FancyBlock
@@ -462,7 +470,7 @@ namespace DGrok.Framework
             }, delegate
             {
                 ListNode<AstNode> declList = ParseOptionalRuleList<AstNode>(RuleType.ImplementationDecl);
-                AstNode block = ParseRule(RuleType.Block);
+                AstNode block = ParseRuleInternal(RuleType.Block);
                 return new FancyBlockNode(declList, block);
             });
             #endregion
@@ -474,7 +482,7 @@ namespace DGrok.Framework
             {
                 ListNode<DelimitedItemNode<Token>> nameList = ParseIdentList();
                 Token colon = ParseToken(TokenType.Colon);
-                AstNode type = ParseRule(RuleType.Type);
+                AstNode type = ParseRuleInternal(RuleType.Type);
                 ListNode<Token> portabilityDirectiveList = ParseTokenList(TokenSets.PortabilityDirective);
                 Token semicolon = null;
                 if (CanParseToken(TokenType.Semicolon))
@@ -513,7 +521,7 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.OfKeyword))
                 {
                     of = ParseToken(TokenType.OfKeyword);
-                    type = ParseRule(RuleType.QualifiedIdent);
+                    type = ParseRuleInternal(RuleType.QualifiedIdent);
                 }
                 return new FileTypeNode(file, of, type);
             });
@@ -526,24 +534,24 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.InKeyword))
                 {
                     Token theIn = ParseToken(TokenType.InKeyword);
-                    AstNode expression = ParseRule(RuleType.Expression);
+                    AstNode expression = ParseRuleInternal(RuleType.Expression);
                     Token theDo = ParseToken(TokenType.DoKeyword);
                     AstNode statement = null;
                     if (CanParseRule(RuleType.Statement))
-                        statement = ParseRule(RuleType.Statement);
+                        statement = ParseRuleInternal(RuleType.Statement);
                     return new ForInStatementNode(theFor, loopVariable, theIn, expression,
                         theDo, statement);
                 }
                 else
                 {
                     Token colonEquals = ParseToken(TokenType.ColonEquals);
-                    AstNode startingValue = ParseRule(RuleType.Expression);
+                    AstNode startingValue = ParseRuleInternal(RuleType.Expression);
                     Token direction = ParseToken(TokenSets.ForDirection);
-                    AstNode endingValue = ParseRule(RuleType.Expression);
+                    AstNode endingValue = ParseRuleInternal(RuleType.Expression);
                     Token theDo = ParseToken(TokenType.DoKeyword);
                     AstNode statement = null;
                     if (CanParseRule(RuleType.Statement))
-                        statement = ParseRule(RuleType.Statement);
+                        statement = ParseRuleInternal(RuleType.Statement);
                     return new ForStatementNode(theFor, loopVariable, colonEquals,
                         startingValue, direction, endingValue, theDo, statement);
                 }
@@ -563,7 +571,7 @@ namespace DGrok.Framework
             AddRule(RuleType.GotoStatement, LookAhead(TokenType.GotoKeyword), delegate
             {
                 Token theGoto = ParseToken(TokenType.GotoKeyword);
-                Token labelId = (Token) ParseRule(RuleType.LabelId);
+                Token labelId = (Token) ParseRuleInternal(RuleType.LabelId);
                 return new GotoStatementNode(theGoto, labelId);
             });
             #endregion
@@ -584,18 +592,18 @@ namespace DGrok.Framework
             AddRule(RuleType.IfStatement, LookAhead(TokenType.IfKeyword), delegate
             {
                 Token theIf = ParseToken(TokenType.IfKeyword);
-                AstNode condition = ParseRule(RuleType.Expression);
+                AstNode condition = ParseRuleInternal(RuleType.Expression);
                 Token then = ParseToken(TokenType.ThenKeyword);
                 AstNode thenStatement = null;
                 if (CanParseRule(RuleType.Statement))
-                    thenStatement = ParseRule(RuleType.Statement);
+                    thenStatement = ParseRuleInternal(RuleType.Statement);
                 Token theElse = null;
                 AstNode elseStatement = null;
                 if (CanParseToken(TokenType.ElseKeyword))
                 {
                     theElse = ParseToken(TokenType.ElseKeyword);
                     if (CanParseRule(RuleType.Statement))
-                        elseStatement = ParseRule(RuleType.Statement);
+                        elseStatement = ParseRuleInternal(RuleType.Statement);
                 }
                 return new IfStatementNode(theIf, condition, then, thenStatement,
                     theElse, elseStatement);
@@ -621,7 +629,7 @@ namespace DGrok.Framework
                 Token implementation = ParseToken(TokenType.ImplementationKeyword);
                 UsesClauseNode usesClause = null;
                 if (CanParseRule(RuleType.UsesClause))
-                    usesClause = (UsesClauseNode) ParseRule(RuleType.UsesClause);
+                    usesClause = (UsesClauseNode) ParseRuleInternal(RuleType.UsesClause);
                 ListNode<AstNode> contents = ParseOptionalRuleList<AstNode>(RuleType.ImplementationDecl);
                 return new UnitSectionNode(implementation, usesClause, contents);
             });
@@ -638,15 +646,15 @@ namespace DGrok.Framework
                 Token end = null;
                 if (CanParseToken(TokenType.BeginKeyword))
                 {
-                    BlockNode block = (BlockNode) ParseRule(RuleType.Block);
-                    initializationHeader = block.Begin;
-                    initializationStatements = block.StatementList;
-                    end = block.End;
+                    BlockNode block = (BlockNode) ParseRuleInternal(RuleType.Block);
+                    initializationHeader = block.BeginKeywordNode;
+                    initializationStatements = block.StatementListNode;
+                    end = block.EndKeywordNode;
                 }
                 else if (CanParseToken(TokenType.AsmKeyword))
                 {
                     AssemblerStatementNode asm =
-                        (AssemblerStatementNode) ParseRule(RuleType.AssemblerStatement);
+                        (AssemblerStatementNode) ParseRuleInternal(RuleType.AssemblerStatement);
                     DelimitedItemNode<AstNode> item = new DelimitedItemNode<AstNode>(asm, null);
                     initializationStatements = new ListNode<DelimitedItemNode<AstNode>>(
                         new DelimitedItemNode<AstNode>[] { item });
@@ -686,7 +694,7 @@ namespace DGrok.Framework
                 Token theInterface = ParseToken(TokenType.InterfaceKeyword);
                 UsesClauseNode usesClause = null;
                 if (CanParseRule(RuleType.UsesClause))
-                    usesClause = (UsesClauseNode) ParseRule(RuleType.UsesClause);
+                    usesClause = (UsesClauseNode) ParseRuleInternal(RuleType.UsesClause);
                 ListNode<AstNode> contents = ParseOptionalRuleList<AstNode>(RuleType.InterfaceDecl);
                 return new UnitSectionNode(theInterface, usesClause, contents);
             });
@@ -701,7 +709,7 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.OpenParenthesis))
                 {
                     openParenthesis = ParseToken(TokenType.OpenParenthesis);
-                    baseInterface = ParseRule(RuleType.QualifiedIdent);
+                    baseInterface = ParseRuleInternal(RuleType.QualifiedIdent);
                     closeParenthesis = ParseToken(TokenType.CloseParenthesis);
                 }
                 Token openBracket = null;
@@ -710,7 +718,7 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.OpenBracket))
                 {
                     openBracket = ParseToken(TokenType.OpenBracket);
-                    guid = ParseRule(RuleType.Expression);
+                    guid = ParseRuleInternal(RuleType.Expression);
                     closeBracket = ParseToken(TokenType.CloseBracket);
                 }
                 ListNode<AstNode> methodAndPropertyList =
@@ -751,7 +759,7 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.ClassKeyword))
                     theClass = ParseToken(TokenType.ClassKeyword);
                 Token methodType = ParseToken(TokenSets.MethodType);
-                AstNode name = ParseRule(RuleType.QualifiedIdent);
+                AstNode name = ParseRuleInternal(RuleType.QualifiedIdent);
                 if (CanParseToken(TokenType.EqualSign))
                 {
                     AstNode interfaceMethod = name;
@@ -782,7 +790,7 @@ namespace DGrok.Framework
                     if (CanParseToken(TokenType.Colon))
                     {
                         colon = ParseToken(TokenType.Colon);
-                        returnType = ParseRule(RuleType.MethodReturnType);
+                        returnType = ParseRuleInternal(RuleType.MethodReturnType);
                     }
                     ListNode<DirectiveNode> directiveList = ParseOptionalRuleList<DirectiveNode>(RuleType.Directive);
                     Token semicolon = null;
@@ -800,12 +808,12 @@ namespace DGrok.Framework
                 return CanParseRule(RuleType.MethodHeading);
             }, delegate
             {
-                MethodHeadingNode methodHeading = (MethodHeadingNode) ParseRule(RuleType.MethodHeading);
+                MethodHeadingNode methodHeading = (MethodHeadingNode) ParseRuleInternal(RuleType.MethodHeading);
                 if (!methodHeading.RequiresBody)
                     return methodHeading;
                 else
                 {
-                    FancyBlockNode fancyBlock = (FancyBlockNode) ParseRule(RuleType.FancyBlock);
+                    FancyBlockNode fancyBlock = (FancyBlockNode) ParseRuleInternal(RuleType.FancyBlock);
                     Token semicolon = ParseToken(TokenType.Semicolon);
                     return new MethodImplementationNode(methodHeading, fancyBlock, semicolon);
                 }
@@ -850,14 +858,14 @@ namespace DGrok.Framework
             AddRule(RuleType.Package, LookAhead(TokenType.PackageSemikeyword), delegate
             {
                 Token package = ParseToken(TokenType.PackageSemikeyword);
-                AstNode name = ParseRule(RuleType.QualifiedIdent);
+                AstNode name = ParseRuleInternal(RuleType.QualifiedIdent);
                 Token semicolon = ParseToken(TokenType.Semicolon);
                 RequiresClauseNode requiresClause = null;
                 if (CanParseRule(RuleType.RequiresClause))
-                    requiresClause = (RequiresClauseNode) ParseRule(RuleType.RequiresClause);
+                    requiresClause = (RequiresClauseNode) ParseRuleInternal(RuleType.RequiresClause);
                 UsesClauseNode containsClause = null;
                 if (CanParseRule(RuleType.UsesClause))
-                    containsClause = (UsesClauseNode) ParseRule(RuleType.UsesClause);
+                    containsClause = (UsesClauseNode) ParseRuleInternal(RuleType.UsesClause);
                 ListNode<AttributeNode> attributeList =
                     ParseOptionalRuleList<AttributeNode>(RuleType.AssemblyAttribute);
                 Token end = ParseToken(TokenType.EndKeyword);
@@ -870,7 +878,7 @@ namespace DGrok.Framework
             AddRule(RuleType.PackedType, LookAhead(TokenType.PackedKeyword), delegate
             {
                 Token packed = ParseToken(TokenType.PackedKeyword);
-                AstNode type = ParseRule(RuleType.Type);
+                AstNode type = ParseRuleInternal(RuleType.Type);
                 return new PackedTypeNode(packed, type);
             });
             #endregion
@@ -886,14 +894,14 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.Colon))
                 {
                     colon = ParseToken(TokenType.Colon);
-                    type = ParseRule(RuleType.ParameterType);
+                    type = ParseRuleInternal(RuleType.ParameterType);
                 }
                 Token equalSign = null;
                 AstNode defaultValue = null;
                 if (CanParseToken(TokenType.EqualSign))
                 {
                     equalSign = ParseToken(TokenType.EqualSign);
-                    defaultValue = ParseRule(RuleType.Expression);
+                    defaultValue = ParseRuleInternal(RuleType.Expression);
                 }
                 return new ParameterNode(modifier, names, colon, type, equalSign, defaultValue);
             });
@@ -904,17 +912,17 @@ namespace DGrok.Framework
                 return CanParseRule(RuleType.Expression);
             }, delegate
             {
-                AstNode node = ParseRule(RuleType.Expression);
+                AstNode node = ParseRuleInternal(RuleType.Expression);
                 if (CanParseToken(TokenType.Colon))
                 {
                     Token sizeColon = ParseToken(TokenType.Colon);
-                    AstNode size = ParseRule(RuleType.Expression);
+                    AstNode size = ParseRuleInternal(RuleType.Expression);
                     Token precisionColon = null;
                     AstNode precision = null;
                     if (CanParseToken(TokenType.Colon))
                     {
                         precisionColon = ParseToken(TokenType.Colon);
-                        precision = ParseRule(RuleType.Expression);
+                        precision = ParseRuleInternal(RuleType.Expression);
                     }
                     return new NumberFormatNode(node, sizeColon, size, precisionColon, precision);
                 }
@@ -937,7 +945,7 @@ namespace DGrok.Framework
             AddRule(RuleType.ParenthesizedExpression, LookAhead(TokenType.OpenParenthesis), delegate
             {
                 Token openParenthesis = ParseToken(TokenType.OpenParenthesis);
-                AstNode expression = ParseRule(RuleType.Expression);
+                AstNode expression = ParseRuleInternal(RuleType.Expression);
                 Token closeParenthesis = ParseToken(TokenType.CloseParenthesis);
                 return new ParenthesizedExpressionNode(openParenthesis, expression, closeParenthesis);
             });
@@ -961,7 +969,7 @@ namespace DGrok.Framework
             AddRule(RuleType.PointerType, LookAhead(TokenType.Caret), delegate
             {
                 Token caret = ParseToken(TokenType.Caret);
-                AstNode type = ParseRule(RuleType.Type);
+                AstNode type = ParseRuleInternal(RuleType.Type);
                 return new PointerTypeNode(caret, type);
             });
             #endregion
@@ -991,7 +999,7 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.Colon))
                 {
                     colon = ParseToken(TokenType.Colon);
-                    returnType = ParseRule(RuleType.MethodReturnType);
+                    returnType = ParseRuleInternal(RuleType.MethodReturnType);
                 }
                 ListNode<DirectiveNode> firstDirectives =
                     ParseOptionalRuleList<DirectiveNode>(RuleType.Directive);
@@ -1026,10 +1034,10 @@ namespace DGrok.Framework
                 Token semicolon = ParseToken(TokenType.Semicolon);
                 UsesClauseNode usesClause = null;
                 if (CanParseRule(RuleType.UsesClause))
-                    usesClause = (UsesClauseNode) ParseRule(RuleType.UsesClause);
+                    usesClause = (UsesClauseNode) ParseRuleInternal(RuleType.UsesClause);
                 ListNode<AstNode> declarationList =
                     ParseOptionalRuleList<AstNode>(RuleType.ImplementationDecl);
-                InitSectionNode initSection = (InitSectionNode) ParseRule(RuleType.InitSection);
+                InitSectionNode initSection = (InitSectionNode) ParseRuleInternal(RuleType.InitSection);
                 Token dot = ParseToken(TokenType.Dot);
                 return new ProgramNode(program, name,
                     noiseOpenParenthesis, noiseContents, noiseCloseParenthesis,
@@ -1064,7 +1072,7 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.Colon))
                 {
                     colon = ParseToken(TokenType.Colon);
-                    type = ParseRule(RuleType.MethodReturnType);
+                    type = ParseRuleInternal(RuleType.MethodReturnType);
                 }
                 ListNode<DirectiveNode> directiveList =
                     ParseOptionalRuleList<DirectiveNode>(RuleType.PropertyDirective);
@@ -1099,7 +1107,7 @@ namespace DGrok.Framework
                 else if (CanParseToken(TokenSets.ParameterizedPropertyDirective))
                 {
                     directive = ParseToken(TokenSets.ParameterizedPropertyDirective);
-                    value = ParseRule(RuleType.Expression);
+                    value = ParseRuleInternal(RuleType.Expression);
                 }
                 else
                     directive = ParseToken(TokenSets.ParameterlessPropertyDirective);
@@ -1113,7 +1121,7 @@ namespace DGrok.Framework
                 while (CanParseToken(TokenType.Dot))
                 {
                     Token dot = ParseToken(TokenType.Dot);
-                    AstNode right = ParseRule(RuleType.ExtendedIdent);
+                    AstNode right = ParseRuleInternal(RuleType.ExtendedIdent);
                     node = new BinaryOperationNode(node, dot, right);
                 }
                 return node;
@@ -1128,11 +1136,11 @@ namespace DGrok.Framework
                 AstNode address = null;
                 if (CanParseRule(RuleType.Expression))
                 {
-                    exception = ParseRule(RuleType.Expression);
+                    exception = ParseRuleInternal(RuleType.Expression);
                     if (CanParseToken(TokenType.AtSemikeyword))
                     {
                         at = ParseToken(TokenType.AtSemikeyword);
-                        address = ParseRule(RuleType.Expression);
+                        address = ParseRuleInternal(RuleType.Expression);
                     }
                 }
                 return new RaiseStatementNode(raise, exception, at, address);
@@ -1144,9 +1152,9 @@ namespace DGrok.Framework
                 return CanParseRule(RuleType.QualifiedIdent);
             }, delegate
             {
-                AstNode name = ParseRule(RuleType.QualifiedIdent);
+                AstNode name = ParseRuleInternal(RuleType.QualifiedIdent);
                 Token colon = ParseToken(TokenType.Colon);
-                AstNode value = ParseRule(RuleType.TypedConstant);
+                AstNode value = ParseRuleInternal(RuleType.TypedConstant);
                 return new RecordFieldConstantNode(name, colon, value);
             });
             #endregion
@@ -1163,7 +1171,7 @@ namespace DGrok.Framework
                 const AstNode baseHelperType = null;
                 const Token closeParenthesis = null;
                 Token theFor = ParseToken(TokenType.ForKeyword);
-                AstNode type = ParseRule(RuleType.QualifiedIdent);
+                AstNode type = ParseRuleInternal(RuleType.QualifiedIdent);
                 ListNode<VisibilitySectionNode> contents =
                     ParseOptionalRuleList<VisibilitySectionNode>(RuleType.VisibilitySection);
                 Token end = ParseToken(TokenType.EndKeyword);
@@ -1180,7 +1188,7 @@ namespace DGrok.Framework
                     ParseOptionalRuleList<VisibilitySectionNode>(RuleType.VisibilitySection);
                 VariantSectionNode variantSection = null;
                 if (CanParseRule(RuleType.VariantSection))
-                    variantSection = (VariantSectionNode) ParseRule(RuleType.VariantSection);
+                    variantSection = (VariantSectionNode) ParseRuleInternal(RuleType.VariantSection);
                 Token end = ParseToken(TokenType.EndKeyword);
                 return new RecordTypeNode(record, contents, variantSection, end);
             });
@@ -1194,7 +1202,7 @@ namespace DGrok.Framework
                 Token repeat = ParseToken(TokenType.RepeatKeyword);
                 ListNode<DelimitedItemNode<AstNode>> statementList = ParseOptionalStatementList();
                 Token until = ParseToken(TokenType.UntilKeyword);
-                AstNode condition = ParseRule(RuleType.Expression);
+                AstNode condition = ParseRuleInternal(RuleType.Expression);
                 return new RepeatStatementNode(repeat, statementList, until, condition);
             });
             #endregion
@@ -1214,7 +1222,7 @@ namespace DGrok.Framework
                 Token openBracket = ParseToken(TokenType.OpenBracket);
                 ListNode<DelimitedItemNode<AstNode>> itemList;
                 if (CanParseRule(RuleType.ExpressionOrRangeList))
-                    itemList = (ListNode<DelimitedItemNode<AstNode>>) ParseRule(RuleType.ExpressionOrRangeList);
+                    itemList = (ListNode<DelimitedItemNode<AstNode>>) ParseRuleInternal(RuleType.ExpressionOrRangeList);
                 else
                     itemList = CreateEmptyListNode<DelimitedItemNode<AstNode>>();
                 Token closeBracket = ParseToken(TokenType.CloseBracket);
@@ -1226,18 +1234,18 @@ namespace DGrok.Framework
             {
                 Token set = ParseToken(TokenType.SetKeyword);
                 Token of = ParseToken(TokenType.OfKeyword);
-                AstNode type = ParseRule(RuleType.Type);
+                AstNode type = ParseRuleInternal(RuleType.Type);
                 return new SetOfNode(set, of, type);
             });
             #endregion
             #region SimpleExpression
             AddRule(RuleType.SimpleExpression, TokenSets.Expression.LookAhead, delegate
             {
-                AstNode node = ParseRule(RuleType.Term);
+                AstNode node = ParseRuleInternal(RuleType.Term);
                 while (CanParseRule(RuleType.AddOp))
                 {
-                    Token theOperator = (Token) ParseRule(RuleType.AddOp);
-                    AstNode right = ParseRule(RuleType.Term);
+                    Token theOperator = (Token) ParseRuleInternal(RuleType.AddOp);
+                    AstNode right = ParseRuleInternal(RuleType.Term);
                     node = new BinaryOperationNode(node, theOperator, right);
                 }
                 return node;
@@ -1270,15 +1278,15 @@ namespace DGrok.Framework
             {
                 if (TokenSets.LabelId.Contains(Peek(0)) && Peek(1) == TokenType.Colon)
                 {
-                    Token label = (Token) ParseRule(RuleType.LabelId);
+                    Token label = (Token) ParseRuleInternal(RuleType.LabelId);
                     Token colon = ParseToken(TokenType.Colon);
                     AstNode statement = null;
                     if (CanParseRule(RuleType.SimpleStatement))
-                        statement = ParseRule(RuleType.SimpleStatement);
+                        statement = ParseRuleInternal(RuleType.SimpleStatement);
                     return new LabeledStatementNode(label, colon, statement);
                 }
                 else
-                    return ParseRule(RuleType.SimpleStatement);
+                    return ParseRuleInternal(RuleType.SimpleStatement);
             });
             #endregion
             #region StatementList
@@ -1292,7 +1300,7 @@ namespace DGrok.Framework
                 {
                     AstNode item = null;
                     if (CanParseRule(RuleType.Statement))
-                        item = ParseRule(RuleType.Statement);
+                        item = ParseRuleInternal(RuleType.Statement);
                     Token delimiter = null;
                     if (CanParseToken(TokenType.Semicolon))
                         delimiter = ParseToken(TokenType.Semicolon);
@@ -1308,7 +1316,7 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.OpenBracket))
                 {
                     Token openBracket = ParseToken(TokenType.OpenBracket);
-                    AstNode length = ParseRule(RuleType.Expression);
+                    AstNode length = ParseRuleInternal(RuleType.Expression);
                     Token closeBracket = ParseToken(TokenType.CloseBracket);
                     return new StringOfLengthNode(theString, openBracket, length, closeBracket);
                 }
@@ -1319,11 +1327,11 @@ namespace DGrok.Framework
             #region Term
             AddRule(RuleType.Term, TokenSets.Expression.LookAhead, delegate
             {
-                AstNode node = ParseRule(RuleType.Factor);
+                AstNode node = ParseRuleInternal(RuleType.Factor);
                 while (CanParseRule(RuleType.MulOp))
                 {
-                    Token theOperator = (Token) ParseRule(RuleType.MulOp);
-                    AstNode right = ParseRule(RuleType.Factor);
+                    Token theOperator = (Token) ParseRuleInternal(RuleType.MulOp);
+                    AstNode right = ParseRuleInternal(RuleType.Factor);
                     node = new BinaryOperationNode(node, theOperator, right);
                 }
                 return node;
@@ -1395,7 +1403,7 @@ namespace DGrok.Framework
                 IFrame originalFrame = _nextFrame;
                 try
                 {
-                    return ParseRule(RuleType.Expression);
+                    return ParseRuleInternal(RuleType.Expression);
                 }
                 catch (ParseException)
                 {
@@ -1437,7 +1445,7 @@ namespace DGrok.Framework
                 else
                 {
                     Token typeKeyword = TryParseToken(TokenType.TypeKeyword);
-                    AstNode type = ParseRule(RuleType.Type);
+                    AstNode type = ParseRuleInternal(RuleType.Type);
                     ListNode<Token> portabilityDirectiveList =
                         ParseOptionalRuleList<Token>(RuleType.PortabilityDirective);
                     Token semicolon = ParseToken(TokenType.Semicolon);
@@ -1464,9 +1472,9 @@ namespace DGrok.Framework
                 Token unitName = ParseIdent();
                 ListNode<Token> portabilityDirectives = ParseTokenList(TokenSets.PortabilityDirective);
                 Token semicolon = ParseToken(TokenType.Semicolon);
-                UnitSectionNode interfaceSection = (UnitSectionNode) ParseRule(RuleType.InterfaceSection);
-                UnitSectionNode implementationSection = (UnitSectionNode) ParseRule(RuleType.ImplementationSection);
-                InitSectionNode initSection = (InitSectionNode) ParseRule(RuleType.InitSection);
+                UnitSectionNode interfaceSection = (UnitSectionNode) ParseRuleInternal(RuleType.InterfaceSection);
+                UnitSectionNode implementationSection = (UnitSectionNode) ParseRuleInternal(RuleType.ImplementationSection);
+                InitSectionNode initSection = (InitSectionNode) ParseRuleInternal(RuleType.InitSection);
                 Token dot = ParseToken(TokenType.Dot);
                 return new UnitNode(unit, unitName, portabilityDirectives, semicolon,
                     interfaceSection, implementationSection, initSection, dot);
@@ -1475,7 +1483,7 @@ namespace DGrok.Framework
             #region UsedUnit
             AddRule(RuleType.UsedUnit, TokenSets.Ident.LookAhead, delegate
             {
-                AstNode name = ParseRule(RuleType.QualifiedIdent);
+                AstNode name = ParseRuleInternal(RuleType.QualifiedIdent);
                 Token theIn = null;
                 Token fileName = null;
                 if (CanParseToken(TokenType.InKeyword))
@@ -1502,7 +1510,7 @@ namespace DGrok.Framework
                 ListNode<DelimitedItemNode<Token>> names =
                     ParseDelimitedList<Token>(RuleType.Ident, TokenType.Comma);
                 Token colon = ParseToken(TokenType.Colon);
-                AstNode type = ParseRule(RuleType.Type);
+                AstNode type = ParseRuleInternal(RuleType.Type);
                 ListNode<Token> firstPortabilityDirectives =
                     ParseOptionalRuleList<Token>(RuleType.PortabilityDirective);
                 Token absolute = null;
@@ -1512,12 +1520,12 @@ namespace DGrok.Framework
                 if (CanParseToken(TokenType.AbsoluteSemikeyword))
                 {
                     absolute = ParseToken(TokenType.AbsoluteSemikeyword);
-                    absoluteAddress = ParseRule(RuleType.Expression);
+                    absoluteAddress = ParseRuleInternal(RuleType.Expression);
                 }
                 else if (CanParseToken(TokenType.EqualSign))
                 {
                     equalSign = ParseToken(TokenType.EqualSign);
-                    value = ParseRule(RuleType.TypedConstant);
+                    value = ParseRuleInternal(RuleType.TypedConstant);
                 }
                 ListNode<Token> secondPortabilityDirectives =
                     ParseOptionalRuleList<Token>(RuleType.PortabilityDirective);
@@ -1540,7 +1548,7 @@ namespace DGrok.Framework
                 ListNode<FieldDeclNode> fieldDeclList = ParseOptionalRuleList<FieldDeclNode>(RuleType.FieldDecl);
                 VariantSectionNode variantSection = null;
                 if (CanParseRule(RuleType.VariantSection))
-                    variantSection = (VariantSectionNode) ParseRule(RuleType.VariantSection);
+                    variantSection = (VariantSectionNode) ParseRuleInternal(RuleType.VariantSection);
                 Token closeParenthesis = ParseToken(TokenType.CloseParenthesis);
                 Token semicolon = null;
                 if (CanParseToken(TokenType.Semicolon))
@@ -1560,7 +1568,7 @@ namespace DGrok.Framework
                     name = ParseIdent();
                     colon = ParseToken(TokenType.Colon);
                 }
-                AstNode type = ParseRule(RuleType.QualifiedIdent);
+                AstNode type = ParseRuleInternal(RuleType.QualifiedIdent);
                 Token of = ParseToken(TokenType.OfKeyword);
                 ListNode<VariantGroupNode> variantGroupList =
                     ParseRequiredRuleList<VariantGroupNode>(RuleType.VariantGroup);
@@ -1595,7 +1603,7 @@ namespace DGrok.Framework
             {
                 VisibilityNode visibility = null;
                 if (CanParseRule(RuleType.Visibility))
-                    visibility = (VisibilityNode) ParseRule(RuleType.Visibility);
+                    visibility = (VisibilityNode) ParseRuleInternal(RuleType.Visibility);
                 ListNode<AstNode> contents =
                     ParseOptionalRuleList<AstNode>(RuleType.VisibilitySectionContent);
                 return new VisibilitySectionNode(visibility, contents);
@@ -1616,11 +1624,11 @@ namespace DGrok.Framework
             AddRule(RuleType.WhileStatement, LookAhead(TokenType.WhileKeyword), delegate
             {
                 Token theWhile = ParseToken(TokenType.WhileKeyword);
-                AstNode condition = ParseRule(RuleType.Expression);
+                AstNode condition = ParseRuleInternal(RuleType.Expression);
                 Token theDo = ParseToken(TokenType.DoKeyword);
                 AstNode statement = null;
                 if (CanParseRule(RuleType.Statement))
-                    statement = ParseRule(RuleType.Statement);
+                    statement = ParseRuleInternal(RuleType.Statement);
                 return new WhileStatementNode(theWhile, condition, theDo, statement);
             });
             #endregion
@@ -1633,7 +1641,7 @@ namespace DGrok.Framework
                 Token theDo = ParseToken(TokenType.DoKeyword);
                 AstNode statement = null;
                 if (CanParseRule(RuleType.Statement))
-                    statement = ParseRule(RuleType.Statement);
+                    statement = ParseRuleInternal(RuleType.Statement);
                 return new WithStatementNode(with, expressionList, theDo, statement);
             });
             #endregion
@@ -1677,18 +1685,18 @@ namespace DGrok.Framework
 
         private void AddRule(RuleType ruleType, Predicate<Parser> lookAhead, RuleDelegate evaluate)
         {
-            _rules[ruleType] = new Rule(this, ruleType, lookAhead, evaluate);
+            _rules[(int) ruleType] = new Rule(this, ruleType, lookAhead, evaluate);
         }
-        private void AddTokenRule(RuleType ruleType, TokenSet tokenSet)
+        private void AddTokenRule(RuleType ruleType, ITokenSet tokenSet)
         {
             AddRule(ruleType, delegate { return CanParseToken(tokenSet); },
                 delegate { return ParseToken(tokenSet); });
         }
         public bool CanParseRule(RuleType ruleType)
         {
-            return GetRule(ruleType).CanParse();
+            return _rules[(int) ruleType].CanParse();
         }
-        public bool CanParseToken(TokenSet tokenSet)
+        public bool CanParseToken(ITokenSet tokenSet)
         {
             return tokenSet.Contains(Peek(0));
         }
@@ -1706,12 +1714,6 @@ namespace DGrok.Framework
             return new ParseException("Expected " + expected + " but was " + _nextFrame.DisplayName,
                 _nextFrame.Location);
         }
-        public Rule GetRule(RuleType ruleType)
-        {
-            if (_rules.ContainsKey(ruleType))
-                return _rules[ruleType];
-            throw new ArgumentException("Parse rule " + ruleType + " not found");
-        }
         private Predicate<Parser> LookAhead(TokenType tokenType)
         {
             return delegate { return CanParseToken(tokenType); };
@@ -1726,7 +1728,7 @@ namespace DGrok.Framework
             List<DelimitedItemNode<T>> items = new List<DelimitedItemNode<T>>();
             do
             {
-                T item = (T) ParseRule(itemRule);
+                T item = (T) ParseRuleInternal(itemRule);
                 Token delimiter = null;
                 if (CanParseToken(delimiterType))
                     delimiter = ParseToken(delimiterType);
@@ -1736,18 +1738,18 @@ namespace DGrok.Framework
         }
         private Token ParseIdent()
         {
-            return (Token) ParseRule(RuleType.Ident);
+            return (Token) ParseRuleInternal(RuleType.Ident);
         }
         private ListNode<DelimitedItemNode<Token>> ParseIdentList()
         {
-            return (ListNode<DelimitedItemNode<Token>>) ParseRule(RuleType.IdentList);
+            return (ListNode<DelimitedItemNode<Token>>) ParseRuleInternal(RuleType.IdentList);
         }
         private ListNode<T> ParseOptionalRuleList<T>(RuleType ruleType)
             where T : AstNode
         {
             List<T> items = new List<T>();
             while (CanParseRule(ruleType))
-                items.Add((T) ParseRule(ruleType));
+                items.Add((T) ParseRuleInternal(ruleType));
             return new ListNode<T>(items);
         }
         private ListNode<DelimitedItemNode<AstNode>> ParseOptionalStatementList()
@@ -1763,23 +1765,26 @@ namespace DGrok.Framework
             List<T> items = new List<T>();
             do
             {
-                items.Add((T) ParseRule(ruleType));
+                items.Add((T) ParseRuleInternal(ruleType));
             }
             while (CanParseRule(ruleType));
             return new ListNode<T>(items);
         }
         private ListNode<DelimitedItemNode<AstNode>> ParseRequiredStatementList()
         {
-            return (ListNode<DelimitedItemNode<AstNode>>) ParseRule(RuleType.StatementList);
+            return (ListNode<DelimitedItemNode<AstNode>>) ParseRuleInternal(RuleType.StatementList);
         }
         public AstNode ParseRule(RuleType ruleType)
         {
-            if (_rules.ContainsKey(ruleType))
-                return _rules[ruleType].Execute();
-            else
-                throw new ArgumentException("Unrecognized parse rule " + ruleType);
+            AstNode result = ParseRuleInternal(ruleType);
+            result.BuildParentReferences(null);
+            return result;
         }
-        public Token ParseToken(TokenSet tokenSet)
+        private AstNode ParseRuleInternal(RuleType ruleType)
+        {
+            return _rules[(int) ruleType].Execute();
+        }
+        public Token ParseToken(ITokenSet tokenSet)
         {
             Token result = _nextFrame.ParseToken(tokenSet);
             _nextFrame = _nextFrame.Next;
@@ -1787,16 +1792,16 @@ namespace DGrok.Framework
         }
         private Token ParseToken(TokenType tokenType)
         {
-            return ParseToken(new TokenSet(tokenType));
+            return ParseToken(new SingleTokenTokenSet(tokenType));
         }
-        private ListNode<Token> ParseTokenList(TokenSet tokenSet)
+        private ListNode<Token> ParseTokenList(ITokenSet tokenSet)
         {
             List<Token> nodes = new List<Token>();
             while (CanParseToken(tokenSet))
                 nodes.Add(ParseToken(tokenSet));
             return new ListNode<Token>(nodes);
         }
-        public TokenType Peek(int offset)
+        private TokenType Peek(int offset)
         {
             IFrame frame = _nextFrame;
             while (offset > 0)

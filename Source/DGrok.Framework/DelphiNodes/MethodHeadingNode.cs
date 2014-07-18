@@ -17,7 +17,7 @@ namespace DGrok.DelphiNodes
         {
             get
             {
-                foreach (DirectiveNode directive in DirectiveList.Items)
+                foreach (DirectiveNode directive in DirectiveListNode.Items)
                 {
                     if (directive.ForbidsBody)
                         return false;

@@ -28,180 +28,180 @@ namespace DGrok.Tests
         {
             Assert.That("(6 * 9)", ParsesAs(
                 "ParenthesizedExpressionNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  Expression: BinaryOperationNode",
-                "    Left: Number |6|",
-                "    Operator: TimesSign |*|",
-                "    Right: Number |9|",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ExpressionNode: BinaryOperationNode",
+                "    LeftNode: Number |6|",
+                "    OperatorNode: TimesSign |*|",
+                "    RightNode: Number |9|",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
         public void TestList()
         {
             Assert.That("(6, 9)", ParsesAs(
                 "ConstantListNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  ItemList: ListNode",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |6|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: Number |6|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Number |9|",
-                "      Delimiter: (none)",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "      ItemNode: Number |9|",
+                "      DelimiterNode: (none)",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
         public void TestRecord()
         {
             Assert.That("(Foo: 24; Bar.Baz: 42)", ParsesAs(
                 "ConstantListNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  ItemList: ListNode",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: RecordFieldConstantNode",
-                "        Name: Identifier |Foo|",
-                "        Colon: Colon |:|",
-                "        Value: Number |24|",
-                "      Delimiter: Semicolon |;|",
+                "      ItemNode: RecordFieldConstantNode",
+                "        NameNode: Identifier |Foo|",
+                "        ColonNode: Colon |:|",
+                "        ValueNode: Number |24|",
+                "      DelimiterNode: Semicolon |;|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: RecordFieldConstantNode",
-                "        Name: BinaryOperationNode",
-                "          Left: Identifier |Bar|",
-                "          Operator: Dot |.|",
-                "          Right: Identifier |Baz|",
-                "        Colon: Colon |:|",
-                "        Value: Number |42|",
-                "      Delimiter: (none)",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "      ItemNode: RecordFieldConstantNode",
+                "        NameNode: BinaryOperationNode",
+                "          LeftNode: Identifier |Bar|",
+                "          OperatorNode: Dot |.|",
+                "          RightNode: Identifier |Baz|",
+                "        ColonNode: Colon |:|",
+                "        ValueNode: Number |42|",
+                "      DelimiterNode: (none)",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
         public void TestListOfExpressions()
         {
             Assert.That("((6), (9))", ParsesAs(
                 "ConstantListNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  ItemList: ListNode",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: ParenthesizedExpressionNode",
-                "        OpenParenthesis: OpenParenthesis |(|",
-                "        Expression: Number |6|",
-                "        CloseParenthesis: CloseParenthesis |)|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: ParenthesizedExpressionNode",
+                "        OpenParenthesisNode: OpenParenthesis |(|",
+                "        ExpressionNode: Number |6|",
+                "        CloseParenthesisNode: CloseParenthesis |)|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: ParenthesizedExpressionNode",
-                "        OpenParenthesis: OpenParenthesis |(|",
-                "        Expression: Number |9|",
-                "        CloseParenthesis: CloseParenthesis |)|",
-                "      Delimiter: (none)",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "      ItemNode: ParenthesizedExpressionNode",
+                "        OpenParenthesisNode: OpenParenthesis |(|",
+                "        ExpressionNode: Number |9|",
+                "        CloseParenthesisNode: CloseParenthesis |)|",
+                "      DelimiterNode: (none)",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
         public void TestListOfLists()
         {
             Assert.That("((6, 9))", ParsesAs(
                 "ConstantListNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  ItemList: ListNode",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: ConstantListNode",
-                "        OpenParenthesis: OpenParenthesis |(|",
-                "        ItemList: ListNode",
+                "      ItemNode: ConstantListNode",
+                "        OpenParenthesisNode: OpenParenthesis |(|",
+                "        ItemListNode: ListNode",
                 "          Items[0]: DelimitedItemNode",
-                "            Item: Number |6|",
-                "            Delimiter: Comma |,|",
+                "            ItemNode: Number |6|",
+                "            DelimiterNode: Comma |,|",
                 "          Items[1]: DelimitedItemNode",
-                "            Item: Number |9|",
-                "            Delimiter: (none)",
-                "        CloseParenthesis: CloseParenthesis |)|",
-                "      Delimiter: (none)",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "            ItemNode: Number |9|",
+                "            DelimiterNode: (none)",
+                "        CloseParenthesisNode: CloseParenthesis |)|",
+                "      DelimiterNode: (none)",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
         public void TestListOfRecords()
         {
             Assert.That("((Foo: 42))", ParsesAs(
                 "ConstantListNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  ItemList: ListNode",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: ConstantListNode",
-                "        OpenParenthesis: OpenParenthesis |(|",
-                "        ItemList: ListNode",
+                "      ItemNode: ConstantListNode",
+                "        OpenParenthesisNode: OpenParenthesis |(|",
+                "        ItemListNode: ListNode",
                 "          Items[0]: DelimitedItemNode",
-                "            Item: RecordFieldConstantNode",
-                "              Name: Identifier |Foo|",
-                "              Colon: Colon |:|",
-                "              Value: Number |42|",
-                "            Delimiter: (none)",
-                "        CloseParenthesis: CloseParenthesis |)|",
-                "      Delimiter: (none)",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "            ItemNode: RecordFieldConstantNode",
+                "              NameNode: Identifier |Foo|",
+                "              ColonNode: Colon |:|",
+                "              ValueNode: Number |42|",
+                "            DelimiterNode: (none)",
+                "        CloseParenthesisNode: CloseParenthesis |)|",
+                "      DelimiterNode: (none)",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
         public void TestRecordOfExpressions()
         {
             Assert.That("(Foo: (42))", ParsesAs(
                 "ConstantListNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  ItemList: ListNode",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: RecordFieldConstantNode",
-                "        Name: Identifier |Foo|",
-                "        Colon: Colon |:|",
-                "        Value: ParenthesizedExpressionNode",
-                "          OpenParenthesis: OpenParenthesis |(|",
-                "          Expression: Number |42|",
-                "          CloseParenthesis: CloseParenthesis |)|",
-                "      Delimiter: (none)",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "      ItemNode: RecordFieldConstantNode",
+                "        NameNode: Identifier |Foo|",
+                "        ColonNode: Colon |:|",
+                "        ValueNode: ParenthesizedExpressionNode",
+                "          OpenParenthesisNode: OpenParenthesis |(|",
+                "          ExpressionNode: Number |42|",
+                "          CloseParenthesisNode: CloseParenthesis |)|",
+                "      DelimiterNode: (none)",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
         public void TestRecordOfLists()
         {
             Assert.That("(Foo: (6, 9))", ParsesAs(
                 "ConstantListNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  ItemList: ListNode",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: RecordFieldConstantNode",
-                "        Name: Identifier |Foo|",
-                "        Colon: Colon |:|",
-                "        Value: ConstantListNode",
-                "          OpenParenthesis: OpenParenthesis |(|",
-                "          ItemList: ListNode",
+                "      ItemNode: RecordFieldConstantNode",
+                "        NameNode: Identifier |Foo|",
+                "        ColonNode: Colon |:|",
+                "        ValueNode: ConstantListNode",
+                "          OpenParenthesisNode: OpenParenthesis |(|",
+                "          ItemListNode: ListNode",
                 "            Items[0]: DelimitedItemNode",
-                "              Item: Number |6|",
-                "              Delimiter: Comma |,|",
+                "              ItemNode: Number |6|",
+                "              DelimiterNode: Comma |,|",
                 "            Items[1]: DelimitedItemNode",
-                "              Item: Number |9|",
-                "              Delimiter: (none)",
-                "          CloseParenthesis: CloseParenthesis |)|",
-                "      Delimiter: (none)",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "              ItemNode: Number |9|",
+                "              DelimiterNode: (none)",
+                "          CloseParenthesisNode: CloseParenthesis |)|",
+                "      DelimiterNode: (none)",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
         public void TestRecordOfRecords()
         {
             Assert.That("(Foo: (Bar: 42))", ParsesAs(
                 "ConstantListNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  ItemList: ListNode",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: RecordFieldConstantNode",
-                "        Name: Identifier |Foo|",
-                "        Colon: Colon |:|",
-                "        Value: ConstantListNode",
-                "          OpenParenthesis: OpenParenthesis |(|",
-                "          ItemList: ListNode",
+                "      ItemNode: RecordFieldConstantNode",
+                "        NameNode: Identifier |Foo|",
+                "        ColonNode: Colon |:|",
+                "        ValueNode: ConstantListNode",
+                "          OpenParenthesisNode: OpenParenthesis |(|",
+                "          ItemListNode: ListNode",
                 "            Items[0]: DelimitedItemNode",
-                "              Item: RecordFieldConstantNode",
-                "                Name: Identifier |Bar|",
-                "                Colon: Colon |:|",
-                "                Value: Number |42|",
-                "              Delimiter: (none)",
-                "          CloseParenthesis: CloseParenthesis |)|",
-                "      Delimiter: (none)",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "              ItemNode: RecordFieldConstantNode",
+                "                NameNode: Identifier |Bar|",
+                "                ColonNode: Colon |:|",
+                "                ValueNode: Number |42|",
+                "              DelimiterNode: (none)",
+                "          CloseParenthesisNode: CloseParenthesis |)|",
+                "      DelimiterNode: (none)",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
         public void TestEmptyParentheses()
         {
             Assert.That("()", ParsesAs(
                 "ConstantListNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  ItemList: ListNode",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ItemListNode: ListNode",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
     }
 }

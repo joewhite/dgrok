@@ -24,25 +24,25 @@ namespace DGrok.Tests
         {
             Assert.That("repeat until Doomsday", ParsesAs(
                 "RepeatStatementNode",
-                "  Repeat: RepeatKeyword |repeat|",
-                "  StatementList: ListNode",
-                "  Until: UntilKeyword |until|",
-                "  Condition: Identifier |Doomsday|"));
+                "  RepeatKeywordNode: RepeatKeyword |repeat|",
+                "  StatementListNode: ListNode",
+                "  UntilKeywordNode: UntilKeyword |until|",
+                "  ConditionNode: Identifier |Doomsday|"));
         }
         public void TestPopulated()
         {
             Assert.That("repeat Foo; Bar; until Doomsday", ParsesAs(
                 "RepeatStatementNode",
-                "  Repeat: RepeatKeyword |repeat|",
-                "  StatementList: ListNode",
+                "  RepeatKeywordNode: RepeatKeyword |repeat|",
+                "  StatementListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: Semicolon |;|",
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: Semicolon |;|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Identifier |Bar|",
-                "      Delimiter: Semicolon |;|",
-                "  Until: UntilKeyword |until|",
-                "  Condition: Identifier |Doomsday|"));
+                "      ItemNode: Identifier |Bar|",
+                "      DelimiterNode: Semicolon |;|",
+                "  UntilKeywordNode: UntilKeyword |until|",
+                "  ConditionNode: Identifier |Doomsday|"));
         }
     }
 }

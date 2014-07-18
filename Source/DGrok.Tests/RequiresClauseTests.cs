@@ -24,40 +24,40 @@ namespace DGrok.Tests
         {
             Assert.That("requires Foo;", ParsesAs(
                 "RequiresClauseNode",
-                "  Requires: RequiresSemikeyword |requires|",
-                "  PackageList: ListNode",
+                "  RequiresSemikeywordNode: RequiresSemikeyword |requires|",
+                "  PackageListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestTwoItems()
         {
             Assert.That("requires Foo, Bar;", ParsesAs(
                 "RequiresClauseNode",
-                "  Requires: RequiresSemikeyword |requires|",
-                "  PackageList: ListNode",
+                "  RequiresSemikeywordNode: RequiresSemikeyword |requires|",
+                "  PackageListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Identifier |Bar|",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: Identifier |Bar|",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestDottedItem()
         {
             Assert.That("requires Foo.Bar;", ParsesAs(
                 "RequiresClauseNode",
-                "  Requires: RequiresSemikeyword |requires|",
-                "  PackageList: ListNode",
+                "  RequiresSemikeywordNode: RequiresSemikeyword |requires|",
+                "  PackageListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: BinaryOperationNode",
-                "        Left: Identifier |Foo|",
-                "        Operator: Dot |.|",
-                "        Right: Identifier |Bar|",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: BinaryOperationNode",
+                "        LeftNode: Identifier |Foo|",
+                "        OperatorNode: Dot |.|",
+                "        RightNode: Identifier |Bar|",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
     }
 }

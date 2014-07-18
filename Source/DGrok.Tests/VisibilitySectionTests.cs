@@ -24,30 +24,30 @@ namespace DGrok.Tests
         {
             Assert.That("public", ParsesAs(
                 "VisibilitySectionNode",
-                "  Visibility: VisibilityNode",
-                "    Strict: (none)",
-                "    Visibility: PublicSemikeyword |public|",
-                "  Contents: ListNode"));
+                "  VisibilityNode: VisibilityNode",
+                "    StrictSemikeywordNode: (none)",
+                "    VisibilityKeywordNode: PublicSemikeyword |public|",
+                "  ContentListNode: ListNode"));
         }
         public void TestContentsOnly()
         {
             Assert.That("FFoo: Integer;", ParsesAs(
                 "VisibilitySectionNode",
-                "  Visibility: (none)",
-                "  Contents: ListNode",
+                "  VisibilityNode: (none)",
+                "  ContentListNode: ListNode",
                 "    Items[0]: FieldSectionNode",
-                "      Class: (none)",
-                "      Var: (none)",
-                "      FieldList: ListNode",
+                "      ClassKeywordNode: (none)",
+                "      VarKeywordNode: (none)",
+                "      FieldListNode: ListNode",
                 "        Items[0]: FieldDeclNode",
-                "          NameList: ListNode",
+                "          NameListNode: ListNode",
                 "            Items[0]: DelimitedItemNode",
-                "              Item: Identifier |FFoo|",
-                "              Delimiter: (none)",
-                "          Colon: Colon |:|",
-                "          Type: Identifier |Integer|",
-                "          PortabilityDirectiveList: ListNode",
-                "          Semicolon: Semicolon |;|"));
+                "              ItemNode: Identifier |FFoo|",
+                "              DelimiterNode: (none)",
+                "          ColonNode: Colon |:|",
+                "          TypeNode: Identifier |Integer|",
+                "          PortabilityDirectiveListNode: ListNode",
+                "          SemicolonNode: Semicolon |;|"));
         }
     }
 }

@@ -18,7 +18,7 @@ namespace DGrok.Framework
         IFrame Next { get; set; }
         TokenType TokenType { get; }
 
-        bool CanParseToken(TokenSet tokenSet);
-        Token ParseToken(TokenSet tokenSet);
+        bool CanParseToken(ITokenSet tokenSet);
+        Token ParseToken(ITokenSet tokenSet);
     }
 }

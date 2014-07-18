@@ -28,29 +28,29 @@ namespace DGrok.Tests
         {
             Assert.That("42 = 42", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Number |42|",
-                "  Operator: EqualSign |=|",
-                "  Right: Number |42|"));
+                "  LeftNode: Number |42|",
+                "  OperatorNode: EqualSign |=|",
+                "  RightNode: Number |42|"));
         }
         public void TestColon()
         {
             Assert.That("42:4", ParsesAs(
                 "NumberFormatNode",
-                "  Value: Number |42|",
-                "  SizeColon: Colon |:|",
-                "  Size: Number |4|",
-                "  PrecisionColon: (none)",
-                "  Precision: (none)"));
+                "  ValueNode: Number |42|",
+                "  SizeColonNode: Colon |:|",
+                "  SizeNode: Number |4|",
+                "  PrecisionColonNode: (none)",
+                "  PrecisionNode: (none)"));
         }
         public void TestColonColon()
         {
             Assert.That("42.0:4:2", ParsesAs(
                 "NumberFormatNode",
-                "  Value: Number |42.0|",
-                "  SizeColon: Colon |:|",
-                "  Size: Number |4|",
-                "  PrecisionColon: Colon |:|",
-                "  Precision: Number |2|"));
+                "  ValueNode: Number |42.0|",
+                "  SizeColonNode: Colon |:|",
+                "  SizeNode: Number |4|",
+                "  PrecisionColonNode: Colon |:|",
+                "  PrecisionNode: Number |2|"));
         }
     }
 }

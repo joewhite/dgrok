@@ -24,48 +24,48 @@ namespace DGrok.Tests
         {
             Assert.That("label 42;", ParsesAs(
                 "LabelDeclSectionNode",
-                "  Label: LabelKeyword |label|",
-                "  LabelList: ListNode",
+                "  LabelKeywordNode: LabelKeyword |label|",
+                "  LabelListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |42|",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: Number |42|",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestOneIdentifier()
         {
             Assert.That("label Foo;", ParsesAs(
                 "LabelDeclSectionNode",
-                "  Label: LabelKeyword |label|",
-                "  LabelList: ListNode",
+                "  LabelKeywordNode: LabelKeyword |label|",
+                "  LabelListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestOneSemikeyword()
         {
             Assert.That("label Absolute;", ParsesAs(
                 "LabelDeclSectionNode",
-                "  Label: LabelKeyword |label|",
-                "  LabelList: ListNode",
+                "  LabelKeywordNode: LabelKeyword |label|",
+                "  LabelListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Absolute|",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: Identifier |Absolute|",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestMixed()
         {
             Assert.That("label Answer, 42;", ParsesAs(
                 "LabelDeclSectionNode",
-                "  Label: LabelKeyword |label|",
-                "  LabelList: ListNode",
+                "  LabelKeywordNode: LabelKeyword |label|",
+                "  LabelListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Answer|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: Identifier |Answer|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Number |42|",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: Number |42|",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
     }
 }

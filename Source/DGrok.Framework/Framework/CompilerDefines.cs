@@ -90,9 +90,9 @@ namespace DGrok.Framework
             defines.UndefineSymbol("VER150"); // Delphi 7
             defines.UndefineSymbol("VER160"); // Delphi 8 for .NET
             defines.UndefineSymbol("VER170"); // Delphi 2005
-            defines.DefineSymbol("VER180"); // Delphi 2006
+            defines.UndefineSymbol("VER180"); // Delphi 2006
             // Need: VERxxx value for Delphi 2007 for Win32
-            // Need: VERxxx value for CodeGear Studio 2007
+            // Need: VERxxx value for CodeGear RAD Studio 2007
 
             return defines;
         }
@@ -110,6 +110,8 @@ namespace DGrok.Framework
         }
         public void DefineSymbol(string symbol)
         {
+            if (String.IsNullOrEmpty(symbol))
+                return;
             DefineDirectiveAsTrue("IFDEF " + symbol);
             DefineDirectiveAsTrue("IF Defined(" + symbol + ")");
             DefineDirectiveAsFalse("IFNDEF " + symbol);

@@ -19,6 +19,10 @@ namespace DGrok.Framework
             get { return _hits; }
         }
 
+        public void AddHit(AstNode node, string description)
+        {
+            Hits.Add(new Hit(node.Location, description));
+        }
         public IList<Hit> Execute(CodeBase codeBase)
         {
             Visit(codeBase);
@@ -26,8 +30,8 @@ namespace DGrok.Framework
         }
         public void Visit(CodeBase codeBase)
         {
-            foreach (KeyValuePair<string, AstNode> pair in codeBase.ParsedFiles)
-                VisitSourceFile(pair.Key, pair.Value);
+            foreach (NamedContent<AstNode> node in codeBase.ParsedFiles)
+                VisitSourceFile(node.FileName, node.Content);
         }
         public void Visit(AstNode node)
         {

@@ -24,115 +24,115 @@ namespace DGrok.Tests
         {
             Assert.That("class end", ParsesAs(
                 "ClassTypeNode",
-                "  Class: ClassKeyword |class|",
-                "  Disposition: (none)",
-                "  OpenParenthesis: (none)",
-                "  InheritanceList: ListNode",
-                "  CloseParenthesis: (none)",
-                "  Contents: ListNode",
-                "  End: EndKeyword |end|"));
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  DispositionNode: (none)",
+                "  OpenParenthesisNode: (none)",
+                "  InheritanceListNode: ListNode",
+                "  CloseParenthesisNode: (none)",
+                "  ContentListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestContents()
         {
             Assert.That("class procedure Foo; end", ParsesAs(
                 "ClassTypeNode",
-                "  Class: ClassKeyword |class|",
-                "  Disposition: (none)",
-                "  OpenParenthesis: (none)",
-                "  InheritanceList: ListNode",
-                "  CloseParenthesis: (none)",
-                "  Contents: ListNode",
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  DispositionNode: (none)",
+                "  OpenParenthesisNode: (none)",
+                "  InheritanceListNode: ListNode",
+                "  CloseParenthesisNode: (none)",
+                "  ContentListNode: ListNode",
                 "    Items[0]: VisibilitySectionNode",
-                "      Visibility: (none)",
-                "      Contents: ListNode",
+                "      VisibilityNode: (none)",
+                "      ContentListNode: ListNode",
                 "        Items[0]: MethodHeadingNode",
-                "          Class: (none)",
-                "          MethodType: ProcedureKeyword |procedure|",
-                "          Name: Identifier |Foo|",
-                "          OpenParenthesis: (none)",
-                "          ParameterList: ListNode",
-                "          CloseParenthesis: (none)",
-                "          Colon: (none)",
-                "          ReturnType: (none)",
-                "          DirectiveList: ListNode",
-                "          Semicolon: Semicolon |;|",
-                "  End: EndKeyword |end|"));
+                "          ClassKeywordNode: (none)",
+                "          MethodTypeNode: ProcedureKeyword |procedure|",
+                "          NameNode: Identifier |Foo|",
+                "          OpenParenthesisNode: (none)",
+                "          ParameterListNode: ListNode",
+                "          CloseParenthesisNode: (none)",
+                "          ColonNode: (none)",
+                "          ReturnTypeNode: (none)",
+                "          DirectiveListNode: ListNode",
+                "          SemicolonNode: Semicolon |;|",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestAbstractClass()
         {
             Assert.That("class abstract end", ParsesAs(
                 "ClassTypeNode",
-                "  Class: ClassKeyword |class|",
-                "  Disposition: AbstractSemikeyword |abstract|",
-                "  OpenParenthesis: (none)",
-                "  InheritanceList: ListNode",
-                "  CloseParenthesis: (none)",
-                "  Contents: ListNode",
-                "  End: EndKeyword |end|"));
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  DispositionNode: AbstractSemikeyword |abstract|",
+                "  OpenParenthesisNode: (none)",
+                "  InheritanceListNode: ListNode",
+                "  CloseParenthesisNode: (none)",
+                "  ContentListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestSealedClass()
         {
             Assert.That("class sealed end", ParsesAs(
                 "ClassTypeNode",
-                "  Class: ClassKeyword |class|",
-                "  Disposition: SealedSemikeyword |sealed|",
-                "  OpenParenthesis: (none)",
-                "  InheritanceList: ListNode",
-                "  CloseParenthesis: (none)",
-                "  Contents: ListNode",
-                "  End: EndKeyword |end|"));
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  DispositionNode: SealedSemikeyword |sealed|",
+                "  OpenParenthesisNode: (none)",
+                "  InheritanceListNode: ListNode",
+                "  CloseParenthesisNode: (none)",
+                "  ContentListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestBaseClass()
         {
             Assert.That("class(TComponent) end", ParsesAs(
                 "ClassTypeNode",
-                "  Class: ClassKeyword |class|",
-                "  Disposition: (none)",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  InheritanceList: ListNode",
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  DispositionNode: (none)",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  InheritanceListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |TComponent|",
-                "      Delimiter: (none)",
-                "  CloseParenthesis: CloseParenthesis |)|",
-                "  Contents: ListNode",
-                "  End: EndKeyword |end|"));
+                "      ItemNode: Identifier |TComponent|",
+                "      DelimiterNode: (none)",
+                "  CloseParenthesisNode: CloseParenthesis |)|",
+                "  ContentListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestInterface()
         {
             Assert.That("class(TInterfacedObject, IInterface) end", ParsesAs(
                 "ClassTypeNode",
-                "  Class: ClassKeyword |class|",
-                "  Disposition: (none)",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  InheritanceList: ListNode",
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  DispositionNode: (none)",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  InheritanceListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |TInterfacedObject|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: Identifier |TInterfacedObject|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Identifier |IInterface|",
-                "      Delimiter: (none)",
-                "  CloseParenthesis: CloseParenthesis |)|",
-                "  Contents: ListNode",
-                "  End: EndKeyword |end|"));
+                "      ItemNode: Identifier |IInterface|",
+                "      DelimiterNode: (none)",
+                "  CloseParenthesisNode: CloseParenthesis |)|",
+                "  ContentListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestNoBody()
         {
             Parser parser = CreateParser("class(Exception);");
             AstNode node = parser.ParseRule(RuleType.ClassType);
-            parser.ParseToken(new TokenSet(TokenType.Semicolon));
+            parser.ParseToken(new SingleTokenTokenSet(TokenType.Semicolon));
             Assert.That(parser.AtEof, Is.True);
             Assert.That(node.Inspect(), Is.EqualTo(
                 "ClassTypeNode" + Environment.NewLine +
-                "  Class: ClassKeyword |class|" + Environment.NewLine +
-                "  Disposition: (none)" + Environment.NewLine +
-                "  OpenParenthesis: OpenParenthesis |(|" + Environment.NewLine +
-                "  InheritanceList: ListNode" + Environment.NewLine +
+                "  ClassKeywordNode: ClassKeyword |class|" + Environment.NewLine +
+                "  DispositionNode: (none)" + Environment.NewLine +
+                "  OpenParenthesisNode: OpenParenthesis |(|" + Environment.NewLine +
+                "  InheritanceListNode: ListNode" + Environment.NewLine +
                 "    Items[0]: DelimitedItemNode" + Environment.NewLine +
-                "      Item: Identifier |Exception|" + Environment.NewLine +
-                "      Delimiter: (none)" + Environment.NewLine +
-                "  CloseParenthesis: CloseParenthesis |)|" + Environment.NewLine +
-                "  Contents: ListNode" + Environment.NewLine +
-                "  End: (none)"));
+                "      ItemNode: Identifier |Exception|" + Environment.NewLine +
+                "      DelimiterNode: (none)" + Environment.NewLine +
+                "  CloseParenthesisNode: CloseParenthesis |)|" + Environment.NewLine +
+                "  ContentListNode: ListNode" + Environment.NewLine +
+                "  EndKeywordNode: (none)"));
         }
     }
 }

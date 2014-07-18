@@ -18,8 +18,8 @@ namespace DGrok.DelphiNodes
             get
             {
                 return
-                    Directive.Type == TokenType.ForwardSemikeyword ||
-                    Directive.Type == TokenType.ExternalSemikeyword;
+                    KeywordNode.Type == TokenType.ForwardSemikeyword ||
+                    KeywordNode.Type == TokenType.ExternalSemikeyword;
             }
         }
     }

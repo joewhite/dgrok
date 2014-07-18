@@ -24,34 +24,34 @@ namespace DGrok.Tests
         {
             Assert.That("type TFoo = Integer; TBar = Byte;", ParsesAs(
                 "TypeSectionNode",
-                "  Type: TypeKeyword |type|",
-                "  TypeList: ListNode",
+                "  TypeKeywordNode: TypeKeyword |type|",
+                "  TypeListNode: ListNode",
                 "    Items[0]: TypeDeclNode",
-                "      Name: Identifier |TFoo|",
-                "      EqualSign: EqualSign |=|",
-                "      TypeKeyword: (none)",
-                "      Type: Identifier |Integer|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|",
+                "      NameNode: Identifier |TFoo|",
+                "      EqualSignNode: EqualSign |=|",
+                "      TypeKeywordNode: (none)",
+                "      TypeNode: Identifier |Integer|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|",
                 "    Items[1]: TypeDeclNode",
-                "      Name: Identifier |TBar|",
-                "      EqualSign: EqualSign |=|",
-                "      TypeKeyword: (none)",
-                "      Type: Identifier |Byte|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|"));
+                "      NameNode: Identifier |TBar|",
+                "      EqualSignNode: EqualSign |=|",
+                "      TypeKeywordNode: (none)",
+                "      TypeNode: Identifier |Byte|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestClassForwardDeclaration()
         {
             Assert.That("type TFoo = class;", ParsesAs(
                 "TypeSectionNode",
-                "  Type: TypeKeyword |type|",
-                "  TypeList: ListNode",
+                "  TypeKeywordNode: TypeKeyword |type|",
+                "  TypeListNode: ListNode",
                 "    Items[0]: TypeForwardDeclarationNode",
-                "      Name: Identifier |TFoo|",
-                "      EqualSign: EqualSign |=|",
-                "      Type: ClassKeyword |class|",
-                "      Semicolon: Semicolon |;|"));
+                "      NameNode: Identifier |TFoo|",
+                "      EqualSignNode: EqualSign |=|",
+                "      TypeNode: ClassKeyword |class|",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestBareTypeDoesNotParse()
         {

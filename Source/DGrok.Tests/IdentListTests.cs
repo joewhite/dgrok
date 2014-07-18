@@ -25,30 +25,30 @@ namespace DGrok.Tests
             Assert.That("Foo", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: Identifier |Foo|",
-                "    Delimiter: (none)"));
+                "    ItemNode: Identifier |Foo|",
+                "    DelimiterNode: (none)"));
         }
         public void TestTwoIdents()
         {
             Assert.That("Foo, Bar", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: Identifier |Foo|",
-                "    Delimiter: Comma |,|",
+                "    ItemNode: Identifier |Foo|",
+                "    DelimiterNode: Comma |,|",
                 "  Items[1]: DelimitedItemNode",
-                "    Item: Identifier |Bar|",
-                "    Delimiter: (none)"));
+                "    ItemNode: Identifier |Bar|",
+                "    DelimiterNode: (none)"));
         }
         public void TestSemikeywords()
         {
             Assert.That("Absolute, Index", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: Identifier |Absolute|",
-                "    Delimiter: Comma |,|",
+                "    ItemNode: Identifier |Absolute|",
+                "    DelimiterNode: Comma |,|",
                 "  Items[1]: DelimitedItemNode",
-                "    Item: Identifier |Index|",
-                "    Delimiter: (none)"));
+                "    ItemNode: Identifier |Index|",
+                "    DelimiterNode: (none)"));
         }
     }
 }

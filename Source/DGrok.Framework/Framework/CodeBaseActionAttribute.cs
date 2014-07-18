@@ -13,5 +13,16 @@ namespace DGrok.Framework
     [AttributeUsage(AttributeTargets.Class)]
     public class CodeBaseActionAttribute : Attribute
     {
+        private CategoryType _category;
+
+        public CodeBaseActionAttribute(CategoryType category)
+        {
+            _category = category;
+        }
+
+        public CategoryType Category
+        {
+            get { return _category; }
+        }
     }
 }

@@ -24,38 +24,38 @@ namespace DGrok.Tests
         {
             Assert.That("exports Foo;", ParsesAs(
                 "ExportsStatementNode",
-                "  Exports: ExportsKeyword |exports|",
-                "  ItemList: ListNode",
+                "  ExportsKeywordNode: ExportsKeyword |exports|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: ExportsItemNode",
-                "        Name: Identifier |Foo|",
-                "        SpecifierList: ListNode",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: ExportsItemNode",
+                "        NameNode: Identifier |Foo|",
+                "        SpecifierListNode: ListNode",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestTwoFancy()
         {
             Assert.That("exports Foo index 42, Bar name 'Baz';", ParsesAs(
                 "ExportsStatementNode",
-                "  Exports: ExportsKeyword |exports|",
-                "  ItemList: ListNode",
+                "  ExportsKeywordNode: ExportsKeyword |exports|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: ExportsItemNode",
-                "        Name: Identifier |Foo|",
-                "        SpecifierList: ListNode",
+                "      ItemNode: ExportsItemNode",
+                "        NameNode: Identifier |Foo|",
+                "        SpecifierListNode: ListNode",
                 "          Items[0]: ExportsSpecifierNode",
-                "            Keyword: IndexSemikeyword |index|",
-                "            Value: Number |42|",
-                "      Delimiter: Comma |,|",
+                "            KeywordNode: IndexSemikeyword |index|",
+                "            ValueNode: Number |42|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: ExportsItemNode",
-                "        Name: Identifier |Bar|",
-                "        SpecifierList: ListNode",
+                "      ItemNode: ExportsItemNode",
+                "        NameNode: Identifier |Bar|",
+                "        SpecifierListNode: ListNode",
                 "          Items[0]: ExportsSpecifierNode",
-                "            Keyword: NameSemikeyword |name|",
-                "            Value: StringLiteral |'Baz'|",
-                "      Delimiter: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "            KeywordNode: NameSemikeyword |name|",
+                "            ValueNode: StringLiteral |'Baz'|",
+                "      DelimiterNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
     }
 }

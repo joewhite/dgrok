@@ -28,9 +28,9 @@ namespace DGrok.Tests
         {
             Assert.That("Foo.TBar", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Identifier |Foo|",
-                "  Operator: Dot |.|",
-                "  Right: Identifier |TBar|"));
+                "  LeftNode: Identifier |Foo|",
+                "  OperatorNode: Dot |.|",
+                "  RightNode: Identifier |TBar|"));
         }
         public void TestString()
         {
@@ -44,9 +44,9 @@ namespace DGrok.Tests
         {
             Assert.That("array of TFoo", ParsesAs(
                 "OpenArrayNode",
-                "  Array: ArrayKeyword |array|",
-                "  Of: OfKeyword |of|",
-                "  Type: Identifier |TFoo|"));
+                "  ArrayKeywordNode: ArrayKeyword |array|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: Identifier |TFoo|"));
         }
     }
 }

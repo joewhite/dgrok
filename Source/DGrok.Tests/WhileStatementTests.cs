@@ -24,19 +24,19 @@ namespace DGrok.Tests
         {
             Assert.That("while Foo do", ParsesAs(
                 "WhileStatementNode",
-                "  While: WhileKeyword |while|",
-                "  Condition: Identifier |Foo|",
-                "  Do: DoKeyword |do|",
-                "  Statement: (none)"));
+                "  WhileKeywordNode: WhileKeyword |while|",
+                "  ConditionNode: Identifier |Foo|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: (none)"));
         }
         public void TestWithBody()
         {
             Assert.That("while Foo do Bar", ParsesAs(
                 "WhileStatementNode",
-                "  While: WhileKeyword |while|",
-                "  Condition: Identifier |Foo|",
-                "  Do: DoKeyword |do|",
-                "  Statement: Identifier |Bar|"));
+                "  WhileKeywordNode: WhileKeyword |while|",
+                "  ConditionNode: Identifier |Foo|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: Identifier |Bar|"));
         }
     }
 }

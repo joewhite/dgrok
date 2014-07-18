@@ -28,10 +28,10 @@ namespace DGrok.Tests
         {
             Assert.That("string[42]", ParsesAs(
                 "StringOfLengthNode",
-                "  String: StringKeyword |string|",
-                "  OpenBracket: OpenBracket |[|",
-                "  Length: Number |42|",
-                "  CloseBracket: CloseBracket |]|"));
+                "  StringKeywordNode: StringKeyword |string|",
+                "  OpenBracketNode: OpenBracket |[|",
+                "  LengthNode: Number |42|",
+                "  CloseBracketNode: CloseBracket |]|"));
         }
     }
 }

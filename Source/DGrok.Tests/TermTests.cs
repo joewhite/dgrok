@@ -28,43 +28,43 @@ namespace DGrok.Tests
         {
             Assert.That("not 42", ParsesAs(
                 "UnaryOperationNode",
-                "  Operator: NotKeyword |not|",
-                "  Operand: Number |42|"));
+                "  OperatorNode: NotKeyword |not|",
+                "  OperandNode: Number |42|"));
         }
         public void TestMultiply()
         {
             Assert.That("6 * 9", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Number |6|",
-                "  Operator: TimesSign |*|",
-                "  Right: Number |9|"));
+                "  LeftNode: Number |6|",
+                "  OperatorNode: TimesSign |*|",
+                "  RightNode: Number |9|"));
         }
         public void TestMultipleMultiply()
         {
             Assert.That("6 * 3 * 3", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: BinaryOperationNode",
-                "    Left: Number |6|",
-                "    Operator: TimesSign |*|",
-                "    Right: Number |3|",
-                "  Operator: TimesSign |*|",
-                "  Right: Number |3|"));
+                "  LeftNode: BinaryOperationNode",
+                "    LeftNode: Number |6|",
+                "    OperatorNode: TimesSign |*|",
+                "    RightNode: Number |3|",
+                "  OperatorNode: TimesSign |*|",
+                "  RightNode: Number |3|"));
         }
         public void TestDivide()
         {
             Assert.That("84 / 2", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Number |84|",
-                "  Operator: DivideBySign |/|",
-                "  Right: Number |2|"));
+                "  LeftNode: Number |84|",
+                "  OperatorNode: DivideBySign |/|",
+                "  RightNode: Number |2|"));
         }
         public void TestSemikeywords()
         {
             Assert.That("Absolute * Index", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Identifier |Absolute|",
-                "  Operator: TimesSign |*|",
-                "  Right: Identifier |Index|"));
+                "  LeftNode: Identifier |Absolute|",
+                "  OperatorNode: TimesSign |*|",
+                "  RightNode: Identifier |Index|"));
         }
     }
 }

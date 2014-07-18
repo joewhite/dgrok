@@ -25,89 +25,89 @@ namespace DGrok.Tests
             Assert.That("24, 42", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: Number |24|",
-                "    Delimiter: Comma |,|",
+                "    ItemNode: Number |24|",
+                "    DelimiterNode: Comma |,|",
                 "  Items[1]: DelimitedItemNode",
-                "    Item: Number |42|",
-                "    Delimiter: (none)"));
+                "    ItemNode: Number |42|",
+                "    DelimiterNode: (none)"));
         }
         public void TestStringLiterals()
         {
             Assert.That("'foo', 'bar'", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: StringLiteral |'foo'|",
-                "    Delimiter: Comma |,|",
+                "    ItemNode: StringLiteral |'foo'|",
+                "    DelimiterNode: Comma |,|",
                 "  Items[1]: DelimitedItemNode",
-                "    Item: StringLiteral |'bar'|",
-                "    Delimiter: (none)"));
+                "    ItemNode: StringLiteral |'bar'|",
+                "    DelimiterNode: (none)"));
         }
         public void TestIdentifiers()
         {
             Assert.That("Foo, Bar", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: Identifier |Foo|",
-                "    Delimiter: Comma |,|",
+                "    ItemNode: Identifier |Foo|",
+                "    DelimiterNode: Comma |,|",
                 "  Items[1]: DelimitedItemNode",
-                "    Item: Identifier |Bar|",
-                "    Delimiter: (none)"));
+                "    ItemNode: Identifier |Bar|",
+                "    DelimiterNode: (none)"));
         }
         public void TestSemikeywords()
         {
             Assert.That("Absolute, Index", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: Identifier |Absolute|",
-                "    Delimiter: Comma |,|",
+                "    ItemNode: Identifier |Absolute|",
+                "    DelimiterNode: Comma |,|",
                 "  Items[1]: DelimitedItemNode",
-                "    Item: Identifier |Index|",
-                "    Delimiter: (none)"));
+                "    ItemNode: Identifier |Index|",
+                "    DelimiterNode: (none)"));
         }
         public void TestNils()
         {
             Assert.That("nil, nil", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: NilKeyword |nil|",
-                "    Delimiter: Comma |,|",
+                "    ItemNode: NilKeyword |nil|",
+                "    DelimiterNode: Comma |,|",
                 "  Items[1]: DelimitedItemNode",
-                "    Item: NilKeyword |nil|",
-                "    Delimiter: (none)"));
+                "    ItemNode: NilKeyword |nil|",
+                "    DelimiterNode: (none)"));
         }
         public void TestParenthesizedExpressions()
         {
             Assert.That("(24), (42)", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: ParenthesizedExpressionNode",
-                "      OpenParenthesis: OpenParenthesis |(|",
-                "      Expression: Number |24|",
-                "      CloseParenthesis: CloseParenthesis |)|",
-                "    Delimiter: Comma |,|",
+                "    ItemNode: ParenthesizedExpressionNode",
+                "      OpenParenthesisNode: OpenParenthesis |(|",
+                "      ExpressionNode: Number |24|",
+                "      CloseParenthesisNode: CloseParenthesis |)|",
+                "    DelimiterNode: Comma |,|",
                 "  Items[1]: DelimitedItemNode",
-                "    Item: ParenthesizedExpressionNode",
-                "      OpenParenthesis: OpenParenthesis |(|",
-                "      Expression: Number |42|",
-                "      CloseParenthesis: CloseParenthesis |)|",
-                "    Delimiter: (none)"));
+                "    ItemNode: ParenthesizedExpressionNode",
+                "      OpenParenthesisNode: OpenParenthesis |(|",
+                "      ExpressionNode: Number |42|",
+                "      CloseParenthesisNode: CloseParenthesis |)|",
+                "    DelimiterNode: (none)"));
         }
         public void TestSetLiterals()
         {
             Assert.That("[], []", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: SetLiteralNode",
-                "      OpenBracket: OpenBracket |[|",
-                "      ItemList: ListNode",
-                "      CloseBracket: CloseBracket |]|",
-                "    Delimiter: Comma |,|",
+                "    ItemNode: SetLiteralNode",
+                "      OpenBracketNode: OpenBracket |[|",
+                "      ItemListNode: ListNode",
+                "      CloseBracketNode: CloseBracket |]|",
+                "    DelimiterNode: Comma |,|",
                 "  Items[1]: DelimitedItemNode",
-                "    Item: SetLiteralNode",
-                "      OpenBracket: OpenBracket |[|",
-                "      ItemList: ListNode",
-                "      CloseBracket: CloseBracket |]|",
-                "    Delimiter: (none)"));
+                "    ItemNode: SetLiteralNode",
+                "      OpenBracketNode: OpenBracket |[|",
+                "      ItemListNode: ListNode",
+                "      CloseBracketNode: CloseBracket |]|",
+                "    DelimiterNode: (none)"));
         }
     }
 }

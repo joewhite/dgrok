@@ -28,147 +28,147 @@ namespace DGrok.Tests
         {
             Assert.That("inherited Foo", ParsesAs(
                 "UnaryOperationNode",
-                "  Operator: InheritedKeyword |inherited|",
-                "  Operand: Identifier |Foo|"));
+                "  OperatorNode: InheritedKeyword |inherited|",
+                "  OperandNode: Identifier |Foo|"));
         }
         public void TestAssignment()
         {
             Assert.That("Foo := 42", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Identifier |Foo|",
-                "  Operator: ColonEquals |:=|",
-                "  Right: Number |42|"));
+                "  LeftNode: Identifier |Foo|",
+                "  OperatorNode: ColonEquals |:=|",
+                "  RightNode: Number |42|"));
         }
         public void TestGoto()
         {
             Assert.That("goto 42", ParsesAs(
                 "GotoStatementNode",
-                "  Goto: GotoKeyword |goto|",
-                "  LabelId: Number |42|"));
+                "  GotoKeywordNode: GotoKeyword |goto|",
+                "  LabelIdNode: Number |42|"));
         }
         public void TestBlock()
         {
             Assert.That("begin end", ParsesAs(
                 "BlockNode",
-                "  Begin: BeginKeyword |begin|",
-                "  StatementList: ListNode",
-                "  End: EndKeyword |end|"));
+                "  BeginKeywordNode: BeginKeyword |begin|",
+                "  StatementListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestIfStatement()
         {
             Assert.That("if Foo then Bar", ParsesAs(
                 "IfStatementNode",
-                "  If: IfKeyword |if|",
-                "  Condition: Identifier |Foo|",
-                "  Then: ThenKeyword |then|",
-                "  ThenStatement: Identifier |Bar|",
-                "  Else: (none)",
-                "  ElseStatement: (none)"));
+                "  IfKeywordNode: IfKeyword |if|",
+                "  ConditionNode: Identifier |Foo|",
+                "  ThenKeywordNode: ThenKeyword |then|",
+                "  ThenStatementNode: Identifier |Bar|",
+                "  ElseKeywordNode: (none)",
+                "  ElseStatementNode: (none)"));
         }
         public void TestCase()
         {
             Assert.That("case Foo of 1: end", ParsesAs(
                 "CaseStatementNode",
-                "  Case: CaseKeyword |case|",
-                "  Expression: Identifier |Foo|",
-                "  Of: OfKeyword |of|",
-                "  SelectorList: ListNode",
+                "  CaseKeywordNode: CaseKeyword |case|",
+                "  ExpressionNode: Identifier |Foo|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  SelectorListNode: ListNode",
                 "    Items[0]: CaseSelectorNode",
-                "      Values: ListNode",
+                "      ValueListNode: ListNode",
                 "        Items[0]: DelimitedItemNode",
-                "          Item: Number |1|",
-                "          Delimiter: (none)",
-                "      Colon: Colon |:|",
-                "      Statement: (none)",
-                "      Semicolon: (none)",
-                "  Else: (none)",
-                "  ElseStatements: ListNode",
-                "  End: EndKeyword |end|"));
+                "          ItemNode: Number |1|",
+                "          DelimiterNode: (none)",
+                "      ColonNode: Colon |:|",
+                "      StatementNode: (none)",
+                "      SemicolonNode: (none)",
+                "  ElseKeywordNode: (none)",
+                "  ElseStatementListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestRepeat()
         {
             Assert.That("repeat until Doomsday", ParsesAs(
                 "RepeatStatementNode",
-                "  Repeat: RepeatKeyword |repeat|",
-                "  StatementList: ListNode",
-                "  Until: UntilKeyword |until|",
-                "  Condition: Identifier |Doomsday|"));
+                "  RepeatKeywordNode: RepeatKeyword |repeat|",
+                "  StatementListNode: ListNode",
+                "  UntilKeywordNode: UntilKeyword |until|",
+                "  ConditionNode: Identifier |Doomsday|"));
         }
         public void TestWhile()
         {
             Assert.That("while Foo do Bar", ParsesAs(
                 "WhileStatementNode",
-                "  While: WhileKeyword |while|",
-                "  Condition: Identifier |Foo|",
-                "  Do: DoKeyword |do|",
-                "  Statement: Identifier |Bar|"));
+                "  WhileKeywordNode: WhileKeyword |while|",
+                "  ConditionNode: Identifier |Foo|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: Identifier |Bar|"));
         }
         public void TestFor()
         {
             Assert.That("for I := 1 to 42 do", ParsesAs(
                 "ForStatementNode",
-                "  For: ForKeyword |for|",
-                "  LoopVariable: Identifier |I|",
-                "  ColonEquals: ColonEquals |:=|",
-                "  StartingValue: Number |1|",
-                "  Direction: ToKeyword |to|",
-                "  EndingValue: Number |42|",
-                "  Do: DoKeyword |do|",
-                "  Statement: (none)"));
+                "  ForKeywordNode: ForKeyword |for|",
+                "  LoopVariableNode: Identifier |I|",
+                "  ColonEqualsNode: ColonEquals |:=|",
+                "  StartingValueNode: Number |1|",
+                "  DirectionNode: ToKeyword |to|",
+                "  EndingValueNode: Number |42|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: (none)"));
         }
         public void TestWith()
         {
             Assert.That("with Foo do", ParsesAs(
                 "WithStatementNode",
-                "  With: WithKeyword |with|",
-                "  ExpressionList: ListNode",
+                "  WithKeywordNode: WithKeyword |with|",
+                "  ExpressionListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Identifier |Foo|",
-                "      Delimiter: (none)",
-                "  Do: DoKeyword |do|",
-                "  Statement: (none)"));
+                "      ItemNode: Identifier |Foo|",
+                "      DelimiterNode: (none)",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: (none)"));
         }
         public void TestForIn()
         {
             Assert.That("for Obj in List do", ParsesAs(
                 "ForInStatementNode",
-                "  For: ForKeyword |for|",
-                "  LoopVariable: Identifier |Obj|",
-                "  In: InKeyword |in|",
-                "  Expression: Identifier |List|",
-                "  Do: DoKeyword |do|",
-                "  Statement: (none)"));
+                "  ForKeywordNode: ForKeyword |for|",
+                "  LoopVariableNode: Identifier |Obj|",
+                "  InKeywordNode: InKeyword |in|",
+                "  ExpressionNode: Identifier |List|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: (none)"));
         }
         public void TestTryExcept()
         {
             Assert.That("try except end", ParsesAs(
                 "TryExceptNode",
-                "  Try: TryKeyword |try|",
-                "  TryStatements: ListNode",
-                "  Except: ExceptKeyword |except|",
-                "  ExceptionItemList: ListNode",
-                "  Else: (none)",
-                "  ElseStatements: ListNode",
-                "  End: EndKeyword |end|"));
+                "  TryKeywordNode: TryKeyword |try|",
+                "  TryStatementListNode: ListNode",
+                "  ExceptKeywordNode: ExceptKeyword |except|",
+                "  ExceptionItemListNode: ListNode",
+                "  ElseKeywordNode: (none)",
+                "  ElseStatementListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestTryFinally()
         {
             Assert.That("try finally end", ParsesAs(
                 "TryFinallyNode",
-                "  Try: TryKeyword |try|",
-                "  TryStatements: ListNode",
-                "  Finally: FinallyKeyword |finally|",
-                "  FinallyStatements: ListNode",
-                "  End: EndKeyword |end|"));
+                "  TryKeywordNode: TryKeyword |try|",
+                "  TryStatementListNode: ListNode",
+                "  FinallyKeywordNode: FinallyKeyword |finally|",
+                "  FinallyStatementListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestRaise()
         {
             Assert.That("raise E", ParsesAs(
                 "RaiseStatementNode",
-                "  Raise: RaiseKeyword |raise|",
-                "  Exception: Identifier |E|",
-                "  At: (none)",
-                "  Address: (none)"));
+                "  RaiseKeywordNode: RaiseKeyword |raise|",
+                "  ExceptionNode: Identifier |E|",
+                "  AtSemikeywordNode: (none)",
+                "  AddressNode: (none)"));
         }
     }
 }

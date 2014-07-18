@@ -35,15 +35,21 @@ namespace DGrok.Demo
             this.label2 = new System.Windows.Forms.Label();
             this.btnStop = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.pnlActions = new System.Windows.Forms.Panel();
-            this.lnkShowParseResults = new System.Windows.Forms.LinkLabel();
-            this.lnkParseAll = new System.Windows.Forms.LinkLabel();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.trvActions = new System.Windows.Forms.TreeView();
+            this.edtActionDescription = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnParseAll = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnRunAction = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.pnlActions.SuspendLayout();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +61,7 @@ namespace DGrok.Demo
             this.edtStartingDirectory.Name = "edtStartingDirectory";
             this.edtStartingDirectory.Size = new System.Drawing.Size(437, 20);
             this.edtStartingDirectory.TabIndex = 1;
-            this.edtStartingDirectory.Text = "c:\\program files\\borland\\bds\\4.0\\source\\win32\\rtl\\**";
+            this.edtStartingDirectory.TextChanged += new System.EventHandler(this.edtStartingDirectory_TextChanged);
             // 
             // label1
             // 
@@ -71,7 +77,7 @@ namespace DGrok.Demo
             this.trvSummary.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trvSummary.Location = new System.Drawing.Point(0, 0);
             this.trvSummary.Name = "trvSummary";
-            this.trvSummary.Size = new System.Drawing.Size(386, 182);
+            this.trvSummary.Size = new System.Drawing.Size(356, 182);
             this.trvSummary.TabIndex = 7;
             this.trvSummary.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvSummary_NodeMouseDoubleClick);
             this.trvSummary.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.trvSummary_KeyPress);
@@ -84,7 +90,7 @@ namespace DGrok.Demo
             this.edtFileMasks.Name = "edtFileMasks";
             this.edtFileMasks.Size = new System.Drawing.Size(437, 20);
             this.edtFileMasks.TabIndex = 4;
-            this.edtFileMasks.Text = "*.pas;*.dpr;*.dpk;*.pp";
+            this.edtFileMasks.TextChanged += new System.EventHandler(this.edtFileMasks_TextChanged);
             // 
             // label2
             // 
@@ -98,10 +104,10 @@ namespace DGrok.Demo
             // btnStop
             // 
             this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnStop.Location = new System.Drawing.Point(0, 6);
+            this.btnStop.Location = new System.Drawing.Point(81, 6);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 23);
-            this.btnStop.TabIndex = 6;
+            this.btnStop.TabIndex = 1;
             this.btnStop.Text = "&Stop";
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
@@ -117,57 +123,99 @@ namespace DGrok.Demo
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.pnlActions);
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
+            this.splitContainer1.Panel1.Controls.Add(this.panel2);
             this.splitContainer1.Panel1.Controls.Add(this.panel1);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.trvSummary);
             this.splitContainer1.Size = new System.Drawing.Size(516, 182);
-            this.splitContainer1.SplitterDistance = 126;
+            this.splitContainer1.SplitterDistance = 156;
             this.splitContainer1.TabIndex = 8;
             // 
-            // pnlActions
+            // splitContainer2
             // 
-            this.pnlActions.AutoScroll = true;
-            this.pnlActions.Controls.Add(this.lnkShowParseResults);
-            this.pnlActions.Controls.Add(this.lnkParseAll);
-            this.pnlActions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlActions.Location = new System.Drawing.Point(0, 0);
-            this.pnlActions.Name = "pnlActions";
-            this.pnlActions.Size = new System.Drawing.Size(126, 153);
-            this.pnlActions.TabIndex = 2;
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 29);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // lnkShowParseResults
+            // splitContainer2.Panel1
             // 
-            this.lnkShowParseResults.AutoSize = true;
-            this.lnkShowParseResults.Location = new System.Drawing.Point(0, 17);
-            this.lnkShowParseResults.Name = "lnkShowParseResults";
-            this.lnkShowParseResults.Size = new System.Drawing.Size(102, 13);
-            this.lnkShowParseResults.TabIndex = 1;
-            this.lnkShowParseResults.TabStop = true;
-            this.lnkShowParseResults.Text = "Show Parse Results";
-            this.lnkShowParseResults.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkShowParseResults_LinkClicked);
+            this.splitContainer2.Panel1.Controls.Add(this.trvActions);
             // 
-            // lnkParseAll
+            // splitContainer2.Panel2
             // 
-            this.lnkParseAll.AutoSize = true;
-            this.lnkParseAll.Location = new System.Drawing.Point(0, 0);
-            this.lnkParseAll.Name = "lnkParseAll";
-            this.lnkParseAll.Size = new System.Drawing.Size(48, 13);
-            this.lnkParseAll.TabIndex = 0;
-            this.lnkParseAll.TabStop = true;
-            this.lnkParseAll.Text = "Parse All";
-            this.lnkParseAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkParseAll_LinkClicked);
+            this.splitContainer2.Panel2.Controls.Add(this.edtActionDescription);
+            this.splitContainer2.Size = new System.Drawing.Size(156, 124);
+            this.splitContainer2.SplitterDistance = 74;
+            this.splitContainer2.TabIndex = 3;
+            // 
+            // trvActions
+            // 
+            this.trvActions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trvActions.HideSelection = false;
+            this.trvActions.Location = new System.Drawing.Point(0, 0);
+            this.trvActions.Name = "trvActions";
+            this.trvActions.Size = new System.Drawing.Size(156, 74);
+            this.trvActions.TabIndex = 1;
+            this.trvActions.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvActions_NodeMouseDoubleClick);
+            this.trvActions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.trvActions_AfterSelect);
+            this.trvActions.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.trvActions_KeyPress);
+            // 
+            // edtActionDescription
+            // 
+            this.edtActionDescription.BackColor = System.Drawing.SystemColors.Info;
+            this.edtActionDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.edtActionDescription.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.edtActionDescription.Location = new System.Drawing.Point(0, 0);
+            this.edtActionDescription.Multiline = true;
+            this.edtActionDescription.Name = "edtActionDescription";
+            this.edtActionDescription.ReadOnly = true;
+            this.edtActionDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.edtActionDescription.Size = new System.Drawing.Size(156, 46);
+            this.edtActionDescription.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.btnParseAll);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(156, 29);
+            this.panel2.TabIndex = 0;
+            // 
+            // btnParseAll
+            // 
+            this.btnParseAll.Location = new System.Drawing.Point(0, 0);
+            this.btnParseAll.Name = "btnParseAll";
+            this.btnParseAll.Size = new System.Drawing.Size(75, 23);
+            this.btnParseAll.TabIndex = 0;
+            this.btnParseAll.Text = "&Parse All";
+            this.btnParseAll.UseVisualStyleBackColor = true;
+            this.btnParseAll.Click += new System.EventHandler(this.btnParseAll_Click);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnRunAction);
             this.panel1.Controls.Add(this.btnStop);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 153);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(126, 29);
-            this.panel1.TabIndex = 1;
+            this.panel1.Size = new System.Drawing.Size(156, 29);
+            this.panel1.TabIndex = 2;
+            // 
+            // btnRunAction
+            // 
+            this.btnRunAction.Location = new System.Drawing.Point(0, 6);
+            this.btnRunAction.Name = "btnRunAction";
+            this.btnRunAction.Size = new System.Drawing.Size(75, 23);
+            this.btnRunAction.TabIndex = 0;
+            this.btnRunAction.Text = "&Run Action";
+            this.btnRunAction.UseVisualStyleBackColor = true;
+            this.btnRunAction.Click += new System.EventHandler(this.btnRunAction_Click);
             // 
             // backgroundWorker1
             // 
@@ -191,8 +239,11 @@ namespace DGrok.Demo
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
-            this.pnlActions.ResumeLayout(false);
-            this.pnlActions.PerformLayout();
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            this.splitContainer2.Panel2.PerformLayout();
+            this.splitContainer2.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -208,10 +259,13 @@ namespace DGrok.Demo
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Panel pnlActions;
-        private System.Windows.Forms.LinkLabel lnkParseAll;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.LinkLabel lnkShowParseResults;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnParseAll;
+        private System.Windows.Forms.Button btnRunAction;
+        private System.Windows.Forms.TreeView trvActions;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.TextBox edtActionDescription;
     }
 }

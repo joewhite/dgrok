@@ -24,39 +24,39 @@ namespace DGrok.Tests
         {
             Assert.That("const Foo = 24; Bar = 42;", ParsesAs(
                 "ConstSectionNode",
-                "  Const: ConstKeyword |const|",
-                "  ConstList: ListNode",
+                "  ConstKeywordNode: ConstKeyword |const|",
+                "  ConstListNode: ListNode",
                 "    Items[0]: ConstantDeclNode",
-                "      Name: Identifier |Foo|",
-                "      Colon: (none)",
-                "      Type: (none)",
-                "      EqualSign: EqualSign |=|",
-                "      Value: Number |24|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|",
+                "      NameNode: Identifier |Foo|",
+                "      ColonNode: (none)",
+                "      TypeNode: (none)",
+                "      EqualSignNode: EqualSign |=|",
+                "      ValueNode: Number |24|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|",
                 "    Items[1]: ConstantDeclNode",
-                "      Name: Identifier |Bar|",
-                "      Colon: (none)",
-                "      Type: (none)",
-                "      EqualSign: EqualSign |=|",
-                "      Value: Number |42|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|"));
+                "      NameNode: Identifier |Bar|",
+                "      ColonNode: (none)",
+                "      TypeNode: (none)",
+                "      EqualSignNode: EqualSign |=|",
+                "      ValueNode: Number |42|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestResourceString()
         {
             Assert.That("resourcestring Foo = 'Bar';", ParsesAs(
                 "ConstSectionNode",
-                "  Const: ResourceStringKeyword |resourcestring|",
-                "  ConstList: ListNode",
+                "  ConstKeywordNode: ResourceStringKeyword |resourcestring|",
+                "  ConstListNode: ListNode",
                 "    Items[0]: ConstantDeclNode",
-                "      Name: Identifier |Foo|",
-                "      Colon: (none)",
-                "      Type: (none)",
-                "      EqualSign: EqualSign |=|",
-                "      Value: StringLiteral |'Bar'|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|"));
+                "      NameNode: Identifier |Foo|",
+                "      ColonNode: (none)",
+                "      TypeNode: (none)",
+                "      EqualSignNode: EqualSign |=|",
+                "      ValueNode: StringLiteral |'Bar'|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestConstAloneDoesNotParse()
         {

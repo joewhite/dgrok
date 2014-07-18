@@ -25,10 +25,10 @@ namespace DGrok.Tests
         {
             return ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: " + expectedDirective,
-                "  Value: (none)",
-                "  Data: ListNode");
+                "  SemicolonNode: (none)",
+                "  KeywordNode: " + expectedDirective,
+                "  ValueNode: (none)",
+                "  DataNode: ListNode");
         }
 
         public void TestAbstract()
@@ -51,10 +51,10 @@ namespace DGrok.Tests
         {
             Assert.That("dispid 42", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: DispIdSemikeyword |dispid|",
-                "  Value: Number |42|",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: DispIdSemikeyword |dispid|",
+                "  ValueNode: Number |42|",
+                "  DataNode: ListNode"));
         }
         public void TestDynamic()
         {
@@ -68,34 +68,34 @@ namespace DGrok.Tests
         {
             Assert.That("external", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: ExternalSemikeyword |external|",
-                "  Value: (none)",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: ExternalSemikeyword |external|",
+                "  ValueNode: (none)",
+                "  DataNode: ListNode"));
         }
         public void TestExternalDll()
         {
             Assert.That("external 'Foo.dll'", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: ExternalSemikeyword |external|",
-                "  Value: StringLiteral |'Foo.dll'|",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: ExternalSemikeyword |external|",
+                "  ValueNode: StringLiteral |'Foo.dll'|",
+                "  DataNode: ListNode"));
         }
         public void TestExternalIndexAndName()
         {
             Assert.That("external 'Foo.dll' index 42 name 'Bar'", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: ExternalSemikeyword |external|",
-                "  Value: StringLiteral |'Foo.dll'|",
-                "  Data: ListNode",
+                "  SemicolonNode: (none)",
+                "  KeywordNode: ExternalSemikeyword |external|",
+                "  ValueNode: StringLiteral |'Foo.dll'|",
+                "  DataNode: ListNode",
                 "    Items[0]: ExportsSpecifierNode",
-                "      Keyword: IndexSemikeyword |index|",
-                "      Value: Number |42|",
+                "      KeywordNode: IndexSemikeyword |index|",
+                "      ValueNode: Number |42|",
                 "    Items[1]: ExportsSpecifierNode",
-                "      Keyword: NameSemikeyword |name|",
-                "      Value: StringLiteral |'Bar'|"));
+                "      KeywordNode: NameSemikeyword |name|",
+                "      ValueNode: StringLiteral |'Bar'|"));
         }
         public void TestFar()
         {
@@ -125,10 +125,10 @@ namespace DGrok.Tests
         {
             Assert.That("message WM_ULTIMATEANSWER", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: (none)",
-                "  Directive: MessageSemikeyword |message|",
-                "  Value: Identifier |WM_ULTIMATEANSWER|",
-                "  Data: ListNode"));
+                "  SemicolonNode: (none)",
+                "  KeywordNode: MessageSemikeyword |message|",
+                "  ValueNode: Identifier |WM_ULTIMATEANSWER|",
+                "  DataNode: ListNode"));
         }
         public void TestNear()
         {
@@ -190,28 +190,28 @@ namespace DGrok.Tests
         {
             Assert.That("; abstract", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: Semicolon |;|",
-                "  Directive: AbstractSemikeyword |abstract|",
-                "  Value: (none)",
-                "  Data: ListNode"));
+                "  SemicolonNode: Semicolon |;|",
+                "  KeywordNode: AbstractSemikeyword |abstract|",
+                "  ValueNode: (none)",
+                "  DataNode: ListNode"));
         }
         public void TestMessageWithLeadingSemicolon()
         {
             Assert.That("; message WM_ULTIMATEANSWER", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: Semicolon |;|",
-                "  Directive: MessageSemikeyword |message|",
-                "  Value: Identifier |WM_ULTIMATEANSWER|",
-                "  Data: ListNode"));
+                "  SemicolonNode: Semicolon |;|",
+                "  KeywordNode: MessageSemikeyword |message|",
+                "  ValueNode: Identifier |WM_ULTIMATEANSWER|",
+                "  DataNode: ListNode"));
         }
         public void TestExternalWithLeadingSemicolon()
         {
             Assert.That("; external", ParsesAs(
                 "DirectiveNode",
-                "  Semicolon: Semicolon |;|",
-                "  Directive: ExternalSemikeyword |external|",
-                "  Value: (none)",
-                "  Data: ListNode"));
+                "  SemicolonNode: Semicolon |;|",
+                "  KeywordNode: ExternalSemikeyword |external|",
+                "  ValueNode: (none)",
+                "  DataNode: ListNode"));
         }
         public void TestLookaheadRejectsLoneSemicolon()
         {

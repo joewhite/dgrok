@@ -12,65 +12,25 @@ namespace DGrok.Framework
 {
     public abstract class AstNode
     {
+        private AstNode _parentNode;
+
+        public abstract IEnumerable<AstNode> ChildNodes { get;}
         public abstract IEnumerable<KeyValuePair<string, AstNode>> Properties { get; }
 
-        public AstNode FirstChild
+        public abstract Location EndLocation { get; }
+        public abstract Location Location { get; }
+        public AstNode ParentNode
         {
-            get
-            {
-                foreach (KeyValuePair<string, AstNode> property in Properties)
-                {
-                    if (property.Value != null)
-                        return property.Value;
-                }
-                return null;
-            }
-        }
-        public Token FirstToken
-        {
-            get
-            {
-                AstNode node = this;
-                for (; ; )
-                {
-                    AstNode child = node.FirstChild;
-                    if (child == null)
-                        return (Token) node;
-                    node = child;
-                }
-            }
-        }
-        public AstNode LastChild
-        {
-            get
-            {
-                List<KeyValuePair<string, AstNode>> properties =
-                    new List<KeyValuePair<string, AstNode>>(Properties);
-                for (int i = properties.Count - 1; i >= 0; --i)
-                {
-                    AstNode node = properties[i].Value;
-                    if (node != null)
-                        return node;
-                }
-                return null;
-            }
-        }
-        public Token LastToken
-        {
-            get
-            {
-                AstNode node = this;
-                for (; ; )
-                {
-                    AstNode child = node.LastChild;
-                    if (child == null)
-                        return (Token) node;
-                    node = child;
-                }
-            }
+            get { return _parentNode; }
         }
 
         public abstract void Accept(Visitor visitor);
+        internal void BuildParentReferences(AstNode myParent)
+        {
+            _parentNode = myParent;
+            foreach (AstNode childNode in ChildNodes)
+                childNode.BuildParentReferences(this);
+        }
         public string Inspect()
         {
             StringBuilder builder = new StringBuilder();
@@ -78,14 +38,22 @@ namespace DGrok.Framework
             return builder.ToString();
         }
         public abstract void InspectTo(StringBuilder builder, int currentIndentCount);
+        public T ParentNodeOfType<T>()
+            where T : class
+        {
+            T result = this as T;
+            if (result != null)
+                return result;
+            return ParentNode.ParentNodeOfType<T>();
+        }
         public string ToCode()
         {
             return ToCode(this, this);
         }
         public static string ToCode(AstNode firstNode, AstNode lastNode)
         {
-            Location first = firstNode.FirstToken.Location;
-            Location last = lastNode.LastToken.EndLocation;
+            Location first = firstNode.Location;
+            Location last = lastNode.EndLocation;
             if (first.FileName != last.FileName)
                 return "<code spans include files>";
             return first.FileSource.Substring(first.Offset, last.Offset - first.Offset);

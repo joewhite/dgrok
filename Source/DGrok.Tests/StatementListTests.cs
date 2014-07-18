@@ -25,24 +25,24 @@ namespace DGrok.Tests
             Assert.That("Foo", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: Identifier |Foo|",
-                "    Delimiter: (none)"));
+                "    ItemNode: Identifier |Foo|",
+                "    DelimiterNode: (none)"));
         }
         public void TestSingleStatementWithSemicolon()
         {
             Assert.That("Foo;", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: Identifier |Foo|",
-                "    Delimiter: Semicolon |;|"));
+                "    ItemNode: Identifier |Foo|",
+                "    DelimiterNode: Semicolon |;|"));
         }
         public void TestLoneSemicolon()
         {
             Assert.That(";", ParsesAs(
                 "ListNode",
                 "  Items[0]: DelimitedItemNode",
-                "    Item: (none)",
-                "    Delimiter: Semicolon |;|"));
+                "    ItemNode: (none)",
+                "    DelimiterNode: Semicolon |;|"));
         }
     }
 }

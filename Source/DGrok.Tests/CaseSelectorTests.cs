@@ -24,67 +24,67 @@ namespace DGrok.Tests
         {
             Assert.That("1:", ParsesAs(
                 "CaseSelectorNode",
-                "  Values: ListNode",
+                "  ValueListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |1|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Statement: (none)",
-                "  Semicolon: (none)"));
+                "      ItemNode: Number |1|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  StatementNode: (none)",
+                "  SemicolonNode: (none)"));
         }
         public void TestSingleRange()
         {
             Assert.That("1..2:", ParsesAs(
                 "CaseSelectorNode",
-                "  Values: ListNode",
+                "  ValueListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: BinaryOperationNode",
-                "        Left: Number |1|",
-                "        Operator: DotDot |..|",
-                "        Right: Number |2|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Statement: (none)",
-                "  Semicolon: (none)"));
+                "      ItemNode: BinaryOperationNode",
+                "        LeftNode: Number |1|",
+                "        OperatorNode: DotDot |..|",
+                "        RightNode: Number |2|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  StatementNode: (none)",
+                "  SemicolonNode: (none)"));
         }
         public void TestTwoValues()
         {
             Assert.That("1, 2:", ParsesAs(
                 "CaseSelectorNode",
-                "  Values: ListNode",
+                "  ValueListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |1|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: Number |1|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: Number |2|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Statement: (none)",
-                "  Semicolon: (none)"));
+                "      ItemNode: Number |2|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  StatementNode: (none)",
+                "  SemicolonNode: (none)"));
         }
         public void TestStatement()
         {
             Assert.That("1: Foo", ParsesAs(
                 "CaseSelectorNode",
-                "  Values: ListNode",
+                "  ValueListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |1|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Statement: Identifier |Foo|",
-                "  Semicolon: (none)"));
+                "      ItemNode: Number |1|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  StatementNode: Identifier |Foo|",
+                "  SemicolonNode: (none)"));
         }
         public void TestStatementWithSemicolon()
         {
             Assert.That("1: Foo;", ParsesAs(
                 "CaseSelectorNode",
-                "  Values: ListNode",
+                "  ValueListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |1|",
-                "      Delimiter: (none)",
-                "  Colon: Colon |:|",
-                "  Statement: Identifier |Foo|",
-                "  Semicolon: Semicolon |;|"));
+                "      ItemNode: Number |1|",
+                "      DelimiterNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  StatementNode: Identifier |Foo|",
+                "  SemicolonNode: Semicolon |;|"));
         }
     }
 }

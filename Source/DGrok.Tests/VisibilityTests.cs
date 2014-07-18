@@ -24,43 +24,43 @@ namespace DGrok.Tests
         {
             Assert.That("private", ParsesAs(
                 "VisibilityNode",
-                "  Strict: (none)",
-                "  Visibility: PrivateSemikeyword |private|"));
+                "  StrictSemikeywordNode: (none)",
+                "  VisibilityKeywordNode: PrivateSemikeyword |private|"));
         }
         public void TestProtected()
         {
             Assert.That("protected", ParsesAs(
                 "VisibilityNode",
-                "  Strict: (none)",
-                "  Visibility: ProtectedSemikeyword |protected|"));
+                "  StrictSemikeywordNode: (none)",
+                "  VisibilityKeywordNode: ProtectedSemikeyword |protected|"));
         }
         public void TestPublic()
         {
             Assert.That("public", ParsesAs(
                 "VisibilityNode",
-                "  Strict: (none)",
-                "  Visibility: PublicSemikeyword |public|"));
+                "  StrictSemikeywordNode: (none)",
+                "  VisibilityKeywordNode: PublicSemikeyword |public|"));
         }
         public void TestPublished()
         {
             Assert.That("published", ParsesAs(
                 "VisibilityNode",
-                "  Strict: (none)",
-                "  Visibility: PublishedSemikeyword |published|"));
+                "  StrictSemikeywordNode: (none)",
+                "  VisibilityKeywordNode: PublishedSemikeyword |published|"));
         }
         public void TestStrictPrivate()
         {
             Assert.That("strict private", ParsesAs(
                 "VisibilityNode",
-                "  Strict: StrictSemikeyword |strict|",
-                "  Visibility: PrivateSemikeyword |private|"));
+                "  StrictSemikeywordNode: StrictSemikeyword |strict|",
+                "  VisibilityKeywordNode: PrivateSemikeyword |private|"));
         }
         public void TestStrictProtected()
         {
             Assert.That("strict protected", ParsesAs(
                 "VisibilityNode",
-                "  Strict: StrictSemikeyword |strict|",
-                "  Visibility: ProtectedSemikeyword |protected|"));
+                "  StrictSemikeywordNode: StrictSemikeyword |strict|",
+                "  VisibilityKeywordNode: ProtectedSemikeyword |protected|"));
         }
     }
 }

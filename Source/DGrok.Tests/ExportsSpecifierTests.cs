@@ -24,15 +24,15 @@ namespace DGrok.Tests
         {
             Assert.That("index 42", ParsesAs(
                 "ExportsSpecifierNode",
-                "  Keyword: IndexSemikeyword |index|",
-                "  Value: Number |42|"));
+                "  KeywordNode: IndexSemikeyword |index|",
+                "  ValueNode: Number |42|"));
         }
         public void TestName()
         {
             Assert.That("name 'Foo'", ParsesAs(
                 "ExportsSpecifierNode",
-                "  Keyword: NameSemikeyword |name|",
-                "  Value: StringLiteral |'Foo'|"));
+                "  KeywordNode: NameSemikeyword |name|",
+                "  ValueNode: StringLiteral |'Foo'|"));
         }
     }
 }

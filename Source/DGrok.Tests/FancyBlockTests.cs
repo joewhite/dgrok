@@ -24,38 +24,38 @@ namespace DGrok.Tests
         {
             Assert.That("begin end", ParsesAs(
                 "FancyBlockNode",
-                "  DeclList: ListNode",
-                "  Block: BlockNode",
-                "    Begin: BeginKeyword |begin|",
-                "    StatementList: ListNode",
-                "    End: EndKeyword |end|"));
+                "  DeclListNode: ListNode",
+                "  BlockNode: BlockNode",
+                "    BeginKeywordNode: BeginKeyword |begin|",
+                "    StatementListNode: ListNode",
+                "    EndKeywordNode: EndKeyword |end|"));
         }
         public void TestVarSection()
         {
             Assert.That("var Foo: Integer; begin end", ParsesAs(
                 "FancyBlockNode",
-                "  DeclList: ListNode",
+                "  DeclListNode: ListNode",
                 "    Items[0]: VarSectionNode",
-                "      Var: VarKeyword |var|",
-                "      VarList: ListNode",
+                "      VarKeywordNode: VarKeyword |var|",
+                "      VarListNode: ListNode",
                 "        Items[0]: VarDeclNode",
-                "          Names: ListNode",
+                "          NameListNode: ListNode",
                 "            Items[0]: DelimitedItemNode",
-                "              Item: Identifier |Foo|",
-                "              Delimiter: (none)",
-                "          Colon: Colon |:|",
-                "          Type: Identifier |Integer|",
-                "          FirstPortabilityDirectives: ListNode",
-                "          Absolute: (none)",
-                "          AbsoluteAddress: (none)",
-                "          EqualSign: (none)",
-                "          Value: (none)",
-                "          SecondPortabilityDirectives: ListNode",
-                "          Semicolon: Semicolon |;|",
-                "  Block: BlockNode",
-                "    Begin: BeginKeyword |begin|",
-                "    StatementList: ListNode",
-                "    End: EndKeyword |end|"));
+                "              ItemNode: Identifier |Foo|",
+                "              DelimiterNode: (none)",
+                "          ColonNode: Colon |:|",
+                "          TypeNode: Identifier |Integer|",
+                "          FirstPortabilityDirectiveListNode: ListNode",
+                "          AbsoluteSemikeywordNode: (none)",
+                "          AbsoluteAddressNode: (none)",
+                "          EqualSignNode: (none)",
+                "          ValueNode: (none)",
+                "          SecondPortabilityDirectiveListNode: ListNode",
+                "          SemicolonNode: Semicolon |;|",
+                "  BlockNode: BlockNode",
+                "    BeginKeywordNode: BeginKeyword |begin|",
+                "    StatementListNode: ListNode",
+                "    EndKeywordNode: EndKeyword |end|"));
         }
     }
 }

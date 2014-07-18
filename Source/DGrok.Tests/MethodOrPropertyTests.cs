@@ -24,71 +24,71 @@ namespace DGrok.Tests
         {
             Assert.That("procedure Foo;", ParsesAs(
                 "MethodHeadingNode",
-                "  Class: (none)",
-                "  MethodType: ProcedureKeyword |procedure|",
-                "  Name: Identifier |Foo|",
-                "  OpenParenthesis: (none)",
-                "  ParameterList: ListNode",
-                "  CloseParenthesis: (none)",
-                "  Colon: (none)",
-                "  ReturnType: (none)",
-                "  DirectiveList: ListNode",
-                "  Semicolon: Semicolon |;|"));
+                "  ClassKeywordNode: (none)",
+                "  MethodTypeNode: ProcedureKeyword |procedure|",
+                "  NameNode: Identifier |Foo|",
+                "  OpenParenthesisNode: (none)",
+                "  ParameterListNode: ListNode",
+                "  CloseParenthesisNode: (none)",
+                "  ColonNode: (none)",
+                "  ReturnTypeNode: (none)",
+                "  DirectiveListNode: ListNode",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestClassMethod()
         {
             Assert.That("class procedure Foo;", ParsesAs(
                 "MethodHeadingNode",
-                "  Class: ClassKeyword |class|",
-                "  MethodType: ProcedureKeyword |procedure|",
-                "  Name: Identifier |Foo|",
-                "  OpenParenthesis: (none)",
-                "  ParameterList: ListNode",
-                "  CloseParenthesis: (none)",
-                "  Colon: (none)",
-                "  ReturnType: (none)",
-                "  DirectiveList: ListNode",
-                "  Semicolon: Semicolon |;|"));
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  MethodTypeNode: ProcedureKeyword |procedure|",
+                "  NameNode: Identifier |Foo|",
+                "  OpenParenthesisNode: (none)",
+                "  ParameterListNode: ListNode",
+                "  CloseParenthesisNode: (none)",
+                "  ColonNode: (none)",
+                "  ReturnTypeNode: (none)",
+                "  DirectiveListNode: ListNode",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestProperty()
         {
             Assert.That("property Foo: Integer read FFoo;", ParsesAs(
                 "PropertyNode",
-                "  Class: (none)",
-                "  Property: PropertyKeyword |property|",
-                "  Name: Identifier |Foo|",
-                "  OpenBracket: (none)",
-                "  ParameterList: ListNode",
-                "  CloseBracket: (none)",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |Integer|",
-                "  DirectiveList: ListNode",
+                "  ClassKeywordNode: (none)",
+                "  PropertyKeywordNode: PropertyKeyword |property|",
+                "  NameNode: Identifier |Foo|",
+                "  OpenBracketNode: (none)",
+                "  ParameterListNode: ListNode",
+                "  CloseBracketNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |Integer|",
+                "  DirectiveListNode: ListNode",
                 "    Items[0]: DirectiveNode",
-                "      Semicolon: (none)",
-                "      Directive: ReadSemikeyword |read|",
-                "      Value: Identifier |FFoo|",
-                "      Data: ListNode",
-                "  Semicolon: Semicolon |;|"));
+                "      SemicolonNode: (none)",
+                "      KeywordNode: ReadSemikeyword |read|",
+                "      ValueNode: Identifier |FFoo|",
+                "      DataNode: ListNode",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestClassProperty()
         {
             Assert.That("class property Foo: Integer read FFoo;", ParsesAs(
                 "PropertyNode",
-                "  Class: ClassKeyword |class|",
-                "  Property: PropertyKeyword |property|",
-                "  Name: Identifier |Foo|",
-                "  OpenBracket: (none)",
-                "  ParameterList: ListNode",
-                "  CloseBracket: (none)",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |Integer|",
-                "  DirectiveList: ListNode",
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  PropertyKeywordNode: PropertyKeyword |property|",
+                "  NameNode: Identifier |Foo|",
+                "  OpenBracketNode: (none)",
+                "  ParameterListNode: ListNode",
+                "  CloseBracketNode: (none)",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |Integer|",
+                "  DirectiveListNode: ListNode",
                 "    Items[0]: DirectiveNode",
-                "      Semicolon: (none)",
-                "      Directive: ReadSemikeyword |read|",
-                "      Value: Identifier |FFoo|",
-                "      Data: ListNode",
-                "  Semicolon: Semicolon |;|"));
+                "      SemicolonNode: (none)",
+                "      KeywordNode: ReadSemikeyword |read|",
+                "      ValueNode: Identifier |FFoo|",
+                "      DataNode: ListNode",
+                "  SemicolonNode: Semicolon |;|"));
         }
     }
 }

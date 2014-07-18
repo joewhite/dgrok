@@ -25,11 +25,10 @@ class GenFile
     sorted_node_types.each do |type_name|
       fail "Node classes must end with 'Node'" if type_name !~ /Node$/
       properties = @node_types[type_name].map do |item|
-        if item.class == Hash
-          Property.new(item['Name'], item['Type'])
-        else
-          Property.new(item, "AstNode")
+        if item['Name'] !~ /Node$/
+          puts "Warning: #{type_name}.#{item['Name']} does not end with 'Node'"
         end
+        Property.new(item['Name'], item['Type'])
       end
       sorted_properties = properties.sort_by {|i| i.name.downcase}
       yield type_name, properties, sorted_properties
@@ -92,6 +91,16 @@ class GeneratedNodes < GenFile
         cs << "        }"
       end
       cs << ""
+      cs << "        public override IEnumerable<AstNode> ChildNodes"
+      cs << "        {"
+      cs << "            get"
+      cs << "            {"
+      properties.each do |prop|
+        cs << "                if (#{prop.name} != null)"
+        cs << "                    yield return #{prop.name};"
+      end
+      cs << "            }"
+      cs << "        }"
       cs << "        public override " +
         "IEnumerable<KeyValuePair<string, AstNode>> Properties"
       cs << "        {"

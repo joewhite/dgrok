@@ -24,40 +24,40 @@ namespace DGrok.Tests
         {
             Assert.That("[]", ParsesAs(
                 "SetLiteralNode",
-                "  OpenBracket: OpenBracket |[|",
-                "  ItemList: ListNode",
-                "  CloseBracket: CloseBracket |]|"));
+                "  OpenBracketNode: OpenBracket |[|",
+                "  ItemListNode: ListNode",
+                "  CloseBracketNode: CloseBracket |]|"));
         }
         public void TestOneValue()
         {
             Assert.That("[42]", ParsesAs(
                 "SetLiteralNode",
-                "  OpenBracket: OpenBracket |[|",
-                "  ItemList: ListNode",
+                "  OpenBracketNode: OpenBracket |[|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: Number |42|",
-                "      Delimiter: (none)",
-                "  CloseBracket: CloseBracket |]|"));
+                "      ItemNode: Number |42|",
+                "      DelimiterNode: (none)",
+                "  CloseBracketNode: CloseBracket |]|"));
         }
         public void TestTwoRanges()
         {
             Assert.That("[1..2, 4..5]", ParsesAs(
                 "SetLiteralNode",
-                "  OpenBracket: OpenBracket |[|",
-                "  ItemList: ListNode",
+                "  OpenBracketNode: OpenBracket |[|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: BinaryOperationNode",
-                "        Left: Number |1|",
-                "        Operator: DotDot |..|",
-                "        Right: Number |2|",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: BinaryOperationNode",
+                "        LeftNode: Number |1|",
+                "        OperatorNode: DotDot |..|",
+                "        RightNode: Number |2|",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: BinaryOperationNode",
-                "        Left: Number |4|",
-                "        Operator: DotDot |..|",
-                "        Right: Number |5|",
-                "      Delimiter: (none)",
-                "  CloseBracket: CloseBracket |]|"));
+                "      ItemNode: BinaryOperationNode",
+                "        LeftNode: Number |4|",
+                "        OperatorNode: DotDot |..|",
+                "        RightNode: Number |5|",
+                "      DelimiterNode: (none)",
+                "  CloseBracketNode: CloseBracket |]|"));
         }
     }
 }

@@ -15,12 +15,12 @@ namespace DGrok.Tests
     [TestFixture]
     public class AlternatorTests
     {
-        private Alternator _alternator;
+        private Parser.Alternator _alternator;
 
         [SetUp]
         public void SetUp()
         {
-            _alternator = new Alternator();
+            _alternator = new Parser.Alternator();
         }
 
         [ExpectedException(typeof(InvalidOperationException))]

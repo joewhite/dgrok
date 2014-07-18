@@ -28,15 +28,15 @@ namespace DGrok.Tests
         {
             Assert.That("asm end", ParsesAs(
                 "AssemblerStatementNode",
-                "  Asm: AsmKeyword |asm|",
-                "  End: EndKeyword |end|"));
+                "  AsmKeywordNode: AsmKeyword |asm|",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestNonEmptyAsmBlock()
         {
             Assert.That("asm INT 3 end", ParsesAs(
                 "AssemblerStatementNode",
-                "  Asm: AsmKeyword |asm|",
-                "  End: EndKeyword |end|"));
+                "  AsmKeywordNode: AsmKeyword |asm|",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
     }
 }

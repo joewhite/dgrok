@@ -24,79 +24,79 @@ namespace DGrok.Tests
         {
             Assert.That("package Foo; end.", ParsesAs(
                 "PackageNode",
-                "  Package: PackageSemikeyword |package|",
-                "  Name: Identifier |Foo|",
-                "  Semicolon: Semicolon |;|",
-                "  RequiresClause: (none)",
-                "  ContainsClause: (none)",
-                "  AttributeList: ListNode",
-                "  End: EndKeyword |end|",
-                "  Dot: Dot |.|"));
+                "  PackageKeywordNode: PackageSemikeyword |package|",
+                "  NameNode: Identifier |Foo|",
+                "  SemicolonNode: Semicolon |;|",
+                "  RequiresClauseNode: (none)",
+                "  ContainsClauseNode: (none)",
+                "  AttributeListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|",
+                "  DotNode: Dot |.|"));
         }
         public void TestUnit()
         {
             Assert.That("unit Foo; interface implementation end.", ParsesAs(
                 "UnitNode",
-                "  Unit: UnitKeyword |unit|",
-                "  UnitName: Identifier |Foo|",
-                "  PortabilityDirectives: ListNode",
-                "  Semicolon: Semicolon |;|",
-                "  InterfaceSection: UnitSectionNode",
-                "    HeaderKeyword: InterfaceKeyword |interface|",
-                "    UsesClause: (none)",
-                "    Contents: ListNode",
-                "  ImplementationSection: UnitSectionNode",
-                "    HeaderKeyword: ImplementationKeyword |implementation|",
-                "    UsesClause: (none)",
-                "    Contents: ListNode",
-                "  InitSection: InitSectionNode",
-                "    InitializationHeader: (none)",
-                "    InitializationStatements: ListNode",
-                "    FinalizationHeader: (none)",
-                "    FinalizationStatements: ListNode",
-                "    End: EndKeyword |end|",
-                "  Dot: Dot |.|"));
+                "  UnitKeywordNode: UnitKeyword |unit|",
+                "  UnitNameNode: Identifier |Foo|",
+                "  PortabilityDirectiveListNode: ListNode",
+                "  SemicolonNode: Semicolon |;|",
+                "  InterfaceSectionNode: UnitSectionNode",
+                "    HeaderKeywordNode: InterfaceKeyword |interface|",
+                "    UsesClauseNode: (none)",
+                "    ContentListNode: ListNode",
+                "  ImplementationSectionNode: UnitSectionNode",
+                "    HeaderKeywordNode: ImplementationKeyword |implementation|",
+                "    UsesClauseNode: (none)",
+                "    ContentListNode: ListNode",
+                "  InitSectionNode: InitSectionNode",
+                "    InitializationKeywordNode: (none)",
+                "    InitializationStatementListNode: ListNode",
+                "    FinalizationKeywordNode: (none)",
+                "    FinalizationStatementListNode: ListNode",
+                "    EndKeywordNode: EndKeyword |end|",
+                "  DotNode: Dot |.|"));
 
         }
         public void TestProgram()
         {
             Assert.That("program Foo; end.", ParsesAs(
                 "ProgramNode",
-                "  Program: ProgramKeyword |program|",
-                "  Name: Identifier |Foo|",
-                "  NoiseOpenParenthesis: (none)",
-                "  NoiseContents: ListNode",
-                "  NoiseCloseParenthesis: (none)",
-                "  Semicolon: Semicolon |;|",
-                "  UsesClause: (none)",
-                "  DeclarationList: ListNode",
-                "  InitSection: InitSectionNode",
-                "    InitializationHeader: (none)",
-                "    InitializationStatements: ListNode",
-                "    FinalizationHeader: (none)",
-                "    FinalizationStatements: ListNode",
-                "    End: EndKeyword |end|",
-                "  Dot: Dot |.|"));
+                "  ProgramKeywordNode: ProgramKeyword |program|",
+                "  NameNode: Identifier |Foo|",
+                "  NoiseOpenParenthesisNode: (none)",
+                "  NoiseContentListNode: ListNode",
+                "  NoiseCloseParenthesisNode: (none)",
+                "  SemicolonNode: Semicolon |;|",
+                "  UsesClauseNode: (none)",
+                "  DeclarationListNode: ListNode",
+                "  InitSectionNode: InitSectionNode",
+                "    InitializationKeywordNode: (none)",
+                "    InitializationStatementListNode: ListNode",
+                "    FinalizationKeywordNode: (none)",
+                "    FinalizationStatementListNode: ListNode",
+                "    EndKeywordNode: EndKeyword |end|",
+                "  DotNode: Dot |.|"));
         }
         public void TestLibrary()
         {
             Assert.That("library Foo; end.", ParsesAs(
                 "ProgramNode",
-                "  Program: LibraryKeyword |library|",
-                "  Name: Identifier |Foo|",
-                "  NoiseOpenParenthesis: (none)",
-                "  NoiseContents: ListNode",
-                "  NoiseCloseParenthesis: (none)",
-                "  Semicolon: Semicolon |;|",
-                "  UsesClause: (none)",
-                "  DeclarationList: ListNode",
-                "  InitSection: InitSectionNode",
-                "    InitializationHeader: (none)",
-                "    InitializationStatements: ListNode",
-                "    FinalizationHeader: (none)",
-                "    FinalizationStatements: ListNode",
-                "    End: EndKeyword |end|",
-                "  Dot: Dot |.|"));
+                "  ProgramKeywordNode: LibraryKeyword |library|",
+                "  NameNode: Identifier |Foo|",
+                "  NoiseOpenParenthesisNode: (none)",
+                "  NoiseContentListNode: ListNode",
+                "  NoiseCloseParenthesisNode: (none)",
+                "  SemicolonNode: Semicolon |;|",
+                "  UsesClauseNode: (none)",
+                "  DeclarationListNode: ListNode",
+                "  InitSectionNode: InitSectionNode",
+                "    InitializationKeywordNode: (none)",
+                "    InitializationStatementListNode: ListNode",
+                "    FinalizationKeywordNode: (none)",
+                "    FinalizationStatementListNode: ListNode",
+                "    EndKeywordNode: EndKeyword |end|",
+                "  DotNode: Dot |.|"));
         }
     }
 }

@@ -24,49 +24,49 @@ namespace DGrok.Tests
         {
             Assert.That("on Exception do", ParsesAs(
                 "ExceptionItemNode",
-                "  On: OnSemikeyword |on|",
-                "  Name: (none)",
-                "  Colon: (none)",
-                "  Type: Identifier |Exception|",
-                "  Do: DoKeyword |do|",
-                "  Statement: (none)",
-                "  Semicolon: (none)"));
+                "  OnSemikeywordNode: OnSemikeyword |on|",
+                "  NameNode: (none)",
+                "  ColonNode: (none)",
+                "  TypeNode: Identifier |Exception|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: (none)",
+                "  SemicolonNode: (none)"));
         }
         public void TestNamed()
         {
             Assert.That("on E: Exception do", ParsesAs(
                 "ExceptionItemNode",
-                "  On: OnSemikeyword |on|",
-                "  Name: Identifier |E|",
-                "  Colon: Colon |:|",
-                "  Type: Identifier |Exception|",
-                "  Do: DoKeyword |do|",
-                "  Statement: (none)",
-                "  Semicolon: (none)"));
+                "  OnSemikeywordNode: OnSemikeyword |on|",
+                "  NameNode: Identifier |E|",
+                "  ColonNode: Colon |:|",
+                "  TypeNode: Identifier |Exception|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: (none)",
+                "  SemicolonNode: (none)"));
         }
         public void TestStatement()
         {
             Assert.That("on Exception do Foo", ParsesAs(
                 "ExceptionItemNode",
-                "  On: OnSemikeyword |on|",
-                "  Name: (none)",
-                "  Colon: (none)",
-                "  Type: Identifier |Exception|",
-                "  Do: DoKeyword |do|",
-                "  Statement: Identifier |Foo|",
-                "  Semicolon: (none)"));
+                "  OnSemikeywordNode: OnSemikeyword |on|",
+                "  NameNode: (none)",
+                "  ColonNode: (none)",
+                "  TypeNode: Identifier |Exception|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: Identifier |Foo|",
+                "  SemicolonNode: (none)"));
         }
         public void TestSemicolon()
         {
             Assert.That("on Exception do;", ParsesAs(
                 "ExceptionItemNode",
-                "  On: OnSemikeyword |on|",
-                "  Name: (none)",
-                "  Colon: (none)",
-                "  Type: Identifier |Exception|",
-                "  Do: DoKeyword |do|",
-                "  Statement: (none)",
-                "  Semicolon: Semicolon |;|"));
+                "  OnSemikeywordNode: OnSemikeyword |on|",
+                "  NameNode: (none)",
+                "  ColonNode: (none)",
+                "  TypeNode: Identifier |Exception|",
+                "  DoKeywordNode: DoKeyword |do|",
+                "  StatementNode: (none)",
+                "  SemicolonNode: Semicolon |;|"));
         }
     }
 }

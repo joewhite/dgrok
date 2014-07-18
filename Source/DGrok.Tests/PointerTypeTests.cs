@@ -24,25 +24,25 @@ namespace DGrok.Tests
         {
             Assert.That("^TFoo", ParsesAs(
                 "PointerTypeNode",
-                "  Caret: Caret |^|",
-                "  Type: Identifier |TFoo|"));
+                "  CaretNode: Caret |^|",
+                "  TypeNode: Identifier |TFoo|"));
         }
         public void TestQualified()
         {
             Assert.That("^Foo.TBar", ParsesAs(
                 "PointerTypeNode",
-                "  Caret: Caret |^|",
-                "  Type: BinaryOperationNode",
-                "    Left: Identifier |Foo|",
-                "    Operator: Dot |.|",
-                "    Right: Identifier |TBar|"));
+                "  CaretNode: Caret |^|",
+                "  TypeNode: BinaryOperationNode",
+                "    LeftNode: Identifier |Foo|",
+                "    OperatorNode: Dot |.|",
+                "    RightNode: Identifier |TBar|"));
         }
         public void TestString()
         {
             Assert.That("^string", ParsesAs(
                 "PointerTypeNode",
-                "  Caret: Caret |^|",
-                "  Type: StringKeyword |string|"));
+                "  CaretNode: Caret |^|",
+                "  TypeNode: StringKeyword |string|"));
         }
     }
 }

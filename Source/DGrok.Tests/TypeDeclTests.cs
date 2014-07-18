@@ -24,63 +24,63 @@ namespace DGrok.Tests
         {
             Assert.That("TFoo = Integer;", ParsesAs(
                 "TypeDeclNode",
-                "  Name: Identifier |TFoo|",
-                "  EqualSign: EqualSign |=|",
-                "  TypeKeyword: (none)",
-                "  Type: Identifier |Integer|",
-                "  PortabilityDirectiveList: ListNode",
-                "  Semicolon: Semicolon |;|"));
+                "  NameNode: Identifier |TFoo|",
+                "  EqualSignNode: EqualSign |=|",
+                "  TypeKeywordNode: (none)",
+                "  TypeNode: Identifier |Integer|",
+                "  PortabilityDirectiveListNode: ListNode",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestTypeType()
         {
             Assert.That("TFoo = type Integer;", ParsesAs(
                 "TypeDeclNode",
-                "  Name: Identifier |TFoo|",
-                "  EqualSign: EqualSign |=|",
-                "  TypeKeyword: TypeKeyword |type|",
-                "  Type: Identifier |Integer|",
-                "  PortabilityDirectiveList: ListNode",
-                "  Semicolon: Semicolon |;|"));
+                "  NameNode: Identifier |TFoo|",
+                "  EqualSignNode: EqualSign |=|",
+                "  TypeKeywordNode: TypeKeyword |type|",
+                "  TypeNode: Identifier |Integer|",
+                "  PortabilityDirectiveListNode: ListNode",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestPortabilityDirectives()
         {
             Assert.That("TFoo = Integer experimental platform;", ParsesAs(
                 "TypeDeclNode",
-                "  Name: Identifier |TFoo|",
-                "  EqualSign: EqualSign |=|",
-                "  TypeKeyword: (none)",
-                "  Type: Identifier |Integer|",
-                "  PortabilityDirectiveList: ListNode",
+                "  NameNode: Identifier |TFoo|",
+                "  EqualSignNode: EqualSign |=|",
+                "  TypeKeywordNode: (none)",
+                "  TypeNode: Identifier |Integer|",
+                "  PortabilityDirectiveListNode: ListNode",
                 "    Items[0]: ExperimentalSemikeyword |experimental|",
                 "    Items[1]: PlatformSemikeyword |platform|",
-                "  Semicolon: Semicolon |;|"));
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestClassForwardDeclaration()
         {
             Assert.That("TFoo = class;", ParsesAs(
                 "TypeForwardDeclarationNode",
-                "  Name: Identifier |TFoo|",
-                "  EqualSign: EqualSign |=|",
-                "  Type: ClassKeyword |class|",
-                "  Semicolon: Semicolon |;|"));
+                "  NameNode: Identifier |TFoo|",
+                "  EqualSignNode: EqualSign |=|",
+                "  TypeNode: ClassKeyword |class|",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestDispInterfaceForwardDeclaration()
         {
             Assert.That("IFoo = dispinterface;", ParsesAs(
                 "TypeForwardDeclarationNode",
-                "  Name: Identifier |IFoo|",
-                "  EqualSign: EqualSign |=|",
-                "  Type: DispInterfaceKeyword |dispinterface|",
-                "  Semicolon: Semicolon |;|"));
+                "  NameNode: Identifier |IFoo|",
+                "  EqualSignNode: EqualSign |=|",
+                "  TypeNode: DispInterfaceKeyword |dispinterface|",
+                "  SemicolonNode: Semicolon |;|"));
         }
         public void TestInterfaceForwardDeclaration()
         {
             Assert.That("IFoo = interface;", ParsesAs(
                 "TypeForwardDeclarationNode",
-                "  Name: Identifier |IFoo|",
-                "  EqualSign: EqualSign |=|",
-                "  Type: InterfaceKeyword |interface|",
-                "  Semicolon: Semicolon |;|"));
+                "  NameNode: Identifier |IFoo|",
+                "  EqualSignNode: EqualSign |=|",
+                "  TypeNode: InterfaceKeyword |interface|",
+                "  SemicolonNode: Semicolon |;|"));
         }
     }
 }

@@ -6,18 +6,20 @@
 // http://www.opensource.org/licenses/osl-3.0.php
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using DGrok.DelphiNodes;
 using DGrok.Framework;
 
 namespace DGrok.Visitors
 {
-    [CodeBaseAction]
+    [CodeBaseAction(CategoryType.BestPracticeViolations)]
+    [Description("'With' statements make for confusing code. Avoid them.")]
     public class FindWithStatements : Visitor
     {
         public override void VisitWithStatementNode(WithStatementNode node)
         {
-            Hits.Add(new Hit(node.With.Location, AstNode.ToCode(node.With, node.ExpressionList)));
+            AddHit(node.WithKeywordNode, AstNode.ToCode(node.WithKeywordNode, node.ExpressionListNode));
             base.VisitWithStatementNode(node);
         }
     }

@@ -24,45 +24,45 @@ namespace DGrok.Tests
         {
             Assert.That("interface", ParsesAs(
                 "UnitSectionNode",
-                "  HeaderKeyword: InterfaceKeyword |interface|",
-                "  UsesClause: (none)",
-                "  Contents: ListNode"));
+                "  HeaderKeywordNode: InterfaceKeyword |interface|",
+                "  UsesClauseNode: (none)",
+                "  ContentListNode: ListNode"));
         }
         public void TestUses()
         {
             Assert.That("interface uses Foo;", ParsesAs(
                 "UnitSectionNode",
-                "  HeaderKeyword: InterfaceKeyword |interface|",
-                "  UsesClause: UsesClauseNode",
-                "    Uses: UsesKeyword |uses|",
-                "    UnitList: ListNode",
+                "  HeaderKeywordNode: InterfaceKeyword |interface|",
+                "  UsesClauseNode: UsesClauseNode",
+                "    UsesKeywordNode: UsesKeyword |uses|",
+                "    UnitListNode: ListNode",
                 "      Items[0]: DelimitedItemNode",
-                "        Item: UsedUnitNode",
-                "          Name: Identifier |Foo|",
-                "          In: (none)",
-                "          FileName: (none)",
-                "        Delimiter: (none)",
-                "    Semicolon: Semicolon |;|",
-                "  Contents: ListNode"));
+                "        ItemNode: UsedUnitNode",
+                "          NameNode: Identifier |Foo|",
+                "          InKeywordNode: (none)",
+                "          FileNameNode: (none)",
+                "        DelimiterNode: (none)",
+                "    SemicolonNode: Semicolon |;|",
+                "  ContentListNode: ListNode"));
         }
         public void TestWithContents()
         {
             Assert.That("interface resourcestring Foo = 'Bar';", ParsesAs(
                 "UnitSectionNode",
-                "  HeaderKeyword: InterfaceKeyword |interface|",
-                "  UsesClause: (none)",
-                "  Contents: ListNode",
+                "  HeaderKeywordNode: InterfaceKeyword |interface|",
+                "  UsesClauseNode: (none)",
+                "  ContentListNode: ListNode",
                 "    Items[0]: ConstSectionNode",
-                "      Const: ResourceStringKeyword |resourcestring|",
-                "      ConstList: ListNode",
+                "      ConstKeywordNode: ResourceStringKeyword |resourcestring|",
+                "      ConstListNode: ListNode",
                 "        Items[0]: ConstantDeclNode",
-                "          Name: Identifier |Foo|",
-                "          Colon: (none)",
-                "          Type: (none)",
-                "          EqualSign: EqualSign |=|",
-                "          Value: StringLiteral |'Bar'|",
-                "          PortabilityDirectiveList: ListNode",
-                "          Semicolon: Semicolon |;|"));
+                "          NameNode: Identifier |Foo|",
+                "          ColonNode: (none)",
+                "          TypeNode: (none)",
+                "          EqualSignNode: EqualSign |=|",
+                "          ValueNode: StringLiteral |'Bar'|",
+                "          PortabilityDirectiveListNode: ListNode",
+                "          SemicolonNode: Semicolon |;|"));
         }
     }
 }

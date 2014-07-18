@@ -8,7 +8,7 @@ CODE_VERSION = version.sub(/(\.0){1,2}$/, "")
 RELEASES_DIR = File.expand_path("Releases")
 ZIP_NAME = File.join(RELEASES_DIR, "DGrok-#{CODE_VERSION}.zip")
 
-file 'Grammar.html' => 'Grammar.yaml' do
+file 'Grammar.html' => ['Grammar.yaml', 'MakePrettyGrammarHtml.rb'] do
   ruby 'MakePrettyGrammarHtml.rb'
 end
 

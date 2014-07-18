@@ -28,21 +28,21 @@ namespace DGrok.Tests
         {
             Assert.That("(fooBar, fooBaz)", ParsesAs(
                 "EnumeratedTypeNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  ItemList: ListNode",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: EnumeratedTypeElementNode",
-                "        Name: Identifier |fooBar|",
-                "        EqualSign: (none)",
-                "        Value: (none)",
-                "      Delimiter: Comma |,|",
+                "      ItemNode: EnumeratedTypeElementNode",
+                "        NameNode: Identifier |fooBar|",
+                "        EqualSignNode: (none)",
+                "        ValueNode: (none)",
+                "      DelimiterNode: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
-                "      Item: EnumeratedTypeElementNode",
-                "        Name: Identifier |fooBaz|",
-                "        EqualSign: (none)",
-                "        Value: (none)",
-                "      Delimiter: (none)",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "      ItemNode: EnumeratedTypeElementNode",
+                "        NameNode: Identifier |fooBaz|",
+                "        EqualSignNode: (none)",
+                "        ValueNode: (none)",
+                "      DelimiterNode: (none)",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
     }
 }

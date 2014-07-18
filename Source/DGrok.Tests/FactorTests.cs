@@ -28,10 +28,10 @@ namespace DGrok.Tests
         {
             Assert.That("not not 42", ParsesAs(
                 "UnaryOperationNode",
-                "  Operator: NotKeyword |not|",
-                "  Operand: UnaryOperationNode",
-                "    Operator: NotKeyword |not|",
-                "    Operand: Number |42|"));
+                "  OperatorNode: NotKeyword |not|",
+                "  OperandNode: UnaryOperationNode",
+                "    OperatorNode: NotKeyword |not|",
+                "    OperandNode: Number |42|"));
         }
         public void TestNotAloneDoesNotParse()
         {
@@ -41,9 +41,9 @@ namespace DGrok.Tests
         {
             Assert.That("Foo.Bar", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Identifier |Foo|",
-                "  Operator: Dot |.|",
-                "  Right: Identifier |Bar|"));
+                "  LeftNode: Identifier |Foo|",
+                "  OperatorNode: Dot |.|",
+                "  RightNode: Identifier |Bar|"));
         }
     }
 }

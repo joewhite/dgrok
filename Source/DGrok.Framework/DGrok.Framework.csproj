@@ -35,23 +35,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DelphiNodes\ConstantDeclNode.cs" />
     <Compile Include="DelphiNodes\DirectiveNode.cs" />
+    <Compile Include="DelphiNodes\FieldDeclNode.cs" />
     <Compile Include="DelphiNodes\GeneratedNodes.cs" />
+    <Compile Include="DelphiNodes\ITypeDeclaration.cs" />
     <Compile Include="DelphiNodes\MethodHeadingNode.cs" />
+    <Compile Include="DelphiNodes\TypeDeclNode.cs" />
+    <Compile Include="DelphiNodes\VarDeclNode.cs" />
+    <Compile Include="Framework\CategoryType.cs" />
     <Compile Include="Framework\CancelException.cs" />
     <Compile Include="Framework\Catalog.cs" />
+    <Compile Include="Framework\Category.cs" />
     <Compile Include="Framework\CodeBase.cs" />
     <Compile Include="Framework\CodeBaseActionAttribute.cs" />
     <Compile Include="Framework\CodeBaseActionProxy.cs" />
     <Compile Include="Framework\CodeBaseOptions.cs" />
     <Compile Include="Framework\CodeBaseWorker.cs" />
     <Compile Include="Framework\DelimitedItemNode.cs" />
+    <Compile Include="Framework\DuplicateFileNameException.cs" />
     <Compile Include="Framework\GeneratedVisitor.cs" />
     <Compile Include="Framework\ICodeBaseAction.cs" />
     <Compile Include="Framework\IFileLoader.cs" />
     <Compile Include="Framework\FileLoader.cs" />
+    <Compile Include="Framework\ITokenSet.cs" />
     <Compile Include="Framework\Location.cs" />
     <Compile Include="Framework\MemoryFileLoader.cs" />
+    <Compile Include="Framework\NamedContent.cs" />
+    <Compile Include="Framework\SingleTokenTokenSet.cs" />
     <Compile Include="Framework\Visitor.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Framework\Alternator.cs" />
@@ -79,8 +90,10 @@
     <Compile Include="Framework\Rule.cs" />
     <Compile Include="Framework\RuleDelegate.cs" />
     <Compile Include="Framework\Hit.cs" />
+    <Compile Include="Visitors\FindAsmBlocks.cs" />
     <Compile Include="Visitors\FindGlobalVariables.cs" />
     <Compile Include="Visitors\FindNestedMethods.cs" />
+    <Compile Include="Visitors\FindVariantRecords.cs" />
     <Compile Include="Visitors\FindWithStatements.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

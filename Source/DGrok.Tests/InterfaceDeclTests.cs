@@ -24,66 +24,66 @@ namespace DGrok.Tests
         {
             Assert.That("const Foo = 42;", ParsesAs(
                 "ConstSectionNode",
-                "  Const: ConstKeyword |const|",
-                "  ConstList: ListNode",
+                "  ConstKeywordNode: ConstKeyword |const|",
+                "  ConstListNode: ListNode",
                 "    Items[0]: ConstantDeclNode",
-                "      Name: Identifier |Foo|",
-                "      Colon: (none)",
-                "      Type: (none)",
-                "      EqualSign: EqualSign |=|",
-                "      Value: Number |42|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|"));
+                "      NameNode: Identifier |Foo|",
+                "      ColonNode: (none)",
+                "      TypeNode: (none)",
+                "      EqualSignNode: EqualSign |=|",
+                "      ValueNode: Number |42|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestTypeSection()
         {
             Assert.That("type TFoo = Integer;", ParsesAs(
                 "TypeSectionNode",
-                "  Type: TypeKeyword |type|",
-                "  TypeList: ListNode",
+                "  TypeKeywordNode: TypeKeyword |type|",
+                "  TypeListNode: ListNode",
                 "    Items[0]: TypeDeclNode",
-                "      Name: Identifier |TFoo|",
-                "      EqualSign: EqualSign |=|",
-                "      TypeKeyword: (none)",
-                "      Type: Identifier |Integer|",
-                "      PortabilityDirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|"));
+                "      NameNode: Identifier |TFoo|",
+                "      EqualSignNode: EqualSign |=|",
+                "      TypeKeywordNode: (none)",
+                "      TypeNode: Identifier |Integer|",
+                "      PortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestVarSection()
         {
             Assert.That("var Foo: Integer;", ParsesAs(
                 "VarSectionNode",
-                "  Var: VarKeyword |var|",
-                "  VarList: ListNode",
+                "  VarKeywordNode: VarKeyword |var|",
+                "  VarListNode: ListNode",
                 "    Items[0]: VarDeclNode",
-                "      Names: ListNode",
+                "      NameListNode: ListNode",
                 "        Items[0]: DelimitedItemNode",
-                "          Item: Identifier |Foo|",
-                "          Delimiter: (none)",
-                "      Colon: Colon |:|",
-                "      Type: Identifier |Integer|",
-                "      FirstPortabilityDirectives: ListNode",
-                "      Absolute: (none)",
-                "      AbsoluteAddress: (none)",
-                "      EqualSign: (none)",
-                "      Value: (none)",
-                "      SecondPortabilityDirectives: ListNode",
-                "      Semicolon: Semicolon |;|"));
+                "          ItemNode: Identifier |Foo|",
+                "          DelimiterNode: (none)",
+                "      ColonNode: Colon |:|",
+                "      TypeNode: Identifier |Integer|",
+                "      FirstPortabilityDirectiveListNode: ListNode",
+                "      AbsoluteSemikeywordNode: (none)",
+                "      AbsoluteAddressNode: (none)",
+                "      EqualSignNode: (none)",
+                "      ValueNode: (none)",
+                "      SecondPortabilityDirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|"));
         }
         public void TestMethodHeading()
         {
             Assert.That("procedure Foo;", ParsesAs(
                 "MethodHeadingNode",
-                "  Class: (none)",
-                "  MethodType: ProcedureKeyword |procedure|",
-                "  Name: Identifier |Foo|",
-                "  OpenParenthesis: (none)",
-                "  ParameterList: ListNode",
-                "  CloseParenthesis: (none)",
-                "  Colon: (none)",
-                "  ReturnType: (none)",
-                "  DirectiveList: ListNode",
-                "  Semicolon: Semicolon |;|"));
+                "  ClassKeywordNode: (none)",
+                "  MethodTypeNode: ProcedureKeyword |procedure|",
+                "  NameNode: Identifier |Foo|",
+                "  OpenParenthesisNode: (none)",
+                "  ParameterListNode: ListNode",
+                "  CloseParenthesisNode: (none)",
+                "  ColonNode: (none)",
+                "  ReturnTypeNode: (none)",
+                "  DirectiveListNode: ListNode",
+                "  SemicolonNode: Semicolon |;|"));
         }
     }
 }

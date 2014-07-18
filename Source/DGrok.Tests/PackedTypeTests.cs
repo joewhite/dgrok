@@ -24,14 +24,14 @@ namespace DGrok.Tests
         {
             Assert.That("packed array of Byte", ParsesAs(
                 "PackedTypeNode",
-                "  Packed: PackedKeyword |packed|",
-                "  Type: ArrayTypeNode",
-                "    Array: ArrayKeyword |array|",
-                "    OpenBracket: (none)",
-                "    IndexList: ListNode",
-                "    CloseBracket: (none)",
-                "    Of: OfKeyword |of|",
-                "    Type: Identifier |Byte|"));
+                "  PackedKeywordNode: PackedKeyword |packed|",
+                "  TypeNode: ArrayTypeNode",
+                "    ArrayKeywordNode: ArrayKeyword |array|",
+                "    OpenBracketNode: (none)",
+                "    IndexListNode: ListNode",
+                "    CloseBracketNode: (none)",
+                "    OfKeywordNode: OfKeyword |of|",
+                "    TypeNode: Identifier |Byte|"));
         }
     }
 }

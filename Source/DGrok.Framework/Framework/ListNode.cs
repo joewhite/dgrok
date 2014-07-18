@@ -20,6 +20,14 @@ namespace DGrok.Framework
             _items = new List<T>(items);
         }
 
+        public override IEnumerable<AstNode> ChildNodes
+        {
+            get
+            {
+                foreach (T item in Items)
+                    yield return item;
+            }
+        }
         public IList<T> Items
         {
             get { return _items; }

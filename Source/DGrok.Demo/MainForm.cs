@@ -11,14 +11,27 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using DGrok.Framework;
 
 namespace DGrok.Demo
 {
     public partial class MainForm : Form
     {
+        CodeBaseOptions _codeBaseOptions;
+
         public MainForm()
         {
             InitializeComponent();
+
+            _codeBaseOptions = new CodeBaseOptions();
+            _codeBaseOptions.LoadFromRegistry();
+            parseSourceTreeControl1.CodeBaseOptions = _codeBaseOptions;
+            compilerOptionsControl1.CodeBaseOptions = _codeBaseOptions;
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _codeBaseOptions.SaveToRegistry();
         }
     }
 }

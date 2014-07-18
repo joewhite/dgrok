@@ -28,173 +28,173 @@ namespace DGrok.Tests
         {
             Assert.That("(fooBar)", ParsesAs(
                 "EnumeratedTypeNode",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  ItemList: ListNode",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  ItemListNode: ListNode",
                 "    Items[0]: DelimitedItemNode",
-                "      Item: EnumeratedTypeElementNode",
-                "        Name: Identifier |fooBar|",
-                "        EqualSign: (none)",
-                "        Value: (none)",
-                "      Delimiter: (none)",
-                "  CloseParenthesis: CloseParenthesis |)|"));
+                "      ItemNode: EnumeratedTypeElementNode",
+                "        NameNode: Identifier |fooBar|",
+                "        EqualSignNode: (none)",
+                "        ValueNode: (none)",
+                "      DelimiterNode: (none)",
+                "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
         public void TestQualifiedIdentifier()
         {
             Assert.That("System.Integer", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Identifier |System|",
-                "  Operator: Dot |.|",
-                "  Right: Identifier |Integer|"));
+                "  LeftNode: Identifier |System|",
+                "  OperatorNode: Dot |.|",
+                "  RightNode: Identifier |Integer|"));
         }
         public void TestRange()
         {
             Assert.That("24..42", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Number |24|",
-                "  Operator: DotDot |..|",
-                "  Right: Number |42|"));
+                "  LeftNode: Number |24|",
+                "  OperatorNode: DotDot |..|",
+                "  RightNode: Number |42|"));
         }
         public void TestArray()
         {
             Assert.That("array of Integer", ParsesAs(
                 "ArrayTypeNode",
-                "  Array: ArrayKeyword |array|",
-                "  OpenBracket: (none)",
-                "  IndexList: ListNode",
-                "  CloseBracket: (none)",
-                "  Of: OfKeyword |of|",
-                "  Type: Identifier |Integer|"));
+                "  ArrayKeywordNode: ArrayKeyword |array|",
+                "  OpenBracketNode: (none)",
+                "  IndexListNode: ListNode",
+                "  CloseBracketNode: (none)",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: Identifier |Integer|"));
         }
         public void TestSet()
         {
             Assert.That("set of Byte", ParsesAs(
                 "SetOfNode",
-                "  Set: SetKeyword |set|",
-                "  Of: OfKeyword |of|",
-                "  Type: Identifier |Byte|"));
+                "  SetKeywordNode: SetKeyword |set|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: Identifier |Byte|"));
         }
         public void TestFile()
         {
             Assert.That("file", ParsesAs(
                 "FileTypeNode",
-                "  File: FileKeyword |file|",
-                "  Of: (none)",
-                "  Type: (none)"));
+                "  FileKeywordNode: FileKeyword |file|",
+                "  OfKeywordNode: (none)",
+                "  TypeNode: (none)"));
         }
         public void TestRecordHelper()
         {
             Assert.That("record helper for TPoint end", ParsesAs(
                 "TypeHelperNode",
-                "  TypeKeyword: RecordKeyword |record|",
-                "  Helper: HelperSemikeyword |helper|",
-                "  OpenParenthesis: (none)",
-                "  BaseHelperType: (none)",
-                "  CloseParenthesis: (none)",
-                "  For: ForKeyword |for|",
-                "  Type: Identifier |TPoint|",
-                "  Contents: ListNode",
-                "  End: EndKeyword |end|"));
+                "  TypeKeywordNode: RecordKeyword |record|",
+                "  HelperSemikeywordNode: HelperSemikeyword |helper|",
+                "  OpenParenthesisNode: (none)",
+                "  BaseHelperTypeNode: (none)",
+                "  CloseParenthesisNode: (none)",
+                "  ForKeywordNode: ForKeyword |for|",
+                "  TypeNode: Identifier |TPoint|",
+                "  ContentListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestRecord()
         {
             Assert.That("record end", ParsesAs(
                 "RecordTypeNode",
-                "  Record: RecordKeyword |record|",
-                "  Contents: ListNode",
-                "  VariantSection: (none)",
-                "  End: EndKeyword |end|"));
+                "  RecordKeywordNode: RecordKeyword |record|",
+                "  ContentListNode: ListNode",
+                "  VariantSectionNode: (none)",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestPointer()
         {
             Assert.That("^TFoo", ParsesAs(
                 "PointerTypeNode",
-                "  Caret: Caret |^|",
-                "  Type: Identifier |TFoo|"));
+                "  CaretNode: Caret |^|",
+                "  TypeNode: Identifier |TFoo|"));
         }
         public void TestString()
         {
             Assert.That("string[42]", ParsesAs(
                 "StringOfLengthNode",
-                "  String: StringKeyword |string|",
-                "  OpenBracket: OpenBracket |[|",
-                "  Length: Number |42|",
-                "  CloseBracket: CloseBracket |]|"));
+                "  StringKeywordNode: StringKeyword |string|",
+                "  OpenBracketNode: OpenBracket |[|",
+                "  LengthNode: Number |42|",
+                "  CloseBracketNode: CloseBracket |]|"));
         }
         public void TestProcedureType()
         {
             Assert.That("procedure of object", ParsesAs(
                 "ProcedureTypeNode",
-                "  MethodType: ProcedureKeyword |procedure|",
-                "  OpenParenthesis: (none)",
-                "  ParameterList: ListNode",
-                "  CloseParenthesis: (none)",
-                "  Colon: (none)",
-                "  ReturnType: (none)",
-                "  FirstDirectives: ListNode",
-                "  Of: OfKeyword |of|",
-                "  Object: ObjectKeyword |object|",
-                "  SecondDirectives: ListNode"));
+                "  MethodTypeNode: ProcedureKeyword |procedure|",
+                "  OpenParenthesisNode: (none)",
+                "  ParameterListNode: ListNode",
+                "  CloseParenthesisNode: (none)",
+                "  ColonNode: (none)",
+                "  ReturnTypeNode: (none)",
+                "  FirstDirectiveListNode: ListNode",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  ObjectKeywordNode: ObjectKeyword |object|",
+                "  SecondDirectiveListNode: ListNode"));
         }
         public void TestClassHelper()
         {
             Assert.That("class helper for TObject end", ParsesAs(
                 "TypeHelperNode",
-                "  TypeKeyword: ClassKeyword |class|",
-                "  Helper: HelperSemikeyword |helper|",
-                "  OpenParenthesis: (none)",
-                "  BaseHelperType: (none)",
-                "  CloseParenthesis: (none)",
-                "  For: ForKeyword |for|",
-                "  Type: Identifier |TObject|",
-                "  Contents: ListNode",
-                "  End: EndKeyword |end|"));
+                "  TypeKeywordNode: ClassKeyword |class|",
+                "  HelperSemikeywordNode: HelperSemikeyword |helper|",
+                "  OpenParenthesisNode: (none)",
+                "  BaseHelperTypeNode: (none)",
+                "  CloseParenthesisNode: (none)",
+                "  ForKeywordNode: ForKeyword |for|",
+                "  TypeNode: Identifier |TObject|",
+                "  ContentListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestClassOf()
         {
             Assert.That("class of TObject", ParsesAs(
                 "ClassOfNode",
-                "  Class: ClassKeyword |class|",
-                "  Of: OfKeyword |of|",
-                "  Type: Identifier |TObject|"));
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  OfKeywordNode: OfKeyword |of|",
+                "  TypeNode: Identifier |TObject|"));
         }
         public void TestClass()
         {
             Assert.That("class end", ParsesAs(
                 "ClassTypeNode",
-                "  Class: ClassKeyword |class|",
-                "  Disposition: (none)",
-                "  OpenParenthesis: (none)",
-                "  InheritanceList: ListNode",
-                "  CloseParenthesis: (none)",
-                "  Contents: ListNode",
-                "  End: EndKeyword |end|"));
+                "  ClassKeywordNode: ClassKeyword |class|",
+                "  DispositionNode: (none)",
+                "  OpenParenthesisNode: (none)",
+                "  InheritanceListNode: ListNode",
+                "  CloseParenthesisNode: (none)",
+                "  ContentListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestInterface()
         {
             Assert.That("interface end", ParsesAs(
                 "InterfaceTypeNode",
-                "  Interface: InterfaceKeyword |interface|",
-                "  OpenParenthesis: (none)",
-                "  BaseInterface: (none)",
-                "  CloseParenthesis: (none)",
-                "  OpenBracket: (none)",
-                "  Guid: (none)",
-                "  CloseBracket: (none)",
-                "  MethodAndPropertyList: ListNode",
-                "  End: EndKeyword |end|"));
+                "  InterfaceKeywordNode: InterfaceKeyword |interface|",
+                "  OpenParenthesisNode: (none)",
+                "  BaseInterfaceNode: (none)",
+                "  CloseParenthesisNode: (none)",
+                "  OpenBracketNode: (none)",
+                "  GuidNode: (none)",
+                "  CloseBracketNode: (none)",
+                "  MethodAndPropertyListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestPackedType()
         {
             Assert.That("packed array of Byte", ParsesAs(
                 "PackedTypeNode",
-                "  Packed: PackedKeyword |packed|",
-                "  Type: ArrayTypeNode",
-                "    Array: ArrayKeyword |array|",
-                "    OpenBracket: (none)",
-                "    IndexList: ListNode",
-                "    CloseBracket: (none)",
-                "    Of: OfKeyword |of|",
-                "    Type: Identifier |Byte|"));
+                "  PackedKeywordNode: PackedKeyword |packed|",
+                "  TypeNode: ArrayTypeNode",
+                "    ArrayKeywordNode: ArrayKeyword |array|",
+                "    OpenBracketNode: (none)",
+                "    IndexListNode: ListNode",
+                "    CloseBracketNode: (none)",
+                "    OfKeywordNode: OfKeyword |of|",
+                "    TypeNode: Identifier |Byte|"));
         }
     }
 }

@@ -24,47 +24,47 @@ namespace DGrok.Tests
         {
             Assert.That("raise", ParsesAs(
                 "RaiseStatementNode",
-                "  Raise: RaiseKeyword |raise|",
-                "  Exception: (none)",
-                "  At: (none)",
-                "  Address: (none)"));
+                "  RaiseKeywordNode: RaiseKeyword |raise|",
+                "  ExceptionNode: (none)",
+                "  AtSemikeywordNode: (none)",
+                "  AddressNode: (none)"));
         }
         public void TestRaiseVariable()
         {
             Assert.That("raise E", ParsesAs(
                 "RaiseStatementNode",
-                "  Raise: RaiseKeyword |raise|",
-                "  Exception: Identifier |E|",
-                "  At: (none)",
-                "  Address: (none)"));
+                "  RaiseKeywordNode: RaiseKeyword |raise|",
+                "  ExceptionNode: Identifier |E|",
+                "  AtSemikeywordNode: (none)",
+                "  AddressNode: (none)"));
         }
         public void TestRaiseExceptionCreate()
         {
             Assert.That("raise Exception.Create('Foo')", ParsesAs(
                 "RaiseStatementNode",
-                "  Raise: RaiseKeyword |raise|",
-                "  Exception: ParameterizedNode",
-                "    Left: BinaryOperationNode",
-                "      Left: Identifier |Exception|",
-                "      Operator: Dot |.|",
-                "      Right: Identifier |Create|",
-                "    OpenDelimiter: OpenParenthesis |(|",
-                "    ParameterList: ListNode",
+                "  RaiseKeywordNode: RaiseKeyword |raise|",
+                "  ExceptionNode: ParameterizedNode",
+                "    LeftNode: BinaryOperationNode",
+                "      LeftNode: Identifier |Exception|",
+                "      OperatorNode: Dot |.|",
+                "      RightNode: Identifier |Create|",
+                "    OpenDelimiterNode: OpenParenthesis |(|",
+                "    ParameterListNode: ListNode",
                 "      Items[0]: DelimitedItemNode",
-                "        Item: StringLiteral |'Foo'|",
-                "        Delimiter: (none)",
-                "    CloseDelimiter: CloseParenthesis |)|",
-                "  At: (none)",
-                "  Address: (none)"));
+                "        ItemNode: StringLiteral |'Foo'|",
+                "        DelimiterNode: (none)",
+                "    CloseDelimiterNode: CloseParenthesis |)|",
+                "  AtSemikeywordNode: (none)",
+                "  AddressNode: (none)"));
         }
         public void TestRaiseAtAddress()
         {
             Assert.That("raise E at Address", ParsesAs(
                 "RaiseStatementNode",
-                "  Raise: RaiseKeyword |raise|",
-                "  Exception: Identifier |E|",
-                "  At: AtSemikeyword |at|",
-                "  Address: Identifier |Address|"));
+                "  RaiseKeywordNode: RaiseKeyword |raise|",
+                "  ExceptionNode: Identifier |E|",
+                "  AtSemikeywordNode: AtSemikeyword |at|",
+                "  AddressNode: Identifier |Address|"));
         }
     }
 }

@@ -24,64 +24,64 @@ namespace DGrok.Tests
         {
             Assert.That("Foo", ParsesAs(
                 "ExportsItemNode",
-                "  Name: Identifier |Foo|",
-                "  SpecifierList: ListNode"));
+                "  NameNode: Identifier |Foo|",
+                "  SpecifierListNode: ListNode"));
         }
         public void TestDottedName()
         {
             Assert.That("Foo.Bar", ParsesAs(
                 "ExportsItemNode",
-                "  Name: BinaryOperationNode",
-                "    Left: Identifier |Foo|",
-                "    Operator: Dot |.|",
-                "    Right: Identifier |Bar|",
-                "  SpecifierList: ListNode"));
+                "  NameNode: BinaryOperationNode",
+                "    LeftNode: Identifier |Foo|",
+                "    OperatorNode: Dot |.|",
+                "    RightNode: Identifier |Bar|",
+                "  SpecifierListNode: ListNode"));
         }
         public void TestIndex()
         {
             Assert.That("Foo index 42", ParsesAs(
                 "ExportsItemNode",
-                "  Name: Identifier |Foo|",
-                "  SpecifierList: ListNode",
+                "  NameNode: Identifier |Foo|",
+                "  SpecifierListNode: ListNode",
                 "    Items[0]: ExportsSpecifierNode",
-                "      Keyword: IndexSemikeyword |index|",
-                "      Value: Number |42|"));
+                "      KeywordNode: IndexSemikeyword |index|",
+                "      ValueNode: Number |42|"));
         }
         public void TestName()
         {
             Assert.That("Foo name 'Foo'", ParsesAs(
                 "ExportsItemNode",
-                "  Name: Identifier |Foo|",
-                "  SpecifierList: ListNode",
+                "  NameNode: Identifier |Foo|",
+                "  SpecifierListNode: ListNode",
                 "    Items[0]: ExportsSpecifierNode",
-                "      Keyword: NameSemikeyword |name|",
-                "      Value: StringLiteral |'Foo'|"));
+                "      KeywordNode: NameSemikeyword |name|",
+                "      ValueNode: StringLiteral |'Foo'|"));
         }
         public void TestIndexAndName()
         {
             Assert.That("Foo index 42 name 'Foo'", ParsesAs(
                 "ExportsItemNode",
-                "  Name: Identifier |Foo|",
-                "  SpecifierList: ListNode",
+                "  NameNode: Identifier |Foo|",
+                "  SpecifierListNode: ListNode",
                 "    Items[0]: ExportsSpecifierNode",
-                "      Keyword: IndexSemikeyword |index|",
-                "      Value: Number |42|",
+                "      KeywordNode: IndexSemikeyword |index|",
+                "      ValueNode: Number |42|",
                 "    Items[1]: ExportsSpecifierNode",
-                "      Keyword: NameSemikeyword |name|",
-                "      Value: StringLiteral |'Foo'|"));
+                "      KeywordNode: NameSemikeyword |name|",
+                "      ValueNode: StringLiteral |'Foo'|"));
         }
         public void TestNameAndIndex()
         {
             Assert.That("Foo name 'Foo' index 42", ParsesAs(
                 "ExportsItemNode",
-                "  Name: Identifier |Foo|",
-                "  SpecifierList: ListNode",
+                "  NameNode: Identifier |Foo|",
+                "  SpecifierListNode: ListNode",
                 "    Items[0]: ExportsSpecifierNode",
-                "      Keyword: NameSemikeyword |name|",
-                "      Value: StringLiteral |'Foo'|",
+                "      KeywordNode: NameSemikeyword |name|",
+                "      ValueNode: StringLiteral |'Foo'|",
                 "    Items[1]: ExportsSpecifierNode",
-                "      Keyword: IndexSemikeyword |index|",
-                "      Value: Number |42|"));
+                "      KeywordNode: IndexSemikeyword |index|",
+                "      ValueNode: Number |42|"));
         }
     }
 }

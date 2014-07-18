@@ -28,28 +28,28 @@ namespace DGrok.Tests
         {
             Assert.That("40 + 2", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Number |40|",
-                "  Operator: PlusSign |+|",
-                "  Right: Number |2|"));
+                "  LeftNode: Number |40|",
+                "  OperatorNode: PlusSign |+|",
+                "  RightNode: Number |2|"));
         }
         public void TestEquals()
         {
             Assert.That("A = B", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Identifier |A|",
-                "  Operator: EqualSign |=|",
-                "  Right: Identifier |B|"));
+                "  LeftNode: Identifier |A|",
+                "  OperatorNode: EqualSign |=|",
+                "  RightNode: Identifier |B|"));
         }
         public void TestTwoEquals()
         {
             Assert.That("A = B = C", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: BinaryOperationNode",
-                "    Left: Identifier |A|",
-                "    Operator: EqualSign |=|",
-                "    Right: Identifier |B|",
-                "  Operator: EqualSign |=|",
-                "  Right: Identifier |C|"));
+                "  LeftNode: BinaryOperationNode",
+                "    LeftNode: Identifier |A|",
+                "    OperatorNode: EqualSign |=|",
+                "    RightNode: Identifier |B|",
+                "  OperatorNode: EqualSign |=|",
+                "  RightNode: Identifier |C|"));
         }
     }
 }

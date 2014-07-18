@@ -40,20 +40,20 @@ namespace DGrok.Tests
         {
             Assert.That("Foo.Bar.Baz", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: BinaryOperationNode",
-                "    Left: Identifier |Foo|",
-                "    Operator: Dot |.|",
-                "    Right: Identifier |Bar|",
-                "  Operator: Dot |.|",
-                "  Right: Identifier |Baz|"));
+                "  LeftNode: BinaryOperationNode",
+                "    LeftNode: Identifier |Foo|",
+                "    OperatorNode: Dot |.|",
+                "    RightNode: Identifier |Bar|",
+                "  OperatorNode: Dot |.|",
+                "  RightNode: Identifier |Baz|"));
         }
         public void TestDotKeyword()
         {
             Assert.That("Should.Not", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Identifier |Should|",
-                "  Operator: Dot |.|",
-                "  Right: Identifier |Not|"));
+                "  LeftNode: Identifier |Should|",
+                "  OperatorNode: Dot |.|",
+                "  RightNode: Identifier |Not|"));
         }
     }
 }

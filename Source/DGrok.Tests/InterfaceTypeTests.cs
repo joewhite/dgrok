@@ -24,96 +24,96 @@ namespace DGrok.Tests
         {
             Assert.That("interface end", ParsesAs(
                 "InterfaceTypeNode",
-                "  Interface: InterfaceKeyword |interface|",
-                "  OpenParenthesis: (none)",
-                "  BaseInterface: (none)",
-                "  CloseParenthesis: (none)",
-                "  OpenBracket: (none)",
-                "  Guid: (none)",
-                "  CloseBracket: (none)",
-                "  MethodAndPropertyList: ListNode",
-                "  End: EndKeyword |end|"));
+                "  InterfaceKeywordNode: InterfaceKeyword |interface|",
+                "  OpenParenthesisNode: (none)",
+                "  BaseInterfaceNode: (none)",
+                "  CloseParenthesisNode: (none)",
+                "  OpenBracketNode: (none)",
+                "  GuidNode: (none)",
+                "  CloseBracketNode: (none)",
+                "  MethodAndPropertyListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestBaseInterface()
         {
             Assert.That("interface(IFoo) end", ParsesAs(
                 "InterfaceTypeNode",
-                "  Interface: InterfaceKeyword |interface|",
-                "  OpenParenthesis: OpenParenthesis |(|",
-                "  BaseInterface: Identifier |IFoo|",
-                "  CloseParenthesis: CloseParenthesis |)|",
-                "  OpenBracket: (none)",
-                "  Guid: (none)",
-                "  CloseBracket: (none)",
-                "  MethodAndPropertyList: ListNode",
-                "  End: EndKeyword |end|"));
+                "  InterfaceKeywordNode: InterfaceKeyword |interface|",
+                "  OpenParenthesisNode: OpenParenthesis |(|",
+                "  BaseInterfaceNode: Identifier |IFoo|",
+                "  CloseParenthesisNode: CloseParenthesis |)|",
+                "  OpenBracketNode: (none)",
+                "  GuidNode: (none)",
+                "  CloseBracketNode: (none)",
+                "  MethodAndPropertyListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestGuid()
         {
             Assert.That("interface ['{5781334E-E121-4C2B-B7A4-0396A632F94F}'] end", ParsesAs(
                 "InterfaceTypeNode",
-                "  Interface: InterfaceKeyword |interface|",
-                "  OpenParenthesis: (none)",
-                "  BaseInterface: (none)",
-                "  CloseParenthesis: (none)",
-                "  OpenBracket: OpenBracket |[|",
-                "  Guid: StringLiteral |'{5781334E-E121-4C2B-B7A4-0396A632F94F}'|",
-                "  CloseBracket: CloseBracket |]|",
-                "  MethodAndPropertyList: ListNode",
-                "  End: EndKeyword |end|"));
+                "  InterfaceKeywordNode: InterfaceKeyword |interface|",
+                "  OpenParenthesisNode: (none)",
+                "  BaseInterfaceNode: (none)",
+                "  CloseParenthesisNode: (none)",
+                "  OpenBracketNode: OpenBracket |[|",
+                "  GuidNode: StringLiteral |'{5781334E-E121-4C2B-B7A4-0396A632F94F}'|",
+                "  CloseBracketNode: CloseBracket |]|",
+                "  MethodAndPropertyListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestGuidExpression()
         {
             Assert.That("interface [MyGuidConst] end", ParsesAs(
                 "InterfaceTypeNode",
-                "  Interface: InterfaceKeyword |interface|",
-                "  OpenParenthesis: (none)",
-                "  BaseInterface: (none)",
-                "  CloseParenthesis: (none)",
-                "  OpenBracket: OpenBracket |[|",
-                "  Guid: Identifier |MyGuidConst|",
-                "  CloseBracket: CloseBracket |]|",
-                "  MethodAndPropertyList: ListNode",
-                "  End: EndKeyword |end|"));
+                "  InterfaceKeywordNode: InterfaceKeyword |interface|",
+                "  OpenParenthesisNode: (none)",
+                "  BaseInterfaceNode: (none)",
+                "  CloseParenthesisNode: (none)",
+                "  OpenBracketNode: OpenBracket |[|",
+                "  GuidNode: Identifier |MyGuidConst|",
+                "  CloseBracketNode: CloseBracket |]|",
+                "  MethodAndPropertyListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestMethod()
         {
             Assert.That("interface procedure Foo; end", ParsesAs(
                 "InterfaceTypeNode",
-                "  Interface: InterfaceKeyword |interface|",
-                "  OpenParenthesis: (none)",
-                "  BaseInterface: (none)",
-                "  CloseParenthesis: (none)",
-                "  OpenBracket: (none)",
-                "  Guid: (none)",
-                "  CloseBracket: (none)",
-                "  MethodAndPropertyList: ListNode",
+                "  InterfaceKeywordNode: InterfaceKeyword |interface|",
+                "  OpenParenthesisNode: (none)",
+                "  BaseInterfaceNode: (none)",
+                "  CloseParenthesisNode: (none)",
+                "  OpenBracketNode: (none)",
+                "  GuidNode: (none)",
+                "  CloseBracketNode: (none)",
+                "  MethodAndPropertyListNode: ListNode",
                 "    Items[0]: MethodHeadingNode",
-                "      Class: (none)",
-                "      MethodType: ProcedureKeyword |procedure|",
-                "      Name: Identifier |Foo|",
-                "      OpenParenthesis: (none)",
-                "      ParameterList: ListNode",
-                "      CloseParenthesis: (none)",
-                "      Colon: (none)",
-                "      ReturnType: (none)",
-                "      DirectiveList: ListNode",
-                "      Semicolon: Semicolon |;|",
-                "  End: EndKeyword |end|"));
+                "      ClassKeywordNode: (none)",
+                "      MethodTypeNode: ProcedureKeyword |procedure|",
+                "      NameNode: Identifier |Foo|",
+                "      OpenParenthesisNode: (none)",
+                "      ParameterListNode: ListNode",
+                "      CloseParenthesisNode: (none)",
+                "      ColonNode: (none)",
+                "      ReturnTypeNode: (none)",
+                "      DirectiveListNode: ListNode",
+                "      SemicolonNode: Semicolon |;|",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
         public void TestDispInterface()
         {
             Assert.That("dispinterface end", ParsesAs(
                 "InterfaceTypeNode",
-                "  Interface: DispInterfaceKeyword |dispinterface|",
-                "  OpenParenthesis: (none)",
-                "  BaseInterface: (none)",
-                "  CloseParenthesis: (none)",
-                "  OpenBracket: (none)",
-                "  Guid: (none)",
-                "  CloseBracket: (none)",
-                "  MethodAndPropertyList: ListNode",
-                "  End: EndKeyword |end|"));
+                "  InterfaceKeywordNode: DispInterfaceKeyword |dispinterface|",
+                "  OpenParenthesisNode: (none)",
+                "  BaseInterfaceNode: (none)",
+                "  CloseParenthesisNode: (none)",
+                "  OpenBracketNode: (none)",
+                "  GuidNode: (none)",
+                "  CloseBracketNode: (none)",
+                "  MethodAndPropertyListNode: ListNode",
+                "  EndKeywordNode: EndKeyword |end|"));
         }
     }
 }

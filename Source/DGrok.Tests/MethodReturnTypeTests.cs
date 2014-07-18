@@ -28,9 +28,9 @@ namespace DGrok.Tests
         {
             Assert.That("Foo.TBar", ParsesAs(
                 "BinaryOperationNode",
-                "  Left: Identifier |Foo|",
-                "  Operator: Dot |.|",
-                "  Right: Identifier |TBar|"));
+                "  LeftNode: Identifier |Foo|",
+                "  OperatorNode: Dot |.|",
+                "  RightNode: Identifier |TBar|"));
         }
         public void TestString()
         {
