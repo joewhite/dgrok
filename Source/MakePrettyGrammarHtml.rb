@@ -150,7 +150,7 @@ end
 class Rule
   def initialize(name, data, yaml)
     @name = name
-    @lines = data.rstrip.collect {|l| make_line(l)}
+    @lines = data.rstrip.lines.collect {|l| make_line(l)}
     @yaml = yaml
   end
   

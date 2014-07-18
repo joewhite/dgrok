@@ -1,3 +1,8 @@
 DGrok*.dll
 DGrok*.exe
 DGrok*.pdb
+Source/Bin
+Source/Grammar.html
+Source/TestResult.xml
+obj
+*.cache
