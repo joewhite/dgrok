@@ -10,10 +10,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using DGrok.Framework;
 
-namespace DGrok.Framework
+namespace DGrok.DelphiNodes
 {
-    public class ArrayTypeNode : NonterminalNode
+    public partial class ArrayTypeNode : NonterminalNode
     {
         private AstNode _array;
         private AstNode _closeBracket;
@@ -70,7 +71,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class AssemblerStatementNode : NonterminalNode
+    public partial class AssemblerStatementNode : NonterminalNode
     {
         private AstNode _asm;
         private AstNode _end;
@@ -99,7 +100,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class BinaryOperationNode : NonterminalNode
+    public partial class BinaryOperationNode : NonterminalNode
     {
         private AstNode _left;
         private AstNode _operator;
@@ -135,7 +136,43 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ClassOfNode : NonterminalNode
+    public partial class BlockNode : NonterminalNode
+    {
+        private AstNode _begin;
+        private AstNode _end;
+        private AstNode _statementList;
+
+        public BlockNode(AstNode begin, AstNode statementList, AstNode end)
+        {
+            _begin = begin;
+            _statementList = statementList;
+            _end = end;
+        }
+
+        public AstNode Begin
+        {
+            get { return _begin; }
+        }
+        public AstNode End
+        {
+            get { return _end; }
+        }
+        public AstNode StatementList
+        {
+            get { return _statementList; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("Begin", Begin);
+                yield return new KeyValuePair<string, AstNode>("StatementList", StatementList);
+                yield return new KeyValuePair<string, AstNode>("End", End);
+            }
+        }
+    }
+    public partial class ClassOfNode : NonterminalNode
     {
         private AstNode _class;
         private AstNode _of;
@@ -171,7 +208,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ClassTypeNode : NonterminalNode
+    public partial class ClassTypeNode : NonterminalNode
     {
         private AstNode _class;
         private AstNode _closeParenthesis;
@@ -235,7 +272,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ConstantDeclNode : NonterminalNode
+    public partial class ConstantDeclNode : NonterminalNode
     {
         private AstNode _colon;
         private AstNode _equalSign;
@@ -299,7 +336,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ConstantListNode : NonterminalNode
+    public partial class ConstantListNode : NonterminalNode
     {
         private AstNode _closeParenthesis;
         private AstNode _itemList;
@@ -335,7 +372,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ConstSectionNode : NonterminalNode
+    public partial class ConstSectionNode : NonterminalNode
     {
         private AstNode _const;
         private AstNode _constList;
@@ -364,7 +401,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ContainsClauseNode : NonterminalNode
+    public partial class ContainsClauseNode : NonterminalNode
     {
         private AstNode _contains;
         private AstNode _identList;
@@ -400,43 +437,14 @@ namespace DGrok.Framework
             }
         }
     }
-    public class DelimitedItemNode : NonterminalNode
-    {
-        private AstNode _delimiter;
-        private AstNode _item;
-
-        public DelimitedItemNode(AstNode item, AstNode delimiter)
-        {
-            _item = item;
-            _delimiter = delimiter;
-        }
-
-        public AstNode Delimiter
-        {
-            get { return _delimiter; }
-        }
-        public AstNode Item
-        {
-            get { return _item; }
-        }
-
-        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
-        {
-            get
-            {
-                yield return new KeyValuePair<string, AstNode>("Item", Item);
-                yield return new KeyValuePair<string, AstNode>("Delimiter", Delimiter);
-            }
-        }
-    }
-    public class DirectiveNode : NonterminalNode
+    public partial class DirectiveNode : NonterminalNode
     {
         private AstNode _data;
-        private AstNode _directive;
-        private AstNode _semicolon;
+        private Token _directive;
+        private Token _semicolon;
         private AstNode _value;
 
-        public DirectiveNode(AstNode semicolon, AstNode directive, AstNode value, AstNode data)
+        public DirectiveNode(Token semicolon, Token directive, AstNode value, AstNode data)
         {
             _semicolon = semicolon;
             _directive = directive;
@@ -448,11 +456,11 @@ namespace DGrok.Framework
         {
             get { return _data; }
         }
-        public AstNode Directive
+        public Token Directive
         {
             get { return _directive; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
@@ -472,7 +480,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class EnumeratedTypeElementNode : NonterminalNode
+    public partial class EnumeratedTypeElementNode : NonterminalNode
     {
         private AstNode _equalSign;
         private AstNode _name;
@@ -508,7 +516,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class EnumeratedTypeNode : NonterminalNode
+    public partial class EnumeratedTypeNode : NonterminalNode
     {
         private AstNode _closeParenthesis;
         private AstNode _itemList;
@@ -544,7 +552,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ExportsItemNode : NonterminalNode
+    public partial class ExportsItemNode : NonterminalNode
     {
         private AstNode _name;
         private AstNode _specifierList;
@@ -573,7 +581,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ExportsSpecifierNode : NonterminalNode
+    public partial class ExportsSpecifierNode : NonterminalNode
     {
         private AstNode _keyword;
         private AstNode _value;
@@ -602,7 +610,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ExportsStatementNode : NonterminalNode
+    public partial class ExportsStatementNode : NonterminalNode
     {
         private AstNode _exports;
         private AstNode _itemList;
@@ -638,7 +646,36 @@ namespace DGrok.Framework
             }
         }
     }
-    public class FieldDeclNode : NonterminalNode
+    public partial class FancyBlockNode : NonterminalNode
+    {
+        private AstNode _block;
+        private AstNode _declList;
+
+        public FancyBlockNode(AstNode declList, AstNode block)
+        {
+            _declList = declList;
+            _block = block;
+        }
+
+        public AstNode Block
+        {
+            get { return _block; }
+        }
+        public AstNode DeclList
+        {
+            get { return _declList; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("DeclList", DeclList);
+                yield return new KeyValuePair<string, AstNode>("Block", Block);
+            }
+        }
+    }
+    public partial class FieldDeclNode : NonterminalNode
     {
         private AstNode _colon;
         private AstNode _nameList;
@@ -688,7 +725,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class FieldSectionNode : NonterminalNode
+    public partial class FieldSectionNode : NonterminalNode
     {
         private AstNode _class;
         private AstNode _fieldList;
@@ -724,7 +761,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class FileTypeNode : NonterminalNode
+    public partial class FileTypeNode : NonterminalNode
     {
         private AstNode _file;
         private AstNode _of;
@@ -760,7 +797,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class GotoStatementNode : NonterminalNode
+    public partial class GotoStatementNode : NonterminalNode
     {
         private AstNode _goto;
         private AstNode _labelId;
@@ -789,7 +826,64 @@ namespace DGrok.Framework
             }
         }
     }
-    public class InitSectionNode : NonterminalNode
+    public partial class IfStatementNode : NonterminalNode
+    {
+        private AstNode _condition;
+        private AstNode _else;
+        private AstNode _elseStatement;
+        private AstNode _if;
+        private AstNode _then;
+        private AstNode _thenStatement;
+
+        public IfStatementNode(AstNode theIf, AstNode condition, AstNode then, AstNode thenStatement, AstNode theElse, AstNode elseStatement)
+        {
+            _if = theIf;
+            _condition = condition;
+            _then = then;
+            _thenStatement = thenStatement;
+            _else = theElse;
+            _elseStatement = elseStatement;
+        }
+
+        public AstNode Condition
+        {
+            get { return _condition; }
+        }
+        public AstNode Else
+        {
+            get { return _else; }
+        }
+        public AstNode ElseStatement
+        {
+            get { return _elseStatement; }
+        }
+        public AstNode If
+        {
+            get { return _if; }
+        }
+        public AstNode Then
+        {
+            get { return _then; }
+        }
+        public AstNode ThenStatement
+        {
+            get { return _thenStatement; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("If", If);
+                yield return new KeyValuePair<string, AstNode>("Condition", Condition);
+                yield return new KeyValuePair<string, AstNode>("Then", Then);
+                yield return new KeyValuePair<string, AstNode>("ThenStatement", ThenStatement);
+                yield return new KeyValuePair<string, AstNode>("Else", Else);
+                yield return new KeyValuePair<string, AstNode>("ElseStatement", ElseStatement);
+            }
+        }
+    }
+    public partial class InitSectionNode : NonterminalNode
     {
         private AstNode _end;
         private AstNode _finalizationHeader;
@@ -839,7 +933,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class InterfaceTypeNode : NonterminalNode
+    public partial class InterfaceTypeNode : NonterminalNode
     {
         private AstNode _baseInterface;
         private AstNode _closeBracket;
@@ -917,7 +1011,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class LabelDeclSectionNode : NonterminalNode
+    public partial class LabelDeclSectionNode : NonterminalNode
     {
         private AstNode _label;
         private AstNode _labelList;
@@ -953,20 +1047,56 @@ namespace DGrok.Framework
             }
         }
     }
-    public class MethodHeadingNode : NonterminalNode
+    public partial class LabeledStatementNode : NonterminalNode
     {
-        private AstNode _class;
-        private AstNode _closeParenthesis;
         private AstNode _colon;
-        private AstNode _directiveList;
-        private AstNode _methodType;
-        private AstNode _name;
-        private AstNode _openParenthesis;
-        private AstNode _parameterList;
-        private AstNode _returnType;
-        private AstNode _semicolon;
+        private AstNode _label;
+        private AstNode _statement;
 
-        public MethodHeadingNode(AstNode theClass, AstNode methodType, AstNode name, AstNode openParenthesis, AstNode parameterList, AstNode closeParenthesis, AstNode colon, AstNode returnType, AstNode directiveList, AstNode semicolon)
+        public LabeledStatementNode(AstNode label, AstNode colon, AstNode statement)
+        {
+            _label = label;
+            _colon = colon;
+            _statement = statement;
+        }
+
+        public AstNode Colon
+        {
+            get { return _colon; }
+        }
+        public AstNode Label
+        {
+            get { return _label; }
+        }
+        public AstNode Statement
+        {
+            get { return _statement; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("Label", Label);
+                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
+                yield return new KeyValuePair<string, AstNode>("Statement", Statement);
+            }
+        }
+    }
+    public partial class MethodHeadingNode : NonterminalNode
+    {
+        private Token _class;
+        private Token _closeParenthesis;
+        private Token _colon;
+        private ListNode<DirectiveNode> _directiveList;
+        private Token _methodType;
+        private AstNode _name;
+        private Token _openParenthesis;
+        private ListNode<DelimitedItemNode<ParameterNode>> _parameterList;
+        private AstNode _returnType;
+        private Token _semicolon;
+
+        public MethodHeadingNode(Token theClass, Token methodType, AstNode name, Token openParenthesis, ListNode<DelimitedItemNode<ParameterNode>> parameterList, Token closeParenthesis, Token colon, AstNode returnType, ListNode<DirectiveNode> directiveList, Token semicolon)
         {
             _class = theClass;
             _methodType = methodType;
@@ -980,23 +1110,23 @@ namespace DGrok.Framework
             _semicolon = semicolon;
         }
 
-        public AstNode Class
+        public Token Class
         {
             get { return _class; }
         }
-        public AstNode CloseParenthesis
+        public Token CloseParenthesis
         {
             get { return _closeParenthesis; }
         }
-        public AstNode Colon
+        public Token Colon
         {
             get { return _colon; }
         }
-        public AstNode DirectiveList
+        public ListNode<DirectiveNode> DirectiveList
         {
             get { return _directiveList; }
         }
-        public AstNode MethodType
+        public Token MethodType
         {
             get { return _methodType; }
         }
@@ -1004,11 +1134,11 @@ namespace DGrok.Framework
         {
             get { return _name; }
         }
-        public AstNode OpenParenthesis
+        public Token OpenParenthesis
         {
             get { return _openParenthesis; }
         }
-        public AstNode ParameterList
+        public ListNode<DelimitedItemNode<ParameterNode>> ParameterList
         {
             get { return _parameterList; }
         }
@@ -1016,7 +1146,7 @@ namespace DGrok.Framework
         {
             get { return _returnType; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
@@ -1038,7 +1168,43 @@ namespace DGrok.Framework
             }
         }
     }
-    public class MethodResolutionNode : NonterminalNode
+    public partial class MethodImplementationNode : NonterminalNode
+    {
+        private AstNode _fancyBlock;
+        private AstNode _methodHeading;
+        private AstNode _semicolon;
+
+        public MethodImplementationNode(AstNode methodHeading, AstNode fancyBlock, AstNode semicolon)
+        {
+            _methodHeading = methodHeading;
+            _fancyBlock = fancyBlock;
+            _semicolon = semicolon;
+        }
+
+        public AstNode FancyBlock
+        {
+            get { return _fancyBlock; }
+        }
+        public AstNode MethodHeading
+        {
+            get { return _methodHeading; }
+        }
+        public AstNode Semicolon
+        {
+            get { return _semicolon; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("MethodHeading", MethodHeading);
+                yield return new KeyValuePair<string, AstNode>("FancyBlock", FancyBlock);
+                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+            }
+        }
+    }
+    public partial class MethodResolutionNode : NonterminalNode
     {
         private AstNode _equalSign;
         private AstNode _implementationMethod;
@@ -1088,7 +1254,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class OpenArrayNode : NonterminalNode
+    public partial class OpenArrayNode : NonterminalNode
     {
         private AstNode _array;
         private AstNode _of;
@@ -1124,7 +1290,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class PackageNode : NonterminalNode
+    public partial class PackageNode : NonterminalNode
     {
         private AstNode _containsClause;
         private AstNode _dot;
@@ -1188,7 +1354,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class PackedTypeNode : NonterminalNode
+    public partial class PackedTypeNode : NonterminalNode
     {
         private AstNode _packed;
         private AstNode _type;
@@ -1217,7 +1383,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ParameterizedNode : NonterminalNode
+    public partial class ParameterizedNode : NonterminalNode
     {
         private AstNode _closeDelimiter;
         private AstNode _left;
@@ -1260,7 +1426,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ParameterNode : NonterminalNode
+    public partial class ParameterNode : NonterminalNode
     {
         private AstNode _colon;
         private AstNode _defaultValue;
@@ -1317,7 +1483,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ParenthesizedExpressionNode : NonterminalNode
+    public partial class ParenthesizedExpressionNode : NonterminalNode
     {
         private AstNode _closeParenthesis;
         private AstNode _expression;
@@ -1353,7 +1519,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class PointerDereferenceNode : NonterminalNode
+    public partial class PointerDereferenceNode : NonterminalNode
     {
         private AstNode _caret;
         private AstNode _operand;
@@ -1382,7 +1548,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class PointerTypeNode : NonterminalNode
+    public partial class PointerTypeNode : NonterminalNode
     {
         private AstNode _caret;
         private AstNode _type;
@@ -1411,7 +1577,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ProcedureTypeNode : NonterminalNode
+    public partial class ProcedureTypeNode : NonterminalNode
     {
         private AstNode _closeParenthesis;
         private AstNode _colon;
@@ -1496,7 +1662,92 @@ namespace DGrok.Framework
             }
         }
     }
-    public class PropertyNode : NonterminalNode
+    public partial class ProgramNode : NonterminalNode
+    {
+        private AstNode _declarationList;
+        private AstNode _dot;
+        private AstNode _initSection;
+        private AstNode _name;
+        private AstNode _noiseCloseParenthesis;
+        private AstNode _noiseContents;
+        private AstNode _noiseOpenParenthesis;
+        private AstNode _program;
+        private AstNode _semicolon;
+        private AstNode _usesClause;
+
+        public ProgramNode(AstNode program, AstNode name, AstNode noiseOpenParenthesis, AstNode noiseContents, AstNode noiseCloseParenthesis, AstNode semicolon, AstNode usesClause, AstNode declarationList, AstNode initSection, AstNode dot)
+        {
+            _program = program;
+            _name = name;
+            _noiseOpenParenthesis = noiseOpenParenthesis;
+            _noiseContents = noiseContents;
+            _noiseCloseParenthesis = noiseCloseParenthesis;
+            _semicolon = semicolon;
+            _usesClause = usesClause;
+            _declarationList = declarationList;
+            _initSection = initSection;
+            _dot = dot;
+        }
+
+        public AstNode DeclarationList
+        {
+            get { return _declarationList; }
+        }
+        public AstNode Dot
+        {
+            get { return _dot; }
+        }
+        public AstNode InitSection
+        {
+            get { return _initSection; }
+        }
+        public AstNode Name
+        {
+            get { return _name; }
+        }
+        public AstNode NoiseCloseParenthesis
+        {
+            get { return _noiseCloseParenthesis; }
+        }
+        public AstNode NoiseContents
+        {
+            get { return _noiseContents; }
+        }
+        public AstNode NoiseOpenParenthesis
+        {
+            get { return _noiseOpenParenthesis; }
+        }
+        public AstNode Program
+        {
+            get { return _program; }
+        }
+        public AstNode Semicolon
+        {
+            get { return _semicolon; }
+        }
+        public AstNode UsesClause
+        {
+            get { return _usesClause; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("Program", Program);
+                yield return new KeyValuePair<string, AstNode>("Name", Name);
+                yield return new KeyValuePair<string, AstNode>("NoiseOpenParenthesis", NoiseOpenParenthesis);
+                yield return new KeyValuePair<string, AstNode>("NoiseContents", NoiseContents);
+                yield return new KeyValuePair<string, AstNode>("NoiseCloseParenthesis", NoiseCloseParenthesis);
+                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("UsesClause", UsesClause);
+                yield return new KeyValuePair<string, AstNode>("DeclarationList", DeclarationList);
+                yield return new KeyValuePair<string, AstNode>("InitSection", InitSection);
+                yield return new KeyValuePair<string, AstNode>("Dot", Dot);
+            }
+        }
+    }
+    public partial class PropertyNode : NonterminalNode
     {
         private AstNode _class;
         private AstNode _closeBracket;
@@ -1581,7 +1832,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class RaiseStatementNode : NonterminalNode
+    public partial class RaiseStatementNode : NonterminalNode
     {
         private AstNode _address;
         private AstNode _at;
@@ -1624,7 +1875,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class RecordFieldConstantNode : NonterminalNode
+    public partial class RecordFieldConstantNode : NonterminalNode
     {
         private AstNode _colon;
         private AstNode _name;
@@ -1660,7 +1911,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class RecordTypeNode : NonterminalNode
+    public partial class RecordTypeNode : NonterminalNode
     {
         private AstNode _contents;
         private AstNode _end;
@@ -1703,7 +1954,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class RequiresClauseNode : NonterminalNode
+    public partial class RequiresClauseNode : NonterminalNode
     {
         private AstNode _identList;
         private AstNode _requires;
@@ -1739,7 +1990,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class SetLiteralNode : NonterminalNode
+    public partial class SetLiteralNode : NonterminalNode
     {
         private AstNode _closeBracket;
         private AstNode _itemList;
@@ -1775,7 +2026,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class SetOfNode : NonterminalNode
+    public partial class SetOfNode : NonterminalNode
     {
         private AstNode _of;
         private AstNode _set;
@@ -1811,7 +2062,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class StringOfLengthNode : NonterminalNode
+    public partial class StringOfLengthNode : NonterminalNode
     {
         private AstNode _closeBracket;
         private AstNode _length;
@@ -1854,7 +2105,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class TypeDeclNode : NonterminalNode
+    public partial class TypeDeclNode : NonterminalNode
     {
         private AstNode _equalSign;
         private AstNode _name;
@@ -1911,7 +2162,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class TypeForwardDeclarationNode : NonterminalNode
+    public partial class TypeForwardDeclarationNode : NonterminalNode
     {
         private AstNode _equalSign;
         private AstNode _name;
@@ -1954,7 +2205,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class TypeSectionNode : NonterminalNode
+    public partial class TypeSectionNode : NonterminalNode
     {
         private AstNode _type;
         private AstNode _typeList;
@@ -1983,7 +2234,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class UnaryOperationNode : NonterminalNode
+    public partial class UnaryOperationNode : NonterminalNode
     {
         private AstNode _operand;
         private AstNode _operator;
@@ -2012,7 +2263,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class UnitNode : NonterminalNode
+    public partial class UnitNode : NonterminalNode
     {
         private AstNode _dot;
         private AstNode _implementationSection;
@@ -2083,7 +2334,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class UnitSectionNode : NonterminalNode
+    public partial class UnitSectionNode : NonterminalNode
     {
         private AstNode _contents;
         private AstNode _headerKeyword;
@@ -2119,7 +2370,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class UsedUnitNode : NonterminalNode
+    public partial class UsedUnitNode : NonterminalNode
     {
         private AstNode _fileName;
         private AstNode _in;
@@ -2155,7 +2406,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class UsesClauseNode : NonterminalNode
+    public partial class UsesClauseNode : NonterminalNode
     {
         private AstNode _semicolon;
         private AstNode _unitList;
@@ -2191,7 +2442,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class VarDeclNode : NonterminalNode
+    public partial class VarDeclNode : NonterminalNode
     {
         private AstNode _absolute;
         private AstNode _absoluteAddress;
@@ -2269,7 +2520,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class VarSectionNode : NonterminalNode
+    public partial class VarSectionNode : NonterminalNode
     {
         private AstNode _var;
         private AstNode _varList;
@@ -2298,7 +2549,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class VisibilityNode : NonterminalNode
+    public partial class VisibilityNode : NonterminalNode
     {
         private AstNode _strict;
         private AstNode _visibility;
@@ -2327,7 +2578,7 @@ namespace DGrok.Framework
             }
         }
     }
-    public class VisibilitySectionNode : NonterminalNode
+    public partial class VisibilitySectionNode : NonterminalNode
     {
         private AstNode _contents;
         private AstNode _visibility;

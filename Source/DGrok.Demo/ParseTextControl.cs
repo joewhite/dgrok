@@ -45,11 +45,10 @@ namespace DGrok.Demo
         }
         public void Parse()
         {
-            Parser parser = Parser.FromText(edtSource.Text, CompilerDefines.CreateStandard());
-            AstNode tree;
             try
             {
-                tree = parser.ParseRule(_ruleType);
+                Parser parser = Parser.FromText(edtSource.Text, CompilerDefines.CreateStandard());
+                AstNode tree = parser.ParseRule(_ruleType);
                 edtResults.Text = tree.Inspect();
             }
             catch (DGrokException ex)

@@ -13,6 +13,10 @@ NodeTypes:
     - Left
     - Operator
     - Right
+  BlockNode:
+    - Begin
+    - StatementList
+    - End
   ClassOfNode:
     - Class
     - Of
@@ -44,14 +48,11 @@ NodeTypes:
     - Contains
     - IdentList
     - Semicolon
-  DelimitedItemNode:
-    - Item
-    - Delimiter
   DirectiveNode:
-    - Semicolon
-    - Directive
-    - Value
-    - Data
+    - {Name: Semicolon, Type: Token}
+    - {Name: Directive, Type: Token}
+    - {Name: Value, Type: AstNode}
+    - {Name: Data, Type: AstNode}
   EnumeratedTypeNode:
     - OpenParenthesis
     - ItemList
@@ -70,6 +71,9 @@ NodeTypes:
     - Exports
     - ItemList
     - Semicolon
+  FancyBlockNode:
+    - DeclList
+    - Block
   FieldDeclNode:
     - NameList
     - Colon
@@ -87,6 +91,13 @@ NodeTypes:
   GotoStatementNode:
     - Goto
     - LabelId
+  IfStatementNode:
+    - If
+    - Condition
+    - Then
+    - ThenStatement
+    - Else
+    - ElseStatement
   InitSectionNode:
     - InitializationHeader
     - InitializationStatements
@@ -107,16 +118,24 @@ NodeTypes:
     - Label
     - LabelList
     - Semicolon
-  MethodHeadingNode:
-    - Class
-    - MethodType
-    - Name
-    - OpenParenthesis
-    - ParameterList
-    - CloseParenthesis
+  LabeledStatementNode:
+    - Label
     - Colon
-    - ReturnType
-    - DirectiveList
+    - Statement
+  MethodHeadingNode:
+    - {Name: Class, Type: Token}
+    - {Name: MethodType, Type: Token}
+    - {Name: Name, Type: AstNode}
+    - {Name: OpenParenthesis, Type: Token}
+    - {Name: ParameterList, Type: ListNode<DelimitedItemNode<ParameterNode>>}
+    - {Name: CloseParenthesis, Type: Token}
+    - {Name: Colon, Type: Token}
+    - {Name: ReturnType, Type: AstNode}
+    - {Name: DirectiveList, Type: ListNode<DirectiveNode>}
+    - {Name: Semicolon, Type: Token}
+  MethodImplementationNode:
+    - MethodHeading
+    - FancyBlock
     - Semicolon
   MethodResolutionNode:
     - MethodType
@@ -172,6 +191,17 @@ NodeTypes:
     - Of
     - Object
     - SecondDirectives
+  ProgramNode:
+    - Program
+    - Name
+    - NoiseOpenParenthesis
+    - NoiseContents
+    - NoiseCloseParenthesis
+    - Semicolon
+    - UsesClause
+    - DeclarationList
+    - InitSection
+    - Dot
   PropertyNode:
     - Class
     - Property

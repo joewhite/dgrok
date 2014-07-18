@@ -38,9 +38,9 @@ namespace DGrok.Tests
                 "    Contents: ListNode",
                 "  InitSection: InitSectionNode",
                 "    InitializationHeader: (none)",
-                "    InitializationStatements: (none)",
+                "    InitializationStatements: ListNode",
                 "    FinalizationHeader: (none)",
-                "    FinalizationStatements: (none)",
+                "    FinalizationStatements: ListNode",
                 "    End: EndKeyword |end|",
                 "  Dot: Dot |.|"));
         }
@@ -64,9 +64,9 @@ namespace DGrok.Tests
                 "    Contents: ListNode",
                 "  InitSection: InitSectionNode",
                 "    InitializationHeader: (none)",
-                "    InitializationStatements: (none)",
+                "    InitializationStatements: ListNode",
                 "    FinalizationHeader: (none)",
-                "    FinalizationStatements: (none)",
+                "    FinalizationStatements: ListNode",
                 "    End: EndKeyword |end|",
                 "  Dot: Dot |.|"));
         }

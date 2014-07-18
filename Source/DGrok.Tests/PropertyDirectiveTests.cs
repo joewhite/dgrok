@@ -49,14 +49,20 @@ namespace DGrok.Tests
         }
         public void TestImplements()
         {
-            Assert.That("implements IFoo.Bar", ParsesAs(
+            Assert.That("implements IFoo.Bar, IBaz", ParsesAs(
                 "DirectiveNode",
                 "  Semicolon: (none)",
                 "  Directive: ImplementsSemikeyword |implements|",
-                "  Value: BinaryOperationNode",
-                "    Left: Identifier |IFoo|",
-                "    Operator: Dot |.|",
-                "    Right: Identifier |Bar|",
+                "  Value: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: BinaryOperationNode",
+                "        Left: Identifier |IFoo|",
+                "        Operator: Dot |.|",
+                "        Right: Identifier |Bar|",
+                "      Delimiter: Comma |,|",
+                "    Items[1]: DelimitedItemNode",
+                "      Item: Identifier |IBaz|",
+                "      Delimiter: (none)",
                 "  Data: ListNode"));
         }
         public void TestIndex()

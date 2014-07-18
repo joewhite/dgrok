@@ -50,6 +50,7 @@ namespace DGrok.Framework
         NearSemikeyword,
         NoDefaultSemikeyword,
         OnSemikeyword,
+        OperatorSemikeyword,
         OutSemikeyword,
         OverloadSemikeyword,
         OverrideSemikeyword,

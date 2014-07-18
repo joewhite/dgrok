@@ -35,6 +35,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DelphiNodes\DirectiveNode.cs" />
+    <Compile Include="DelphiNodes\GeneratedNodes.cs" />
+    <Compile Include="DelphiNodes\MethodHeadingNode.cs" />
+    <Compile Include="Framework\DelimitedItemNode.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Framework\Alternator.cs" />
     <Compile Include="Framework\AstNode.cs" />
@@ -42,7 +46,6 @@
     <Compile Include="Framework\DGrokException.cs" />
     <Compile Include="Framework\Frame.cs" />
     <Compile Include="Framework\Parser.cs" />
-    <Compile Include="Framework\GeneratedNodes.cs" />
     <Compile Include="Framework\ListNode.cs" />
     <Compile Include="Framework\IFrame.cs" />
     <Compile Include="Framework\LexException.cs" />

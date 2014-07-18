@@ -40,6 +40,26 @@ namespace DGrok.Tests
                 "      PortabilityDirectiveList: ListNode",
                 "      Semicolon: Semicolon |;|"));
         }
+        public void TestThreadVar()
+        {
+            Assert.That("threadvar Foo: Integer;", ParsesAs(
+                "VarSectionNode",
+                "  Var: ThreadVarKeyword |threadvar|",
+                "  VarList: ListNode",
+                "    Items[0]: VarDeclNode",
+                "      Names: ListNode",
+                "        Items[0]: DelimitedItemNode",
+                "          Item: Identifier |Foo|",
+                "          Delimiter: (none)",
+                "      Colon: Colon |:|",
+                "      Type: Identifier |Integer|",
+                "      Absolute: (none)",
+                "      AbsoluteAddress: (none)",
+                "      EqualSign: (none)",
+                "      Value: (none)",
+                "      PortabilityDirectiveList: ListNode",
+                "      Semicolon: Semicolon |;|"));
+        }
         public void TestVarAloneDoesNotParse()
         {
             AssertDoesNotParse("var");

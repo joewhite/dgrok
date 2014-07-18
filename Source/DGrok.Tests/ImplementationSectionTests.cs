@@ -45,5 +45,24 @@ namespace DGrok.Tests
                 "    Semicolon: Semicolon |;|",
                 "  Contents: ListNode"));
         }
+        public void TestContents()
+        {
+            Assert.That("implementation const Foo = 42;", ParsesAs(
+                "UnitSectionNode",
+                "  HeaderKeyword: ImplementationKeyword |implementation|",
+                "  UsesClause: (none)",
+                "  Contents: ListNode",
+                "    Items[0]: ConstSectionNode",
+                "      Const: ConstKeyword |const|",
+                "      ConstList: ListNode",
+                "        Items[0]: ConstantDeclNode",
+                "          Name: Identifier |Foo|",
+                "          Colon: (none)",
+                "          Type: (none)",
+                "          EqualSign: EqualSign |=|",
+                "          Value: Number |42|",
+                "          PortabilityDirectiveList: ListNode",
+                "          Semicolon: Semicolon |;|"));
+        }
     }
 }

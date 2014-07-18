@@ -50,12 +50,52 @@ namespace DGrok.Tests
                 "    Contents: ListNode",
                 "  InitSection: InitSectionNode",
                 "    InitializationHeader: (none)",
-                "    InitializationStatements: (none)",
+                "    InitializationStatements: ListNode",
                 "    FinalizationHeader: (none)",
-                "    FinalizationStatements: (none)",
+                "    FinalizationStatements: ListNode",
                 "    End: EndKeyword |end|",
                 "  Dot: Dot |.|"));
 
+        }
+        public void TestProgram()
+        {
+            Assert.That("program Foo; end.", ParsesAs(
+                "ProgramNode",
+                "  Program: ProgramKeyword |program|",
+                "  Name: Identifier |Foo|",
+                "  NoiseOpenParenthesis: (none)",
+                "  NoiseContents: ListNode",
+                "  NoiseCloseParenthesis: (none)",
+                "  Semicolon: Semicolon |;|",
+                "  UsesClause: (none)",
+                "  DeclarationList: ListNode",
+                "  InitSection: InitSectionNode",
+                "    InitializationHeader: (none)",
+                "    InitializationStatements: ListNode",
+                "    FinalizationHeader: (none)",
+                "    FinalizationStatements: ListNode",
+                "    End: EndKeyword |end|",
+                "  Dot: Dot |.|"));
+        }
+        public void TestLibrary()
+        {
+            Assert.That("library Foo; end.", ParsesAs(
+                "ProgramNode",
+                "  Program: LibraryKeyword |library|",
+                "  Name: Identifier |Foo|",
+                "  NoiseOpenParenthesis: (none)",
+                "  NoiseContents: ListNode",
+                "  NoiseCloseParenthesis: (none)",
+                "  Semicolon: Semicolon |;|",
+                "  UsesClause: (none)",
+                "  DeclarationList: ListNode",
+                "  InitSection: InitSectionNode",
+                "    InitializationHeader: (none)",
+                "    InitializationStatements: ListNode",
+                "    FinalizationHeader: (none)",
+                "    FinalizationStatements: ListNode",
+                "    End: EndKeyword |end|",
+                "  Dot: Dot |.|"));
         }
     }
 }

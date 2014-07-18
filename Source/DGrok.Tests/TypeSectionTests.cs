@@ -41,6 +41,18 @@ namespace DGrok.Tests
                 "      PortabilityDirectiveList: ListNode",
                 "      Semicolon: Semicolon |;|"));
         }
+        public void TestClassForwardDeclaration()
+        {
+            Assert.That("type TFoo = class;", ParsesAs(
+                "TypeSectionNode",
+                "  Type: TypeKeyword |type|",
+                "  TypeList: ListNode",
+                "    Items[0]: TypeForwardDeclarationNode",
+                "      Name: Identifier |TFoo|",
+                "      EqualSign: EqualSign |=|",
+                "      Type: ClassKeyword |class|",
+                "      Semicolon: Semicolon |;|"));
+        }
         public void TestBareTypeDoesNotParse()
         {
             AssertDoesNotParse("type");

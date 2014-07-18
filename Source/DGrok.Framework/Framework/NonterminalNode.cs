@@ -14,7 +14,9 @@ namespace DGrok.Framework
     {
         public override void InspectTo(StringBuilder builder, int currentIndentCount)
         {
-            builder.Append(GetType().Name);
+            string mangledTypeName = GetType().Name;
+            string typeNameWithoutGenericMangling = mangledTypeName.Split('`')[0];
+            builder.Append(typeNameWithoutGenericMangling);
             int childIndentCount = currentIndentCount + 1;
             foreach (KeyValuePair<string, AstNode> property in Properties)
             {

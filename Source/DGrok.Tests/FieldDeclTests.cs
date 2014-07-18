@@ -33,6 +33,19 @@ namespace DGrok.Tests
                 "  PortabilityDirectiveList: ListNode",
                 "  Semicolon: Semicolon |;|"));
         }
+        public void TestWithoutSemicolon()
+        {
+            Assert.That("Foo: Integer", ParsesAs(
+                "FieldDeclNode",
+                "  NameList: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: Identifier |Foo|",
+                "      Delimiter: (none)",
+                "  Colon: Colon |:|",
+                "  Type: Identifier |Integer|",
+                "  PortabilityDirectiveList: ListNode",
+                "  Semicolon: (none)"));
+        }
         public void TestPortabilityDirectives()
         {
             Assert.That("Foo: Integer library deprecated;", ParsesAs(

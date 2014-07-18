@@ -245,5 +245,32 @@ namespace DGrok.Tests
                 "  ImplementationMethod: Identifier |Baz|",
                 "  Semicolon: Semicolon |;|"));
         }
+        public void TestOperator()
+        {
+            Assert.That("class operator Implicit(Value: Integer): TValue;", ParsesAs(
+                "MethodHeadingNode",
+                "  Class: ClassKeyword |class|",
+                "  MethodType: OperatorSemikeyword |operator|",
+                "  Name: Identifier |Implicit|",
+                "  OpenParenthesis: OpenParenthesis |(|",
+                "  ParameterList: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: ParameterNode",
+                "        Modifier: (none)",
+                "        Names: ListNode",
+                "          Items[0]: DelimitedItemNode",
+                "            Item: Identifier |Value|",
+                "            Delimiter: (none)",
+                "        Colon: Colon |:|",
+                "        Type: Identifier |Integer|",
+                "        EqualSign: (none)",
+                "        DefaultValue: (none)",
+                "      Delimiter: (none)",
+                "  CloseParenthesis: CloseParenthesis |)|",
+                "  Colon: Colon |:|",
+                "  ReturnType: Identifier |TValue|",
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
+        }
     }
 }

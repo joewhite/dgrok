@@ -13,6 +13,7 @@ namespace DGrok.Framework
     public static class TokenSets
     {
         private static TokenSet _addOp;
+        private static TokenSet _block;
         private static TokenSet _classDisposition;
         private static TokenSet _constHeader;
         private static TokenSet _directive;
@@ -33,10 +34,12 @@ namespace DGrok.Framework
         private static TokenSet _parameterModifier;
         private static TokenSet _particle;
         private static TokenSet _portabilityDirective;
+        private static TokenSet _program;
         private static TokenSet _relOp;
         private static TokenSet _semikeyword;
         private static TokenSet _simpleParameterType;
         private static TokenSet _unaryOperator;
+        private static TokenSet _varHeader;
         private static TokenSet _visibility;
         private static TokenSet _visibilitySingleWord;
 
@@ -47,6 +50,10 @@ namespace DGrok.Framework
             _addOp.Add(TokenType.MinusSign);
             _addOp.Add(TokenType.OrKeyword);
             _addOp.Add(TokenType.XorKeyword);
+
+            _block = new TokenSet("block");
+            _block.Add(TokenType.BeginKeyword);
+            _block.Add(TokenType.AsmKeyword);
 
             _classDisposition = new TokenSet("class disposition");
             _classDisposition.Add(TokenType.AbstractSemikeyword);
@@ -93,6 +100,7 @@ namespace DGrok.Framework
             _forwardableType.Add(TokenType.InterfaceKeyword);
 
             _initSection = new TokenSet("initialization section");
+            _initSection.Add(TokenType.AsmKeyword);
             _initSection.Add(TokenType.BeginKeyword);
             _initSection.Add(TokenType.InitializationKeyword);
             _initSection.Add(TokenType.EndKeyword);
@@ -172,6 +180,7 @@ namespace DGrok.Framework
             _methodType.Add(TokenType.DestructorKeyword);
             _methodType.Add(TokenType.FunctionKeyword);
             _methodType.Add(TokenType.ProcedureKeyword);
+            _methodType.Add(TokenType.OperatorSemikeyword);
 
             _mulOp = new TokenSet("multiplication operator");
             _mulOp.Add(TokenType.TimesSign);
@@ -206,6 +215,10 @@ namespace DGrok.Framework
             _portabilityDirective.Add(TokenType.DeprecatedSemikeyword);
             _portabilityDirective.Add(TokenType.LibraryKeyword);
             _portabilityDirective.Add(TokenType.ExperimentalSemikeyword);
+
+            _program = new TokenSet("program");
+            _program.Add(TokenType.ProgramKeyword);
+            _program.Add(TokenType.LibraryKeyword);
 
             _relOp = new TokenSet("relational operator");
             _relOp.Add(TokenType.EqualSign);
@@ -245,6 +258,7 @@ namespace DGrok.Framework
             _semikeyword.Add(TokenType.NearSemikeyword);
             _semikeyword.Add(TokenType.NoDefaultSemikeyword);
             _semikeyword.Add(TokenType.OnSemikeyword);
+            _semikeyword.Add(TokenType.OperatorSemikeyword);
             _semikeyword.Add(TokenType.OutSemikeyword);
             _semikeyword.Add(TokenType.OverloadSemikeyword);
             _semikeyword.Add(TokenType.OverrideSemikeyword);
@@ -279,6 +293,10 @@ namespace DGrok.Framework
             _unaryOperator.Add(TokenType.MinusSign);
             _unaryOperator.Add(TokenType.NotKeyword);
             _unaryOperator.Add(TokenType.PlusSign);
+
+            _varHeader = new TokenSet("var section");
+            _varHeader.Add(TokenType.VarKeyword);
+            _varHeader.Add(TokenType.ThreadVarKeyword);
 
             _visibilitySingleWord = new TokenSet("'private', 'protected', 'public', or 'published'");
             _visibilitySingleWord.Add(TokenType.PrivateSemikeyword);
@@ -322,6 +340,10 @@ namespace DGrok.Framework
         public static TokenSet AddOp
         {
             get { return _addOp; }
+        }
+        public static TokenSet Block
+        {
+            get { return _block; }
         }
         public static TokenSet ClassDisposition
         {
@@ -403,6 +425,10 @@ namespace DGrok.Framework
         {
             get { return _portabilityDirective; }
         }
+        public static TokenSet Program
+        {
+            get { return _program; }
+        }
         public static TokenSet RelOp
         {
             get { return _relOp; }
@@ -418,6 +444,10 @@ namespace DGrok.Framework
         public static TokenSet UnaryOperator
         {
             get { return _unaryOperator; }
+        }
+        public static TokenSet VarHeader
+        {
+            get { return _varHeader; }
         }
         public static TokenSet Visibility
         {

@@ -54,7 +54,7 @@ namespace DGrok.Tests
                 "  PortabilityDirectiveList: ListNode",
                 "  Semicolon: Semicolon |;|"));
         }
-        public void TestDefaultValue()
+        public void TestInitialized()
         {
             Assert.That("Foo: Integer = 42;", ParsesAs(
                 "VarDeclNode",
@@ -68,6 +68,38 @@ namespace DGrok.Tests
                 "  AbsoluteAddress: (none)",
                 "  EqualSign: EqualSign |=|",
                 "  Value: Number |42|",
+                "  PortabilityDirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
+        }
+        public void TestInitializedRecord()
+        {
+            Assert.That("Foo: TPoint = (X: 0; Y: 0);", ParsesAs(
+                "VarDeclNode",
+                "  Names: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: Identifier |Foo|",
+                "      Delimiter: (none)",
+                "  Colon: Colon |:|",
+                "  Type: Identifier |TPoint|",
+                "  Absolute: (none)",
+                "  AbsoluteAddress: (none)",
+                "  EqualSign: EqualSign |=|",
+                "  Value: ConstantListNode",
+                "    OpenParenthesis: OpenParenthesis |(|",
+                "    ItemList: ListNode",
+                "      Items[0]: DelimitedItemNode",
+                "        Item: RecordFieldConstantNode",
+                "          Name: Identifier |X|",
+                "          Colon: Colon |:|",
+                "          Value: Number |0|",
+                "        Delimiter: Semicolon |;|",
+                "      Items[1]: DelimitedItemNode",
+                "        Item: RecordFieldConstantNode",
+                "          Name: Identifier |Y|",
+                "          Colon: Colon |:|",
+                "          Value: Number |0|",
+                "        Delimiter: (none)",
+                "    CloseParenthesis: CloseParenthesis |)|",
                 "  PortabilityDirectiveList: ListNode",
                 "  Semicolon: Semicolon |;|"));
         }

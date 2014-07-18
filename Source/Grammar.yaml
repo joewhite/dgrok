@@ -21,10 +21,13 @@ Atom:
     !      | '^'
     !      | '(' [ExpressionList] ')'
     !    )*
+BareInherited:
+  Doc: |
+    ! -> INHERITED
 Block:
   Doc: |
-    . -> BEGIN [StatementList] END
-    . -> AssemblerStatement
+    ! -> BEGIN (Statement [';'])* END
+    ! -> AssemblerStatement
 CaseSelector:
   Doc: |
     . -> ExpressionOrRangeList ':' [Statement] [';']
@@ -35,7 +38,7 @@ CaseStatement:
   Doc: |
     . -> CASE Expression OF
     .    CaseSelectorList
-    .    [ELSE [StatementList]]
+    .    [ELSE (Statement [';'])*]
     .    END
 ClassHelperType:
   Doc: |
@@ -69,14 +72,6 @@ ConstSection:
 ContainsClause:
   Doc: |
     ! -> CONTAINS IdentList ';'
-DeclSection:
-  Doc: |
-    . -> LabelDeclSection
-    . -> ConstSection
-    . -> TypeSection
-    . -> VarSection
-    . -> MethodDecl
-    . -> ExportsStatement
 Directive:
   Doc: |
     ! -> [';'] ABSTRACT
@@ -131,6 +126,10 @@ Expression:
 ExpressionList:
   Doc: |
     ! -> (Expression [','])+
+ExpressionOrAssignment:
+  Doc: |
+    ! -> Expression
+    ! -> Expression ':=' Expression
 ExpressionOrRange:
   Doc: |
     ! -> SimpleExpression ['..' SimpleExpression]
@@ -147,11 +146,11 @@ Factor:
     ! -> UnaryOperator Factor
 FancyBlock:
   Doc: |
-    . -> (DeclSection)*
-    .    Block
+    ! -> (ImplementationDecl)*
+    !    Block
 FieldDecl:
   Doc: |
-    ! -> IdentList ':' Type (PortabilityDirective)* ';'
+    ! -> IdentList ':' Type (PortabilityDirective)* [';']
 FieldSection:
   Doc: |
     ! -> [[CLASS] VAR]
@@ -165,7 +164,7 @@ ForStatement:
     . -> FOR Ident ':=' Expression (TO | DOWNTO) Expression DO [Statement]
 Goal:
   Doc: |
-    . -> Program
+    ! -> Program
     ! -> Package
     ! -> Unit
 GotoStatement:
@@ -183,25 +182,30 @@ IdentList:
     ! -> (Ident [','])+
 IfStatement:
   Doc: |
-    . -> IF Expression THEN [Statement]
-    .    [ELSE [Statement]]
+    ! -> IF Expression THEN [Statement]
+    !    [ELSE [Statement]]
+ImplementationDecl:
+  Doc: |
+    ! -> LabelDeclSection
+    ! -> ConstSection
+    ! -> TypeSection
+    ! -> VarSection
+    ! -> MethodImplementation
+    ! -> ExportsStatement
 ImplementationSection:
   Doc: |
     ! -> IMPLEMENTATION
     !    [UsesClause]
-    .    (DeclSection)*
+    !    (ImplementationDecl)*
 InitSection:
   Doc: |
-    ! -> INITIALIZATION
-    .    [StatementList]
-    !    [FINALIZATION
-    .    [StatementList]]
-    !    END
-    ! -> BEGIN
-    .    [StatementList]
-    !    END
-    . -> AssemblerStatement
     ! -> END
+    ! -> Block
+    ! -> INITIALIZATION
+    !    (Statement [';'])*
+    !    [FINALIZATION
+    !    (Statement [';'])*]
+    !    END
 InterfaceDecl:
   Doc: |
     ! -> ConstSection
@@ -227,17 +231,10 @@ LabelId:
   Doc: |
     ! -> <number>
     ! -> Ident
-MethodDecl:
-  Doc: |
-    // If the MethodHeading does not include 'external' or 'forward':
-    . -> MethodHeading
-    .    FancyBlock ';'
-    // If the MethodHeading does include 'external' or 'forward':
-    . -> MethodHeading
 MethodHeading:
   Doc: |
     ! -> [CLASS]
-    !    (PROCEDURE | FUNCTION | CONSTRUCTOR | DESTRUCTOR)
+    !    (PROCEDURE | FUNCTION | CONSTRUCTOR | DESTRUCTOR | OPERATOR)
     !    QualifiedIdent
     !    (
     !      ['(' (Parameter [';'])* ')']
@@ -246,6 +243,13 @@ MethodHeading:
     !    | '=' Ident
     !    )
     !    ';'
+MethodImplementation:
+  Doc: |
+    // If the MethodHeading does not include 'external' or 'forward':
+    ! -> MethodHeading
+    !    FancyBlock ';'
+    // If the MethodHeading does include 'external' or 'forward':
+    ! -> MethodHeading
 MethodOrProperty:
   Doc: |
     ! -> MethodHeading
@@ -320,9 +324,10 @@ ProcedureType:
     !    (Directive)*
 Program:
   Doc: |
-    . -> (PROGRAM | LIBRARY) Ident ['(' IdentList ')'] ';'
-    . -> [UsesClause]
-    .    FancyBlock '.'
+    ! -> (PROGRAM | LIBRARY) Ident ['(' IdentList ')'] ';'
+    ! -> [UsesClause]
+    !    (ImplementationDecl)*
+    !    InitSection '.'
 Property:
   Doc: |
     ! -> [CLASS]
@@ -336,7 +341,7 @@ PropertyDirective:
     ! -> ';' DEFAULT
     ! -> DEFAULT Expression
     ! -> DISPID Expression
-    ! -> IMPLEMENTS Expression
+    ! -> IMPLEMENTS (QualifiedIdent [','])+
     ! -> INDEX Expression
     ! -> NODEFAULT
     ! -> READ Expression
@@ -382,7 +387,7 @@ RelOp:
     ! -> AS
 RepeatStatement:
   Doc: |
-    . -> REPEAT [StatementList] UNTIL Expression
+    . -> REPEAT (Statement [';'])* UNTIL Expression
 RequiresClause:
   Doc: |
     ! -> REQUIRES IdentList ';'
@@ -397,12 +402,11 @@ SimpleExpression:
     ! -> Term (AddOp Term)*
 SimpleStatement:
   Doc: |
-    . -> Expression
-    . -> Expression ':=' Expression
-    . -> INHERITED
-    . -> GotoStatement
+    ! -> BareInherited
+    ! -> ExpressionOrAssignment
+    ! -> GotoStatement
     . -> Block
-    . -> IfStatement
+    ! -> IfStatement
     . -> CaseStatement
     . -> RepeatStatement
     . -> WhileStatement
@@ -410,15 +414,11 @@ SimpleStatement:
     . -> WithStatement
     . -> TryExceptStatement
     . -> TryFinallyStatement
-    . -> RaiseStatement
-    . -> AssemblerStatement
+    ! -> RaiseStatement
 Statement:
   Doc: |
-    . -> LabelId ':' [SimpleStatement]
-    . -> SimpleStatement
-StatementList:
-  Doc: |
-    . -> (Statement [';'])+
+    ! -> LabelId ':' [SimpleStatement]
+    ! -> SimpleStatement
 StringType:
   Doc: |
     ! -> STRING
@@ -432,19 +432,19 @@ ToBeDetermined:
 TryExceptStatement:
   Doc: |
     . -> TRY
-    .      [StatementList]
+    .      (Statement [';'])*
     .    EXCEPT
     .    (
-    .      [StatementList] |
-    .      ExceptionItemList [ELSE [StatementList]]
+    .      (Statement [';'])* |
+    .      ExceptionItemList [ELSE (Statement [';'])*]
     .    )
     .    END
 TryFinallyStatement:
   Doc: |
     . -> TRY
-    .      [StatementList]
+    .      (Statement [';'])*
     .    FINALLY
-    .      [StatementList]
+    .      (Statement [';'])*
     .    END
 Type:
   Doc: |
@@ -501,7 +501,7 @@ UsedUnit:
 VarDecl:
   Doc: |
     ! -> IdentList ':' Type
-    !    [ABSOLUTE Expression | '=' Expression]
+    !    [ABSOLUTE Expression | '=' TypedConstant]
     !    (PortabilityDirective)*
     !    ';'
 VariantSection:
@@ -510,7 +510,7 @@ VariantSection:
     .    ToBeDetermined
 VarSection:
   Doc: |
-    ! -> VAR (VarDecl)+
+    ! -> (VAR | THREADVAR) (VarDecl)+
 Visibility:
   Doc: |
     ! -> STRICT PRIVATE

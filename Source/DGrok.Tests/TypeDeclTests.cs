@@ -22,9 +22,9 @@ namespace DGrok.Tests
 
         public void TestSimple()
         {
-            Assert.That("Foo = Integer;", ParsesAs(
+            Assert.That("TFoo = Integer;", ParsesAs(
                 "TypeDeclNode",
-                "  Name: Identifier |Foo|",
+                "  Name: Identifier |TFoo|",
                 "  EqualSign: EqualSign |=|",
                 "  TypeKeyword: (none)",
                 "  Type: Identifier |Integer|",
@@ -33,9 +33,9 @@ namespace DGrok.Tests
         }
         public void TestTypeType()
         {
-            Assert.That("Foo = type Integer;", ParsesAs(
+            Assert.That("TFoo = type Integer;", ParsesAs(
                 "TypeDeclNode",
-                "  Name: Identifier |Foo|",
+                "  Name: Identifier |TFoo|",
                 "  EqualSign: EqualSign |=|",
                 "  TypeKeyword: TypeKeyword |type|",
                 "  Type: Identifier |Integer|",
@@ -44,9 +44,9 @@ namespace DGrok.Tests
         }
         public void TestPortabilityDirectives()
         {
-            Assert.That("Foo = Integer experimental platform;", ParsesAs(
+            Assert.That("TFoo = Integer experimental platform;", ParsesAs(
                 "TypeDeclNode",
-                "  Name: Identifier |Foo|",
+                "  Name: Identifier |TFoo|",
                 "  EqualSign: EqualSign |=|",
                 "  TypeKeyword: (none)",
                 "  Type: Identifier |Integer|",
@@ -57,27 +57,27 @@ namespace DGrok.Tests
         }
         public void TestClassForwardDeclaration()
         {
-            Assert.That("Foo = class;", ParsesAs(
+            Assert.That("TFoo = class;", ParsesAs(
                 "TypeForwardDeclarationNode",
-                "  Name: Identifier |Foo|",
+                "  Name: Identifier |TFoo|",
                 "  EqualSign: EqualSign |=|",
                 "  Type: ClassKeyword |class|",
                 "  Semicolon: Semicolon |;|"));
         }
         public void TestDispInterfaceForwardDeclaration()
         {
-            Assert.That("Foo = dispinterface;", ParsesAs(
+            Assert.That("IFoo = dispinterface;", ParsesAs(
                 "TypeForwardDeclarationNode",
-                "  Name: Identifier |Foo|",
+                "  Name: Identifier |IFoo|",
                 "  EqualSign: EqualSign |=|",
                 "  Type: DispInterfaceKeyword |dispinterface|",
                 "  Semicolon: Semicolon |;|"));
         }
         public void TestInterfaceForwardDeclaration()
         {
-            Assert.That("Foo = interface;", ParsesAs(
+            Assert.That("IFoo = interface;", ParsesAs(
                 "TypeForwardDeclarationNode",
-                "  Name: Identifier |Foo|",
+                "  Name: Identifier |IFoo|",
                 "  EqualSign: EqualSign |=|",
                 "  Type: InterfaceKeyword |interface|",
                 "  Semicolon: Semicolon |;|"));

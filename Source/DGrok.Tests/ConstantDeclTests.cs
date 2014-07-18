@@ -97,5 +97,15 @@ namespace DGrok.Tests
                 "    Items[1]: ExperimentalSemikeyword |experimental|",
                 "  Semicolon: Semicolon |;|"));
         }
+        public void TestLookaheadRejectsVisibilitySpecifier()
+        {
+            Parser parser = Parser.FromText("public", CompilerDefines.CreateEmpty());
+            Assert.That(parser.CanParseRule(RuleType), Is.False);
+        }
+        public void TestLookaheadRejectsStrictVisibilitySpecifier()
+        {
+            Parser parser = Parser.FromText("strict private", CompilerDefines.CreateEmpty());
+            Assert.That(parser.CanParseRule(RuleType), Is.False);
+        }
     }
 }

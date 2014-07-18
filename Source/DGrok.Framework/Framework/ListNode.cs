@@ -10,16 +10,17 @@ using System.Text;
 
 namespace DGrok.Framework
 {
-    public class ListNode : NonterminalNode
+    public class ListNode<T> : NonterminalNode
+        where T : AstNode
     {
-        private List<AstNode> _items;
+        private List<T> _items;
 
-        public ListNode(IEnumerable<AstNode> items)
+        public ListNode(IEnumerable<T> items)
         {
-            _items = new List<AstNode>(items);
+            _items = new List<T>(items);
         }
 
-        public IList<AstNode> Items
+        public IList<T> Items
         {
             get { return _items; }
         }

@@ -5,11 +5,15 @@ def fieldname(s)
 end
 def varname(s)
   result = s.sub(/^[A-Z]/) {|m| m.downcase}
-  if %w|class const default goto in interface object operator string|.include?(result)
+  csharp_keywords = %w|class const default else goto
+    if in interface object operator string|
+  if csharp_keywords.include?(result)
     result = "the" + s
   end
   result
 end
+
+Property = Struct.new(:name, :type)
 
 cs = []
 cs << IO.read('osl-notice.txt')
@@ -18,34 +22,41 @@ cs << ""
 cs << "using System;"
 cs << "using System.Collections.Generic;"
 cs << "using System.Text;"
+cs << "using DGrok.Framework;"
 cs << ""
-cs << "namespace DGrok.Framework"
+cs << "namespace DGrok.DelphiNodes"
 cs << "{"
 
 data = YAML.load_file("CodeGen.yaml")
 node_types = data['NodeTypes']
 node_types.keys.sort_by {|i| i.downcase}.each do |type_name|
   fail "Node classes must end with 'Node'" if type_name !~ /Node$/
-  property_names = node_types[type_name]
-  sorted_property_names = property_names.sort_by {|i| i.downcase}
-  cs << "    public class #{type_name} : NonterminalNode"
+  properties = node_types[type_name].map do |item|
+    if item.class == Hash
+      Property.new(item['Name'], item['Type'])
+    else
+      Property.new(item, "AstNode")
+    end
+  end
+  sorted_properties = properties.sort_by {|i| i.name.downcase}
+  cs << "    public partial class #{type_name} : NonterminalNode"
   cs << "    {"
-  sorted_property_names.each do |prop|
-    cs << "        private AstNode #{fieldname(prop)};"
+  sorted_properties.each do |prop|
+    cs << "        private #{prop.type} #{fieldname(prop.name)};"
   end
   cs << ""
-  params = property_names.map {|item| "AstNode " + varname(item)}
+  params = properties.map {|item| "#{item.type} #{varname(item.name)}"}
   cs << "        public #{type_name}(#{params.join(', ')})"
   cs << "        {"
-  property_names.each do |prop|
-    cs << "            #{fieldname(prop)} = #{varname(prop)};"
+  properties.each do |prop|
+    cs << "            #{fieldname(prop.name)} = #{varname(prop.name)};"
   end
   cs << "        }"
   cs << ""
-  sorted_property_names.each do |prop|
-    cs << "        public AstNode #{prop}"
+  sorted_properties.each do |prop|
+    cs << "        public #{prop.type} #{prop.name}"
     cs << "        {"
-    cs << "            get { return #{fieldname(prop)}; }"
+    cs << "            get { return #{fieldname(prop.name)}; }"
     cs << "        }"
   end
   cs << ""
@@ -54,9 +65,9 @@ node_types.keys.sort_by {|i| i.downcase}.each do |type_name|
   cs << "        {"
   cs << "            get"
   cs << "            {"
-  property_names.each do |prop|
+  properties.each do |prop|
     cs << "                yield return new " +
-      "KeyValuePair<string, AstNode>(\"#{prop}\", #{prop});"
+      "KeyValuePair<string, AstNode>(\"#{prop.name}\", #{prop.name});"
   end
   cs << "            }"
   cs << "        }"
@@ -65,7 +76,7 @@ end
 
 cs << "}"
 cs_text = cs.join("\n") + "\n"
-cs_filename = "DGrok.Framework/Framework/GeneratedNodes.cs"
+cs_filename = "DGrok.Framework/DelphiNodes/GeneratedNodes.cs"
 if !File.exist?(cs_filename) || cs_text != IO.read(cs_filename)
   File.open(cs_filename, "w") do |file|
     file.write(cs_text)

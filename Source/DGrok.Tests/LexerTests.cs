@@ -320,6 +320,10 @@ namespace DGrok.Tests
         {
             Assert.That("on", LexesAs("OnSemikeyword |on|"));
         }
+        public void TestOperatorSemikeyword()
+        {
+            Assert.That("operator", LexesAs("OperatorSemikeyword |operator|"));
+        }
         public void TestOutSemikeyword()
         {
             Assert.That("out", LexesAs("OutSemikeyword |out|"));
