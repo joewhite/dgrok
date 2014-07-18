@@ -81,8 +81,8 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
-                "  Semicolon: Semicolon |;|",
-                "  DirectiveList: ListNode"));
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
     }
 }

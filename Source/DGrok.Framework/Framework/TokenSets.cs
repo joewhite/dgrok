@@ -13,18 +13,23 @@ namespace DGrok.Framework
     public static class TokenSets
     {
         private static TokenSet _addOp;
+        private static TokenSet _classDisposition;
         private static TokenSet _constHeader;
         private static TokenSet _directive;
         private static TokenSet _exportsSpecifier;
         private static TokenSet _expression;
         private static TokenSet _extendedIdent;
+        private static TokenSet _forwardableType;
         private static TokenSet _ident;
         private static TokenSet _initSection;
+        private static TokenSet _interfaceType;
         private static TokenSet _keyword;
         private static TokenSet _labelId;
         private static TokenSet _methodType;
         private static TokenSet _mulOp;
         private static TokenSet _parameter;
+        private static TokenSet _parameterizedPropertyDirective;
+        private static TokenSet _parameterlessPropertyDirective;
         private static TokenSet _parameterModifier;
         private static TokenSet _particle;
         private static TokenSet _portabilityDirective;
@@ -42,6 +47,10 @@ namespace DGrok.Framework
             _addOp.Add(TokenType.MinusSign);
             _addOp.Add(TokenType.OrKeyword);
             _addOp.Add(TokenType.XorKeyword);
+
+            _classDisposition = new TokenSet("class disposition");
+            _classDisposition.Add(TokenType.AbstractSemikeyword);
+            _classDisposition.Add(TokenType.SealedSemikeyword);
 
             _constHeader = new TokenSet("const section");
             _constHeader.Add(TokenType.ConstKeyword);
@@ -78,10 +87,19 @@ namespace DGrok.Framework
             _exportsSpecifier.Add(TokenType.IndexSemikeyword);
             _exportsSpecifier.Add(TokenType.NameSemikeyword);
 
+            _forwardableType = new TokenSet("forwardable type");
+            _forwardableType.Add(TokenType.ClassKeyword);
+            _forwardableType.Add(TokenType.DispInterfaceKeyword);
+            _forwardableType.Add(TokenType.InterfaceKeyword);
+
             _initSection = new TokenSet("initialization section");
             _initSection.Add(TokenType.BeginKeyword);
             _initSection.Add(TokenType.InitializationKeyword);
             _initSection.Add(TokenType.EndKeyword);
+
+            _interfaceType = new TokenSet("interface type");
+            _interfaceType.Add(TokenType.InterfaceKeyword);
+            _interfaceType.Add(TokenType.DispInterfaceKeyword);
 
             _keyword = new TokenSet("keyword");
             _keyword.Add(TokenType.AndKeyword);
@@ -163,6 +181,20 @@ namespace DGrok.Framework
             _mulOp.Add(TokenType.ModKeyword);
             _mulOp.Add(TokenType.ShlKeyword);
             _mulOp.Add(TokenType.ShrKeyword);
+
+            _parameterizedPropertyDirective = new TokenSet("property directive");
+            _parameterizedPropertyDirective.Add(TokenType.DefaultSemikeyword);
+            _parameterizedPropertyDirective.Add(TokenType.DispIdSemikeyword);
+            _parameterizedPropertyDirective.Add(TokenType.ImplementsSemikeyword);
+            _parameterizedPropertyDirective.Add(TokenType.IndexSemikeyword);
+            _parameterizedPropertyDirective.Add(TokenType.ReadSemikeyword);
+            _parameterizedPropertyDirective.Add(TokenType.StoredSemikeyword);
+            _parameterizedPropertyDirective.Add(TokenType.WriteSemikeyword);
+
+            _parameterlessPropertyDirective = new TokenSet("property directive");
+            _parameterlessPropertyDirective.Add(TokenType.NoDefaultSemikeyword);
+            _parameterlessPropertyDirective.Add(TokenType.ReadOnlySemikeyword);
+            _parameterlessPropertyDirective.Add(TokenType.WriteOnlySemikeyword);
 
             _parameterModifier = new TokenSet("parameter modifier");
             _parameterModifier.Add(TokenType.ConstKeyword);
@@ -291,6 +323,10 @@ namespace DGrok.Framework
         {
             get { return _addOp; }
         }
+        public static TokenSet ClassDisposition
+        {
+            get { return _classDisposition; }
+        }
         public static TokenSet ConstHeader
         {
             get { return _constHeader; }
@@ -311,6 +347,10 @@ namespace DGrok.Framework
         {
             get { return _extendedIdent; }
         }
+        public static TokenSet ForwardableType
+        {
+            get { return _forwardableType; }
+        }
         public static TokenSet Ident
         {
             get { return _ident; }
@@ -318,6 +358,10 @@ namespace DGrok.Framework
         public static TokenSet InitSection
         {
             get { return _initSection; }
+        }
+        public static TokenSet InterfaceType
+        {
+            get { return _interfaceType; }
         }
         public static TokenSet Keyword
         {
@@ -338,6 +382,14 @@ namespace DGrok.Framework
         public static TokenSet Parameter
         {
             get { return _parameter; }
+        }
+        public static TokenSet ParameterizedPropertyDirective
+        {
+            get { return _parameterizedPropertyDirective; }
+        }
+        public static TokenSet ParameterlessPropertyDirective
+        {
+            get { return _parameterlessPropertyDirective; }
         }
         public static TokenSet ParameterModifier
         {

@@ -24,33 +24,9 @@ namespace DGrok.Demo
             lstRules.SelectedItem = RuleType.Goal;
         }
 
-        private void btnParse_Click(object sender, EventArgs e)
+        private void lstRules_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.WaitCursor;
-            try
-            {
-                Parser parser = Parser.FromText(edtSource.Text, CompilerDefines.CreateStandard());
-                AstNode tree;
-                try
-                {
-                    tree = parser.ParseRule((RuleType) lstRules.SelectedItem);
-                    edtResults.Text = tree.Inspect();
-                }
-                catch (DGrokException ex)
-                {
-                    edtResults.Text = ex.Message;
-                    if (ex.Offset >= 0)
-                        edtSource.SelectionStart = ex.Offset;
-                    else
-                        edtSource.SelectionStart = edtSource.TextLength;
-                    edtSource.Focus();
-                    return;
-                }
-            }
-            finally
-            {
-                Cursor.Current = Cursors.Default;
-            }
+            parseTextControl1.RuleType = (RuleType) lstRules.SelectedItem;
         }
     }
 }

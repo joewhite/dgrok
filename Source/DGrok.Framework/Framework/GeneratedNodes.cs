@@ -135,6 +135,106 @@ namespace DGrok.Framework
             }
         }
     }
+    public class ClassOfNode : NonterminalNode
+    {
+        private AstNode _class;
+        private AstNode _of;
+        private AstNode _type;
+
+        public ClassOfNode(AstNode theClass, AstNode of, AstNode type)
+        {
+            _class = theClass;
+            _of = of;
+            _type = type;
+        }
+
+        public AstNode Class
+        {
+            get { return _class; }
+        }
+        public AstNode Of
+        {
+            get { return _of; }
+        }
+        public AstNode Type
+        {
+            get { return _type; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("Class", Class);
+                yield return new KeyValuePair<string, AstNode>("Of", Of);
+                yield return new KeyValuePair<string, AstNode>("Type", Type);
+            }
+        }
+    }
+    public class ClassTypeNode : NonterminalNode
+    {
+        private AstNode _class;
+        private AstNode _closeParenthesis;
+        private AstNode _contents;
+        private AstNode _disposition;
+        private AstNode _end;
+        private AstNode _inheritanceList;
+        private AstNode _openParenthesis;
+
+        public ClassTypeNode(AstNode theClass, AstNode disposition, AstNode openParenthesis, AstNode inheritanceList, AstNode closeParenthesis, AstNode contents, AstNode end)
+        {
+            _class = theClass;
+            _disposition = disposition;
+            _openParenthesis = openParenthesis;
+            _inheritanceList = inheritanceList;
+            _closeParenthesis = closeParenthesis;
+            _contents = contents;
+            _end = end;
+        }
+
+        public AstNode Class
+        {
+            get { return _class; }
+        }
+        public AstNode CloseParenthesis
+        {
+            get { return _closeParenthesis; }
+        }
+        public AstNode Contents
+        {
+            get { return _contents; }
+        }
+        public AstNode Disposition
+        {
+            get { return _disposition; }
+        }
+        public AstNode End
+        {
+            get { return _end; }
+        }
+        public AstNode InheritanceList
+        {
+            get { return _inheritanceList; }
+        }
+        public AstNode OpenParenthesis
+        {
+            get { return _openParenthesis; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("Class", Class);
+                yield return new KeyValuePair<string, AstNode>("Disposition", Disposition);
+                yield return new KeyValuePair<string, AstNode>("OpenParenthesis", OpenParenthesis);
+                yield return new KeyValuePair<string, AstNode>("InheritanceList", InheritanceList);
+                yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
+                yield return new KeyValuePair<string, AstNode>("Contents", Contents);
+                yield return new KeyValuePair<string, AstNode>("End", End);
+            }
+        }
+    }
     public class ConstantDeclNode : NonterminalNode
     {
         private AstNode _colon;
@@ -329,6 +429,49 @@ namespace DGrok.Framework
             }
         }
     }
+    public class DirectiveNode : NonterminalNode
+    {
+        private AstNode _data;
+        private AstNode _directive;
+        private AstNode _semicolon;
+        private AstNode _value;
+
+        public DirectiveNode(AstNode semicolon, AstNode directive, AstNode value, AstNode data)
+        {
+            _semicolon = semicolon;
+            _directive = directive;
+            _value = value;
+            _data = data;
+        }
+
+        public AstNode Data
+        {
+            get { return _data; }
+        }
+        public AstNode Directive
+        {
+            get { return _directive; }
+        }
+        public AstNode Semicolon
+        {
+            get { return _semicolon; }
+        }
+        public AstNode Value
+        {
+            get { return _value; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+                yield return new KeyValuePair<string, AstNode>("Directive", Directive);
+                yield return new KeyValuePair<string, AstNode>("Value", Value);
+                yield return new KeyValuePair<string, AstNode>("Data", Data);
+            }
+        }
+    }
     public class EnumeratedTypeElementNode : NonterminalNode
     {
         private AstNode _equalSign;
@@ -430,6 +573,35 @@ namespace DGrok.Framework
             }
         }
     }
+    public class ExportsSpecifierNode : NonterminalNode
+    {
+        private AstNode _keyword;
+        private AstNode _value;
+
+        public ExportsSpecifierNode(AstNode keyword, AstNode value)
+        {
+            _keyword = keyword;
+            _value = value;
+        }
+
+        public AstNode Keyword
+        {
+            get { return _keyword; }
+        }
+        public AstNode Value
+        {
+            get { return _value; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("Keyword", Keyword);
+                yield return new KeyValuePair<string, AstNode>("Value", Value);
+            }
+        }
+    }
     public class ExportsStatementNode : NonterminalNode
     {
         private AstNode _exports;
@@ -463,42 +635,6 @@ namespace DGrok.Framework
                 yield return new KeyValuePair<string, AstNode>("Exports", Exports);
                 yield return new KeyValuePair<string, AstNode>("ItemList", ItemList);
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
-            }
-        }
-    }
-    public class ExternalNode : NonterminalNode
-    {
-        private AstNode _dllName;
-        private AstNode _external;
-        private AstNode _specifierList;
-
-        public ExternalNode(AstNode external, AstNode dllName, AstNode specifierList)
-        {
-            _external = external;
-            _dllName = dllName;
-            _specifierList = specifierList;
-        }
-
-        public AstNode DllName
-        {
-            get { return _dllName; }
-        }
-        public AstNode External
-        {
-            get { return _external; }
-        }
-        public AstNode SpecifierList
-        {
-            get { return _specifierList; }
-        }
-
-        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
-        {
-            get
-            {
-                yield return new KeyValuePair<string, AstNode>("External", External);
-                yield return new KeyValuePair<string, AstNode>("DllName", DllName);
-                yield return new KeyValuePair<string, AstNode>("SpecifierList", SpecifierList);
             }
         }
     }
@@ -830,7 +966,7 @@ namespace DGrok.Framework
         private AstNode _returnType;
         private AstNode _semicolon;
 
-        public MethodHeadingNode(AstNode theClass, AstNode methodType, AstNode name, AstNode openParenthesis, AstNode parameterList, AstNode closeParenthesis, AstNode colon, AstNode returnType, AstNode semicolon, AstNode directiveList)
+        public MethodHeadingNode(AstNode theClass, AstNode methodType, AstNode name, AstNode openParenthesis, AstNode parameterList, AstNode closeParenthesis, AstNode colon, AstNode returnType, AstNode directiveList, AstNode semicolon)
         {
             _class = theClass;
             _methodType = methodType;
@@ -840,8 +976,8 @@ namespace DGrok.Framework
             _closeParenthesis = closeParenthesis;
             _colon = colon;
             _returnType = returnType;
-            _semicolon = semicolon;
             _directiveList = directiveList;
+            _semicolon = semicolon;
         }
 
         public AstNode Class
@@ -897,8 +1033,58 @@ namespace DGrok.Framework
                 yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
                 yield return new KeyValuePair<string, AstNode>("Colon", Colon);
                 yield return new KeyValuePair<string, AstNode>("ReturnType", ReturnType);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
                 yield return new KeyValuePair<string, AstNode>("DirectiveList", DirectiveList);
+                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+            }
+        }
+    }
+    public class MethodResolutionNode : NonterminalNode
+    {
+        private AstNode _equalSign;
+        private AstNode _implementationMethod;
+        private AstNode _interfaceMethod;
+        private AstNode _methodType;
+        private AstNode _semicolon;
+
+        public MethodResolutionNode(AstNode methodType, AstNode interfaceMethod, AstNode equalSign, AstNode implementationMethod, AstNode semicolon)
+        {
+            _methodType = methodType;
+            _interfaceMethod = interfaceMethod;
+            _equalSign = equalSign;
+            _implementationMethod = implementationMethod;
+            _semicolon = semicolon;
+        }
+
+        public AstNode EqualSign
+        {
+            get { return _equalSign; }
+        }
+        public AstNode ImplementationMethod
+        {
+            get { return _implementationMethod; }
+        }
+        public AstNode InterfaceMethod
+        {
+            get { return _interfaceMethod; }
+        }
+        public AstNode MethodType
+        {
+            get { return _methodType; }
+        }
+        public AstNode Semicolon
+        {
+            get { return _semicolon; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("MethodType", MethodType);
+                yield return new KeyValuePair<string, AstNode>("InterfaceMethod", InterfaceMethod);
+                yield return new KeyValuePair<string, AstNode>("EqualSign", EqualSign);
+                yield return new KeyValuePair<string, AstNode>("ImplementationMethod", ImplementationMethod);
+                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
     }
@@ -1002,32 +1188,32 @@ namespace DGrok.Framework
             }
         }
     }
-    public class ParameterizedDirectiveNode : NonterminalNode
+    public class PackedTypeNode : NonterminalNode
     {
-        private AstNode _keyword;
-        private AstNode _value;
+        private AstNode _packed;
+        private AstNode _type;
 
-        public ParameterizedDirectiveNode(AstNode keyword, AstNode value)
+        public PackedTypeNode(AstNode packed, AstNode type)
         {
-            _keyword = keyword;
-            _value = value;
+            _packed = packed;
+            _type = type;
         }
 
-        public AstNode Keyword
+        public AstNode Packed
         {
-            get { return _keyword; }
+            get { return _packed; }
         }
-        public AstNode Value
+        public AstNode Type
         {
-            get { return _value; }
+            get { return _type; }
         }
 
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
             {
-                yield return new KeyValuePair<string, AstNode>("Keyword", Keyword);
-                yield return new KeyValuePair<string, AstNode>("Value", Value);
+                yield return new KeyValuePair<string, AstNode>("Packed", Packed);
+                yield return new KeyValuePair<string, AstNode>("Type", Type);
             }
         }
     }
@@ -1229,14 +1415,16 @@ namespace DGrok.Framework
     {
         private AstNode _closeParenthesis;
         private AstNode _colon;
+        private AstNode _firstDirectives;
         private AstNode _methodType;
         private AstNode _object;
         private AstNode _of;
         private AstNode _openParenthesis;
         private AstNode _parameterList;
         private AstNode _returnType;
+        private AstNode _secondDirectives;
 
-        public ProcedureTypeNode(AstNode methodType, AstNode openParenthesis, AstNode parameterList, AstNode closeParenthesis, AstNode colon, AstNode returnType, AstNode of, AstNode theObject)
+        public ProcedureTypeNode(AstNode methodType, AstNode openParenthesis, AstNode parameterList, AstNode closeParenthesis, AstNode colon, AstNode returnType, AstNode firstDirectives, AstNode of, AstNode theObject, AstNode secondDirectives)
         {
             _methodType = methodType;
             _openParenthesis = openParenthesis;
@@ -1244,8 +1432,10 @@ namespace DGrok.Framework
             _closeParenthesis = closeParenthesis;
             _colon = colon;
             _returnType = returnType;
+            _firstDirectives = firstDirectives;
             _of = of;
             _object = theObject;
+            _secondDirectives = secondDirectives;
         }
 
         public AstNode CloseParenthesis
@@ -1255,6 +1445,10 @@ namespace DGrok.Framework
         public AstNode Colon
         {
             get { return _colon; }
+        }
+        public AstNode FirstDirectives
+        {
+            get { return _firstDirectives; }
         }
         public AstNode MethodType
         {
@@ -1280,6 +1474,10 @@ namespace DGrok.Framework
         {
             get { return _returnType; }
         }
+        public AstNode SecondDirectives
+        {
+            get { return _secondDirectives; }
+        }
 
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
@@ -1291,8 +1489,10 @@ namespace DGrok.Framework
                 yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
                 yield return new KeyValuePair<string, AstNode>("Colon", Colon);
                 yield return new KeyValuePair<string, AstNode>("ReturnType", ReturnType);
+                yield return new KeyValuePair<string, AstNode>("FirstDirectives", FirstDirectives);
                 yield return new KeyValuePair<string, AstNode>("Of", Of);
                 yield return new KeyValuePair<string, AstNode>("Object", Object);
+                yield return new KeyValuePair<string, AstNode>("SecondDirectives", SecondDirectives);
             }
         }
     }
@@ -1301,26 +1501,15 @@ namespace DGrok.Framework
         private AstNode _class;
         private AstNode _closeBracket;
         private AstNode _colon;
-        private AstNode _default;
-        private AstNode _defaultValue;
-        private AstNode _implements;
-        private AstNode _implementsSpecifier;
-        private AstNode _index;
-        private AstNode _indexValue;
+        private AstNode _directiveList;
         private AstNode _name;
         private AstNode _openBracket;
         private AstNode _parameterList;
         private AstNode _property;
-        private AstNode _read;
-        private AstNode _readSpecifier;
         private AstNode _semicolon;
-        private AstNode _stored;
-        private AstNode _storedSpecifier;
         private AstNode _type;
-        private AstNode _write;
-        private AstNode _writeSpecifier;
 
-        public PropertyNode(AstNode theClass, AstNode property, AstNode name, AstNode openBracket, AstNode parameterList, AstNode closeBracket, AstNode colon, AstNode type, AstNode index, AstNode indexValue, AstNode read, AstNode readSpecifier, AstNode write, AstNode writeSpecifier, AstNode stored, AstNode storedSpecifier, AstNode theDefault, AstNode defaultValue, AstNode implements, AstNode implementsSpecifier, AstNode semicolon)
+        public PropertyNode(AstNode theClass, AstNode property, AstNode name, AstNode openBracket, AstNode parameterList, AstNode closeBracket, AstNode colon, AstNode type, AstNode directiveList, AstNode semicolon)
         {
             _class = theClass;
             _property = property;
@@ -1330,18 +1519,7 @@ namespace DGrok.Framework
             _closeBracket = closeBracket;
             _colon = colon;
             _type = type;
-            _index = index;
-            _indexValue = indexValue;
-            _read = read;
-            _readSpecifier = readSpecifier;
-            _write = write;
-            _writeSpecifier = writeSpecifier;
-            _stored = stored;
-            _storedSpecifier = storedSpecifier;
-            _default = theDefault;
-            _defaultValue = defaultValue;
-            _implements = implements;
-            _implementsSpecifier = implementsSpecifier;
+            _directiveList = directiveList;
             _semicolon = semicolon;
         }
 
@@ -1357,29 +1535,9 @@ namespace DGrok.Framework
         {
             get { return _colon; }
         }
-        public AstNode Default
+        public AstNode DirectiveList
         {
-            get { return _default; }
-        }
-        public AstNode DefaultValue
-        {
-            get { return _defaultValue; }
-        }
-        public AstNode Implements
-        {
-            get { return _implements; }
-        }
-        public AstNode ImplementsSpecifier
-        {
-            get { return _implementsSpecifier; }
-        }
-        public AstNode Index
-        {
-            get { return _index; }
-        }
-        public AstNode IndexValue
-        {
-            get { return _indexValue; }
+            get { return _directiveList; }
         }
         public AstNode Name
         {
@@ -1397,37 +1555,13 @@ namespace DGrok.Framework
         {
             get { return _property; }
         }
-        public AstNode Read
-        {
-            get { return _read; }
-        }
-        public AstNode ReadSpecifier
-        {
-            get { return _readSpecifier; }
-        }
         public AstNode Semicolon
         {
             get { return _semicolon; }
         }
-        public AstNode Stored
-        {
-            get { return _stored; }
-        }
-        public AstNode StoredSpecifier
-        {
-            get { return _storedSpecifier; }
-        }
         public AstNode Type
         {
             get { return _type; }
-        }
-        public AstNode Write
-        {
-            get { return _write; }
-        }
-        public AstNode WriteSpecifier
-        {
-            get { return _writeSpecifier; }
         }
 
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
@@ -1442,18 +1576,7 @@ namespace DGrok.Framework
                 yield return new KeyValuePair<string, AstNode>("CloseBracket", CloseBracket);
                 yield return new KeyValuePair<string, AstNode>("Colon", Colon);
                 yield return new KeyValuePair<string, AstNode>("Type", Type);
-                yield return new KeyValuePair<string, AstNode>("Index", Index);
-                yield return new KeyValuePair<string, AstNode>("IndexValue", IndexValue);
-                yield return new KeyValuePair<string, AstNode>("Read", Read);
-                yield return new KeyValuePair<string, AstNode>("ReadSpecifier", ReadSpecifier);
-                yield return new KeyValuePair<string, AstNode>("Write", Write);
-                yield return new KeyValuePair<string, AstNode>("WriteSpecifier", WriteSpecifier);
-                yield return new KeyValuePair<string, AstNode>("Stored", Stored);
-                yield return new KeyValuePair<string, AstNode>("StoredSpecifier", StoredSpecifier);
-                yield return new KeyValuePair<string, AstNode>("Default", Default);
-                yield return new KeyValuePair<string, AstNode>("DefaultValue", DefaultValue);
-                yield return new KeyValuePair<string, AstNode>("Implements", Implements);
-                yield return new KeyValuePair<string, AstNode>("ImplementsSpecifier", ImplementsSpecifier);
+                yield return new KeyValuePair<string, AstNode>("DirectiveList", DirectiveList);
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
@@ -1534,6 +1657,49 @@ namespace DGrok.Framework
                 yield return new KeyValuePair<string, AstNode>("Name", Name);
                 yield return new KeyValuePair<string, AstNode>("Colon", Colon);
                 yield return new KeyValuePair<string, AstNode>("Value", Value);
+            }
+        }
+    }
+    public class RecordTypeNode : NonterminalNode
+    {
+        private AstNode _contents;
+        private AstNode _end;
+        private AstNode _record;
+        private AstNode _variantSection;
+
+        public RecordTypeNode(AstNode record, AstNode contents, AstNode variantSection, AstNode end)
+        {
+            _record = record;
+            _contents = contents;
+            _variantSection = variantSection;
+            _end = end;
+        }
+
+        public AstNode Contents
+        {
+            get { return _contents; }
+        }
+        public AstNode End
+        {
+            get { return _end; }
+        }
+        public AstNode Record
+        {
+            get { return _record; }
+        }
+        public AstNode VariantSection
+        {
+            get { return _variantSection; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("Record", Record);
+                yield return new KeyValuePair<string, AstNode>("Contents", Contents);
+                yield return new KeyValuePair<string, AstNode>("VariantSection", VariantSection);
+                yield return new KeyValuePair<string, AstNode>("End", End);
             }
         }
     }
@@ -1741,6 +1907,49 @@ namespace DGrok.Framework
                 yield return new KeyValuePair<string, AstNode>("TypeKeyword", TypeKeyword);
                 yield return new KeyValuePair<string, AstNode>("Type", Type);
                 yield return new KeyValuePair<string, AstNode>("PortabilityDirectiveList", PortabilityDirectiveList);
+                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
+            }
+        }
+    }
+    public class TypeForwardDeclarationNode : NonterminalNode
+    {
+        private AstNode _equalSign;
+        private AstNode _name;
+        private AstNode _semicolon;
+        private AstNode _type;
+
+        public TypeForwardDeclarationNode(AstNode name, AstNode equalSign, AstNode type, AstNode semicolon)
+        {
+            _name = name;
+            _equalSign = equalSign;
+            _type = type;
+            _semicolon = semicolon;
+        }
+
+        public AstNode EqualSign
+        {
+            get { return _equalSign; }
+        }
+        public AstNode Name
+        {
+            get { return _name; }
+        }
+        public AstNode Semicolon
+        {
+            get { return _semicolon; }
+        }
+        public AstNode Type
+        {
+            get { return _type; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("Name", Name);
+                yield return new KeyValuePair<string, AstNode>("EqualSign", EqualSign);
+                yield return new KeyValuePair<string, AstNode>("Type", Type);
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
@@ -2115,6 +2324,35 @@ namespace DGrok.Framework
             {
                 yield return new KeyValuePair<string, AstNode>("Strict", Strict);
                 yield return new KeyValuePair<string, AstNode>("Visibility", Visibility);
+            }
+        }
+    }
+    public class VisibilitySectionNode : NonterminalNode
+    {
+        private AstNode _contents;
+        private AstNode _visibility;
+
+        public VisibilitySectionNode(AstNode visibility, AstNode contents)
+        {
+            _visibility = visibility;
+            _contents = contents;
+        }
+
+        public AstNode Contents
+        {
+            get { return _contents; }
+        }
+        public AstNode Visibility
+        {
+            get { return _visibility; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("Visibility", Visibility);
+                yield return new KeyValuePair<string, AstNode>("Contents", Contents);
             }
         }
     }

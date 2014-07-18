@@ -23,14 +23,14 @@ namespace DGrok.Tests
         public void TestIndex()
         {
             Assert.That("index 42", ParsesAs(
-                "ParameterizedDirectiveNode",
+                "ExportsSpecifierNode",
                 "  Keyword: IndexSemikeyword |index|",
                 "  Value: Number |42|"));
         }
         public void TestName()
         {
             Assert.That("name 'Foo'", ParsesAs(
-                "ParameterizedDirectiveNode",
+                "ExportsSpecifierNode",
                 "  Keyword: NameSemikeyword |name|",
                 "  Value: StringLiteral |'Foo'|"));
         }

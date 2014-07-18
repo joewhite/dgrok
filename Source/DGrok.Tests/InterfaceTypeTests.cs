@@ -62,6 +62,20 @@ namespace DGrok.Tests
                 "  MethodAndPropertyList: ListNode",
                 "  End: EndKeyword |end|"));
         }
+        public void TestGuidExpression()
+        {
+            Assert.That("interface [MyGuidConst] end", ParsesAs(
+                "InterfaceTypeNode",
+                "  Interface: InterfaceKeyword |interface|",
+                "  OpenParenthesis: (none)",
+                "  BaseInterface: (none)",
+                "  CloseParenthesis: (none)",
+                "  OpenBracket: OpenBracket |[|",
+                "  Guid: Identifier |MyGuidConst|",
+                "  CloseBracket: CloseBracket |]|",
+                "  MethodAndPropertyList: ListNode",
+                "  End: EndKeyword |end|"));
+        }
         public void TestMethod()
         {
             Assert.That("interface procedure Foo; end", ParsesAs(
@@ -83,8 +97,22 @@ namespace DGrok.Tests
                 "      CloseParenthesis: (none)",
                 "      Colon: (none)",
                 "      ReturnType: (none)",
-                "      Semicolon: Semicolon |;|",
                 "      DirectiveList: ListNode",
+                "      Semicolon: Semicolon |;|",
+                "  End: EndKeyword |end|"));
+        }
+        public void TestDispInterface()
+        {
+            Assert.That("dispinterface end", ParsesAs(
+                "InterfaceTypeNode",
+                "  Interface: DispInterfaceKeyword |dispinterface|",
+                "  OpenParenthesis: (none)",
+                "  BaseInterface: (none)",
+                "  CloseParenthesis: (none)",
+                "  OpenBracket: (none)",
+                "  Guid: (none)",
+                "  CloseBracket: (none)",
+                "  MethodAndPropertyList: ListNode",
                 "  End: EndKeyword |end|"));
         }
     }

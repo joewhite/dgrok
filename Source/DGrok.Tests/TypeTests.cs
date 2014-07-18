@@ -54,5 +54,119 @@ namespace DGrok.Tests
                 "  Operator: DotDot |..|",
                 "  Right: Number |42|"));
         }
+        public void TestArray()
+        {
+            Assert.That("array of Integer", ParsesAs(
+                "ArrayTypeNode",
+                "  Array: ArrayKeyword |array|",
+                "  OpenBracket: (none)",
+                "  IndexList: ListNode",
+                "  CloseBracket: (none)",
+                "  Of: OfKeyword |of|",
+                "  Type: Identifier |Integer|"));
+        }
+        public void TestSet()
+        {
+            Assert.That("set of Byte", ParsesAs(
+                "SetOfNode",
+                "  Set: SetKeyword |set|",
+                "  Of: OfKeyword |of|",
+                "  Type: Identifier |Byte|"));
+        }
+        public void TestFile()
+        {
+            Assert.That("file", ParsesAs(
+                "FileTypeNode",
+                "  File: FileKeyword |file|",
+                "  Of: (none)",
+                "  Type: (none)"));
+        }
+        public void TestRecord()
+        {
+            Assert.That("record end", ParsesAs(
+                "RecordTypeNode",
+                "  Record: RecordKeyword |record|",
+                "  Contents: ListNode",
+                "  VariantSection: (none)",
+                "  End: EndKeyword |end|"));
+        }
+        public void TestPointer()
+        {
+            Assert.That("^TFoo", ParsesAs(
+                "PointerTypeNode",
+                "  Caret: Caret |^|",
+                "  Type: Identifier |TFoo|"));
+        }
+        public void TestString()
+        {
+            Assert.That("string[42]", ParsesAs(
+                "StringOfLengthNode",
+                "  String: StringKeyword |string|",
+                "  OpenBracket: OpenBracket |[|",
+                "  Length: Number |42|",
+                "  CloseBracket: CloseBracket |]|"));
+        }
+        public void TestProcedureType()
+        {
+            Assert.That("procedure of object", ParsesAs(
+                "ProcedureTypeNode",
+                "  MethodType: ProcedureKeyword |procedure|",
+                "  OpenParenthesis: (none)",
+                "  ParameterList: ListNode",
+                "  CloseParenthesis: (none)",
+                "  Colon: (none)",
+                "  ReturnType: (none)",
+                "  FirstDirectives: ListNode",
+                "  Of: OfKeyword |of|",
+                "  Object: ObjectKeyword |object|",
+                "  SecondDirectives: ListNode"));
+        }
+        public void TestClassOf()
+        {
+            Assert.That("class of TObject", ParsesAs(
+                "ClassOfNode",
+                "  Class: ClassKeyword |class|",
+                "  Of: OfKeyword |of|",
+                "  Type: Identifier |TObject|"));
+        }
+        public void TestClass()
+        {
+            Assert.That("class end", ParsesAs(
+                "ClassTypeNode",
+                "  Class: ClassKeyword |class|",
+                "  Disposition: (none)",
+                "  OpenParenthesis: (none)",
+                "  InheritanceList: ListNode",
+                "  CloseParenthesis: (none)",
+                "  Contents: ListNode",
+                "  End: EndKeyword |end|"));
+        }
+        public void TestInterface()
+        {
+            Assert.That("interface end", ParsesAs(
+                "InterfaceTypeNode",
+                "  Interface: InterfaceKeyword |interface|",
+                "  OpenParenthesis: (none)",
+                "  BaseInterface: (none)",
+                "  CloseParenthesis: (none)",
+                "  OpenBracket: (none)",
+                "  Guid: (none)",
+                "  CloseBracket: (none)",
+                "  MethodAndPropertyList: ListNode",
+                "  End: EndKeyword |end|"));
+        }
+        public void TestPackedType()
+        {
+            Assert.That("packed array of Byte", ParsesAs(
+                "PackedTypeNode",
+                "  Packed: PackedKeyword |packed|",
+                "  Type: ArrayTypeNode",
+                "    Array: ArrayKeyword |array|",
+                "    OpenBracket: (none)",
+                "    IndexList: ListNode",
+                "    CloseBracket: (none)",
+                "    Of: OfKeyword |of|",
+                "    Type: Identifier |Byte|"));
+        }
     }
 }

@@ -30,8 +30,10 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
+                "  FirstDirectives: ListNode",
                 "  Of: (none)",
-                "  Object: (none)"));
+                "  Object: (none)",
+                "  SecondDirectives: ListNode"));
         }
         public void TestFunction()
         {
@@ -43,8 +45,10 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: Colon |:|",
                 "  ReturnType: Identifier |Integer|",
+                "  FirstDirectives: ListNode",
                 "  Of: (none)",
-                "  Object: (none)"));
+                "  Object: (none)",
+                "  SecondDirectives: ListNode"));
         }
         public void TestEmptyParameterList()
         {
@@ -56,8 +60,10 @@ namespace DGrok.Tests
                 "  CloseParenthesis: CloseParenthesis |)|",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
+                "  FirstDirectives: ListNode",
                 "  Of: (none)",
-                "  Object: (none)"));
+                "  Object: (none)",
+                "  SecondDirectives: ListNode"));
         }
         public void TestParameters()
         {
@@ -93,8 +99,10 @@ namespace DGrok.Tests
                 "  CloseParenthesis: CloseParenthesis |)|",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
+                "  FirstDirectives: ListNode",
                 "  Of: (none)",
-                "  Object: (none)"));
+                "  Object: (none)",
+                "  SecondDirectives: ListNode"));
         }
         public void TestOfObject()
         {
@@ -106,8 +114,70 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
+                "  FirstDirectives: ListNode",
                 "  Of: OfKeyword |of|",
-                "  Object: ObjectKeyword |object|"));
+                "  Object: ObjectKeyword |object|",
+                "  SecondDirectives: ListNode"));
+        }
+        public void TestDirective()
+        {
+            Assert.That("procedure stdcall", ParsesAs(
+                "ProcedureTypeNode",
+                "  MethodType: ProcedureKeyword |procedure|",
+                "  OpenParenthesis: (none)",
+                "  ParameterList: ListNode",
+                "  CloseParenthesis: (none)",
+                "  Colon: (none)",
+                "  ReturnType: (none)",
+                "  FirstDirectives: ListNode",
+                "    Items[0]: DirectiveNode",
+                "      Semicolon: (none)",
+                "      Directive: StdcallSemikeyword |stdcall|",
+                "      Value: (none)",
+                "      Data: ListNode",
+                "  Of: (none)",
+                "  Object: (none)",
+                "  SecondDirectives: ListNode"));
+        }
+        public void TestDirectiveBeforeOfObject()
+        {
+            Assert.That("procedure stdcall of object", ParsesAs(
+                "ProcedureTypeNode",
+                "  MethodType: ProcedureKeyword |procedure|",
+                "  OpenParenthesis: (none)",
+                "  ParameterList: ListNode",
+                "  CloseParenthesis: (none)",
+                "  Colon: (none)",
+                "  ReturnType: (none)",
+                "  FirstDirectives: ListNode",
+                "    Items[0]: DirectiveNode",
+                "      Semicolon: (none)",
+                "      Directive: StdcallSemikeyword |stdcall|",
+                "      Value: (none)",
+                "      Data: ListNode",
+                "  Of: OfKeyword |of|",
+                "  Object: ObjectKeyword |object|",
+                "  SecondDirectives: ListNode"));
+        }
+        public void TestDirectiveAfterOfObjectWithSemicolon()
+        {
+            Assert.That("procedure of object; stdcall", ParsesAs(
+                "ProcedureTypeNode",
+                "  MethodType: ProcedureKeyword |procedure|",
+                "  OpenParenthesis: (none)",
+                "  ParameterList: ListNode",
+                "  CloseParenthesis: (none)",
+                "  Colon: (none)",
+                "  ReturnType: (none)",
+                "  FirstDirectives: ListNode",
+                "  Of: OfKeyword |of|",
+                "  Object: ObjectKeyword |object|",
+                "  SecondDirectives: ListNode",
+                "    Items[0]: DirectiveNode",
+                "      Semicolon: Semicolon |;|",
+                "      Directive: StdcallSemikeyword |stdcall|",
+                "      Value: (none)",
+                "      Data: ListNode"));
         }
     }
 }

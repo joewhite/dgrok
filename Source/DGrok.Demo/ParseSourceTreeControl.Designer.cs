@@ -44,7 +44,7 @@ namespace DGrok.Demo
             this.btnTestParser.Name = "btnTestParser";
             this.btnTestParser.Size = new System.Drawing.Size(75, 23);
             this.btnTestParser.TabIndex = 3;
-            this.btnTestParser.Text = "Test Parser";
+            this.btnTestParser.Text = "Test &Parser";
             this.btnTestParser.UseVisualStyleBackColor = true;
             this.btnTestParser.Click += new System.EventHandler(this.btnTestParser_Click);
             // 
@@ -88,6 +88,8 @@ namespace DGrok.Demo
             this.trvSummary.Name = "trvSummary";
             this.trvSummary.Size = new System.Drawing.Size(516, 207);
             this.trvSummary.TabIndex = 4;
+            this.trvSummary.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvSummary_NodeMouseDoubleClick);
+            this.trvSummary.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.trvSummary_KeyPress);
             // 
             // ParseSourceTreeControl
             // 

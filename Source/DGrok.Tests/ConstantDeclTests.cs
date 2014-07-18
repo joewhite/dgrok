@@ -65,6 +65,24 @@ namespace DGrok.Tests
                 "  PortabilityDirectiveList: ListNode",
                 "  Semicolon: Semicolon |;|"));
         }
+        public void TestTypedWhereTypeIsNotIdentifier()
+        {
+            Assert.That("Foo: set of Byte = [];", ParsesAs(
+                "ConstantDeclNode",
+                "  Name: Identifier |Foo|",
+                "  Colon: Colon |:|",
+                "  Type: SetOfNode",
+                "    Set: SetKeyword |set|",
+                "    Of: OfKeyword |of|",
+                "    Type: Identifier |Byte|",
+                "  EqualSign: EqualSign |=|",
+                "  Value: SetLiteralNode",
+                "    OpenBracket: OpenBracket |[|",
+                "    ItemList: ListNode",
+                "    CloseBracket: CloseBracket |]|",
+                "  PortabilityDirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
+        }
         public void TestPortabilityDirectives()
         {
             Assert.That("Foo = 42 library experimental;", ParsesAs(

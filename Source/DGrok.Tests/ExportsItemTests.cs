@@ -33,7 +33,7 @@ namespace DGrok.Tests
                 "ExportsItemNode",
                 "  Name: Identifier |Foo|",
                 "  SpecifierList: ListNode",
-                "    Items[0]: ParameterizedDirectiveNode",
+                "    Items[0]: ExportsSpecifierNode",
                 "      Keyword: IndexSemikeyword |index|",
                 "      Value: Number |42|"));
         }
@@ -43,7 +43,7 @@ namespace DGrok.Tests
                 "ExportsItemNode",
                 "  Name: Identifier |Foo|",
                 "  SpecifierList: ListNode",
-                "    Items[0]: ParameterizedDirectiveNode",
+                "    Items[0]: ExportsSpecifierNode",
                 "      Keyword: NameSemikeyword |name|",
                 "      Value: StringLiteral |'Foo'|"));
         }
@@ -53,10 +53,10 @@ namespace DGrok.Tests
                 "ExportsItemNode",
                 "  Name: Identifier |Foo|",
                 "  SpecifierList: ListNode",
-                "    Items[0]: ParameterizedDirectiveNode",
+                "    Items[0]: ExportsSpecifierNode",
                 "      Keyword: IndexSemikeyword |index|",
                 "      Value: Number |42|",
-                "    Items[1]: ParameterizedDirectiveNode",
+                "    Items[1]: ExportsSpecifierNode",
                 "      Keyword: NameSemikeyword |name|",
                 "      Value: StringLiteral |'Foo'|"));
         }
@@ -66,10 +66,10 @@ namespace DGrok.Tests
                 "ExportsItemNode",
                 "  Name: Identifier |Foo|",
                 "  SpecifierList: ListNode",
-                "    Items[0]: ParameterizedDirectiveNode",
+                "    Items[0]: ExportsSpecifierNode",
                 "      Keyword: NameSemikeyword |name|",
                 "      Value: StringLiteral |'Foo'|",
-                "    Items[1]: ParameterizedDirectiveNode",
+                "    Items[1]: ExportsSpecifierNode",
                 "      Keyword: IndexSemikeyword |index|",
                 "      Value: Number |42|"));
         }

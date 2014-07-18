@@ -43,6 +43,8 @@
     <Compile Include="ArrayTypeTests.cs" />
     <Compile Include="AssemblerStatementTests.cs" />
     <Compile Include="AstNodeTests.cs" />
+    <Compile Include="ClassOfTypeTests.cs" />
+    <Compile Include="ClassTypeTests.cs" />
     <Compile Include="CompilerDefinesTests.cs" />
     <Compile Include="ConstantDeclTests.cs" />
     <Compile Include="ConstSectionTests.cs" />
@@ -65,16 +67,18 @@
     <Compile Include="InterfaceTypeTests.cs" />
     <Compile Include="MethodHeadingTests.cs" />
     <Compile Include="MethodOrPropertyTests.cs" />
-    <Compile Include="MethodSectionTests.cs" />
     <Compile Include="OpenArrayTests.cs" />
+    <Compile Include="PackedTypeTests.cs" />
     <Compile Include="ParameterTests.cs" />
     <Compile Include="ParameterTypeTests.cs" />
     <Compile Include="ParenthesizedExpressionTests.cs" />
     <Compile Include="ProcedureTypeTests.cs" />
+    <Compile Include="PropertyDirectiveTests.cs" />
     <Compile Include="PropertyTests.cs" />
     <Compile Include="QualifiedIdentTests.cs" />
     <Compile Include="RaiseStatementTests.cs" />
     <Compile Include="RecordFieldConstantTests.cs" />
+    <Compile Include="RecordTypeTests.cs" />
     <Compile Include="SetLiteralTests.cs" />
     <Compile Include="SetTypeTests.cs" />
     <Compile Include="TypedConstantTests.cs" />
@@ -116,6 +120,8 @@
     <Compile Include="UsesClauseTests.cs" />
     <Compile Include="VarDeclTests.cs" />
     <Compile Include="VarSectionTests.cs" />
+    <Compile Include="VisibilitySectionContentTests.cs" />
+    <Compile Include="VisibilitySectionTests.cs" />
     <Compile Include="VisibilityTests.cs" />
   </ItemGroup>
   <ItemGroup>

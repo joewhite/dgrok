@@ -37,23 +37,28 @@ CaseStatement:
     .    CaseSelectorList
     .    [ELSE [StatementList]]
     .    END
-ClassType:
+ClassHelperType:
   Doc: |
-    . -> CLASS
-    .    [ABSTRACT | SEALED]
-    .    ['(' Ident [',' IdentList] ')']
-    .    (VisibilitySection)*
-    .    END
-    . -> CLASS OF QualifiedIdent
     . -> CLASS HELPER
     .    ['(' Ident ')']
     .    FOR QualifiedIdent
     .    (VisibilitySection)*
     .    END
+ClassOfType:
+  Doc: |
+    ! -> CLASS OF QualifiedIdent
+ClassType:
+  Doc: |
+    ! -> CLASS
+    !    [ABSTRACT | SEALED]
+    !    ['(' (QualifiedIdent [','])+ ')']
+    // The remainder is optional, but only if the base class is specified and lookahead shows that the next token is a semicolon
+    !    (VisibilitySection)*
+    !    END
 ConstantDecl:
   Doc: |
     ! -> Ident
-    !    [':' QualifiedIdent]
+    !    [':' Type]
     !    '=' TypedConstant
     !    (PortabilityDirective)*
     !    ';'
@@ -74,31 +79,31 @@ DeclSection:
     . -> ExportsStatement
 Directive:
   Doc: |
-    ! -> ABSTRACT
-    ! -> ASSEMBLER
-    ! -> CDECL
-    ! -> DISPID Expression
-    ! -> DYNAMIC
-    ! -> EXPORT
-    ! -> EXTERNAL [Expression (ExportsSpecifier)*]
-    ! -> FAR
-    ! -> FINAL
-    ! -> FORWARD
-    ! -> INLINE
-    ! -> LOCAL
-    ! -> MESSAGE Expression
-    ! -> NEAR
-    ! -> OVERLOAD
-    ! -> OVERRIDE
-    ! -> PASCAL
-    ! -> REGISTER
-    ! -> REINTRODUCE
-    ! -> SAFECALL
-    ! -> STATIC
-    ! -> STDCALL
-    ! -> VARARGS
-    ! -> VIRTUAL
-    ! -> PortabilityDirective
+    ! -> [';'] ABSTRACT
+    ! -> [';'] ASSEMBLER
+    ! -> [';'] CDECL
+    ! -> [';'] DISPID Expression
+    ! -> [';'] DYNAMIC
+    ! -> [';'] EXPORT
+    ! -> [';'] EXTERNAL [Expression (ExportsSpecifier)*]
+    ! -> [';'] FAR
+    ! -> [';'] FINAL
+    ! -> [';'] FORWARD
+    ! -> [';'] INLINE
+    ! -> [';'] LOCAL
+    ! -> [';'] MESSAGE Expression
+    ! -> [';'] NEAR
+    ! -> [';'] OVERLOAD
+    ! -> [';'] OVERRIDE
+    ! -> [';'] PASCAL
+    ! -> [';'] REGISTER
+    ! -> [';'] REINTRODUCE
+    ! -> [';'] SAFECALL
+    ! -> [';'] STATIC
+    ! -> [';'] STDCALL
+    ! -> [';'] VARARGS
+    ! -> [';'] VIRTUAL
+    ! -> [';'] PortabilityDirective
 EnumeratedType:
   Doc: |
     ! -> '(' (EnumeratedTypeElement [','])+ ')'
@@ -210,9 +215,9 @@ InterfaceSection:
     !    (InterfaceDecl)*
 InterfaceType:
   Doc: |
-    ! -> INTERFACE
+    ! -> (INTERFACE | DISPINTERFACE)
     !    ['(' QualifiedIdent ')']
-    !    ['[' <stringliteral> ']']
+    !    ['[' Expression ']']
     !    (MethodOrProperty)*
     !    END
 LabelDeclSection:
@@ -234,10 +239,13 @@ MethodHeading:
     ! -> [CLASS]
     !    (PROCEDURE | FUNCTION | CONSTRUCTOR | DESTRUCTOR)
     !    QualifiedIdent
-    !    ['(' (Parameter [';'])* ')']
-    !    [':' MethodReturnType]
+    !    (
+    !      ['(' (Parameter [';'])* ')']
+    !      [':' MethodReturnType]
+    !      (Directive)*
+    !    | '=' Ident
+    !    )
     !    ';'
-    !    (Directive ';')*
 MethodOrProperty:
   Doc: |
     ! -> MethodHeading
@@ -246,9 +254,6 @@ MethodReturnType:
   Doc: |
     ! -> QualifiedIdent
     ! -> STRING
-MethodSection:
-  Doc: |
-    ! -> (MethodOrProperty)*
 MulOp:
   Doc: |
     ! -> '*'
@@ -272,7 +277,7 @@ Package:
     !    END '.'
 PackedType:
   Doc: |
-    . -> PACKED Type
+    ! -> PACKED Type
 Parameter:
   Doc: |
     ! -> [VAR | CONST | OUT]
@@ -310,7 +315,9 @@ ProcedureType:
     ! -> (PROCEDURE | FUNCTION)
     !    ['(' (Parameter [';'])* ')']
     !    [':' MethodReturnType]
+    !    (Directive)*
     !    [OF OBJECT]
+    !    (Directive)*
 Program:
   Doc: |
     . -> (PROGRAM | LIBRARY) Ident ['(' IdentList ')'] ';'
@@ -322,28 +329,38 @@ Property:
     !    PROPERTY Ident
     !    ['[' (Parameter [';'])+ ']']
     !    [':' MethodReturnType]
-    !    [INDEX Expression]
-    !    [READ Ident]
-    !    [WRITE Ident]
-    !    [STORED Ident]
-    !    [(DEFAULT Expression) | NODEFAULT]
-    !    [IMPLEMENTS QualifiedIdent]
+    !    (PropertyDirective)*
     !    ';'
+PropertyDirective:
+  Doc: |
+    ! -> ';' DEFAULT
+    ! -> DEFAULT Expression
+    ! -> DISPID Expression
+    ! -> IMPLEMENTS Expression
+    ! -> INDEX Expression
+    ! -> NODEFAULT
+    ! -> READ Expression
+    ! -> READONLY
+    ! -> STORED Expression
+    ! -> WRITE Expression
+    ! -> WRITEONLY
 QualifiedIdent:
   Doc: |
     ! -> Ident ('.' ExtendedIdent)*
 RaiseStatement:
   Doc: |
     ! -> RAISE [Expression [AT Expression]]
-RecordType:
+RecordHelperType:
   Doc: |
-    . -> RECORD
-    .    (VisibilitySection)*
-    .    [VariantSection]
-    .    END
     . -> RECORD HELPER FOR QualifiedIdent
     .    (VisibilitySection)*
     .    END
+RecordType:
+  Doc: |
+    ! -> RECORD
+    !    (VisibilitySection)*
+    .    [VariantSection]
+    !    END
 RecVariant:
   Doc: |
     . -> ExpressionList ':'
@@ -397,7 +414,7 @@ SimpleStatement:
     . -> AssemblerStatement
 Statement:
   Doc: |
-    . -> LabelId ':' SimpleStatement
+    . -> LabelId ':' [SimpleStatement]
     . -> SimpleStatement
 StatementList:
   Doc: |
@@ -434,16 +451,19 @@ Type:
     // Note: Delphi assumes that a Type starting with '(' is an enum, not an expression.
     ! -> EnumeratedType
     ! -> ExpressionOrRange
-    . -> ArrayType
-    . -> SetType
-    . -> FileType
-    . -> RecordType
-    . -> PointerType
-    . -> StringType
-    . -> ProcedureType
-    . -> ClassType
-    . -> InterfaceType
-    . -> PackedType
+    ! -> ArrayType
+    ! -> SetType
+    ! -> FileType
+    . -> RecordHelperType
+    ! -> RecordType
+    ! -> PointerType
+    ! -> StringType
+    ! -> ProcedureType
+    . -> ClassHelperType
+    ! -> ClassOfType
+    ! -> ClassType
+    ! -> InterfaceType
+    ! -> PackedType
 TypedConstant:
   Doc: |
     ! -> Expression
@@ -452,6 +472,9 @@ TypedConstant:
 TypeDecl:
   Doc: |
     ! -> Ident '=' [TYPE] Type (PortabilityDirective)* ';'
+    ! -> Ident '=' CLASS ';'
+    ! -> Ident '=' DISPINTERFACE ';'
+    ! -> Ident '=' INTERFACE ';'
 TypeSection:
   Doc: |
     ! -> TYPE (TypeDecl)+
@@ -498,13 +521,14 @@ Visibility:
     ! -> PUBLISHED
 VisibilitySection:
   Doc: |
-    . -> [Visibility]
-    .    (
-    .      FieldSection |
-    .      MethodSection |
-    .      ConstSection |
-    .      TypeSection
-    .    )*
+    ! -> [Visibility]
+    !    (VisibilitySectionContent)*
+VisibilitySectionContent:
+  Doc: |
+    ! -> FieldSection
+    ! -> MethodOrProperty
+    ! -> ConstSection
+    ! -> TypeSection
 WhileStatement:
   Doc: |
     . -> WHILE Expression DO [Statement]

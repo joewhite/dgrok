@@ -32,8 +32,8 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
-                "  Semicolon: Semicolon |;|",
-                "  DirectiveList: ListNode"));
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
         public void TestClassMethod()
         {
@@ -47,8 +47,8 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
-                "  Semicolon: Semicolon |;|",
-                "  DirectiveList: ListNode"));
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
         public void TestProperty()
         {
@@ -62,18 +62,12 @@ namespace DGrok.Tests
                 "  CloseBracket: (none)",
                 "  Colon: Colon |:|",
                 "  Type: Identifier |Integer|",
-                "  Index: (none)",
-                "  IndexValue: (none)",
-                "  Read: ReadSemikeyword |read|",
-                "  ReadSpecifier: Identifier |FFoo|",
-                "  Write: (none)",
-                "  WriteSpecifier: (none)",
-                "  Stored: (none)",
-                "  StoredSpecifier: (none)",
-                "  Default: (none)",
-                "  DefaultValue: (none)",
-                "  Implements: (none)",
-                "  ImplementsSpecifier: (none)",
+                "  DirectiveList: ListNode",
+                "    Items[0]: DirectiveNode",
+                "      Semicolon: (none)",
+                "      Directive: ReadSemikeyword |read|",
+                "      Value: Identifier |FFoo|",
+                "      Data: ListNode",
                 "  Semicolon: Semicolon |;|"));
         }
         public void TestClassProperty()
@@ -88,18 +82,12 @@ namespace DGrok.Tests
                 "  CloseBracket: (none)",
                 "  Colon: Colon |:|",
                 "  Type: Identifier |Integer|",
-                "  Index: (none)",
-                "  IndexValue: (none)",
-                "  Read: ReadSemikeyword |read|",
-                "  ReadSpecifier: Identifier |FFoo|",
-                "  Write: (none)",
-                "  WriteSpecifier: (none)",
-                "  Stored: (none)",
-                "  StoredSpecifier: (none)",
-                "  Default: (none)",
-                "  DefaultValue: (none)",
-                "  Implements: (none)",
-                "  ImplementsSpecifier: (none)",
+                "  DirectiveList: ListNode",
+                "    Items[0]: DirectiveNode",
+                "      Semicolon: (none)",
+                "      Directive: ReadSemikeyword |read|",
+                "      Value: Identifier |FFoo|",
+                "      Data: ListNode",
                 "  Semicolon: Semicolon |;|"));
         }
     }

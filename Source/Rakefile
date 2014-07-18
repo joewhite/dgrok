@@ -6,6 +6,7 @@ version_source = IO.read("DGrok.Framework/Properties/AssemblyVersion.cs")
 version = /AssemblyVersion\(\"([^"]+)\"/.match(version_source)[1]
 CODE_VERSION = version.sub(/(\.0){1,2}$/, "")
 RELEASES_DIR = File.expand_path("Releases")
+ZIP_NAME = File.join(RELEASES_DIR, "DGrok-#{CODE_VERSION}.zip")
 
 file 'Grammar.html' => 'Grammar.yaml' do
   ruby 'MakePrettyGrammarHtml.rb'
@@ -36,19 +37,21 @@ task :tests => :build do
   sh "Bin/DGrok.Tests.exe"
 end
 
-task :upload => 'Grammar.html' do
-  print "Uploading grammar doc... "
-  STDOUT.flush
-  
+def upload(local_filename, remote_dir, selector)
   require 'net/ftp'
   require 'yaml'
   info = YAML.load_file("c:/svn/dgrok-upload.yaml")
   Net::FTP.open(info['server']) do |ftp|
     ftp.login(info['login'], info['password'])
-    ftp.chdir('dgrok')
-    ftp.puttextfile('Grammar.html')
+    ftp.chdir(remote_dir)
+    ftp.__send__(selector, local_filename)
   end
-  
+end
+
+task :upload_grammar => 'Grammar.html' do
+  print "Uploading grammar doc... "
+  STDOUT.flush
+  upload('Grammar.html', 'dgrok', :puttextfile)
   puts "Done."
 end
 
@@ -75,15 +78,21 @@ end
 
 task :zip => :image do
   mkdir_p RELEASES_DIR
-  zip_name = File.join(RELEASES_DIR, "DGrok-#{CODE_VERSION}.zip")
-  if File.exist?(zip_name)
+  if File.exist?(ZIP_NAME)
     if ENV['FORCE'] == '1'
-      rm_f zip_name
+      rm_f ZIP_NAME
     else
-      fail "Release '#{File.basename(zip_name)}' already exists. Specify FORCE=1 to overwrite."
+      fail "Release '#{File.basename(ZIP_NAME)}' already exists. Specify FORCE=1 to overwrite."
     end
   end
-  sh %Q|"#{ZIP_EXE}" a -tzip -r #{zip_name} "#{File.join(IMAGE_DIR, '*')}"|
+  sh %Q|"#{ZIP_EXE}" a -tzip -r #{ZIP_NAME} "#{File.join(IMAGE_DIR, '*')}"|
+end
+
+task :upload_zip do
+  print "Uploading release zip... "
+  STDOUT.flush
+  upload(ZIP_NAME, 'dgrok', :putbinaryfile)
+  puts "Done."
 end
 
 task :tag do
@@ -91,4 +100,8 @@ task :tag do
   trunk_url = /^URL:\s+(\S*)/.match(info)[1]
   tag_url = trunk_url.sub(/\/trunk\b/, "/tags/Release-#{CODE_VERSION}")
   sh %Q|svn cp #{trunk_url} #{tag_url} -m "Tagging release #{CODE_VERSION}"|
+end
+
+task :release => [:upload_grammar, :zip, :upload_zip, :tag] do
+  puts "Release completed."
 end

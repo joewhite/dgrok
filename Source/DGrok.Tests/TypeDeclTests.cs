@@ -55,5 +55,32 @@ namespace DGrok.Tests
                 "    Items[1]: PlatformSemikeyword |platform|",
                 "  Semicolon: Semicolon |;|"));
         }
+        public void TestClassForwardDeclaration()
+        {
+            Assert.That("Foo = class;", ParsesAs(
+                "TypeForwardDeclarationNode",
+                "  Name: Identifier |Foo|",
+                "  EqualSign: EqualSign |=|",
+                "  Type: ClassKeyword |class|",
+                "  Semicolon: Semicolon |;|"));
+        }
+        public void TestDispInterfaceForwardDeclaration()
+        {
+            Assert.That("Foo = dispinterface;", ParsesAs(
+                "TypeForwardDeclarationNode",
+                "  Name: Identifier |Foo|",
+                "  EqualSign: EqualSign |=|",
+                "  Type: DispInterfaceKeyword |dispinterface|",
+                "  Semicolon: Semicolon |;|"));
+        }
+        public void TestInterfaceForwardDeclaration()
+        {
+            Assert.That("Foo = interface;", ParsesAs(
+                "TypeForwardDeclarationNode",
+                "  Name: Identifier |Foo|",
+                "  EqualSign: EqualSign |=|",
+                "  Type: InterfaceKeyword |interface|",
+                "  Semicolon: Semicolon |;|"));
+        }
     }
 }

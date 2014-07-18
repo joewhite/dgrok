@@ -32,8 +32,8 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
-                "  Semicolon: Semicolon |;|",
-                "  DirectiveList: ListNode"));
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
         public void TestFunctionWithoutReturnType()
         {
@@ -47,8 +47,8 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
-                "  Semicolon: Semicolon |;|",
-                "  DirectiveList: ListNode"));
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
         public void TestConstructor()
         {
@@ -62,8 +62,8 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
-                "  Semicolon: Semicolon |;|",
-                "  DirectiveList: ListNode"));
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
         public void TestDestructor()
         {
@@ -77,11 +77,13 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
-                "  Semicolon: Semicolon |;|",
                 "  DirectiveList: ListNode",
-                "    Items[0]: DelimitedItemNode",
-                "      Item: OverrideSemikeyword |override|",
-                "      Delimiter: Semicolon |;|"));
+                "    Items[0]: DirectiveNode",
+                "      Semicolon: Semicolon |;|",
+                "      Directive: OverrideSemikeyword |override|",
+                "      Value: (none)",
+                "      Data: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
         public void TestMultipleDirectives()
         {
@@ -95,17 +97,23 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
-                "  Semicolon: Semicolon |;|",
                 "  DirectiveList: ListNode",
-                "    Items[0]: DelimitedItemNode",
-                "      Item: VirtualSemikeyword |virtual|",
-                "      Delimiter: Semicolon |;|",
-                "    Items[1]: DelimitedItemNode",
-                "      Item: AbstractSemikeyword |abstract|",
-                "      Delimiter: Semicolon |;|",
-                "    Items[2]: DelimitedItemNode",
-                "      Item: DeprecatedSemikeyword |deprecated|",
-                "      Delimiter: Semicolon |;|"));
+                "    Items[0]: DirectiveNode",
+                "      Semicolon: Semicolon |;|",
+                "      Directive: VirtualSemikeyword |virtual|",
+                "      Value: (none)",
+                "      Data: ListNode",
+                "    Items[1]: DirectiveNode",
+                "      Semicolon: Semicolon |;|",
+                "      Directive: AbstractSemikeyword |abstract|",
+                "      Value: (none)",
+                "      Data: ListNode",
+                "    Items[2]: DirectiveNode",
+                "      Semicolon: Semicolon |;|",
+                "      Directive: DeprecatedSemikeyword |deprecated|",
+                "      Value: (none)",
+                "      Data: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
         public void TestQualifiedName()
         {
@@ -122,8 +130,8 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
-                "  Semicolon: Semicolon |;|",
-                "  DirectiveList: ListNode"));
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
         public void TestEmptyParameterList()
         {
@@ -137,8 +145,8 @@ namespace DGrok.Tests
                 "  CloseParenthesis: CloseParenthesis |)|",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
-                "  Semicolon: Semicolon |;|",
-                "  DirectiveList: ListNode"));
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
         public void TestParameters()
         {
@@ -176,8 +184,8 @@ namespace DGrok.Tests
                 "  CloseParenthesis: CloseParenthesis |)|",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
-                "  Semicolon: Semicolon |;|",
-                "  DirectiveList: ListNode"));
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
         public void TestReturnType()
         {
@@ -191,8 +199,8 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: Colon |:|",
                 "  ReturnType: Identifier |Boolean|",
-                "  Semicolon: Semicolon |;|",
-                "  DirectiveList: ListNode"));
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
         public void TestClassProcedure()
         {
@@ -206,8 +214,8 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: (none)",
                 "  ReturnType: (none)",
-                "  Semicolon: Semicolon |;|",
-                "  DirectiveList: ListNode"));
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
         }
         public void TestClassFunction()
         {
@@ -221,8 +229,21 @@ namespace DGrok.Tests
                 "  CloseParenthesis: (none)",
                 "  Colon: Colon |:|",
                 "  ReturnType: Identifier |Integer|",
-                "  Semicolon: Semicolon |;|",
-                "  DirectiveList: ListNode"));
+                "  DirectiveList: ListNode",
+                "  Semicolon: Semicolon |;|"));
+        }
+        public void TestMethodResolution()
+        {
+            Assert.That("procedure IFoo.Bar = Baz;", ParsesAs(
+                "MethodResolutionNode",
+                "  MethodType: ProcedureKeyword |procedure|",
+                "  InterfaceMethod: BinaryOperationNode",
+                "    Left: Identifier |IFoo|",
+                "    Operator: Dot |.|",
+                "    Right: Identifier |Bar|",
+                "  EqualSign: EqualSign |=|",
+                "  ImplementationMethod: Identifier |Baz|",
+                "  Semicolon: Semicolon |;|"));
         }
     }
 }

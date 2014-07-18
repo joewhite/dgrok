@@ -14,28 +14,29 @@ I've written a working parser for. Solid underline means
 that rule is completely implemented in my parser; broken
 underline means partly implemented; no underline means
 something I haven't started yet.</p>
-<p><b>Current status:</b> Completed 64 rules of 95 = 67% complete.</p>
-<p>Last updated Sat Sep 15 20:35:45 Central Daylight Time 2007.</p>
+<p><b>Current status:</b> Completed 69 rules of 99 = 69% complete.</p>
+<p>Last updated Sun Sep 23 21:08:19 Central Daylight Time 2007.</p>
 <p>&mdash; <a href='http://www.excastle.com/blog/'>Joe White</a></p>
 <h2><a name='toc'>Table of Contents</a></h2>
 <div class="toc">
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
-<tr><td><a href="#AddOp" class="complete">AddOp</a></td><td><a href="#ExceptionItem" class="normal">ExceptionItem</a></td><td><a href="#Goal" class="started">Goal</a></td><td><a href="#MethodSection" class="complete">MethodSection</a></td><td><a href="#RecordType" class="normal">RecordType</a></td><td><a href="#Type" class="started">Type</a></td></tr>
-<tr><td><a href="#ArrayType" class="complete">ArrayType</a></td><td><a href="#ExceptionItemList" class="normal">ExceptionItemList</a></td><td><a href="#GotoStatement" class="complete">GotoStatement</a></td><td><a href="#MulOp" class="complete">MulOp</a></td><td><a href="#RecVariant" class="normal">RecVariant</a></td><td><a href="#TypedConstant" class="complete">TypedConstant</a></td></tr>
-<tr><td><a href="#AssemblerStatement" class="complete">AssemblerStatement</a></td><td><a href="#ExportsItem" class="complete">ExportsItem</a></td><td><a href="#Ident" class="complete">Ident</a></td><td><a href="#OpenArray" class="complete">OpenArray</a></td><td><a href="#RelOp" class="complete">RelOp</a></td><td><a href="#TypeDecl" class="complete">TypeDecl</a></td></tr>
-<tr><td><a href="#Atom" class="complete">Atom</a></td><td><a href="#ExportsSpecifier" class="complete">ExportsSpecifier</a></td><td><a href="#IdentList" class="complete">IdentList</a></td><td><a href="#Package" class="complete">Package</a></td><td><a href="#RepeatStatement" class="normal">RepeatStatement</a></td><td><a href="#TypeSection" class="complete">TypeSection</a></td></tr>
-<tr><td><a href="#Block" class="normal">Block</a></td><td><a href="#ExportsStatement" class="complete">ExportsStatement</a></td><td><a href="#IfStatement" class="normal">IfStatement</a></td><td><a href="#PackedType" class="normal">PackedType</a></td><td><a href="#RequiresClause" class="complete">RequiresClause</a></td><td><a href="#UnaryOperator" class="complete">UnaryOperator</a></td></tr>
-<tr><td><a href="#CaseSelector" class="normal">CaseSelector</a></td><td><a href="#Expression" class="complete">Expression</a></td><td><a href="#ImplementationSection" class="started">ImplementationSection</a></td><td><a href="#Parameter" class="complete">Parameter</a></td><td><a href="#SetLiteral" class="complete">SetLiteral</a></td><td><a href="#Unit" class="complete">Unit</a></td></tr>
-<tr><td><a href="#CaseSelectorList" class="normal">CaseSelectorList</a></td><td><a href="#ExpressionList" class="complete">ExpressionList</a></td><td><a href="#InitSection" class="started">InitSection</a></td><td><a href="#ParameterType" class="complete">ParameterType</a></td><td><a href="#SetType" class="complete">SetType</a></td><td><a href="#UsedUnit" class="complete">UsedUnit</a></td></tr>
-<tr><td><a href="#CaseStatement" class="normal">CaseStatement</a></td><td><a href="#ExpressionOrRange" class="complete">ExpressionOrRange</a></td><td><a href="#InterfaceDecl" class="complete">InterfaceDecl</a></td><td><a href="#ParenthesizedExpression" class="complete">ParenthesizedExpression</a></td><td><a href="#SimpleExpression" class="complete">SimpleExpression</a></td><td><a href="#UsesClause" class="complete">UsesClause</a></td></tr>
-<tr><td><a href="#ClassType" class="normal">ClassType</a></td><td><a href="#ExpressionOrRangeList" class="complete">ExpressionOrRangeList</a></td><td><a href="#InterfaceSection" class="complete">InterfaceSection</a></td><td><a href="#Particle" class="complete">Particle</a></td><td><a href="#SimpleStatement" class="normal">SimpleStatement</a></td><td><a href="#VarDecl" class="complete">VarDecl</a></td></tr>
-<tr><td><a href="#ConstantDecl" class="complete">ConstantDecl</a></td><td><a href="#ExtendedIdent" class="complete">ExtendedIdent</a></td><td><a href="#InterfaceType" class="complete">InterfaceType</a></td><td><a href="#PointerType" class="complete">PointerType</a></td><td><a href="#Statement" class="normal">Statement</a></td><td><a href="#VariantSection" class="normal">VariantSection</a></td></tr>
-<tr><td><a href="#ConstSection" class="complete">ConstSection</a></td><td><a href="#Factor" class="complete">Factor</a></td><td><a href="#LabelDeclSection" class="complete">LabelDeclSection</a></td><td><a href="#PortabilityDirective" class="complete">PortabilityDirective</a></td><td><a href="#StatementList" class="normal">StatementList</a></td><td><a href="#VarSection" class="complete">VarSection</a></td></tr>
-<tr><td><a href="#ContainsClause" class="complete">ContainsClause</a></td><td><a href="#FancyBlock" class="normal">FancyBlock</a></td><td><a href="#LabelId" class="complete">LabelId</a></td><td><a href="#ProcedureType" class="complete">ProcedureType</a></td><td><a href="#StringType" class="complete">StringType</a></td><td><a href="#Visibility" class="complete">Visibility</a></td></tr>
-<tr><td><a href="#DeclSection" class="normal">DeclSection</a></td><td><a href="#FieldDecl" class="complete">FieldDecl</a></td><td><a href="#MethodDecl" class="normal">MethodDecl</a></td><td><a href="#Program" class="normal">Program</a></td><td><a href="#Term" class="complete">Term</a></td><td><a href="#VisibilitySection" class="normal">VisibilitySection</a></td></tr>
-<tr><td><a href="#Directive" class="complete">Directive</a></td><td><a href="#FieldSection" class="complete">FieldSection</a></td><td><a href="#MethodHeading" class="complete">MethodHeading</a></td><td><a href="#Property" class="complete">Property</a></td><td><a href="#ToBeDetermined" class="normal">ToBeDetermined</a></td><td><a href="#WhileStatement" class="normal">WhileStatement</a></td></tr>
-<tr><td><a href="#EnumeratedType" class="complete">EnumeratedType</a></td><td><a href="#FileType" class="complete">FileType</a></td><td><a href="#MethodOrProperty" class="complete">MethodOrProperty</a></td><td><a href="#QualifiedIdent" class="complete">QualifiedIdent</a></td><td><a href="#TryExceptStatement" class="normal">TryExceptStatement</a></td><td><a href="#WithStatement" class="normal">WithStatement</a></td></tr>
-<tr><td><a href="#EnumeratedTypeElement" class="complete">EnumeratedTypeElement</a></td><td><a href="#ForStatement" class="normal">ForStatement</a></td><td><a href="#MethodReturnType" class="complete">MethodReturnType</a></td><td><a href="#RaiseStatement" class="complete">RaiseStatement</a></td><td><a href="#TryFinallyStatement" class="normal">TryFinallyStatement</a></td></tr>
+<tr><td><a href="#AddOp" class="complete">AddOp</a></td><td><a href="#EnumeratedTypeElement" class="complete">EnumeratedTypeElement</a></td><td><a href="#Goal" class="started">Goal</a></td><td><a href="#OpenArray" class="complete">OpenArray</a></td><td><a href="#RecVariant" class="normal">RecVariant</a></td><td><a href="#TypeDecl" class="complete">TypeDecl</a></td></tr>
+<tr><td><a href="#ArrayType" class="complete">ArrayType</a></td><td><a href="#ExceptionItem" class="normal">ExceptionItem</a></td><td><a href="#GotoStatement" class="complete">GotoStatement</a></td><td><a href="#Package" class="complete">Package</a></td><td><a href="#RelOp" class="complete">RelOp</a></td><td><a href="#TypeSection" class="complete">TypeSection</a></td></tr>
+<tr><td><a href="#AssemblerStatement" class="complete">AssemblerStatement</a></td><td><a href="#ExceptionItemList" class="normal">ExceptionItemList</a></td><td><a href="#Ident" class="complete">Ident</a></td><td><a href="#PackedType" class="complete">PackedType</a></td><td><a href="#RepeatStatement" class="normal">RepeatStatement</a></td><td><a href="#UnaryOperator" class="complete">UnaryOperator</a></td></tr>
+<tr><td><a href="#Atom" class="complete">Atom</a></td><td><a href="#ExportsItem" class="complete">ExportsItem</a></td><td><a href="#IdentList" class="complete">IdentList</a></td><td><a href="#Parameter" class="complete">Parameter</a></td><td><a href="#RequiresClause" class="complete">RequiresClause</a></td><td><a href="#Unit" class="complete">Unit</a></td></tr>
+<tr><td><a href="#Block" class="normal">Block</a></td><td><a href="#ExportsSpecifier" class="complete">ExportsSpecifier</a></td><td><a href="#IfStatement" class="normal">IfStatement</a></td><td><a href="#ParameterType" class="complete">ParameterType</a></td><td><a href="#SetLiteral" class="complete">SetLiteral</a></td><td><a href="#UsedUnit" class="complete">UsedUnit</a></td></tr>
+<tr><td><a href="#CaseSelector" class="normal">CaseSelector</a></td><td><a href="#ExportsStatement" class="complete">ExportsStatement</a></td><td><a href="#ImplementationSection" class="started">ImplementationSection</a></td><td><a href="#ParenthesizedExpression" class="complete">ParenthesizedExpression</a></td><td><a href="#SetType" class="complete">SetType</a></td><td><a href="#UsesClause" class="complete">UsesClause</a></td></tr>
+<tr><td><a href="#CaseSelectorList" class="normal">CaseSelectorList</a></td><td><a href="#Expression" class="complete">Expression</a></td><td><a href="#InitSection" class="started">InitSection</a></td><td><a href="#Particle" class="complete">Particle</a></td><td><a href="#SimpleExpression" class="complete">SimpleExpression</a></td><td><a href="#VarDecl" class="complete">VarDecl</a></td></tr>
+<tr><td><a href="#CaseStatement" class="normal">CaseStatement</a></td><td><a href="#ExpressionList" class="complete">ExpressionList</a></td><td><a href="#InterfaceDecl" class="complete">InterfaceDecl</a></td><td><a href="#PointerType" class="complete">PointerType</a></td><td><a href="#SimpleStatement" class="normal">SimpleStatement</a></td><td><a href="#VariantSection" class="normal">VariantSection</a></td></tr>
+<tr><td><a href="#ClassHelperType" class="normal">ClassHelperType</a></td><td><a href="#ExpressionOrRange" class="complete">ExpressionOrRange</a></td><td><a href="#InterfaceSection" class="complete">InterfaceSection</a></td><td><a href="#PortabilityDirective" class="complete">PortabilityDirective</a></td><td><a href="#Statement" class="normal">Statement</a></td><td><a href="#VarSection" class="complete">VarSection</a></td></tr>
+<tr><td><a href="#ClassOfType" class="complete">ClassOfType</a></td><td><a href="#ExpressionOrRangeList" class="complete">ExpressionOrRangeList</a></td><td><a href="#InterfaceType" class="complete">InterfaceType</a></td><td><a href="#ProcedureType" class="complete">ProcedureType</a></td><td><a href="#StatementList" class="normal">StatementList</a></td><td><a href="#Visibility" class="complete">Visibility</a></td></tr>
+<tr><td><a href="#ClassType" class="complete">ClassType</a></td><td><a href="#ExtendedIdent" class="complete">ExtendedIdent</a></td><td><a href="#LabelDeclSection" class="complete">LabelDeclSection</a></td><td><a href="#Program" class="normal">Program</a></td><td><a href="#StringType" class="complete">StringType</a></td><td><a href="#VisibilitySection" class="complete">VisibilitySection</a></td></tr>
+<tr><td><a href="#ConstantDecl" class="complete">ConstantDecl</a></td><td><a href="#Factor" class="complete">Factor</a></td><td><a href="#LabelId" class="complete">LabelId</a></td><td><a href="#Property" class="complete">Property</a></td><td><a href="#Term" class="complete">Term</a></td><td><a href="#VisibilitySectionContent" class="complete">VisibilitySectionContent</a></td></tr>
+<tr><td><a href="#ConstSection" class="complete">ConstSection</a></td><td><a href="#FancyBlock" class="normal">FancyBlock</a></td><td><a href="#MethodDecl" class="normal">MethodDecl</a></td><td><a href="#PropertyDirective" class="complete">PropertyDirective</a></td><td><a href="#ToBeDetermined" class="normal">ToBeDetermined</a></td><td><a href="#WhileStatement" class="normal">WhileStatement</a></td></tr>
+<tr><td><a href="#ContainsClause" class="complete">ContainsClause</a></td><td><a href="#FieldDecl" class="complete">FieldDecl</a></td><td><a href="#MethodHeading" class="complete">MethodHeading</a></td><td><a href="#QualifiedIdent" class="complete">QualifiedIdent</a></td><td><a href="#TryExceptStatement" class="normal">TryExceptStatement</a></td><td><a href="#WithStatement" class="normal">WithStatement</a></td></tr>
+<tr><td><a href="#DeclSection" class="normal">DeclSection</a></td><td><a href="#FieldSection" class="complete">FieldSection</a></td><td><a href="#MethodOrProperty" class="complete">MethodOrProperty</a></td><td><a href="#RaiseStatement" class="complete">RaiseStatement</a></td><td><a href="#TryFinallyStatement" class="normal">TryFinallyStatement</a></td></tr>
+<tr><td><a href="#Directive" class="complete">Directive</a></td><td><a href="#FileType" class="complete">FileType</a></td><td><a href="#MethodReturnType" class="complete">MethodReturnType</a></td><td><a href="#RecordHelperType" class="normal">RecordHelperType</a></td><td><a href="#Type" class="started">Type</a></td></tr>
+<tr><td><a href="#EnumeratedType" class="complete">EnumeratedType</a></td><td><a href="#ForStatement" class="normal">ForStatement</a></td><td><a href="#MulOp" class="complete">MulOp</a></td><td><a href="#RecordType" class="started">RecordType</a></td><td><a href="#TypedConstant" class="complete">TypedConstant</a></td></tr>
 </table>
 </div>
 <h2>Likely Targets (2)</h2>
@@ -44,7 +45,7 @@ and are likely targets to be implemented next. Numbers
 in parentheses show how many places the rule is used.</p>
 <div class="toc">
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
-<tr><td><a href="#PackedType" class="normal">PackedType (1)</a></td><td><a href="#VisibilitySection" class="normal">VisibilitySection (2)</a></td></tr>
+<tr><td><a href="#ClassHelperType" class="normal">ClassHelperType (1)</a></td><td><a href="#RecordHelperType" class="normal">RecordHelperType (1)</a></td></tr>
 </table>
 </div>
 <h2 class="complete"><a name="AddOp"></a><a href="#AddOp" class="black">AddOp</a> <a href="#toc" class="backtotop">[^]</a>
@@ -85,28 +86,33 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> <a href="#CaseSelectorList" class="normal">CaseSelectorList</a></div>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [ELSE [<a href="#StatementList" class="normal">StatementList</a>]]</div>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> END</div>
-<h2 class="normal"><a name="ClassType"></a><a href="#ClassType" class="black">ClassType</a> <a href="#toc" class="backtotop">[^]</a>
+<h2 class="normal"><a name="ClassHelperType"></a><a href="#ClassHelperType" class="black">ClassHelperType</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Type" class="started">Type</a></div></h2>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> CLASS</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [ABSTRACT | SEALED]</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>(</b></tt>' <a href="#Ident" class="complete">Ident</a> ['<tt class=literal><b>,</b></tt>' <a href="#IdentList" class="complete">IdentList</a>] '<tt class=literal><b>)</b></tt>']</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#VisibilitySection" class="normal">VisibilitySection</a>)*</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> END</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> CLASS OF <a href="#QualifiedIdent" class="complete">QualifiedIdent</a></div>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> CLASS HELPER</div>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>(</b></tt>' <a href="#Ident" class="complete">Ident</a> '<tt class=literal><b>)</b></tt>']</div>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> FOR <a href="#QualifiedIdent" class="complete">QualifiedIdent</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#VisibilitySection" class="normal">VisibilitySection</a>)*</div>
+<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#VisibilitySection" class="complete">VisibilitySection</a>)*</div>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> END</div>
+<h2 class="complete"><a name="ClassOfType"></a><a href="#ClassOfType" class="black">ClassOfType</a> <a href="#toc" class="backtotop">[^]</a>
+<div class="backlinks">Backlinks: <a href="#Type" class="started">Type</a></div></h2>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> CLASS OF <a href="#QualifiedIdent" class="complete">QualifiedIdent</a></div>
+<h2 class="complete"><a name="ClassType"></a><a href="#ClassType" class="black">ClassType</a> <a href="#toc" class="backtotop">[^]</a>
+<div class="backlinks">Backlinks: <a href="#Type" class="started">Type</a></div></h2>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> CLASS</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [ABSTRACT | SEALED]</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>(</b></tt>' (<a href="#QualifiedIdent" class="complete">QualifiedIdent</a> ['<tt class=literal><b>,</b></tt>'])+ '<tt class=literal><b>)</b></tt>']</div>
+<p>The remainder is optional, but only if the base class is specified and lookahead shows that the next token is a semicolon</p>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#VisibilitySection" class="complete">VisibilitySection</a>)*</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> END</div>
 <h2 class="complete"><a name="ConstantDecl"></a><a href="#ConstantDecl" class="black">ConstantDecl</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#ConstSection" class="complete">ConstSection</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Ident" class="complete">Ident</a></div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>:</b></tt>' <a href="#QualifiedIdent" class="complete">QualifiedIdent</a>]</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>:</b></tt>' <a href="#Type" class="started">Type</a>]</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> '<tt class=literal><b>=</b></tt>' <a href="#TypedConstant" class="complete">TypedConstant</a></div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#PortabilityDirective" class="complete">PortabilityDirective</a>)*</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> '<tt class=literal><b>;</b></tt>'</div>
 <h2 class="complete"><a name="ConstSection"></a><a href="#ConstSection" class="black">ConstSection</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#DeclSection" class="normal">DeclSection</a>, <a href="#InterfaceDecl" class="complete">InterfaceDecl</a>, <a href="#VisibilitySection" class="normal">VisibilitySection</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#DeclSection" class="normal">DeclSection</a>, <a href="#InterfaceDecl" class="complete">InterfaceDecl</a>, <a href="#VisibilitySectionContent" class="complete">VisibilitySectionContent</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> (CONST|RESOURCESTRING)</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#ConstantDecl" class="complete">ConstantDecl</a>)+</div>
 <h2 class="complete"><a name="ContainsClause"></a><a href="#ContainsClause" class="black">ContainsClause</a> <a href="#toc" class="backtotop">[^]</a>
@@ -121,32 +127,32 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#MethodDecl" class="normal">MethodDecl</a></div>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#ExportsStatement" class="complete">ExportsStatement</a></div>
 <h2 class="complete"><a name="Directive"></a><a href="#Directive" class="black">Directive</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#MethodHeading" class="complete">MethodHeading</a></div></h2>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ABSTRACT</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ASSEMBLER</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> CDECL</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> DISPID <a href="#Expression" class="complete">Expression</a></div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> DYNAMIC</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> EXPORT</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> EXTERNAL [<a href="#Expression" class="complete">Expression</a> (<a href="#ExportsSpecifier" class="complete">ExportsSpecifier</a>)*]</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> FAR</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> FINAL</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> FORWARD</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> INLINE</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> LOCAL</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> MESSAGE <a href="#Expression" class="complete">Expression</a></div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> NEAR</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> OVERLOAD</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> OVERRIDE</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> PASCAL</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> REGISTER</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> REINTRODUCE</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> SAFECALL</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> STATIC</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> STDCALL</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> VARARGS</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> VIRTUAL</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#PortabilityDirective" class="complete">PortabilityDirective</a></div>
+<div class="backlinks">Backlinks: <a href="#MethodHeading" class="complete">MethodHeading</a>, <a href="#ProcedureType" class="complete">ProcedureType</a></div></h2>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] ABSTRACT</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] ASSEMBLER</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] CDECL</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] DISPID <a href="#Expression" class="complete">Expression</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] DYNAMIC</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] EXPORT</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] EXTERNAL [<a href="#Expression" class="complete">Expression</a> (<a href="#ExportsSpecifier" class="complete">ExportsSpecifier</a>)*]</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] FAR</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] FINAL</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] FORWARD</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] INLINE</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] LOCAL</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] MESSAGE <a href="#Expression" class="complete">Expression</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] NEAR</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] OVERLOAD</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] OVERRIDE</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] PASCAL</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] REGISTER</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] REINTRODUCE</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] SAFECALL</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] STATIC</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] STDCALL</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] VARARGS</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] VIRTUAL</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] <a href="#PortabilityDirective" class="complete">PortabilityDirective</a></div>
 <h2 class="complete"><a name="EnumeratedType"></a><a href="#EnumeratedType" class="black">EnumeratedType</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Type" class="started">Type</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> '<tt class=literal><b>(</b></tt>' (<a href="#EnumeratedTypeElement" class="complete">EnumeratedTypeElement</a> ['<tt class=literal><b>,</b></tt>'])+ '<tt class=literal><b>)</b></tt>'</div>
@@ -169,7 +175,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="backlinks">Backlinks: <a href="#DeclSection" class="normal">DeclSection</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> EXPORTS (<a href="#ExportsItem" class="complete">ExportsItem</a> ['<tt class=literal><b>,</b></tt>'])+ '<tt class=literal><b>;</b></tt>'</div>
 <h2 class="complete"><a name="Expression"></a><a href="#Expression" class="black">Expression</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#CaseStatement" class="normal">CaseStatement</a>, <a href="#Directive" class="complete">Directive</a>, <a href="#EnumeratedTypeElement" class="complete">EnumeratedTypeElement</a>, <a href="#ExportsSpecifier" class="complete">ExportsSpecifier</a>, <a href="#ExpressionList" class="complete">ExpressionList</a>, <a href="#ForStatement" class="normal">ForStatement</a>, <a href="#IfStatement" class="normal">IfStatement</a>, <a href="#Parameter" class="complete">Parameter</a>, <a href="#ParenthesizedExpression" class="complete">ParenthesizedExpression</a>, <a href="#Property" class="complete">Property</a>, <a href="#RaiseStatement" class="complete">RaiseStatement</a>, <a href="#RepeatStatement" class="normal">RepeatStatement</a>, <a href="#SimpleStatement" class="normal">SimpleStatement</a>, <a href="#StringType" class="complete">StringType</a>, <a href="#TypedConstant" class="complete">TypedConstant</a>, <a href="#VarDecl" class="complete">VarDecl</a>, <a href="#WhileStatement" class="normal">WhileStatement</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#CaseStatement" class="normal">CaseStatement</a>, <a href="#Directive" class="complete">Directive</a>, <a href="#EnumeratedTypeElement" class="complete">EnumeratedTypeElement</a>, <a href="#ExportsSpecifier" class="complete">ExportsSpecifier</a>, <a href="#ExpressionList" class="complete">ExpressionList</a>, <a href="#ForStatement" class="normal">ForStatement</a>, <a href="#IfStatement" class="normal">IfStatement</a>, <a href="#InterfaceType" class="complete">InterfaceType</a>, <a href="#Parameter" class="complete">Parameter</a>, <a href="#ParenthesizedExpression" class="complete">ParenthesizedExpression</a>, <a href="#PropertyDirective" class="complete">PropertyDirective</a>, <a href="#RaiseStatement" class="complete">RaiseStatement</a>, <a href="#RepeatStatement" class="normal">RepeatStatement</a>, <a href="#SimpleStatement" class="normal">SimpleStatement</a>, <a href="#StringType" class="complete">StringType</a>, <a href="#TypedConstant" class="complete">TypedConstant</a>, <a href="#VarDecl" class="complete">VarDecl</a>, <a href="#WhileStatement" class="normal">WhileStatement</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#SimpleExpression" class="complete">SimpleExpression</a> (<a href="#RelOp" class="complete">RelOp</a> <a href="#SimpleExpression" class="complete">SimpleExpression</a>)*</div>
 <h2 class="complete"><a name="ExpressionList"></a><a href="#ExpressionList" class="black">ExpressionList</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Atom" class="complete">Atom</a>, <a href="#RecVariant" class="normal">RecVariant</a>, <a href="#WithStatement" class="normal">WithStatement</a></div></h2>
@@ -196,7 +202,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="backlinks">Backlinks: <a href="#FieldSection" class="complete">FieldSection</a>, <a href="#RecVariant" class="normal">RecVariant</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#IdentList" class="complete">IdentList</a> '<tt class=literal><b>:</b></tt>' <a href="#Type" class="started">Type</a> (<a href="#PortabilityDirective" class="complete">PortabilityDirective</a>)* '<tt class=literal><b>;</b></tt>'</div>
 <h2 class="complete"><a name="FieldSection"></a><a href="#FieldSection" class="black">FieldSection</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#VisibilitySection" class="normal">VisibilitySection</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#VisibilitySectionContent" class="complete">VisibilitySectionContent</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> [[CLASS] VAR]</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#FieldDecl" class="complete">FieldDecl</a>)*</div>
 <h2 class="complete"><a name="FileType"></a><a href="#FileType" class="black">FileType</a> <a href="#toc" class="backtotop">[^]</a>
@@ -214,14 +220,14 @@ in parentheses show how many places the rule is used.</p>
 <div class="backlinks">Backlinks: <a href="#SimpleStatement" class="normal">SimpleStatement</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> GOTO <a href="#LabelId" class="complete">LabelId</a></div>
 <h2 class="complete"><a name="Ident"></a><a href="#Ident" class="black">Ident</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#ClassType" class="normal">ClassType</a>, <a href="#ConstantDecl" class="complete">ConstantDecl</a>, <a href="#EnumeratedTypeElement" class="complete">EnumeratedTypeElement</a>, <a href="#ExceptionItem" class="normal">ExceptionItem</a>, <a href="#ExportsItem" class="complete">ExportsItem</a>, <a href="#ExtendedIdent" class="complete">ExtendedIdent</a>, <a href="#ForStatement" class="normal">ForStatement</a>, <a href="#IdentList" class="complete">IdentList</a>, <a href="#LabelId" class="complete">LabelId</a>, <a href="#Package" class="complete">Package</a>, <a href="#Particle" class="complete">Particle</a>, <a href="#Program" class="normal">Program</a>, <a href="#Property" class="complete">Property</a>, <a href="#QualifiedIdent" class="complete">QualifiedIdent</a>, <a href="#TypeDecl" class="complete">TypeDecl</a>, <a href="#Unit" class="complete">Unit</a>, <a href="#UsedUnit" class="complete">UsedUnit</a>, <a href="#VariantSection" class="normal">VariantSection</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#ClassHelperType" class="normal">ClassHelperType</a>, <a href="#ConstantDecl" class="complete">ConstantDecl</a>, <a href="#EnumeratedTypeElement" class="complete">EnumeratedTypeElement</a>, <a href="#ExceptionItem" class="normal">ExceptionItem</a>, <a href="#ExportsItem" class="complete">ExportsItem</a>, <a href="#ExtendedIdent" class="complete">ExtendedIdent</a>, <a href="#ForStatement" class="normal">ForStatement</a>, <a href="#IdentList" class="complete">IdentList</a>, <a href="#LabelId" class="complete">LabelId</a>, <a href="#MethodHeading" class="complete">MethodHeading</a>, <a href="#Package" class="complete">Package</a>, <a href="#Particle" class="complete">Particle</a>, <a href="#Program" class="normal">Program</a>, <a href="#Property" class="complete">Property</a>, <a href="#QualifiedIdent" class="complete">QualifiedIdent</a>, <a href="#TypeDecl" class="complete">TypeDecl</a>, <a href="#Unit" class="complete">Unit</a>, <a href="#UsedUnit" class="complete">UsedUnit</a>, <a href="#VariantSection" class="normal">VariantSection</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> &lt;identifier&gt;</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> &lt;semikeyword&gt;</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> '&amp;' &lt;identifier&gt;</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> '&amp;' &lt;semikeyword&gt;</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> '&amp;' &lt;keyword&gt;</div>
 <h2 class="complete"><a name="IdentList"></a><a href="#IdentList" class="black">IdentList</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#ClassType" class="normal">ClassType</a>, <a href="#ContainsClause" class="complete">ContainsClause</a>, <a href="#FieldDecl" class="complete">FieldDecl</a>, <a href="#Parameter" class="complete">Parameter</a>, <a href="#Program" class="normal">Program</a>, <a href="#RequiresClause" class="complete">RequiresClause</a>, <a href="#VarDecl" class="complete">VarDecl</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#ContainsClause" class="complete">ContainsClause</a>, <a href="#FieldDecl" class="complete">FieldDecl</a>, <a href="#Parameter" class="complete">Parameter</a>, <a href="#Program" class="normal">Program</a>, <a href="#RequiresClause" class="complete">RequiresClause</a>, <a href="#VarDecl" class="complete">VarDecl</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> (<a href="#Ident" class="complete">Ident</a> ['<tt class=literal><b>,</b></tt>'])+</div>
 <h2 class="normal"><a name="IfStatement"></a><a href="#IfStatement" class="black">IfStatement</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#SimpleStatement" class="normal">SimpleStatement</a></div></h2>
@@ -257,9 +263,9 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#InterfaceDecl" class="complete">InterfaceDecl</a>)*</div>
 <h2 class="complete"><a name="InterfaceType"></a><a href="#InterfaceType" class="black">InterfaceType</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Type" class="started">Type</a></div></h2>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> INTERFACE</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> (INTERFACE | DISPINTERFACE)</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>(</b></tt>' <a href="#QualifiedIdent" class="complete">QualifiedIdent</a> '<tt class=literal><b>)</b></tt>']</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>[</b></tt>' &lt;stringliteral&gt; '<tt class=literal><b>]</b></tt>']</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>[</b></tt>' <a href="#Expression" class="complete">Expression</a> '<tt class=literal><b>]</b></tt>']</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#MethodOrProperty" class="complete">MethodOrProperty</a>)*</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> END</div>
 <h2 class="complete"><a name="LabelDeclSection"></a><a href="#LabelDeclSection" class="black">LabelDeclSection</a> <a href="#toc" class="backtotop">[^]</a>
@@ -281,21 +287,21 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> [CLASS]</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (PROCEDURE | FUNCTION | CONSTRUCTOR | DESTRUCTOR)</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> <a href="#QualifiedIdent" class="complete">QualifiedIdent</a></div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>(</b></tt>' (<a href="#Parameter" class="complete">Parameter</a> ['<tt class=literal><b>;</b></tt>'])* '<tt class=literal><b>)</b></tt>']</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>:</b></tt>' <a href="#MethodReturnType" class="complete">MethodReturnType</a>]</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt>   ['<tt class=literal><b>(</b></tt>' (<a href="#Parameter" class="complete">Parameter</a> ['<tt class=literal><b>;</b></tt>'])* '<tt class=literal><b>)</b></tt>']</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt>   ['<tt class=literal><b>:</b></tt>' <a href="#MethodReturnType" class="complete">MethodReturnType</a>]</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt>   (<a href="#Directive" class="complete">Directive</a>)*</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> | '<tt class=literal><b>=</b></tt>' <a href="#Ident" class="complete">Ident</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> )</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> '<tt class=literal><b>;</b></tt>'</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#Directive" class="complete">Directive</a> '<tt class=literal><b>;</b></tt>')*</div>
 <h2 class="complete"><a name="MethodOrProperty"></a><a href="#MethodOrProperty" class="black">MethodOrProperty</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#InterfaceType" class="complete">InterfaceType</a>, <a href="#MethodSection" class="complete">MethodSection</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#InterfaceType" class="complete">InterfaceType</a>, <a href="#VisibilitySectionContent" class="complete">VisibilitySectionContent</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#MethodHeading" class="complete">MethodHeading</a></div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Property" class="complete">Property</a></div>
 <h2 class="complete"><a name="MethodReturnType"></a><a href="#MethodReturnType" class="black">MethodReturnType</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#MethodHeading" class="complete">MethodHeading</a>, <a href="#ProcedureType" class="complete">ProcedureType</a>, <a href="#Property" class="complete">Property</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#QualifiedIdent" class="complete">QualifiedIdent</a></div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> STRING</div>
-<h2 class="complete"><a name="MethodSection"></a><a href="#MethodSection" class="black">MethodSection</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#VisibilitySection" class="normal">VisibilitySection</a></div></h2>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> (<a href="#MethodOrProperty" class="complete">MethodOrProperty</a>)*</div>
 <h2 class="complete"><a name="MulOp"></a><a href="#MulOp" class="black">MulOp</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Term" class="complete">Term</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> '<tt class=literal><b>*</b></tt>'</div>
@@ -317,9 +323,9 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [<a href="#RequiresClause" class="complete">RequiresClause</a>]</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [<a href="#ContainsClause" class="complete">ContainsClause</a>]</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> END '<tt class=literal><b>.</b></tt>'</div>
-<h2 class="normal"><a name="PackedType"></a><a href="#PackedType" class="black">PackedType</a> <a href="#toc" class="backtotop">[^]</a>
+<h2 class="complete"><a name="PackedType"></a><a href="#PackedType" class="black">PackedType</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Type" class="started">Type</a></div></h2>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> PACKED <a href="#Type" class="started">Type</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> PACKED <a href="#Type" class="started">Type</a></div>
 <h2 class="complete"><a name="Parameter"></a><a href="#Parameter" class="black">Parameter</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#MethodHeading" class="complete">MethodHeading</a>, <a href="#ProcedureType" class="complete">ProcedureType</a>, <a href="#Property" class="complete">Property</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> [VAR | CONST | OUT]</div>
@@ -357,7 +363,9 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> (PROCEDURE | FUNCTION)</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>(</b></tt>' (<a href="#Parameter" class="complete">Parameter</a> ['<tt class=literal><b>;</b></tt>'])* '<tt class=literal><b>)</b></tt>']</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>:</b></tt>' <a href="#MethodReturnType" class="complete">MethodReturnType</a>]</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#Directive" class="complete">Directive</a>)*</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [OF OBJECT]</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#Directive" class="complete">Directive</a>)*</div>
 <h2 class="normal"><a name="Program"></a><a href="#Program" class="black">Program</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Goal" class="started">Goal</a></div></h2>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> (PROGRAM | LIBRARY) <a href="#Ident" class="complete">Ident</a> ['<tt class=literal><b>(</b></tt>' <a href="#IdentList" class="complete">IdentList</a> '<tt class=literal><b>)</b></tt>'] '<tt class=literal><b>;</b></tt>'</div>
@@ -369,28 +377,38 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> PROPERTY <a href="#Ident" class="complete">Ident</a></div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>[</b></tt>' (<a href="#Parameter" class="complete">Parameter</a> ['<tt class=literal><b>;</b></tt>'])+ '<tt class=literal><b>]</b></tt>']</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>:</b></tt>' <a href="#MethodReturnType" class="complete">MethodReturnType</a>]</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [INDEX <a href="#Expression" class="complete">Expression</a>]</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [READ <a href="#Ident" class="complete">Ident</a>]</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [WRITE <a href="#Ident" class="complete">Ident</a>]</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [STORED <a href="#Ident" class="complete">Ident</a>]</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [(DEFAULT <a href="#Expression" class="complete">Expression</a>) | NODEFAULT]</div>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [IMPLEMENTS <a href="#QualifiedIdent" class="complete">QualifiedIdent</a>]</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#PropertyDirective" class="complete">PropertyDirective</a>)*</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> '<tt class=literal><b>;</b></tt>'</div>
+<h2 class="complete"><a name="PropertyDirective"></a><a href="#PropertyDirective" class="black">PropertyDirective</a> <a href="#toc" class="backtotop">[^]</a>
+<div class="backlinks">Backlinks: <a href="#Property" class="complete">Property</a></div></h2>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> '<tt class=literal><b>;</b></tt>' DEFAULT</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> DEFAULT <a href="#Expression" class="complete">Expression</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> DISPID <a href="#Expression" class="complete">Expression</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> IMPLEMENTS <a href="#Expression" class="complete">Expression</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> INDEX <a href="#Expression" class="complete">Expression</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> NODEFAULT</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> READ <a href="#Expression" class="complete">Expression</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> READONLY</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> STORED <a href="#Expression" class="complete">Expression</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> WRITE <a href="#Expression" class="complete">Expression</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> WRITEONLY</div>
 <h2 class="complete"><a name="QualifiedIdent"></a><a href="#QualifiedIdent" class="black">QualifiedIdent</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#ClassType" class="normal">ClassType</a>, <a href="#ConstantDecl" class="complete">ConstantDecl</a>, <a href="#ExceptionItem" class="normal">ExceptionItem</a>, <a href="#FileType" class="complete">FileType</a>, <a href="#InterfaceType" class="complete">InterfaceType</a>, <a href="#MethodHeading" class="complete">MethodHeading</a>, <a href="#MethodReturnType" class="complete">MethodReturnType</a>, <a href="#OpenArray" class="complete">OpenArray</a>, <a href="#ParameterType" class="complete">ParameterType</a>, <a href="#PointerType" class="complete">PointerType</a>, <a href="#Property" class="complete">Property</a>, <a href="#RecordType" class="normal">RecordType</a>, <a href="#TypedConstant" class="complete">TypedConstant</a>, <a href="#VariantSection" class="normal">VariantSection</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#ClassHelperType" class="normal">ClassHelperType</a>, <a href="#ClassOfType" class="complete">ClassOfType</a>, <a href="#ClassType" class="complete">ClassType</a>, <a href="#ExceptionItem" class="normal">ExceptionItem</a>, <a href="#FileType" class="complete">FileType</a>, <a href="#InterfaceType" class="complete">InterfaceType</a>, <a href="#MethodHeading" class="complete">MethodHeading</a>, <a href="#MethodReturnType" class="complete">MethodReturnType</a>, <a href="#OpenArray" class="complete">OpenArray</a>, <a href="#ParameterType" class="complete">ParameterType</a>, <a href="#PointerType" class="complete">PointerType</a>, <a href="#RecordHelperType" class="normal">RecordHelperType</a>, <a href="#TypedConstant" class="complete">TypedConstant</a>, <a href="#VariantSection" class="normal">VariantSection</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Ident" class="complete">Ident</a> ('<tt class=literal><b>.</b></tt>' <a href="#ExtendedIdent" class="complete">ExtendedIdent</a>)*</div>
 <h2 class="complete"><a name="RaiseStatement"></a><a href="#RaiseStatement" class="black">RaiseStatement</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#SimpleStatement" class="normal">SimpleStatement</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> RAISE [<a href="#Expression" class="complete">Expression</a> [AT <a href="#Expression" class="complete">Expression</a>]]</div>
-<h2 class="normal"><a name="RecordType"></a><a href="#RecordType" class="black">RecordType</a> <a href="#toc" class="backtotop">[^]</a>
+<h2 class="normal"><a name="RecordHelperType"></a><a href="#RecordHelperType" class="black">RecordHelperType</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Type" class="started">Type</a></div></h2>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> RECORD</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#VisibilitySection" class="normal">VisibilitySection</a>)*</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [<a href="#VariantSection" class="normal">VariantSection</a>]</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> END</div>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> RECORD HELPER FOR <a href="#QualifiedIdent" class="complete">QualifiedIdent</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#VisibilitySection" class="normal">VisibilitySection</a>)*</div>
+<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#VisibilitySection" class="complete">VisibilitySection</a>)*</div>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> END</div>
+<h2 class="started"><a name="RecordType"></a><a href="#RecordType" class="black">RecordType</a> <a href="#toc" class="backtotop">[^]</a>
+<div class="backlinks">Backlinks: <a href="#Type" class="started">Type</a></div></h2>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> RECORD</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#VisibilitySection" class="complete">VisibilitySection</a>)*</div>
+<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> [<a href="#VariantSection" class="normal">VariantSection</a>]</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> END</div>
 <h2 class="normal"><a name="RecVariant"></a><a href="#RecVariant" class="black">RecVariant</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#VariantSection" class="normal">VariantSection</a></div></h2>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#ExpressionList" class="complete">ExpressionList</a> '<tt class=literal><b>:</b></tt>'</div>
@@ -444,7 +462,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#AssemblerStatement" class="complete">AssemblerStatement</a></div>
 <h2 class="normal"><a name="Statement"></a><a href="#Statement" class="black">Statement</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#CaseSelector" class="normal">CaseSelector</a>, <a href="#ExceptionItem" class="normal">ExceptionItem</a>, <a href="#ForStatement" class="normal">ForStatement</a>, <a href="#IfStatement" class="normal">IfStatement</a>, <a href="#StatementList" class="normal">StatementList</a>, <a href="#WhileStatement" class="normal">WhileStatement</a>, <a href="#WithStatement" class="normal">WithStatement</a></div></h2>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#LabelId" class="complete">LabelId</a> '<tt class=literal><b>:</b></tt>' <a href="#SimpleStatement" class="normal">SimpleStatement</a></div>
+<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#LabelId" class="complete">LabelId</a> '<tt class=literal><b>:</b></tt>' [<a href="#SimpleStatement" class="normal">SimpleStatement</a>]</div>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#SimpleStatement" class="normal">SimpleStatement</a></div>
 <h2 class="normal"><a name="StatementList"></a><a href="#StatementList" class="black">StatementList</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Block" class="normal">Block</a>, <a href="#CaseStatement" class="normal">CaseStatement</a>, <a href="#InitSection" class="started">InitSection</a>, <a href="#RepeatStatement" class="normal">RepeatStatement</a>, <a href="#TryExceptStatement" class="normal">TryExceptStatement</a>, <a href="#TryFinallyStatement" class="normal">TryFinallyStatement</a></div></h2>
@@ -477,20 +495,23 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt>   [<a href="#StatementList" class="normal">StatementList</a>]</div>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> END</div>
 <h2 class="started"><a name="Type"></a><a href="#Type" class="black">Type</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#ArrayType" class="complete">ArrayType</a>, <a href="#FieldDecl" class="complete">FieldDecl</a>, <a href="#PackedType" class="normal">PackedType</a>, <a href="#SetType" class="complete">SetType</a>, <a href="#TypeDecl" class="complete">TypeDecl</a>, <a href="#VarDecl" class="complete">VarDecl</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#ArrayType" class="complete">ArrayType</a>, <a href="#ConstantDecl" class="complete">ConstantDecl</a>, <a href="#FieldDecl" class="complete">FieldDecl</a>, <a href="#PackedType" class="complete">PackedType</a>, <a href="#SetType" class="complete">SetType</a>, <a href="#TypeDecl" class="complete">TypeDecl</a>, <a href="#VarDecl" class="complete">VarDecl</a></div></h2>
 <p>Note: Delphi assumes that a Type starting with '(' is an enum, not an expression.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#EnumeratedType" class="complete">EnumeratedType</a></div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#ExpressionOrRange" class="complete">ExpressionOrRange</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#ArrayType" class="complete">ArrayType</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#SetType" class="complete">SetType</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#FileType" class="complete">FileType</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#RecordType" class="normal">RecordType</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#PointerType" class="complete">PointerType</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#StringType" class="complete">StringType</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#ProcedureType" class="complete">ProcedureType</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#ClassType" class="normal">ClassType</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#InterfaceType" class="complete">InterfaceType</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#PackedType" class="normal">PackedType</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#ArrayType" class="complete">ArrayType</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#SetType" class="complete">SetType</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#FileType" class="complete">FileType</a></div>
+<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#RecordHelperType" class="normal">RecordHelperType</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#RecordType" class="started">RecordType</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#PointerType" class="complete">PointerType</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#StringType" class="complete">StringType</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#ProcedureType" class="complete">ProcedureType</a></div>
+<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> <a href="#ClassHelperType" class="normal">ClassHelperType</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#ClassOfType" class="complete">ClassOfType</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#ClassType" class="complete">ClassType</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#InterfaceType" class="complete">InterfaceType</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#PackedType" class="complete">PackedType</a></div>
 <h2 class="complete"><a name="TypedConstant"></a><a href="#TypedConstant" class="black">TypedConstant</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#ConstantDecl" class="complete">ConstantDecl</a>, <a href="#TypedConstant" class="complete">TypedConstant</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Expression" class="complete">Expression</a></div>
@@ -499,8 +520,11 @@ in parentheses show how many places the rule is used.</p>
 <h2 class="complete"><a name="TypeDecl"></a><a href="#TypeDecl" class="black">TypeDecl</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#TypeSection" class="complete">TypeSection</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Ident" class="complete">Ident</a> '<tt class=literal><b>=</b></tt>' [TYPE] <a href="#Type" class="started">Type</a> (<a href="#PortabilityDirective" class="complete">PortabilityDirective</a>)* '<tt class=literal><b>;</b></tt>'</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Ident" class="complete">Ident</a> '<tt class=literal><b>=</b></tt>' CLASS '<tt class=literal><b>;</b></tt>'</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Ident" class="complete">Ident</a> '<tt class=literal><b>=</b></tt>' DISPINTERFACE '<tt class=literal><b>;</b></tt>'</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Ident" class="complete">Ident</a> '<tt class=literal><b>=</b></tt>' INTERFACE '<tt class=literal><b>;</b></tt>'</div>
 <h2 class="complete"><a name="TypeSection"></a><a href="#TypeSection" class="black">TypeSection</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#DeclSection" class="normal">DeclSection</a>, <a href="#InterfaceDecl" class="complete">InterfaceDecl</a>, <a href="#VisibilitySection" class="normal">VisibilitySection</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#DeclSection" class="normal">DeclSection</a>, <a href="#InterfaceDecl" class="complete">InterfaceDecl</a>, <a href="#VisibilitySectionContent" class="complete">VisibilitySectionContent</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> TYPE (<a href="#TypeDecl" class="complete">TypeDecl</a>)+</div>
 <h2 class="complete"><a name="UnaryOperator"></a><a href="#UnaryOperator" class="black">UnaryOperator</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Factor" class="complete">Factor</a></div></h2>
@@ -529,29 +553,30 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#PortabilityDirective" class="complete">PortabilityDirective</a>)*</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> '<tt class=literal><b>;</b></tt>'</div>
 <h2 class="normal"><a name="VariantSection"></a><a href="#VariantSection" class="black">VariantSection</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#RecordType" class="normal">RecordType</a>, <a href="#RecVariant" class="normal">RecVariant</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#RecordType" class="started">RecordType</a>, <a href="#RecVariant" class="normal">RecVariant</a></div></h2>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> CASE [<a href="#Ident" class="complete">Ident</a> '<tt class=literal><b>:</b></tt>'] <a href="#QualifiedIdent" class="complete">QualifiedIdent</a> OF <a href="#RecVariant" class="normal">RecVariant</a> '<tt class=literal><b>;</b></tt>'...</div>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> <a href="#ToBeDetermined" class="normal">ToBeDetermined</a></div>
 <h2 class="complete"><a name="VarSection"></a><a href="#VarSection" class="black">VarSection</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#DeclSection" class="normal">DeclSection</a>, <a href="#InterfaceDecl" class="complete">InterfaceDecl</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> VAR (<a href="#VarDecl" class="complete">VarDecl</a>)+</div>
 <h2 class="complete"><a name="Visibility"></a><a href="#Visibility" class="black">Visibility</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#VisibilitySection" class="normal">VisibilitySection</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#VisibilitySection" class="complete">VisibilitySection</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> STRICT PRIVATE</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> STRICT PROTECTED</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> PRIVATE</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> PROTECTED</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> PUBLIC</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> PUBLISHED</div>
-<h2 class="normal"><a name="VisibilitySection"></a><a href="#VisibilitySection" class="black">VisibilitySection</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#ClassType" class="normal">ClassType</a>, <a href="#RecordType" class="normal">RecordType</a></div></h2>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> [<a href="#Visibility" class="complete">Visibility</a>]</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt>   <a href="#FieldSection" class="complete">FieldSection</a> |</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt>   <a href="#MethodSection" class="complete">MethodSection</a> |</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt>   <a href="#ConstSection" class="complete">ConstSection</a> |</div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt>   <a href="#TypeSection" class="complete">TypeSection</a></div>
-<div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>&nbsp;&nbsp;</tt> )*</div>
+<h2 class="complete"><a name="VisibilitySection"></a><a href="#VisibilitySection" class="black">VisibilitySection</a> <a href="#toc" class="backtotop">[^]</a>
+<div class="backlinks">Backlinks: <a href="#ClassHelperType" class="normal">ClassHelperType</a>, <a href="#ClassType" class="complete">ClassType</a>, <a href="#RecordHelperType" class="normal">RecordHelperType</a>, <a href="#RecordType" class="started">RecordType</a></div></h2>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> [<a href="#Visibility" class="complete">Visibility</a>]</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#VisibilitySectionContent" class="complete">VisibilitySectionContent</a>)*</div>
+<h2 class="complete"><a name="VisibilitySectionContent"></a><a href="#VisibilitySectionContent" class="black">VisibilitySectionContent</a> <a href="#toc" class="backtotop">[^]</a>
+<div class="backlinks">Backlinks: <a href="#VisibilitySection" class="complete">VisibilitySection</a></div></h2>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#FieldSection" class="complete">FieldSection</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#MethodOrProperty" class="complete">MethodOrProperty</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#ConstSection" class="complete">ConstSection</a></div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#TypeSection" class="complete">TypeSection</a></div>
 <h2 class="normal"><a name="WhileStatement"></a><a href="#WhileStatement" class="black">WhileStatement</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#SimpleStatement" class="normal">SimpleStatement</a></div></h2>
 <div class="normal"><span class="inprogress">(In Progress)</span> <tt class=arrow>-&gt;</tt> WHILE <a href="#Expression" class="complete">Expression</a> DO [<a href="#Statement" class="normal">Statement</a>]</div>

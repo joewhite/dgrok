@@ -60,6 +60,12 @@
     <Compile Include="ParseSourceTreeControl.Designer.cs">
       <DependentUpon>ParseSourceTreeControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ParseTextControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ParseTextControl.Designer.cs">
+      <DependentUpon>ParseTextControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -81,6 +87,10 @@
     <EmbeddedResource Include="ParseSourceTreeControl.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ParseSourceTreeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParseTextControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ParseTextControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

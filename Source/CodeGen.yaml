@@ -13,6 +13,18 @@ NodeTypes:
     - Left
     - Operator
     - Right
+  ClassOfNode:
+    - Class
+    - Of
+    - Type
+  ClassTypeNode:
+    - Class
+    - Disposition
+    - OpenParenthesis
+    - InheritanceList
+    - CloseParenthesis
+    - Contents
+    - End
   ConstantDeclNode:
     - Name
     - Colon
@@ -35,6 +47,11 @@ NodeTypes:
   DelimitedItemNode:
     - Item
     - Delimiter
+  DirectiveNode:
+    - Semicolon
+    - Directive
+    - Value
+    - Data
   EnumeratedTypeNode:
     - OpenParenthesis
     - ItemList
@@ -46,14 +63,13 @@ NodeTypes:
   ExportsItemNode:
     - Name
     - SpecifierList
+  ExportsSpecifierNode:
+    - Keyword
+    - Value
   ExportsStatementNode:
     - Exports
     - ItemList
     - Semicolon
-  ExternalNode:
-    - External
-    - DllName
-    - SpecifierList
   FieldDeclNode:
     - NameList
     - Colon
@@ -100,8 +116,14 @@ NodeTypes:
     - CloseParenthesis
     - Colon
     - ReturnType
-    - Semicolon
     - DirectiveList
+    - Semicolon
+  MethodResolutionNode:
+    - MethodType
+    - InterfaceMethod
+    - EqualSign
+    - ImplementationMethod
+    - Semicolon
   OpenArrayNode:
     - Array
     - Of
@@ -114,9 +136,9 @@ NodeTypes:
     - ContainsClause
     - End
     - Dot
-  ParameterizedDirectiveNode:
-    - Keyword
-    - Value
+  PackedTypeNode:
+    - Packed
+    - Type
   ParameterizedNode:
     - Left
     - OpenDelimiter
@@ -146,8 +168,10 @@ NodeTypes:
     - CloseParenthesis
     - Colon
     - ReturnType
+    - FirstDirectives
     - Of
     - Object
+    - SecondDirectives
   PropertyNode:
     - Class
     - Property
@@ -157,18 +181,7 @@ NodeTypes:
     - CloseBracket
     - Colon
     - Type
-    - Index
-    - IndexValue
-    - Read
-    - ReadSpecifier
-    - Write
-    - WriteSpecifier
-    - Stored
-    - StoredSpecifier
-    - Default
-    - DefaultValue
-    - Implements
-    - ImplementsSpecifier
+    - DirectiveList
     - Semicolon
   RaiseStatementNode:
     - Raise
@@ -179,6 +192,11 @@ NodeTypes:
     - Name
     - Colon
     - Value
+  RecordTypeNode:
+    - Record
+    - Contents
+    - VariantSection
+    - End
   RequiresClauseNode:
     - Requires
     - IdentList
@@ -202,6 +220,11 @@ NodeTypes:
     - TypeKeyword
     - Type
     - PortabilityDirectiveList
+    - Semicolon
+  TypeForwardDeclarationNode:
+    - Name
+    - EqualSign
+    - Type
     - Semicolon
   TypeSectionNode:
     - Type
@@ -246,3 +269,6 @@ NodeTypes:
   VisibilityNode:
     - Strict
     - Visibility
+  VisibilitySectionNode:
+    - Visibility
+    - Contents
