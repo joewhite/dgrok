@@ -65,5 +65,9 @@ namespace DGrok.Tests
                 "      Delimiter: (none)",
                 "  CloseBracket: CloseBracket |]|"));
         }
+        public void TestStringKeyword()
+        {
+            Assert.That("string", ParsesAs("StringKeyword |string|"));
+        }
     }
 }

@@ -52,5 +52,31 @@ namespace DGrok.Tests
                 "  VariantSection: (none)",
                 "  End: EndKeyword |end|"));
         }
+        public void TestVariantSection()
+        {
+            Assert.That("record case Integer of 1: (); end", ParsesAs(
+                "RecordTypeNode",
+                "  Record: RecordKeyword |record|",
+                "  Contents: ListNode",
+                "  VariantSection: VariantSectionNode",
+                "    Case: CaseKeyword |case|",
+                "    Name: (none)",
+                "    Colon: (none)",
+                "    Type: Identifier |Integer|",
+                "    Of: OfKeyword |of|",
+                "    VariantGroupList: ListNode",
+                "      Items[0]: VariantGroupNode",
+                "        ValueList: ListNode",
+                "          Items[0]: DelimitedItemNode",
+                "            Item: Number |1|",
+                "            Delimiter: (none)",
+                "        Colon: Colon |:|",
+                "        OpenParenthesis: OpenParenthesis |(|",
+                "        FieldDeclList: ListNode",
+                "        VariantSection: (none)",
+                "        CloseParenthesis: CloseParenthesis |)|",
+                "        Semicolon: Semicolon |;|",
+                "  End: EndKeyword |end|"));
+        }
     }
 }

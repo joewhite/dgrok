@@ -17,6 +17,19 @@ NodeTypes:
     - Begin
     - StatementList
     - End
+  CaseSelectorNode:
+    - {Name: Values, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: Colon, Type: Token}
+    - {Name: Statement, Type: AstNode}
+    - {Name: Semicolon, Type: Token}
+  CaseStatementNode:
+    - {Name: Case, Type: Token}
+    - {Name: Expression, Type: AstNode}
+    - {Name: Of, Type: Token}
+    - {Name: SelectorList, Type: ListNode<CaseSelectorNode>}
+    - {Name: Else, Type: Token}
+    - {Name: ElseStatements, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: End, Type: Token}
   ClassOfNode:
     - Class
     - Of
@@ -61,6 +74,14 @@ NodeTypes:
     - Name
     - EqualSign
     - Value
+  ExceptionItemNode:
+    - {Name: 'On', Type: Token}
+    - {Name: Name, Type: Token}
+    - {Name: Colon, Type: Token}
+    - {Name: Type, Type: AstNode}
+    - {Name: Do, Type: Token}
+    - {Name: Statement, Type: AstNode}
+    - {Name: Semicolon, Type: Token}
   ExportsItemNode:
     - Name
     - SpecifierList
@@ -88,6 +109,22 @@ NodeTypes:
     - File
     - Of
     - Type
+  ForInStatementNode:
+    - {Name: For, Type: Token}
+    - {Name: LoopVariable, Type: Token}
+    - {Name: In, Type: Token}
+    - {Name: Expression, Type: AstNode}
+    - {Name: Do, Type: Token}
+    - {Name: Statement, Type: AstNode}
+  ForStatementNode:
+    - {Name: For, Type: Token}
+    - {Name: LoopVariable, Type: Token}
+    - {Name: ColonEquals, Type: Token}
+    - {Name: StartingValue, Type: AstNode}
+    - {Name: Direction, Type: Token}
+    - {Name: EndingValue, Type: AstNode}
+    - {Name: Do, Type: Token}
+    - {Name: Statement, Type: AstNode}
   GotoStatementNode:
     - Goto
     - LabelId
@@ -223,10 +260,15 @@ NodeTypes:
     - Colon
     - Value
   RecordTypeNode:
-    - Record
-    - Contents
-    - VariantSection
-    - End
+    - {Name: Record, Type: Token}
+    - {Name: Contents, Type: ListNode<VisibilitySectionNode>}
+    - {Name: VariantSection, Type: VariantSectionNode}
+    - {Name: End, Type: Token}
+  RepeatStatementNode:
+    - {Name: Repeat, Type: Token}
+    - {Name: StatementList, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: Until, Type: Token}
+    - {Name: Condition, Type: AstNode}
   RequiresClauseNode:
     - Requires
     - IdentList
@@ -244,6 +286,20 @@ NodeTypes:
     - OpenBracket
     - Length
     - CloseBracket
+  TryExceptNode:
+    - {Name: Try, Type: Token}
+    - {Name: TryStatements, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: Except, Type: Token}
+    - {Name: ExceptionItemList, Type: ListNode<ExceptionItemNode>}
+    - {Name: Else, Type: Token}
+    - {Name: ElseStatements, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: End, Type: Token}
+  TryFinallyNode:
+    - {Name: Try, Type: Token}
+    - {Name: TryStatements, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: Finally, Type: Token}
+    - {Name: FinallyStatements, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: End, Type: Token}
   TypeDeclNode:
     - Name
     - EqualSign
@@ -256,6 +312,16 @@ NodeTypes:
     - EqualSign
     - Type
     - Semicolon
+  TypeHelperNode:
+    - {Name: TypeKeyword, Type: Token}
+    - {Name: Helper, Type: Token}
+    - {Name: OpenParenthesis, Type: Token}
+    - {Name: BaseHelperType, Type: AstNode}
+    - {Name: CloseParenthesis, Type: Token}
+    - {Name: For, Type: Token}
+    - {Name: Type, Type: AstNode}
+    - {Name: Contents, Type: ListNode<VisibilitySectionNode>}
+    - {Name: End, Type: Token}
   TypeSectionNode:
     - Type
     - TypeList
@@ -284,15 +350,31 @@ NodeTypes:
     - UnitList
     - Semicolon
   VarDeclNode:
-    - Names
-    - Colon
-    - Type
-    - Absolute
-    - AbsoluteAddress
-    - EqualSign
-    - Value
-    - PortabilityDirectiveList
-    - Semicolon
+    - {Name: Names, Type: ListNode<DelimitedItemNode<Token>>}
+    - {Name: Colon, Type: Token}
+    - {Name: Type, Type: AstNode}
+    - {Name: FirstPortabilityDirectives, Type: ListNode<Token>}
+    - {Name: Absolute, Type: Token}
+    - {Name: AbsoluteAddress, Type: AstNode}
+    - {Name: EqualSign, Type: Token}
+    - {Name: Value, Type: AstNode}
+    - {Name: SecondPortabilityDirectives, Type: ListNode<Token>}
+    - {Name: Semicolon, Type: Token}
+  VariantGroupNode:
+    - {Name: ValueList, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: Colon, Type: Token}
+    - {Name: OpenParenthesis, Type: Token}
+    - {Name: FieldDeclList, Type: ListNode<FieldDeclNode>}
+    - {Name: VariantSection, Type: VariantSectionNode}
+    - {Name: CloseParenthesis, Type: Token}
+    - {Name: Semicolon, Type: Token}
+  VariantSectionNode:
+    - {Name: Case, Type: Token}
+    - {Name: Name, Type: Token}
+    - {Name: Colon, Type: Token}
+    - {Name: Type, Type: AstNode}
+    - {Name: Of, Type: Token}
+    - {Name: VariantGroupList, Type: ListNode<VariantGroupNode>}
   VarSectionNode:
     - Var
     - VarList
@@ -302,3 +384,13 @@ NodeTypes:
   VisibilitySectionNode:
     - Visibility
     - Contents
+  WhileStatementNode:
+    - {Name: While, Type: Token}
+    - {Name: Condition, Type: AstNode}
+    - {Name: Do, Type: Token}
+    - {Name: Statement, Type: AstNode}
+  WithStatementNode:
+    - {Name: With, Type: Token}
+    - {Name: ExpressionList, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: Do, Type: Token}
+    - {Name: Statement, Type: AstNode}

@@ -88,11 +88,12 @@ namespace DGrok.Tests
                 "          Delimiter: (none)",
                 "      Colon: Colon |:|",
                 "      Type: Identifier |Integer|",
+                "      FirstPortabilityDirectives: ListNode",
                 "      Absolute: (none)",
                 "      AbsoluteAddress: (none)",
                 "      EqualSign: (none)",
                 "      Value: (none)",
-                "      PortabilityDirectiveList: ListNode",
+                "      SecondPortabilityDirectives: ListNode",
                 "      Semicolon: Semicolon |;|"));
         }
         public void TestMethodImplementation()

@@ -115,6 +115,26 @@ namespace DGrok.Tests
                 "      Data: ListNode",
                 "  Semicolon: Semicolon |;|"));
         }
+        public void TestDirectiveWithoutTrailingSemicolon()
+        {
+            Assert.That("procedure Foo; deprecated", ParsesAs(
+                "MethodHeadingNode",
+                "  Class: (none)",
+                "  MethodType: ProcedureKeyword |procedure|",
+                "  Name: Identifier |Foo|",
+                "  OpenParenthesis: (none)",
+                "  ParameterList: ListNode",
+                "  CloseParenthesis: (none)",
+                "  Colon: (none)",
+                "  ReturnType: (none)",
+                "  DirectiveList: ListNode",
+                "    Items[0]: DirectiveNode",
+                "      Semicolon: Semicolon |;|",
+                "      Directive: DeprecatedSemikeyword |deprecated|",
+                "      Value: (none)",
+                "      Data: ListNode",
+                "  Semicolon: (none)"));
+        }
         public void TestQualifiedName()
         {
             Assert.That("procedure TFoo.Bar;", ParsesAs(

@@ -19,34 +19,32 @@ Atom:
     !    ( '.' ExtendedIdent
     !      | '[' ExpressionList ']'
     !      | '^'
-    !      | '(' [ExpressionList] ')'
+    !      | '(' (ParameterExpression [','])* ')'
     !    )*
 BareInherited:
   Doc: |
     ! -> INHERITED
 Block:
   Doc: |
-    ! -> BEGIN (Statement [';'])* END
+    ! -> BEGIN [StatementList] END
     ! -> AssemblerStatement
 CaseSelector:
   Doc: |
-    . -> ExpressionOrRangeList ':' [Statement] [';']
-CaseSelectorList:
-  Doc: |
-    . -> (CaseSelector)+
+    ! -> (ExpressionOrRange [','])+
+    !    ':' [Statement] [';']
 CaseStatement:
   Doc: |
-    . -> CASE Expression OF
-    .    CaseSelectorList
-    .    [ELSE (Statement [';'])*]
-    .    END
+    ! -> CASE Expression OF
+    !    (CaseSelector)+
+    !    [ELSE [StatementList]]
+    !    END
 ClassHelperType:
   Doc: |
-    . -> CLASS HELPER
-    .    ['(' Ident ')']
-    .    FOR QualifiedIdent
-    .    (VisibilitySection)*
-    .    END
+    ! -> CLASS HELPER
+    !    ['(' QualifiedIdent ')']
+    !    FOR QualifiedIdent
+    !    (VisibilitySection)*
+    !    END
 ClassOfType:
   Doc: |
     ! -> CLASS OF QualifiedIdent
@@ -107,10 +105,11 @@ EnumeratedTypeElement:
     ! -> Ident [ '=' Expression ]
 ExceptionItem:
   Doc: |
-    . -> ON [Ident ':'] QualifiedIdent DO [Statement] [';']
-ExceptionItemList:
-  Doc: |
-    . -> (ExceptionItem)+
+    ! -> ON
+    !    [Ident ':']
+    !    QualifiedIdent DO
+    !    [Statement]
+    !    [';']
 ExportsItem:
   Doc: |
     ! -> Ident (ExportsSpecifier)*
@@ -161,7 +160,8 @@ FileType:
     ! -> FILE OF QualifiedIdent
 ForStatement:
   Doc: |
-    . -> FOR Ident ':=' Expression (TO | DOWNTO) Expression DO [Statement]
+    ! -> FOR Ident ':=' Expression (TO | DOWNTO) Expression DO [Statement]
+    ! -> FOR Ident IN Expression DO [Statement]
 Goal:
   Doc: |
     ! -> Program
@@ -202,9 +202,9 @@ InitSection:
     ! -> END
     ! -> Block
     ! -> INITIALIZATION
-    !    (Statement [';'])*
+    !    [StatementList]
     !    [FINALIZATION
-    !    (Statement [';'])*]
+    !    [StatementList]]
     !    END
 InterfaceDecl:
   Doc: |
@@ -242,7 +242,7 @@ MethodHeading:
     !      (Directive)*
     !    | '=' Ident
     !    )
-    !    ';'
+    !    [';']
 MethodImplementation:
   Doc: |
     // If the MethodHeading does not include 'external' or 'forward':
@@ -288,6 +288,9 @@ Parameter:
     !    IdentList
     !    [':' ParameterType]
     !    ['=' Expression]
+ParameterExpression:
+  Doc: |
+    ! -> Expression [':' Expression]
 ParameterType:
   Doc: |
     ! -> QualifiedIdent
@@ -305,6 +308,7 @@ Particle:
     ! -> NIL
     ! -> ParenthesizedExpression
     ! -> SetLiteral
+    ! -> STRING
 PointerType:
   Doc: |
     ! -> '^' QualifiedIdent
@@ -357,23 +361,15 @@ RaiseStatement:
     ! -> RAISE [Expression [AT Expression]]
 RecordHelperType:
   Doc: |
-    . -> RECORD HELPER FOR QualifiedIdent
-    .    (VisibilitySection)*
-    .    END
+    ! -> RECORD HELPER FOR QualifiedIdent
+    !    (VisibilitySection)*
+    !    END
 RecordType:
   Doc: |
     ! -> RECORD
     !    (VisibilitySection)*
-    .    [VariantSection]
+    !    [VariantSection]
     !    END
-RecVariant:
-  Doc: |
-    . -> ExpressionList ':'
-    .    '('
-    . -> (FieldDecl)*
-    .    [VariantSection]
-    .    [';']
-    .    ')'
 RelOp:
   Doc: |
     ! -> '='
@@ -387,7 +383,7 @@ RelOp:
     ! -> AS
 RepeatStatement:
   Doc: |
-    . -> REPEAT (Statement [';'])* UNTIL Expression
+    ! -> REPEAT [StatementList] UNTIL Expression
 RequiresClause:
   Doc: |
     ! -> REQUIRES IdentList ';'
@@ -405,20 +401,22 @@ SimpleStatement:
     ! -> BareInherited
     ! -> ExpressionOrAssignment
     ! -> GotoStatement
-    . -> Block
+    ! -> Block
     ! -> IfStatement
-    . -> CaseStatement
-    . -> RepeatStatement
-    . -> WhileStatement
-    . -> ForStatement
-    . -> WithStatement
-    . -> TryExceptStatement
-    . -> TryFinallyStatement
+    ! -> CaseStatement
+    ! -> RepeatStatement
+    ! -> WhileStatement
+    ! -> ForStatement
+    ! -> WithStatement
+    ! -> TryStatement
     ! -> RaiseStatement
 Statement:
   Doc: |
     ! -> LabelId ':' [SimpleStatement]
     ! -> SimpleStatement
+StatementList:
+  Doc: |
+    ! -> ([Statement] [';'])+
 StringType:
   Doc: |
     ! -> STRING
@@ -426,26 +424,16 @@ StringType:
 Term:
   Doc: |
     ! -> Factor (MulOp Factor)*
-ToBeDetermined:
+TryStatement:
   Doc: |
-    . -> ToBeDetermined
-TryExceptStatement:
-  Doc: |
-    . -> TRY
-    .      (Statement [';'])*
-    .    EXCEPT
-    .    (
-    .      (Statement [';'])* |
-    .      ExceptionItemList [ELSE (Statement [';'])*]
-    .    )
-    .    END
-TryFinallyStatement:
-  Doc: |
-    . -> TRY
-    .      (Statement [';'])*
-    .    FINALLY
-    .      (Statement [';'])*
-    .    END
+    ! -> TRY
+    !      [StatementList]
+    !    ( FINALLY [StatementList]
+    !    | EXCEPT (
+    !      [StatementList] |
+    !      (ExceptionItem)* [ELSE [StatementList]]
+    !    )
+    !    END
 Type:
   Doc: |
     // Note: Delphi assumes that a Type starting with '(' is an enum, not an expression.
@@ -454,12 +442,12 @@ Type:
     ! -> ArrayType
     ! -> SetType
     ! -> FileType
-    . -> RecordHelperType
+    ! -> RecordHelperType
     ! -> RecordType
     ! -> PointerType
     ! -> StringType
     ! -> ProcedureType
-    . -> ClassHelperType
+    ! -> ClassHelperType
     ! -> ClassOfType
     ! -> ClassType
     ! -> InterfaceType
@@ -501,13 +489,21 @@ UsedUnit:
 VarDecl:
   Doc: |
     ! -> IdentList ':' Type
+    !    (PortabilityDirective)*
     !    [ABSOLUTE Expression | '=' TypedConstant]
     !    (PortabilityDirective)*
     !    ';'
+VariantGroup:
+  Doc: |
+    ! -> ExpressionList ':'
+    !    '('
+    ! -> (FieldDecl)*
+    !    [VariantSection]
+    !    ')' [';']
 VariantSection:
   Doc: |
-    . -> CASE [Ident ':'] QualifiedIdent OF RecVariant ';'...
-    .    ToBeDetermined
+    ! -> CASE [Ident ':'] QualifiedIdent OF
+    !    (VariantGroup)+
 VarSection:
   Doc: |
     ! -> (VAR | THREADVAR) (VarDecl)+
@@ -531,7 +527,7 @@ VisibilitySectionContent:
     ! -> TypeSection
 WhileStatement:
   Doc: |
-    . -> WHILE Expression DO [Statement]
+    ! -> WHILE Expression DO [Statement]
 WithStatement:
   Doc: |
-    . -> WITH ExpressionList DO [Statement]
+    ! -> WITH ExpressionList DO [Statement]

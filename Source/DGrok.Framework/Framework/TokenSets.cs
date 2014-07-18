@@ -20,6 +20,7 @@ namespace DGrok.Framework
         private static TokenSet _exportsSpecifier;
         private static TokenSet _expression;
         private static TokenSet _extendedIdent;
+        private static TokenSet _forDirection;
         private static TokenSet _forwardableType;
         private static TokenSet _ident;
         private static TokenSet _initSection;
@@ -93,6 +94,10 @@ namespace DGrok.Framework
             _exportsSpecifier = new TokenSet("'index' or 'name'");
             _exportsSpecifier.Add(TokenType.IndexSemikeyword);
             _exportsSpecifier.Add(TokenType.NameSemikeyword);
+
+            _forDirection = new TokenSet("'to' or 'downto'");
+            _forDirection.Add(TokenType.ToKeyword);
+            _forDirection.Add(TokenType.DownToKeyword);
 
             _forwardableType = new TokenSet("forwardable type");
             _forwardableType.Add(TokenType.ClassKeyword);
@@ -314,6 +319,7 @@ namespace DGrok.Framework
             _particle.Add(TokenType.Number);
             _particle.Add(TokenType.OpenBracket);
             _particle.Add(TokenType.OpenParenthesis);
+            _particle.Add(TokenType.StringKeyword);
             _particle.Add(TokenType.StringLiteral);
             _particle.AddRange(_ident);
             _expression = new TokenSet("expression");
@@ -368,6 +374,10 @@ namespace DGrok.Framework
         public static TokenSet ExtendedIdent
         {
             get { return _extendedIdent; }
+        }
+        public static TokenSet ForDirection
+        {
+            get { return _forDirection; }
         }
         public static TokenSet ForwardableType
         {

@@ -81,6 +81,20 @@ namespace DGrok.Tests
                 "  Of: (none)",
                 "  Type: (none)"));
         }
+        public void TestRecordHelper()
+        {
+            Assert.That("record helper for TPoint end", ParsesAs(
+                "TypeHelperNode",
+                "  TypeKeyword: RecordKeyword |record|",
+                "  Helper: HelperSemikeyword |helper|",
+                "  OpenParenthesis: (none)",
+                "  BaseHelperType: (none)",
+                "  CloseParenthesis: (none)",
+                "  For: ForKeyword |for|",
+                "  Type: Identifier |TPoint|",
+                "  Contents: ListNode",
+                "  End: EndKeyword |end|"));
+        }
         public void TestRecord()
         {
             Assert.That("record end", ParsesAs(
@@ -120,6 +134,20 @@ namespace DGrok.Tests
                 "  Of: OfKeyword |of|",
                 "  Object: ObjectKeyword |object|",
                 "  SecondDirectives: ListNode"));
+        }
+        public void TestClassHelper()
+        {
+            Assert.That("class helper for TObject end", ParsesAs(
+                "TypeHelperNode",
+                "  TypeKeyword: ClassKeyword |class|",
+                "  Helper: HelperSemikeyword |helper|",
+                "  OpenParenthesis: (none)",
+                "  BaseHelperType: (none)",
+                "  CloseParenthesis: (none)",
+                "  For: ForKeyword |for|",
+                "  Type: Identifier |TObject|",
+                "  Contents: ListNode",
+                "  End: EndKeyword |end|"));
         }
         public void TestClassOf()
         {

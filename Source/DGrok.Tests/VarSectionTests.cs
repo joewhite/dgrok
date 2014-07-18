@@ -33,11 +33,12 @@ namespace DGrok.Tests
                 "          Delimiter: (none)",
                 "      Colon: Colon |:|",
                 "      Type: Identifier |Integer|",
+                "      FirstPortabilityDirectives: ListNode",
                 "      Absolute: (none)",
                 "      AbsoluteAddress: (none)",
                 "      EqualSign: (none)",
                 "      Value: (none)",
-                "      PortabilityDirectiveList: ListNode",
+                "      SecondPortabilityDirectives: ListNode",
                 "      Semicolon: Semicolon |;|"));
         }
         public void TestThreadVar()
@@ -53,11 +54,12 @@ namespace DGrok.Tests
                 "          Delimiter: (none)",
                 "      Colon: Colon |:|",
                 "      Type: Identifier |Integer|",
+                "      FirstPortabilityDirectives: ListNode",
                 "      Absolute: (none)",
                 "      AbsoluteAddress: (none)",
                 "      EqualSign: (none)",
                 "      Value: (none)",
-                "      PortabilityDirectiveList: ListNode",
+                "      SecondPortabilityDirectives: ListNode",
                 "      Semicolon: Semicolon |;|"));
         }
         public void TestVarAloneDoesNotParse()

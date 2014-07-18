@@ -65,6 +65,102 @@ namespace DGrok.Tests
                 "  Else: (none)",
                 "  ElseStatement: (none)"));
         }
+        public void TestCase()
+        {
+            Assert.That("case Foo of 1: end", ParsesAs(
+                "CaseStatementNode",
+                "  Case: CaseKeyword |case|",
+                "  Expression: Identifier |Foo|",
+                "  Of: OfKeyword |of|",
+                "  SelectorList: ListNode",
+                "    Items[0]: CaseSelectorNode",
+                "      Values: ListNode",
+                "        Items[0]: DelimitedItemNode",
+                "          Item: Number |1|",
+                "          Delimiter: (none)",
+                "      Colon: Colon |:|",
+                "      Statement: (none)",
+                "      Semicolon: (none)",
+                "  Else: (none)",
+                "  ElseStatements: ListNode",
+                "  End: EndKeyword |end|"));
+        }
+        public void TestRepeat()
+        {
+            Assert.That("repeat until Doomsday", ParsesAs(
+                "RepeatStatementNode",
+                "  Repeat: RepeatKeyword |repeat|",
+                "  StatementList: ListNode",
+                "  Until: UntilKeyword |until|",
+                "  Condition: Identifier |Doomsday|"));
+        }
+        public void TestWhile()
+        {
+            Assert.That("while Foo do Bar", ParsesAs(
+                "WhileStatementNode",
+                "  While: WhileKeyword |while|",
+                "  Condition: Identifier |Foo|",
+                "  Do: DoKeyword |do|",
+                "  Statement: Identifier |Bar|"));
+        }
+        public void TestFor()
+        {
+            Assert.That("for I := 1 to 42 do", ParsesAs(
+                "ForStatementNode",
+                "  For: ForKeyword |for|",
+                "  LoopVariable: Identifier |I|",
+                "  ColonEquals: ColonEquals |:=|",
+                "  StartingValue: Number |1|",
+                "  Direction: ToKeyword |to|",
+                "  EndingValue: Number |42|",
+                "  Do: DoKeyword |do|",
+                "  Statement: (none)"));
+        }
+        public void TestWith()
+        {
+            Assert.That("with Foo do", ParsesAs(
+                "WithStatementNode",
+                "  With: WithKeyword |with|",
+                "  ExpressionList: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: Identifier |Foo|",
+                "      Delimiter: (none)",
+                "  Do: DoKeyword |do|",
+                "  Statement: (none)"));
+        }
+        public void TestForIn()
+        {
+            Assert.That("for Obj in List do", ParsesAs(
+                "ForInStatementNode",
+                "  For: ForKeyword |for|",
+                "  LoopVariable: Identifier |Obj|",
+                "  In: InKeyword |in|",
+                "  Expression: Identifier |List|",
+                "  Do: DoKeyword |do|",
+                "  Statement: (none)"));
+        }
+        public void TestTryExcept()
+        {
+            Assert.That("try except end", ParsesAs(
+                "TryExceptNode",
+                "  Try: TryKeyword |try|",
+                "  TryStatements: ListNode",
+                "  Except: ExceptKeyword |except|",
+                "  ExceptionItemList: ListNode",
+                "  Else: (none)",
+                "  ElseStatements: ListNode",
+                "  End: EndKeyword |end|"));
+        }
+        public void TestTryFinally()
+        {
+            Assert.That("try finally end", ParsesAs(
+                "TryFinallyNode",
+                "  Try: TryKeyword |try|",
+                "  TryStatements: ListNode",
+                "  Finally: FinallyKeyword |finally|",
+                "  FinallyStatements: ListNode",
+                "  End: EndKeyword |end|"));
+        }
         public void TestRaise()
         {
             Assert.That("raise E", ParsesAs(

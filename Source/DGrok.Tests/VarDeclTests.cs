@@ -30,11 +30,12 @@ namespace DGrok.Tests
                 "      Delimiter: (none)",
                 "  Colon: Colon |:|",
                 "  Type: Identifier |Integer|",
+                "  FirstPortabilityDirectives: ListNode",
                 "  Absolute: (none)",
                 "  AbsoluteAddress: (none)",
                 "  EqualSign: (none)",
                 "  Value: (none)",
-                "  PortabilityDirectiveList: ListNode",
+                "  SecondPortabilityDirectives: ListNode",
                 "  Semicolon: Semicolon |;|"));
         }
         public void TestAbsolute()
@@ -47,11 +48,12 @@ namespace DGrok.Tests
                 "      Delimiter: (none)",
                 "  Colon: Colon |:|",
                 "  Type: Identifier |Integer|",
+                "  FirstPortabilityDirectives: ListNode",
                 "  Absolute: AbsoluteSemikeyword |absolute|",
                 "  AbsoluteAddress: Identifier |Bar|",
                 "  EqualSign: (none)",
                 "  Value: (none)",
-                "  PortabilityDirectiveList: ListNode",
+                "  SecondPortabilityDirectives: ListNode",
                 "  Semicolon: Semicolon |;|"));
         }
         public void TestInitialized()
@@ -64,11 +66,12 @@ namespace DGrok.Tests
                 "      Delimiter: (none)",
                 "  Colon: Colon |:|",
                 "  Type: Identifier |Integer|",
+                "  FirstPortabilityDirectives: ListNode",
                 "  Absolute: (none)",
                 "  AbsoluteAddress: (none)",
                 "  EqualSign: EqualSign |=|",
                 "  Value: Number |42|",
-                "  PortabilityDirectiveList: ListNode",
+                "  SecondPortabilityDirectives: ListNode",
                 "  Semicolon: Semicolon |;|"));
         }
         public void TestInitializedRecord()
@@ -81,6 +84,7 @@ namespace DGrok.Tests
                 "      Delimiter: (none)",
                 "  Colon: Colon |:|",
                 "  Type: Identifier |TPoint|",
+                "  FirstPortabilityDirectives: ListNode",
                 "  Absolute: (none)",
                 "  AbsoluteAddress: (none)",
                 "  EqualSign: EqualSign |=|",
@@ -100,7 +104,7 @@ namespace DGrok.Tests
                 "          Value: Number |0|",
                 "        Delimiter: (none)",
                 "    CloseParenthesis: CloseParenthesis |)|",
-                "  PortabilityDirectiveList: ListNode",
+                "  SecondPortabilityDirectives: ListNode",
                 "  Semicolon: Semicolon |;|"));
         }
         public void TestPortabilityDirectives()
@@ -113,13 +117,34 @@ namespace DGrok.Tests
                 "      Delimiter: (none)",
                 "  Colon: Colon |:|",
                 "  Type: Identifier |Integer|",
+                "  FirstPortabilityDirectives: ListNode",
+                "    Items[0]: DeprecatedSemikeyword |deprecated|",
+                "    Items[1]: LibraryKeyword |library|",
                 "  Absolute: (none)",
                 "  AbsoluteAddress: (none)",
                 "  EqualSign: (none)",
                 "  Value: (none)",
-                "  PortabilityDirectiveList: ListNode",
+                "  SecondPortabilityDirectives: ListNode",
+                "  Semicolon: Semicolon |;|"));
+        }
+        public void TestPortabilityDirectivesWithDefault()
+        {
+            Assert.That("Foo: Integer deprecated = 42 platform;", ParsesAs(
+                "VarDeclNode",
+                "  Names: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: Identifier |Foo|",
+                "      Delimiter: (none)",
+                "  Colon: Colon |:|",
+                "  Type: Identifier |Integer|",
+                "  FirstPortabilityDirectives: ListNode",
                 "    Items[0]: DeprecatedSemikeyword |deprecated|",
-                "    Items[1]: LibraryKeyword |library|",
+                "  Absolute: (none)",
+                "  AbsoluteAddress: (none)",
+                "  EqualSign: EqualSign |=|",
+                "  Value: Number |42|",
+                "  SecondPortabilityDirectives: ListNode",
+                "    Items[0]: PlatformSemikeyword |platform|",
                 "  Semicolon: Semicolon |;|"));
         }
     }

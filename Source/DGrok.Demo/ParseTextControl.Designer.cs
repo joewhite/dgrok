@@ -65,6 +65,7 @@ namespace DGrok.Demo
             // 
             this.edtSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.edtSource.Location = new System.Drawing.Point(0, 13);
+            this.edtSource.MaxLength = 0;
             this.edtSource.Multiline = true;
             this.edtSource.Name = "edtSource";
             this.edtSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;

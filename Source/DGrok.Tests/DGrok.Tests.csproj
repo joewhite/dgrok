@@ -45,6 +45,9 @@
     <Compile Include="AstNodeTests.cs" />
     <Compile Include="BareInheritedTests.cs" />
     <Compile Include="BlockTests.cs" />
+    <Compile Include="CaseSelectorTests.cs" />
+    <Compile Include="CaseStatementTests.cs" />
+    <Compile Include="ClassHelperTypeTests.cs" />
     <Compile Include="ClassOfTypeTests.cs" />
     <Compile Include="ClassTypeTests.cs" />
     <Compile Include="CompilerDefinesTests.cs" />
@@ -52,6 +55,7 @@
     <Compile Include="ConstSectionTests.cs" />
     <Compile Include="EnumeratedTypeElementTests.cs" />
     <Compile Include="EnumeratedTypeTests.cs" />
+    <Compile Include="ExceptionItemTests.cs" />
     <Compile Include="ExportsItemTests.cs" />
     <Compile Include="ExportsSpecifierTests.cs" />
     <Compile Include="ExportsStatementTests.cs" />
@@ -63,6 +67,7 @@
     <Compile Include="FancyBlockTests.cs" />
     <Compile Include="FieldDeclTests.cs" />
     <Compile Include="FieldSectionTests.cs" />
+    <Compile Include="ForStatementTests.cs" />
     <Compile Include="GoalTests.cs" />
     <Compile Include="IfStatementTests.cs" />
     <Compile Include="ImplementationDeclTests.cs" />
@@ -76,6 +81,7 @@
     <Compile Include="MethodOrPropertyTests.cs" />
     <Compile Include="OpenArrayTests.cs" />
     <Compile Include="PackedTypeTests.cs" />
+    <Compile Include="ParameterExpressionTests.cs" />
     <Compile Include="ParameterTests.cs" />
     <Compile Include="ParameterTypeTests.cs" />
     <Compile Include="ParenthesizedExpressionTests.cs" />
@@ -86,11 +92,15 @@
     <Compile Include="QualifiedIdentTests.cs" />
     <Compile Include="RaiseStatementTests.cs" />
     <Compile Include="RecordFieldConstantTests.cs" />
+    <Compile Include="RecordHelperTypeTests.cs" />
     <Compile Include="RecordTypeTests.cs" />
+    <Compile Include="RepeatStatementTests.cs" />
     <Compile Include="SetLiteralTests.cs" />
     <Compile Include="SetTypeTests.cs" />
     <Compile Include="SimpleStatementTests.cs" />
+    <Compile Include="StatementListTests.cs" />
     <Compile Include="StatementTests.cs" />
+    <Compile Include="TryStatementTests.cs" />
     <Compile Include="TypedConstantTests.cs" />
     <Compile Include="TypeDeclTests.cs" />
     <Compile Include="TypeSectionTests.cs" />
@@ -129,10 +139,14 @@
     <Compile Include="UsedUnitTests.cs" />
     <Compile Include="UsesClauseTests.cs" />
     <Compile Include="VarDeclTests.cs" />
+    <Compile Include="VariantGroupTests.cs" />
+    <Compile Include="VariantSectionTests.cs" />
     <Compile Include="VarSectionTests.cs" />
     <Compile Include="VisibilitySectionContentTests.cs" />
     <Compile Include="VisibilitySectionTests.cs" />
     <Compile Include="VisibilityTests.cs" />
+    <Compile Include="WhileStatementTests.cs" />
+    <Compile Include="WithStatementTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DGrok.Framework\DGrok.Framework.csproj">

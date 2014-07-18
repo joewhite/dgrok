@@ -5,8 +5,8 @@ def fieldname(s)
 end
 def varname(s)
   result = s.sub(/^[A-Z]/) {|m| m.downcase}
-  csharp_keywords = %w|class const default else goto
-    if in interface object operator string|
+  csharp_keywords = %w|case class const default do else finally for goto
+    if in interface object operator string try while|
   if csharp_keywords.include?(result)
     result = "the" + s
   end

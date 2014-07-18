@@ -138,5 +138,35 @@ namespace DGrok.Tests
                 "      Delimiter: (none)",
                 "  CloseDelimiter: CloseParenthesis |)|"));
         }
+        public void TestStringCast()
+        {
+            Assert.That("string('0')", ParsesAs(
+                "ParameterizedNode",
+                "  Left: StringKeyword |string|",
+                "  OpenDelimiter: OpenParenthesis |(|",
+                "  ParameterList: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: StringLiteral |'0'|",
+                "      Delimiter: (none)",
+                "  CloseDelimiter: CloseParenthesis |)|"));
+        }
+        public void TestColonSyntax()
+        {
+            Assert.That("Str(X:0, S)", ParsesAs(
+                "ParameterizedNode",
+                "  Left: Identifier |Str|",
+                "  OpenDelimiter: OpenParenthesis |(|",
+                "  ParameterList: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: BinaryOperationNode",
+                "        Left: Identifier |X|",
+                "        Operator: Colon |:|",
+                "        Right: Number |0|",
+                "      Delimiter: Comma |,|",
+                "    Items[1]: DelimitedItemNode",
+                "      Item: Identifier |S|",
+                "      Delimiter: (none)",
+                "  CloseDelimiter: CloseParenthesis |)|"));
+        }
     }
 }
