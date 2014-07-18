@@ -25,7 +25,7 @@ namespace DGrok.Tests
             Assert.That("contains Foo;", ParsesAs(
                 "ContainsClauseNode",
                 "  Contains: ContainsSemikeyword |contains|",
-                "  IdentList: ListNode",
+                "  UnitList: ListNode",
                 "    Items[0]: DelimitedItemNode",
                 "      Item: Identifier |Foo|",
                 "      Delimiter: (none)",
@@ -36,12 +36,26 @@ namespace DGrok.Tests
             Assert.That("contains Foo, Bar;", ParsesAs(
                 "ContainsClauseNode",
                 "  Contains: ContainsSemikeyword |contains|",
-                "  IdentList: ListNode",
+                "  UnitList: ListNode",
                 "    Items[0]: DelimitedItemNode",
                 "      Item: Identifier |Foo|",
                 "      Delimiter: Comma |,|",
                 "    Items[1]: DelimitedItemNode",
                 "      Item: Identifier |Bar|",
+                "      Delimiter: (none)",
+                "  Semicolon: Semicolon |;|"));
+        }
+        public void TestDottedItem()
+        {
+            Assert.That("contains Foo.Bar;", ParsesAs(
+                "ContainsClauseNode",
+                "  Contains: ContainsSemikeyword |contains|",
+                "  UnitList: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: BinaryOperationNode",
+                "        Left: Identifier |Foo|",
+                "        Operator: Dot |.|",
+                "        Right: Identifier |Bar|",
                 "      Delimiter: (none)",
                 "  Semicolon: Semicolon |;|"));
         }

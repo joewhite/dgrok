@@ -12,32 +12,29 @@ namespace DGrok.Framework
 {
     public class EofFrame : IFrame
     {
-        private static EofFrame _instance = new EofFrame();
+        private Location _location;
 
-        public EofFrame()
+        public EofFrame(Location location)
         {
+            _location = location;
         }
 
         public string DisplayName
         {
             get { return "end of file"; }
         }
-        public static EofFrame Instance
-        {
-            get { return _instance; }
-        }
         public bool IsEof
         {
             get { return true; }
         }
+        public Location Location
+        {
+            get { return _location; }
+        }
         public IFrame Next
         {
-            get { throw new ParseException("Expected token but found end of file", Offset); }
+            get { throw new ParseException("Expected token but found end of file", Location); }
             set { throw new InvalidOperationException("Cannot set Next on NullFrame"); }
-        }
-        public int Offset
-        {
-            get { return -1; }
         }
         public TokenType TokenType
         {
@@ -50,7 +47,7 @@ namespace DGrok.Framework
         }
         public Token ParseToken(TokenSet tokenSet)
         {
-            throw new ParseException("Expected " + tokenSet.Name + " but found end of file", Offset);
+            throw new ParseException("Expected " + tokenSet.Name + " but found end of file", Location);
         }
     }
 }

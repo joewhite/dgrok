@@ -25,7 +25,7 @@ namespace DGrok.Tests
         public override bool Matches(object actual)
         {
             string source = (string) actual;
-            Parser parser = Parser.FromText(source, CompilerDefines.CreateStandard());
+            Parser parser = ParserTestCase.CreateParser(source);
             string actualString = parser.ParseRule(_ruleType).Inspect();
             if (!parser.AtEof)
                 throw new InvalidOperationException("Rule did not consume all input");

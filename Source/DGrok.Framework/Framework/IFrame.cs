@@ -14,8 +14,8 @@ namespace DGrok.Framework
     {
         string DisplayName { get; }
         bool IsEof { get; }
+        Location Location { get; }
         IFrame Next { get; set; }
-        int Offset { get; }
         TokenType TokenType { get; }
 
         bool CanParseToken(TokenSet tokenSet);

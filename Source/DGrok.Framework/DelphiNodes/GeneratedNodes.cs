@@ -16,14 +16,14 @@ namespace DGrok.DelphiNodes
 {
     public partial class ArrayTypeNode : NonterminalNode
     {
-        private AstNode _array;
-        private AstNode _closeBracket;
-        private AstNode _indexList;
-        private AstNode _of;
-        private AstNode _openBracket;
+        private Token _array;
+        private Token _closeBracket;
+        private ListNode<DelimitedItemNode<AstNode>> _indexList;
+        private Token _of;
+        private Token _openBracket;
         private AstNode _type;
 
-        public ArrayTypeNode(AstNode array, AstNode openBracket, AstNode indexList, AstNode closeBracket, AstNode of, AstNode type)
+        public ArrayTypeNode(Token array, Token openBracket, ListNode<DelimitedItemNode<AstNode>> indexList, Token closeBracket, Token of, AstNode type)
         {
             _array = array;
             _openBracket = openBracket;
@@ -33,23 +33,23 @@ namespace DGrok.DelphiNodes
             _type = type;
         }
 
-        public AstNode Array
+        public Token Array
         {
             get { return _array; }
         }
-        public AstNode CloseBracket
+        public Token CloseBracket
         {
             get { return _closeBracket; }
         }
-        public AstNode IndexList
+        public ListNode<DelimitedItemNode<AstNode>> IndexList
         {
             get { return _indexList; }
         }
-        public AstNode Of
+        public Token Of
         {
             get { return _of; }
         }
-        public AstNode OpenBracket
+        public Token OpenBracket
         {
             get { return _openBracket; }
         }
@@ -73,20 +73,20 @@ namespace DGrok.DelphiNodes
     }
     public partial class AssemblerStatementNode : NonterminalNode
     {
-        private AstNode _asm;
-        private AstNode _end;
+        private Token _asm;
+        private Token _end;
 
-        public AssemblerStatementNode(AstNode asm, AstNode end)
+        public AssemblerStatementNode(Token asm, Token end)
         {
             _asm = asm;
             _end = end;
         }
 
-        public AstNode Asm
+        public Token Asm
         {
             get { return _asm; }
         }
-        public AstNode End
+        public Token End
         {
             get { return _end; }
         }
@@ -103,10 +103,10 @@ namespace DGrok.DelphiNodes
     public partial class BinaryOperationNode : NonterminalNode
     {
         private AstNode _left;
-        private AstNode _operator;
+        private Token _operator;
         private AstNode _right;
 
-        public BinaryOperationNode(AstNode left, AstNode theOperator, AstNode right)
+        public BinaryOperationNode(AstNode left, Token theOperator, AstNode right)
         {
             _left = left;
             _operator = theOperator;
@@ -117,7 +117,7 @@ namespace DGrok.DelphiNodes
         {
             get { return _left; }
         }
-        public AstNode Operator
+        public Token Operator
         {
             get { return _operator; }
         }
@@ -138,26 +138,26 @@ namespace DGrok.DelphiNodes
     }
     public partial class BlockNode : NonterminalNode
     {
-        private AstNode _begin;
-        private AstNode _end;
-        private AstNode _statementList;
+        private Token _begin;
+        private Token _end;
+        private ListNode<DelimitedItemNode<AstNode>> _statementList;
 
-        public BlockNode(AstNode begin, AstNode statementList, AstNode end)
+        public BlockNode(Token begin, ListNode<DelimitedItemNode<AstNode>> statementList, Token end)
         {
             _begin = begin;
             _statementList = statementList;
             _end = end;
         }
 
-        public AstNode Begin
+        public Token Begin
         {
             get { return _begin; }
         }
-        public AstNode End
+        public Token End
         {
             get { return _end; }
         }
-        public AstNode StatementList
+        public ListNode<DelimitedItemNode<AstNode>> StatementList
         {
             get { return _statementList; }
         }
@@ -281,22 +281,22 @@ namespace DGrok.DelphiNodes
     }
     public partial class ClassOfNode : NonterminalNode
     {
-        private AstNode _class;
-        private AstNode _of;
+        private Token _class;
+        private Token _of;
         private AstNode _type;
 
-        public ClassOfNode(AstNode theClass, AstNode of, AstNode type)
+        public ClassOfNode(Token theClass, Token of, AstNode type)
         {
             _class = theClass;
             _of = of;
             _type = type;
         }
 
-        public AstNode Class
+        public Token Class
         {
             get { return _class; }
         }
-        public AstNode Of
+        public Token Of
         {
             get { return _of; }
         }
@@ -317,15 +317,15 @@ namespace DGrok.DelphiNodes
     }
     public partial class ClassTypeNode : NonterminalNode
     {
-        private AstNode _class;
-        private AstNode _closeParenthesis;
-        private AstNode _contents;
-        private AstNode _disposition;
-        private AstNode _end;
-        private AstNode _inheritanceList;
-        private AstNode _openParenthesis;
+        private Token _class;
+        private Token _closeParenthesis;
+        private ListNode<VisibilitySectionNode> _contents;
+        private Token _disposition;
+        private Token _end;
+        private ListNode<DelimitedItemNode<AstNode>> _inheritanceList;
+        private Token _openParenthesis;
 
-        public ClassTypeNode(AstNode theClass, AstNode disposition, AstNode openParenthesis, AstNode inheritanceList, AstNode closeParenthesis, AstNode contents, AstNode end)
+        public ClassTypeNode(Token theClass, Token disposition, Token openParenthesis, ListNode<DelimitedItemNode<AstNode>> inheritanceList, Token closeParenthesis, ListNode<VisibilitySectionNode> contents, Token end)
         {
             _class = theClass;
             _disposition = disposition;
@@ -336,31 +336,31 @@ namespace DGrok.DelphiNodes
             _end = end;
         }
 
-        public AstNode Class
+        public Token Class
         {
             get { return _class; }
         }
-        public AstNode CloseParenthesis
+        public Token CloseParenthesis
         {
             get { return _closeParenthesis; }
         }
-        public AstNode Contents
+        public ListNode<VisibilitySectionNode> Contents
         {
             get { return _contents; }
         }
-        public AstNode Disposition
+        public Token Disposition
         {
             get { return _disposition; }
         }
-        public AstNode End
+        public Token End
         {
             get { return _end; }
         }
-        public AstNode InheritanceList
+        public ListNode<DelimitedItemNode<AstNode>> InheritanceList
         {
             get { return _inheritanceList; }
         }
-        public AstNode OpenParenthesis
+        public Token OpenParenthesis
         {
             get { return _openParenthesis; }
         }
@@ -381,15 +381,15 @@ namespace DGrok.DelphiNodes
     }
     public partial class ConstantDeclNode : NonterminalNode
     {
-        private AstNode _colon;
-        private AstNode _equalSign;
-        private AstNode _name;
-        private AstNode _portabilityDirectiveList;
-        private AstNode _semicolon;
+        private Token _colon;
+        private Token _equalSign;
+        private Token _name;
+        private ListNode<Token> _portabilityDirectiveList;
+        private Token _semicolon;
         private AstNode _type;
         private AstNode _value;
 
-        public ConstantDeclNode(AstNode name, AstNode colon, AstNode type, AstNode equalSign, AstNode value, AstNode portabilityDirectiveList, AstNode semicolon)
+        public ConstantDeclNode(Token name, Token colon, AstNode type, Token equalSign, AstNode value, ListNode<Token> portabilityDirectiveList, Token semicolon)
         {
             _name = name;
             _colon = colon;
@@ -400,23 +400,23 @@ namespace DGrok.DelphiNodes
             _semicolon = semicolon;
         }
 
-        public AstNode Colon
+        public Token Colon
         {
             get { return _colon; }
         }
-        public AstNode EqualSign
+        public Token EqualSign
         {
             get { return _equalSign; }
         }
-        public AstNode Name
+        public Token Name
         {
             get { return _name; }
         }
-        public AstNode PortabilityDirectiveList
+        public ListNode<Token> PortabilityDirectiveList
         {
             get { return _portabilityDirectiveList; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
@@ -445,26 +445,26 @@ namespace DGrok.DelphiNodes
     }
     public partial class ConstantListNode : NonterminalNode
     {
-        private AstNode _closeParenthesis;
-        private AstNode _itemList;
-        private AstNode _openParenthesis;
+        private Token _closeParenthesis;
+        private ListNode<DelimitedItemNode<AstNode>> _itemList;
+        private Token _openParenthesis;
 
-        public ConstantListNode(AstNode openParenthesis, AstNode itemList, AstNode closeParenthesis)
+        public ConstantListNode(Token openParenthesis, ListNode<DelimitedItemNode<AstNode>> itemList, Token closeParenthesis)
         {
             _openParenthesis = openParenthesis;
             _itemList = itemList;
             _closeParenthesis = closeParenthesis;
         }
 
-        public AstNode CloseParenthesis
+        public Token CloseParenthesis
         {
             get { return _closeParenthesis; }
         }
-        public AstNode ItemList
+        public ListNode<DelimitedItemNode<AstNode>> ItemList
         {
             get { return _itemList; }
         }
-        public AstNode OpenParenthesis
+        public Token OpenParenthesis
         {
             get { return _openParenthesis; }
         }
@@ -481,20 +481,20 @@ namespace DGrok.DelphiNodes
     }
     public partial class ConstSectionNode : NonterminalNode
     {
-        private AstNode _const;
-        private AstNode _constList;
+        private Token _const;
+        private ListNode<ConstantDeclNode> _constList;
 
-        public ConstSectionNode(AstNode theConst, AstNode constList)
+        public ConstSectionNode(Token theConst, ListNode<ConstantDeclNode> constList)
         {
             _const = theConst;
             _constList = constList;
         }
 
-        public AstNode Const
+        public Token Const
         {
             get { return _const; }
         }
-        public AstNode ConstList
+        public ListNode<ConstantDeclNode> ConstList
         {
             get { return _constList; }
         }
@@ -510,28 +510,28 @@ namespace DGrok.DelphiNodes
     }
     public partial class ContainsClauseNode : NonterminalNode
     {
-        private AstNode _contains;
-        private AstNode _identList;
-        private AstNode _semicolon;
+        private Token _contains;
+        private Token _semicolon;
+        private ListNode<DelimitedItemNode<AstNode>> _unitList;
 
-        public ContainsClauseNode(AstNode contains, AstNode identList, AstNode semicolon)
+        public ContainsClauseNode(Token contains, ListNode<DelimitedItemNode<AstNode>> unitList, Token semicolon)
         {
             _contains = contains;
-            _identList = identList;
+            _unitList = unitList;
             _semicolon = semicolon;
         }
 
-        public AstNode Contains
+        public Token Contains
         {
             get { return _contains; }
         }
-        public AstNode IdentList
-        {
-            get { return _identList; }
-        }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
+        }
+        public ListNode<DelimitedItemNode<AstNode>> UnitList
+        {
+            get { return _unitList; }
         }
 
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
@@ -539,7 +539,7 @@ namespace DGrok.DelphiNodes
             get
             {
                 yield return new KeyValuePair<string, AstNode>("Contains", Contains);
-                yield return new KeyValuePair<string, AstNode>("IdentList", IdentList);
+                yield return new KeyValuePair<string, AstNode>("UnitList", UnitList);
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
@@ -589,22 +589,22 @@ namespace DGrok.DelphiNodes
     }
     public partial class EnumeratedTypeElementNode : NonterminalNode
     {
-        private AstNode _equalSign;
-        private AstNode _name;
+        private Token _equalSign;
+        private Token _name;
         private AstNode _value;
 
-        public EnumeratedTypeElementNode(AstNode name, AstNode equalSign, AstNode value)
+        public EnumeratedTypeElementNode(Token name, Token equalSign, AstNode value)
         {
             _name = name;
             _equalSign = equalSign;
             _value = value;
         }
 
-        public AstNode EqualSign
+        public Token EqualSign
         {
             get { return _equalSign; }
         }
-        public AstNode Name
+        public Token Name
         {
             get { return _name; }
         }
@@ -625,26 +625,26 @@ namespace DGrok.DelphiNodes
     }
     public partial class EnumeratedTypeNode : NonterminalNode
     {
-        private AstNode _closeParenthesis;
-        private AstNode _itemList;
-        private AstNode _openParenthesis;
+        private Token _closeParenthesis;
+        private ListNode<DelimitedItemNode<EnumeratedTypeElementNode>> _itemList;
+        private Token _openParenthesis;
 
-        public EnumeratedTypeNode(AstNode openParenthesis, AstNode itemList, AstNode closeParenthesis)
+        public EnumeratedTypeNode(Token openParenthesis, ListNode<DelimitedItemNode<EnumeratedTypeElementNode>> itemList, Token closeParenthesis)
         {
             _openParenthesis = openParenthesis;
             _itemList = itemList;
             _closeParenthesis = closeParenthesis;
         }
 
-        public AstNode CloseParenthesis
+        public Token CloseParenthesis
         {
             get { return _closeParenthesis; }
         }
-        public AstNode ItemList
+        public ListNode<DelimitedItemNode<EnumeratedTypeElementNode>> ItemList
         {
             get { return _itemList; }
         }
-        public AstNode OpenParenthesis
+        public Token OpenParenthesis
         {
             get { return _openParenthesis; }
         }
@@ -726,9 +726,9 @@ namespace DGrok.DelphiNodes
     public partial class ExportsItemNode : NonterminalNode
     {
         private AstNode _name;
-        private AstNode _specifierList;
+        private ListNode<ExportsSpecifierNode> _specifierList;
 
-        public ExportsItemNode(AstNode name, AstNode specifierList)
+        public ExportsItemNode(AstNode name, ListNode<ExportsSpecifierNode> specifierList)
         {
             _name = name;
             _specifierList = specifierList;
@@ -738,7 +738,7 @@ namespace DGrok.DelphiNodes
         {
             get { return _name; }
         }
-        public AstNode SpecifierList
+        public ListNode<ExportsSpecifierNode> SpecifierList
         {
             get { return _specifierList; }
         }
@@ -754,16 +754,16 @@ namespace DGrok.DelphiNodes
     }
     public partial class ExportsSpecifierNode : NonterminalNode
     {
-        private AstNode _keyword;
+        private Token _keyword;
         private AstNode _value;
 
-        public ExportsSpecifierNode(AstNode keyword, AstNode value)
+        public ExportsSpecifierNode(Token keyword, AstNode value)
         {
             _keyword = keyword;
             _value = value;
         }
 
-        public AstNode Keyword
+        public Token Keyword
         {
             get { return _keyword; }
         }
@@ -783,26 +783,26 @@ namespace DGrok.DelphiNodes
     }
     public partial class ExportsStatementNode : NonterminalNode
     {
-        private AstNode _exports;
-        private AstNode _itemList;
-        private AstNode _semicolon;
+        private Token _exports;
+        private ListNode<DelimitedItemNode<ExportsItemNode>> _itemList;
+        private Token _semicolon;
 
-        public ExportsStatementNode(AstNode exports, AstNode itemList, AstNode semicolon)
+        public ExportsStatementNode(Token exports, ListNode<DelimitedItemNode<ExportsItemNode>> itemList, Token semicolon)
         {
             _exports = exports;
             _itemList = itemList;
             _semicolon = semicolon;
         }
 
-        public AstNode Exports
+        public Token Exports
         {
             get { return _exports; }
         }
-        public AstNode ItemList
+        public ListNode<DelimitedItemNode<ExportsItemNode>> ItemList
         {
             get { return _itemList; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
@@ -820,9 +820,9 @@ namespace DGrok.DelphiNodes
     public partial class FancyBlockNode : NonterminalNode
     {
         private AstNode _block;
-        private AstNode _declList;
+        private ListNode<AstNode> _declList;
 
-        public FancyBlockNode(AstNode declList, AstNode block)
+        public FancyBlockNode(ListNode<AstNode> declList, AstNode block)
         {
             _declList = declList;
             _block = block;
@@ -832,7 +832,7 @@ namespace DGrok.DelphiNodes
         {
             get { return _block; }
         }
-        public AstNode DeclList
+        public ListNode<AstNode> DeclList
         {
             get { return _declList; }
         }
@@ -848,13 +848,13 @@ namespace DGrok.DelphiNodes
     }
     public partial class FieldDeclNode : NonterminalNode
     {
-        private AstNode _colon;
-        private AstNode _nameList;
-        private AstNode _portabilityDirectiveList;
-        private AstNode _semicolon;
+        private Token _colon;
+        private ListNode<DelimitedItemNode<Token>> _nameList;
+        private ListNode<Token> _portabilityDirectiveList;
+        private Token _semicolon;
         private AstNode _type;
 
-        public FieldDeclNode(AstNode nameList, AstNode colon, AstNode type, AstNode portabilityDirectiveList, AstNode semicolon)
+        public FieldDeclNode(ListNode<DelimitedItemNode<Token>> nameList, Token colon, AstNode type, ListNode<Token> portabilityDirectiveList, Token semicolon)
         {
             _nameList = nameList;
             _colon = colon;
@@ -863,19 +863,19 @@ namespace DGrok.DelphiNodes
             _semicolon = semicolon;
         }
 
-        public AstNode Colon
+        public Token Colon
         {
             get { return _colon; }
         }
-        public AstNode NameList
+        public ListNode<DelimitedItemNode<Token>> NameList
         {
             get { return _nameList; }
         }
-        public AstNode PortabilityDirectiveList
+        public ListNode<Token> PortabilityDirectiveList
         {
             get { return _portabilityDirectiveList; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
@@ -898,26 +898,26 @@ namespace DGrok.DelphiNodes
     }
     public partial class FieldSectionNode : NonterminalNode
     {
-        private AstNode _class;
-        private AstNode _fieldList;
-        private AstNode _var;
+        private Token _class;
+        private ListNode<FieldDeclNode> _fieldList;
+        private Token _var;
 
-        public FieldSectionNode(AstNode theClass, AstNode var, AstNode fieldList)
+        public FieldSectionNode(Token theClass, Token var, ListNode<FieldDeclNode> fieldList)
         {
             _class = theClass;
             _var = var;
             _fieldList = fieldList;
         }
 
-        public AstNode Class
+        public Token Class
         {
             get { return _class; }
         }
-        public AstNode FieldList
+        public ListNode<FieldDeclNode> FieldList
         {
             get { return _fieldList; }
         }
-        public AstNode Var
+        public Token Var
         {
             get { return _var; }
         }
@@ -934,22 +934,22 @@ namespace DGrok.DelphiNodes
     }
     public partial class FileTypeNode : NonterminalNode
     {
-        private AstNode _file;
-        private AstNode _of;
+        private Token _file;
+        private Token _of;
         private AstNode _type;
 
-        public FileTypeNode(AstNode file, AstNode of, AstNode type)
+        public FileTypeNode(Token file, Token of, AstNode type)
         {
             _file = file;
             _of = of;
             _type = type;
         }
 
-        public AstNode File
+        public Token File
         {
             get { return _file; }
         }
-        public AstNode Of
+        public Token Of
         {
             get { return _of; }
         }
@@ -1098,20 +1098,20 @@ namespace DGrok.DelphiNodes
     }
     public partial class GotoStatementNode : NonterminalNode
     {
-        private AstNode _goto;
-        private AstNode _labelId;
+        private Token _goto;
+        private Token _labelId;
 
-        public GotoStatementNode(AstNode theGoto, AstNode labelId)
+        public GotoStatementNode(Token theGoto, Token labelId)
         {
             _goto = theGoto;
             _labelId = labelId;
         }
 
-        public AstNode Goto
+        public Token Goto
         {
             get { return _goto; }
         }
-        public AstNode LabelId
+        public Token LabelId
         {
             get { return _labelId; }
         }
@@ -1128,13 +1128,13 @@ namespace DGrok.DelphiNodes
     public partial class IfStatementNode : NonterminalNode
     {
         private AstNode _condition;
-        private AstNode _else;
+        private Token _else;
         private AstNode _elseStatement;
-        private AstNode _if;
-        private AstNode _then;
+        private Token _if;
+        private Token _then;
         private AstNode _thenStatement;
 
-        public IfStatementNode(AstNode theIf, AstNode condition, AstNode then, AstNode thenStatement, AstNode theElse, AstNode elseStatement)
+        public IfStatementNode(Token theIf, AstNode condition, Token then, AstNode thenStatement, Token theElse, AstNode elseStatement)
         {
             _if = theIf;
             _condition = condition;
@@ -1148,7 +1148,7 @@ namespace DGrok.DelphiNodes
         {
             get { return _condition; }
         }
-        public AstNode Else
+        public Token Else
         {
             get { return _else; }
         }
@@ -1156,11 +1156,11 @@ namespace DGrok.DelphiNodes
         {
             get { return _elseStatement; }
         }
-        public AstNode If
+        public Token If
         {
             get { return _if; }
         }
-        public AstNode Then
+        public Token Then
         {
             get { return _then; }
         }
@@ -1184,13 +1184,13 @@ namespace DGrok.DelphiNodes
     }
     public partial class InitSectionNode : NonterminalNode
     {
-        private AstNode _end;
-        private AstNode _finalizationHeader;
-        private AstNode _finalizationStatements;
-        private AstNode _initializationHeader;
-        private AstNode _initializationStatements;
+        private Token _end;
+        private Token _finalizationHeader;
+        private ListNode<DelimitedItemNode<AstNode>> _finalizationStatements;
+        private Token _initializationHeader;
+        private ListNode<DelimitedItemNode<AstNode>> _initializationStatements;
 
-        public InitSectionNode(AstNode initializationHeader, AstNode initializationStatements, AstNode finalizationHeader, AstNode finalizationStatements, AstNode end)
+        public InitSectionNode(Token initializationHeader, ListNode<DelimitedItemNode<AstNode>> initializationStatements, Token finalizationHeader, ListNode<DelimitedItemNode<AstNode>> finalizationStatements, Token end)
         {
             _initializationHeader = initializationHeader;
             _initializationStatements = initializationStatements;
@@ -1199,23 +1199,23 @@ namespace DGrok.DelphiNodes
             _end = end;
         }
 
-        public AstNode End
+        public Token End
         {
             get { return _end; }
         }
-        public AstNode FinalizationHeader
+        public Token FinalizationHeader
         {
             get { return _finalizationHeader; }
         }
-        public AstNode FinalizationStatements
+        public ListNode<DelimitedItemNode<AstNode>> FinalizationStatements
         {
             get { return _finalizationStatements; }
         }
-        public AstNode InitializationHeader
+        public Token InitializationHeader
         {
             get { return _initializationHeader; }
         }
-        public AstNode InitializationStatements
+        public ListNode<DelimitedItemNode<AstNode>> InitializationStatements
         {
             get { return _initializationStatements; }
         }
@@ -1235,16 +1235,16 @@ namespace DGrok.DelphiNodes
     public partial class InterfaceTypeNode : NonterminalNode
     {
         private AstNode _baseInterface;
-        private AstNode _closeBracket;
-        private AstNode _closeParenthesis;
-        private AstNode _end;
+        private Token _closeBracket;
+        private Token _closeParenthesis;
+        private Token _end;
         private AstNode _guid;
-        private AstNode _interface;
-        private AstNode _methodAndPropertyList;
-        private AstNode _openBracket;
-        private AstNode _openParenthesis;
+        private Token _interface;
+        private ListNode<AstNode> _methodAndPropertyList;
+        private Token _openBracket;
+        private Token _openParenthesis;
 
-        public InterfaceTypeNode(AstNode theInterface, AstNode openParenthesis, AstNode baseInterface, AstNode closeParenthesis, AstNode openBracket, AstNode guid, AstNode closeBracket, AstNode methodAndPropertyList, AstNode end)
+        public InterfaceTypeNode(Token theInterface, Token openParenthesis, AstNode baseInterface, Token closeParenthesis, Token openBracket, AstNode guid, Token closeBracket, ListNode<AstNode> methodAndPropertyList, Token end)
         {
             _interface = theInterface;
             _openParenthesis = openParenthesis;
@@ -1261,15 +1261,15 @@ namespace DGrok.DelphiNodes
         {
             get { return _baseInterface; }
         }
-        public AstNode CloseBracket
+        public Token CloseBracket
         {
             get { return _closeBracket; }
         }
-        public AstNode CloseParenthesis
+        public Token CloseParenthesis
         {
             get { return _closeParenthesis; }
         }
-        public AstNode End
+        public Token End
         {
             get { return _end; }
         }
@@ -1277,19 +1277,19 @@ namespace DGrok.DelphiNodes
         {
             get { return _guid; }
         }
-        public AstNode Interface
+        public Token Interface
         {
             get { return _interface; }
         }
-        public AstNode MethodAndPropertyList
+        public ListNode<AstNode> MethodAndPropertyList
         {
             get { return _methodAndPropertyList; }
         }
-        public AstNode OpenBracket
+        public Token OpenBracket
         {
             get { return _openBracket; }
         }
-        public AstNode OpenParenthesis
+        public Token OpenParenthesis
         {
             get { return _openParenthesis; }
         }
@@ -1312,26 +1312,26 @@ namespace DGrok.DelphiNodes
     }
     public partial class LabelDeclSectionNode : NonterminalNode
     {
-        private AstNode _label;
-        private AstNode _labelList;
-        private AstNode _semicolon;
+        private Token _label;
+        private ListNode<DelimitedItemNode<Token>> _labelList;
+        private Token _semicolon;
 
-        public LabelDeclSectionNode(AstNode label, AstNode labelList, AstNode semicolon)
+        public LabelDeclSectionNode(Token label, ListNode<DelimitedItemNode<Token>> labelList, Token semicolon)
         {
             _label = label;
             _labelList = labelList;
             _semicolon = semicolon;
         }
 
-        public AstNode Label
+        public Token Label
         {
             get { return _label; }
         }
-        public AstNode LabelList
+        public ListNode<DelimitedItemNode<Token>> LabelList
         {
             get { return _labelList; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
@@ -1348,22 +1348,22 @@ namespace DGrok.DelphiNodes
     }
     public partial class LabeledStatementNode : NonterminalNode
     {
-        private AstNode _colon;
-        private AstNode _label;
+        private Token _colon;
+        private Token _label;
         private AstNode _statement;
 
-        public LabeledStatementNode(AstNode label, AstNode colon, AstNode statement)
+        public LabeledStatementNode(Token label, Token colon, AstNode statement)
         {
             _label = label;
             _colon = colon;
             _statement = statement;
         }
 
-        public AstNode Colon
+        public Token Colon
         {
             get { return _colon; }
         }
-        public AstNode Label
+        public Token Label
         {
             get { return _label; }
         }
@@ -1469,26 +1469,26 @@ namespace DGrok.DelphiNodes
     }
     public partial class MethodImplementationNode : NonterminalNode
     {
-        private AstNode _fancyBlock;
-        private AstNode _methodHeading;
-        private AstNode _semicolon;
+        private FancyBlockNode _fancyBlock;
+        private MethodHeadingNode _methodHeading;
+        private Token _semicolon;
 
-        public MethodImplementationNode(AstNode methodHeading, AstNode fancyBlock, AstNode semicolon)
+        public MethodImplementationNode(MethodHeadingNode methodHeading, FancyBlockNode fancyBlock, Token semicolon)
         {
             _methodHeading = methodHeading;
             _fancyBlock = fancyBlock;
             _semicolon = semicolon;
         }
 
-        public AstNode FancyBlock
+        public FancyBlockNode FancyBlock
         {
             get { return _fancyBlock; }
         }
-        public AstNode MethodHeading
+        public MethodHeadingNode MethodHeading
         {
             get { return _methodHeading; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
@@ -1505,13 +1505,13 @@ namespace DGrok.DelphiNodes
     }
     public partial class MethodResolutionNode : NonterminalNode
     {
-        private AstNode _equalSign;
-        private AstNode _implementationMethod;
+        private Token _equalSign;
+        private Token _implementationMethod;
         private AstNode _interfaceMethod;
-        private AstNode _methodType;
-        private AstNode _semicolon;
+        private Token _methodType;
+        private Token _semicolon;
 
-        public MethodResolutionNode(AstNode methodType, AstNode interfaceMethod, AstNode equalSign, AstNode implementationMethod, AstNode semicolon)
+        public MethodResolutionNode(Token methodType, AstNode interfaceMethod, Token equalSign, Token implementationMethod, Token semicolon)
         {
             _methodType = methodType;
             _interfaceMethod = interfaceMethod;
@@ -1520,11 +1520,11 @@ namespace DGrok.DelphiNodes
             _semicolon = semicolon;
         }
 
-        public AstNode EqualSign
+        public Token EqualSign
         {
             get { return _equalSign; }
         }
-        public AstNode ImplementationMethod
+        public Token ImplementationMethod
         {
             get { return _implementationMethod; }
         }
@@ -1532,11 +1532,11 @@ namespace DGrok.DelphiNodes
         {
             get { return _interfaceMethod; }
         }
-        public AstNode MethodType
+        public Token MethodType
         {
             get { return _methodType; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
@@ -1553,24 +1553,74 @@ namespace DGrok.DelphiNodes
             }
         }
     }
+    public partial class NumberFormatNode : NonterminalNode
+    {
+        private AstNode _precision;
+        private Token _precisionColon;
+        private AstNode _size;
+        private Token _sizeColon;
+        private AstNode _value;
+
+        public NumberFormatNode(AstNode value, Token sizeColon, AstNode size, Token precisionColon, AstNode precision)
+        {
+            _value = value;
+            _sizeColon = sizeColon;
+            _size = size;
+            _precisionColon = precisionColon;
+            _precision = precision;
+        }
+
+        public AstNode Precision
+        {
+            get { return _precision; }
+        }
+        public Token PrecisionColon
+        {
+            get { return _precisionColon; }
+        }
+        public AstNode Size
+        {
+            get { return _size; }
+        }
+        public Token SizeColon
+        {
+            get { return _sizeColon; }
+        }
+        public AstNode Value
+        {
+            get { return _value; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("Value", Value);
+                yield return new KeyValuePair<string, AstNode>("SizeColon", SizeColon);
+                yield return new KeyValuePair<string, AstNode>("Size", Size);
+                yield return new KeyValuePair<string, AstNode>("PrecisionColon", PrecisionColon);
+                yield return new KeyValuePair<string, AstNode>("Precision", Precision);
+            }
+        }
+    }
     public partial class OpenArrayNode : NonterminalNode
     {
-        private AstNode _array;
-        private AstNode _of;
+        private Token _array;
+        private Token _of;
         private AstNode _type;
 
-        public OpenArrayNode(AstNode array, AstNode of, AstNode type)
+        public OpenArrayNode(Token array, Token of, AstNode type)
         {
             _array = array;
             _of = of;
             _type = type;
         }
 
-        public AstNode Array
+        public Token Array
         {
             get { return _array; }
         }
-        public AstNode Of
+        public Token Of
         {
             get { return _of; }
         }
@@ -1591,15 +1641,15 @@ namespace DGrok.DelphiNodes
     }
     public partial class PackageNode : NonterminalNode
     {
-        private AstNode _containsClause;
-        private AstNode _dot;
-        private AstNode _end;
-        private AstNode _name;
-        private AstNode _package;
-        private AstNode _requiresClause;
-        private AstNode _semicolon;
+        private ContainsClauseNode _containsClause;
+        private Token _dot;
+        private Token _end;
+        private Token _name;
+        private Token _package;
+        private RequiresClauseNode _requiresClause;
+        private Token _semicolon;
 
-        public PackageNode(AstNode package, AstNode name, AstNode semicolon, AstNode requiresClause, AstNode containsClause, AstNode end, AstNode dot)
+        public PackageNode(Token package, Token name, Token semicolon, RequiresClauseNode requiresClause, ContainsClauseNode containsClause, Token end, Token dot)
         {
             _package = package;
             _name = name;
@@ -1610,31 +1660,31 @@ namespace DGrok.DelphiNodes
             _dot = dot;
         }
 
-        public AstNode ContainsClause
+        public ContainsClauseNode ContainsClause
         {
             get { return _containsClause; }
         }
-        public AstNode Dot
+        public Token Dot
         {
             get { return _dot; }
         }
-        public AstNode End
+        public Token End
         {
             get { return _end; }
         }
-        public AstNode Name
+        public Token Name
         {
             get { return _name; }
         }
-        public AstNode Package
+        public Token Package
         {
             get { return _package; }
         }
-        public AstNode RequiresClause
+        public RequiresClauseNode RequiresClause
         {
             get { return _requiresClause; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
@@ -1655,16 +1705,16 @@ namespace DGrok.DelphiNodes
     }
     public partial class PackedTypeNode : NonterminalNode
     {
-        private AstNode _packed;
+        private Token _packed;
         private AstNode _type;
 
-        public PackedTypeNode(AstNode packed, AstNode type)
+        public PackedTypeNode(Token packed, AstNode type)
         {
             _packed = packed;
             _type = type;
         }
 
-        public AstNode Packed
+        public Token Packed
         {
             get { return _packed; }
         }
@@ -1684,12 +1734,12 @@ namespace DGrok.DelphiNodes
     }
     public partial class ParameterizedNode : NonterminalNode
     {
-        private AstNode _closeDelimiter;
+        private Token _closeDelimiter;
         private AstNode _left;
-        private AstNode _openDelimiter;
-        private AstNode _parameterList;
+        private Token _openDelimiter;
+        private ListNode<DelimitedItemNode<AstNode>> _parameterList;
 
-        public ParameterizedNode(AstNode left, AstNode openDelimiter, AstNode parameterList, AstNode closeDelimiter)
+        public ParameterizedNode(AstNode left, Token openDelimiter, ListNode<DelimitedItemNode<AstNode>> parameterList, Token closeDelimiter)
         {
             _left = left;
             _openDelimiter = openDelimiter;
@@ -1697,7 +1747,7 @@ namespace DGrok.DelphiNodes
             _closeDelimiter = closeDelimiter;
         }
 
-        public AstNode CloseDelimiter
+        public Token CloseDelimiter
         {
             get { return _closeDelimiter; }
         }
@@ -1705,11 +1755,11 @@ namespace DGrok.DelphiNodes
         {
             get { return _left; }
         }
-        public AstNode OpenDelimiter
+        public Token OpenDelimiter
         {
             get { return _openDelimiter; }
         }
-        public AstNode ParameterList
+        public ListNode<DelimitedItemNode<AstNode>> ParameterList
         {
             get { return _parameterList; }
         }
@@ -1727,14 +1777,14 @@ namespace DGrok.DelphiNodes
     }
     public partial class ParameterNode : NonterminalNode
     {
-        private AstNode _colon;
+        private Token _colon;
         private AstNode _defaultValue;
-        private AstNode _equalSign;
-        private AstNode _modifier;
-        private AstNode _names;
+        private Token _equalSign;
+        private Token _modifier;
+        private ListNode<DelimitedItemNode<Token>> _names;
         private AstNode _type;
 
-        public ParameterNode(AstNode modifier, AstNode names, AstNode colon, AstNode type, AstNode equalSign, AstNode defaultValue)
+        public ParameterNode(Token modifier, ListNode<DelimitedItemNode<Token>> names, Token colon, AstNode type, Token equalSign, AstNode defaultValue)
         {
             _modifier = modifier;
             _names = names;
@@ -1744,7 +1794,7 @@ namespace DGrok.DelphiNodes
             _defaultValue = defaultValue;
         }
 
-        public AstNode Colon
+        public Token Colon
         {
             get { return _colon; }
         }
@@ -1752,15 +1802,15 @@ namespace DGrok.DelphiNodes
         {
             get { return _defaultValue; }
         }
-        public AstNode EqualSign
+        public Token EqualSign
         {
             get { return _equalSign; }
         }
-        public AstNode Modifier
+        public Token Modifier
         {
             get { return _modifier; }
         }
-        public AstNode Names
+        public ListNode<DelimitedItemNode<Token>> Names
         {
             get { return _names; }
         }
@@ -1784,18 +1834,18 @@ namespace DGrok.DelphiNodes
     }
     public partial class ParenthesizedExpressionNode : NonterminalNode
     {
-        private AstNode _closeParenthesis;
+        private Token _closeParenthesis;
         private AstNode _expression;
-        private AstNode _openParenthesis;
+        private Token _openParenthesis;
 
-        public ParenthesizedExpressionNode(AstNode openParenthesis, AstNode expression, AstNode closeParenthesis)
+        public ParenthesizedExpressionNode(Token openParenthesis, AstNode expression, Token closeParenthesis)
         {
             _openParenthesis = openParenthesis;
             _expression = expression;
             _closeParenthesis = closeParenthesis;
         }
 
-        public AstNode CloseParenthesis
+        public Token CloseParenthesis
         {
             get { return _closeParenthesis; }
         }
@@ -1803,7 +1853,7 @@ namespace DGrok.DelphiNodes
         {
             get { return _expression; }
         }
-        public AstNode OpenParenthesis
+        public Token OpenParenthesis
         {
             get { return _openParenthesis; }
         }
@@ -1820,16 +1870,16 @@ namespace DGrok.DelphiNodes
     }
     public partial class PointerDereferenceNode : NonterminalNode
     {
-        private AstNode _caret;
+        private Token _caret;
         private AstNode _operand;
 
-        public PointerDereferenceNode(AstNode operand, AstNode caret)
+        public PointerDereferenceNode(AstNode operand, Token caret)
         {
             _operand = operand;
             _caret = caret;
         }
 
-        public AstNode Caret
+        public Token Caret
         {
             get { return _caret; }
         }
@@ -1849,16 +1899,16 @@ namespace DGrok.DelphiNodes
     }
     public partial class PointerTypeNode : NonterminalNode
     {
-        private AstNode _caret;
+        private Token _caret;
         private AstNode _type;
 
-        public PointerTypeNode(AstNode caret, AstNode type)
+        public PointerTypeNode(Token caret, AstNode type)
         {
             _caret = caret;
             _type = type;
         }
 
-        public AstNode Caret
+        public Token Caret
         {
             get { return _caret; }
         }
@@ -1878,18 +1928,18 @@ namespace DGrok.DelphiNodes
     }
     public partial class ProcedureTypeNode : NonterminalNode
     {
-        private AstNode _closeParenthesis;
-        private AstNode _colon;
-        private AstNode _firstDirectives;
-        private AstNode _methodType;
-        private AstNode _object;
-        private AstNode _of;
-        private AstNode _openParenthesis;
-        private AstNode _parameterList;
+        private Token _closeParenthesis;
+        private Token _colon;
+        private ListNode<DirectiveNode> _firstDirectives;
+        private Token _methodType;
+        private Token _object;
+        private Token _of;
+        private Token _openParenthesis;
+        private ListNode<DelimitedItemNode<ParameterNode>> _parameterList;
         private AstNode _returnType;
-        private AstNode _secondDirectives;
+        private ListNode<DirectiveNode> _secondDirectives;
 
-        public ProcedureTypeNode(AstNode methodType, AstNode openParenthesis, AstNode parameterList, AstNode closeParenthesis, AstNode colon, AstNode returnType, AstNode firstDirectives, AstNode of, AstNode theObject, AstNode secondDirectives)
+        public ProcedureTypeNode(Token methodType, Token openParenthesis, ListNode<DelimitedItemNode<ParameterNode>> parameterList, Token closeParenthesis, Token colon, AstNode returnType, ListNode<DirectiveNode> firstDirectives, Token of, Token theObject, ListNode<DirectiveNode> secondDirectives)
         {
             _methodType = methodType;
             _openParenthesis = openParenthesis;
@@ -1903,35 +1953,35 @@ namespace DGrok.DelphiNodes
             _secondDirectives = secondDirectives;
         }
 
-        public AstNode CloseParenthesis
+        public Token CloseParenthesis
         {
             get { return _closeParenthesis; }
         }
-        public AstNode Colon
+        public Token Colon
         {
             get { return _colon; }
         }
-        public AstNode FirstDirectives
+        public ListNode<DirectiveNode> FirstDirectives
         {
             get { return _firstDirectives; }
         }
-        public AstNode MethodType
+        public Token MethodType
         {
             get { return _methodType; }
         }
-        public AstNode Object
+        public Token Object
         {
             get { return _object; }
         }
-        public AstNode Of
+        public Token Of
         {
             get { return _of; }
         }
-        public AstNode OpenParenthesis
+        public Token OpenParenthesis
         {
             get { return _openParenthesis; }
         }
-        public AstNode ParameterList
+        public ListNode<DelimitedItemNode<ParameterNode>> ParameterList
         {
             get { return _parameterList; }
         }
@@ -1939,7 +1989,7 @@ namespace DGrok.DelphiNodes
         {
             get { return _returnType; }
         }
-        public AstNode SecondDirectives
+        public ListNode<DirectiveNode> SecondDirectives
         {
             get { return _secondDirectives; }
         }
@@ -1963,18 +2013,18 @@ namespace DGrok.DelphiNodes
     }
     public partial class ProgramNode : NonterminalNode
     {
-        private AstNode _declarationList;
-        private AstNode _dot;
-        private AstNode _initSection;
-        private AstNode _name;
-        private AstNode _noiseCloseParenthesis;
-        private AstNode _noiseContents;
-        private AstNode _noiseOpenParenthesis;
-        private AstNode _program;
-        private AstNode _semicolon;
-        private AstNode _usesClause;
+        private ListNode<AstNode> _declarationList;
+        private Token _dot;
+        private InitSectionNode _initSection;
+        private Token _name;
+        private Token _noiseCloseParenthesis;
+        private ListNode<DelimitedItemNode<Token>> _noiseContents;
+        private Token _noiseOpenParenthesis;
+        private Token _program;
+        private Token _semicolon;
+        private UsesClauseNode _usesClause;
 
-        public ProgramNode(AstNode program, AstNode name, AstNode noiseOpenParenthesis, AstNode noiseContents, AstNode noiseCloseParenthesis, AstNode semicolon, AstNode usesClause, AstNode declarationList, AstNode initSection, AstNode dot)
+        public ProgramNode(Token program, Token name, Token noiseOpenParenthesis, ListNode<DelimitedItemNode<Token>> noiseContents, Token noiseCloseParenthesis, Token semicolon, UsesClauseNode usesClause, ListNode<AstNode> declarationList, InitSectionNode initSection, Token dot)
         {
             _program = program;
             _name = name;
@@ -1988,43 +2038,43 @@ namespace DGrok.DelphiNodes
             _dot = dot;
         }
 
-        public AstNode DeclarationList
+        public ListNode<AstNode> DeclarationList
         {
             get { return _declarationList; }
         }
-        public AstNode Dot
+        public Token Dot
         {
             get { return _dot; }
         }
-        public AstNode InitSection
+        public InitSectionNode InitSection
         {
             get { return _initSection; }
         }
-        public AstNode Name
+        public Token Name
         {
             get { return _name; }
         }
-        public AstNode NoiseCloseParenthesis
+        public Token NoiseCloseParenthesis
         {
             get { return _noiseCloseParenthesis; }
         }
-        public AstNode NoiseContents
+        public ListNode<DelimitedItemNode<Token>> NoiseContents
         {
             get { return _noiseContents; }
         }
-        public AstNode NoiseOpenParenthesis
+        public Token NoiseOpenParenthesis
         {
             get { return _noiseOpenParenthesis; }
         }
-        public AstNode Program
+        public Token Program
         {
             get { return _program; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
-        public AstNode UsesClause
+        public UsesClauseNode UsesClause
         {
             get { return _usesClause; }
         }
@@ -2048,18 +2098,18 @@ namespace DGrok.DelphiNodes
     }
     public partial class PropertyNode : NonterminalNode
     {
-        private AstNode _class;
-        private AstNode _closeBracket;
-        private AstNode _colon;
-        private AstNode _directiveList;
-        private AstNode _name;
-        private AstNode _openBracket;
-        private AstNode _parameterList;
-        private AstNode _property;
-        private AstNode _semicolon;
+        private Token _class;
+        private Token _closeBracket;
+        private Token _colon;
+        private ListNode<DirectiveNode> _directiveList;
+        private Token _name;
+        private Token _openBracket;
+        private ListNode<DelimitedItemNode<ParameterNode>> _parameterList;
+        private Token _property;
+        private Token _semicolon;
         private AstNode _type;
 
-        public PropertyNode(AstNode theClass, AstNode property, AstNode name, AstNode openBracket, AstNode parameterList, AstNode closeBracket, AstNode colon, AstNode type, AstNode directiveList, AstNode semicolon)
+        public PropertyNode(Token theClass, Token property, Token name, Token openBracket, ListNode<DelimitedItemNode<ParameterNode>> parameterList, Token closeBracket, Token colon, AstNode type, ListNode<DirectiveNode> directiveList, Token semicolon)
         {
             _class = theClass;
             _property = property;
@@ -2073,39 +2123,39 @@ namespace DGrok.DelphiNodes
             _semicolon = semicolon;
         }
 
-        public AstNode Class
+        public Token Class
         {
             get { return _class; }
         }
-        public AstNode CloseBracket
+        public Token CloseBracket
         {
             get { return _closeBracket; }
         }
-        public AstNode Colon
+        public Token Colon
         {
             get { return _colon; }
         }
-        public AstNode DirectiveList
+        public ListNode<DirectiveNode> DirectiveList
         {
             get { return _directiveList; }
         }
-        public AstNode Name
+        public Token Name
         {
             get { return _name; }
         }
-        public AstNode OpenBracket
+        public Token OpenBracket
         {
             get { return _openBracket; }
         }
-        public AstNode ParameterList
+        public ListNode<DelimitedItemNode<ParameterNode>> ParameterList
         {
             get { return _parameterList; }
         }
-        public AstNode Property
+        public Token Property
         {
             get { return _property; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
@@ -2134,11 +2184,11 @@ namespace DGrok.DelphiNodes
     public partial class RaiseStatementNode : NonterminalNode
     {
         private AstNode _address;
-        private AstNode _at;
+        private Token _at;
         private AstNode _exception;
-        private AstNode _raise;
+        private Token _raise;
 
-        public RaiseStatementNode(AstNode raise, AstNode exception, AstNode at, AstNode address)
+        public RaiseStatementNode(Token raise, AstNode exception, Token at, AstNode address)
         {
             _raise = raise;
             _exception = exception;
@@ -2150,7 +2200,7 @@ namespace DGrok.DelphiNodes
         {
             get { return _address; }
         }
-        public AstNode At
+        public Token At
         {
             get { return _at; }
         }
@@ -2158,7 +2208,7 @@ namespace DGrok.DelphiNodes
         {
             get { return _exception; }
         }
-        public AstNode Raise
+        public Token Raise
         {
             get { return _raise; }
         }
@@ -2176,18 +2226,18 @@ namespace DGrok.DelphiNodes
     }
     public partial class RecordFieldConstantNode : NonterminalNode
     {
-        private AstNode _colon;
+        private Token _colon;
         private AstNode _name;
         private AstNode _value;
 
-        public RecordFieldConstantNode(AstNode name, AstNode colon, AstNode value)
+        public RecordFieldConstantNode(AstNode name, Token colon, AstNode value)
         {
             _name = name;
             _colon = colon;
             _value = value;
         }
 
-        public AstNode Colon
+        public Token Colon
         {
             get { return _colon; }
         }
@@ -2298,26 +2348,26 @@ namespace DGrok.DelphiNodes
     }
     public partial class RequiresClauseNode : NonterminalNode
     {
-        private AstNode _identList;
-        private AstNode _requires;
-        private AstNode _semicolon;
+        private ListNode<DelimitedItemNode<AstNode>> _packageList;
+        private Token _requires;
+        private Token _semicolon;
 
-        public RequiresClauseNode(AstNode requires, AstNode identList, AstNode semicolon)
+        public RequiresClauseNode(Token requires, ListNode<DelimitedItemNode<AstNode>> packageList, Token semicolon)
         {
             _requires = requires;
-            _identList = identList;
+            _packageList = packageList;
             _semicolon = semicolon;
         }
 
-        public AstNode IdentList
+        public ListNode<DelimitedItemNode<AstNode>> PackageList
         {
-            get { return _identList; }
+            get { return _packageList; }
         }
-        public AstNode Requires
+        public Token Requires
         {
             get { return _requires; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
@@ -2327,33 +2377,33 @@ namespace DGrok.DelphiNodes
             get
             {
                 yield return new KeyValuePair<string, AstNode>("Requires", Requires);
-                yield return new KeyValuePair<string, AstNode>("IdentList", IdentList);
+                yield return new KeyValuePair<string, AstNode>("PackageList", PackageList);
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
     }
     public partial class SetLiteralNode : NonterminalNode
     {
-        private AstNode _closeBracket;
-        private AstNode _itemList;
-        private AstNode _openBracket;
+        private Token _closeBracket;
+        private ListNode<DelimitedItemNode<AstNode>> _itemList;
+        private Token _openBracket;
 
-        public SetLiteralNode(AstNode openBracket, AstNode itemList, AstNode closeBracket)
+        public SetLiteralNode(Token openBracket, ListNode<DelimitedItemNode<AstNode>> itemList, Token closeBracket)
         {
             _openBracket = openBracket;
             _itemList = itemList;
             _closeBracket = closeBracket;
         }
 
-        public AstNode CloseBracket
+        public Token CloseBracket
         {
             get { return _closeBracket; }
         }
-        public AstNode ItemList
+        public ListNode<DelimitedItemNode<AstNode>> ItemList
         {
             get { return _itemList; }
         }
-        public AstNode OpenBracket
+        public Token OpenBracket
         {
             get { return _openBracket; }
         }
@@ -2370,22 +2420,22 @@ namespace DGrok.DelphiNodes
     }
     public partial class SetOfNode : NonterminalNode
     {
-        private AstNode _of;
-        private AstNode _set;
+        private Token _of;
+        private Token _set;
         private AstNode _type;
 
-        public SetOfNode(AstNode set, AstNode of, AstNode type)
+        public SetOfNode(Token set, Token of, AstNode type)
         {
             _set = set;
             _of = of;
             _type = type;
         }
 
-        public AstNode Of
+        public Token Of
         {
             get { return _of; }
         }
-        public AstNode Set
+        public Token Set
         {
             get { return _set; }
         }
@@ -2406,12 +2456,12 @@ namespace DGrok.DelphiNodes
     }
     public partial class StringOfLengthNode : NonterminalNode
     {
-        private AstNode _closeBracket;
+        private Token _closeBracket;
         private AstNode _length;
-        private AstNode _openBracket;
-        private AstNode _string;
+        private Token _openBracket;
+        private Token _string;
 
-        public StringOfLengthNode(AstNode theString, AstNode openBracket, AstNode length, AstNode closeBracket)
+        public StringOfLengthNode(Token theString, Token openBracket, AstNode length, Token closeBracket)
         {
             _string = theString;
             _openBracket = openBracket;
@@ -2419,7 +2469,7 @@ namespace DGrok.DelphiNodes
             _closeBracket = closeBracket;
         }
 
-        public AstNode CloseBracket
+        public Token CloseBracket
         {
             get { return _closeBracket; }
         }
@@ -2427,11 +2477,11 @@ namespace DGrok.DelphiNodes
         {
             get { return _length; }
         }
-        public AstNode OpenBracket
+        public Token OpenBracket
         {
             get { return _openBracket; }
         }
-        public AstNode String
+        public Token String
         {
             get { return _string; }
         }
@@ -2563,14 +2613,14 @@ namespace DGrok.DelphiNodes
     }
     public partial class TypeDeclNode : NonterminalNode
     {
-        private AstNode _equalSign;
-        private AstNode _name;
-        private AstNode _portabilityDirectiveList;
-        private AstNode _semicolon;
+        private Token _equalSign;
+        private Token _name;
+        private ListNode<Token> _portabilityDirectiveList;
+        private Token _semicolon;
         private AstNode _type;
-        private AstNode _typeKeyword;
+        private Token _typeKeyword;
 
-        public TypeDeclNode(AstNode name, AstNode equalSign, AstNode typeKeyword, AstNode type, AstNode portabilityDirectiveList, AstNode semicolon)
+        public TypeDeclNode(Token name, Token equalSign, Token typeKeyword, AstNode type, ListNode<Token> portabilityDirectiveList, Token semicolon)
         {
             _name = name;
             _equalSign = equalSign;
@@ -2580,19 +2630,19 @@ namespace DGrok.DelphiNodes
             _semicolon = semicolon;
         }
 
-        public AstNode EqualSign
+        public Token EqualSign
         {
             get { return _equalSign; }
         }
-        public AstNode Name
+        public Token Name
         {
             get { return _name; }
         }
-        public AstNode PortabilityDirectiveList
+        public ListNode<Token> PortabilityDirectiveList
         {
             get { return _portabilityDirectiveList; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
@@ -2600,7 +2650,7 @@ namespace DGrok.DelphiNodes
         {
             get { return _type; }
         }
-        public AstNode TypeKeyword
+        public Token TypeKeyword
         {
             get { return _typeKeyword; }
         }
@@ -2620,12 +2670,12 @@ namespace DGrok.DelphiNodes
     }
     public partial class TypeForwardDeclarationNode : NonterminalNode
     {
-        private AstNode _equalSign;
-        private AstNode _name;
-        private AstNode _semicolon;
-        private AstNode _type;
+        private Token _equalSign;
+        private Token _name;
+        private Token _semicolon;
+        private Token _type;
 
-        public TypeForwardDeclarationNode(AstNode name, AstNode equalSign, AstNode type, AstNode semicolon)
+        public TypeForwardDeclarationNode(Token name, Token equalSign, Token type, Token semicolon)
         {
             _name = name;
             _equalSign = equalSign;
@@ -2633,19 +2683,19 @@ namespace DGrok.DelphiNodes
             _semicolon = semicolon;
         }
 
-        public AstNode EqualSign
+        public Token EqualSign
         {
             get { return _equalSign; }
         }
-        public AstNode Name
+        public Token Name
         {
             get { return _name; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
-        public AstNode Type
+        public Token Type
         {
             get { return _type; }
         }
@@ -2741,20 +2791,20 @@ namespace DGrok.DelphiNodes
     }
     public partial class TypeSectionNode : NonterminalNode
     {
-        private AstNode _type;
-        private AstNode _typeList;
+        private Token _type;
+        private ListNode<AstNode> _typeList;
 
-        public TypeSectionNode(AstNode type, AstNode typeList)
+        public TypeSectionNode(Token type, ListNode<AstNode> typeList)
         {
             _type = type;
             _typeList = typeList;
         }
 
-        public AstNode Type
+        public Token Type
         {
             get { return _type; }
         }
-        public AstNode TypeList
+        public ListNode<AstNode> TypeList
         {
             get { return _typeList; }
         }
@@ -2771,9 +2821,9 @@ namespace DGrok.DelphiNodes
     public partial class UnaryOperationNode : NonterminalNode
     {
         private AstNode _operand;
-        private AstNode _operator;
+        private Token _operator;
 
-        public UnaryOperationNode(AstNode theOperator, AstNode operand)
+        public UnaryOperationNode(Token theOperator, AstNode operand)
         {
             _operator = theOperator;
             _operand = operand;
@@ -2783,7 +2833,7 @@ namespace DGrok.DelphiNodes
         {
             get { return _operand; }
         }
-        public AstNode Operator
+        public Token Operator
         {
             get { return _operator; }
         }
@@ -2799,16 +2849,16 @@ namespace DGrok.DelphiNodes
     }
     public partial class UnitNode : NonterminalNode
     {
-        private AstNode _dot;
-        private AstNode _implementationSection;
-        private AstNode _initSection;
-        private AstNode _interfaceSection;
-        private AstNode _portabilityDirectives;
-        private AstNode _semicolon;
-        private AstNode _unit;
-        private AstNode _unitName;
+        private Token _dot;
+        private UnitSectionNode _implementationSection;
+        private InitSectionNode _initSection;
+        private UnitSectionNode _interfaceSection;
+        private ListNode<Token> _portabilityDirectives;
+        private Token _semicolon;
+        private Token _unit;
+        private Token _unitName;
 
-        public UnitNode(AstNode unit, AstNode unitName, AstNode portabilityDirectives, AstNode semicolon, AstNode interfaceSection, AstNode implementationSection, AstNode initSection, AstNode dot)
+        public UnitNode(Token unit, Token unitName, ListNode<Token> portabilityDirectives, Token semicolon, UnitSectionNode interfaceSection, UnitSectionNode implementationSection, InitSectionNode initSection, Token dot)
         {
             _unit = unit;
             _unitName = unitName;
@@ -2820,35 +2870,35 @@ namespace DGrok.DelphiNodes
             _dot = dot;
         }
 
-        public AstNode Dot
+        public Token Dot
         {
             get { return _dot; }
         }
-        public AstNode ImplementationSection
+        public UnitSectionNode ImplementationSection
         {
             get { return _implementationSection; }
         }
-        public AstNode InitSection
+        public InitSectionNode InitSection
         {
             get { return _initSection; }
         }
-        public AstNode InterfaceSection
+        public UnitSectionNode InterfaceSection
         {
             get { return _interfaceSection; }
         }
-        public AstNode PortabilityDirectives
+        public ListNode<Token> PortabilityDirectives
         {
             get { return _portabilityDirectives; }
         }
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
-        public AstNode Unit
+        public Token Unit
         {
             get { return _unit; }
         }
-        public AstNode UnitName
+        public Token UnitName
         {
             get { return _unitName; }
         }
@@ -2870,26 +2920,26 @@ namespace DGrok.DelphiNodes
     }
     public partial class UnitSectionNode : NonterminalNode
     {
-        private AstNode _contents;
-        private AstNode _headerKeyword;
-        private AstNode _usesClause;
+        private ListNode<AstNode> _contents;
+        private Token _headerKeyword;
+        private UsesClauseNode _usesClause;
 
-        public UnitSectionNode(AstNode headerKeyword, AstNode usesClause, AstNode contents)
+        public UnitSectionNode(Token headerKeyword, UsesClauseNode usesClause, ListNode<AstNode> contents)
         {
             _headerKeyword = headerKeyword;
             _usesClause = usesClause;
             _contents = contents;
         }
 
-        public AstNode Contents
+        public ListNode<AstNode> Contents
         {
             get { return _contents; }
         }
-        public AstNode HeaderKeyword
+        public Token HeaderKeyword
         {
             get { return _headerKeyword; }
         }
-        public AstNode UsesClause
+        public UsesClauseNode UsesClause
         {
             get { return _usesClause; }
         }
@@ -2906,22 +2956,22 @@ namespace DGrok.DelphiNodes
     }
     public partial class UsedUnitNode : NonterminalNode
     {
-        private AstNode _fileName;
-        private AstNode _in;
+        private Token _fileName;
+        private Token _in;
         private AstNode _name;
 
-        public UsedUnitNode(AstNode name, AstNode theIn, AstNode fileName)
+        public UsedUnitNode(AstNode name, Token theIn, Token fileName)
         {
             _name = name;
             _in = theIn;
             _fileName = fileName;
         }
 
-        public AstNode FileName
+        public Token FileName
         {
             get { return _fileName; }
         }
-        public AstNode In
+        public Token In
         {
             get { return _in; }
         }
@@ -2942,26 +2992,26 @@ namespace DGrok.DelphiNodes
     }
     public partial class UsesClauseNode : NonterminalNode
     {
-        private AstNode _semicolon;
-        private AstNode _unitList;
-        private AstNode _uses;
+        private Token _semicolon;
+        private ListNode<DelimitedItemNode<UsedUnitNode>> _unitList;
+        private Token _uses;
 
-        public UsesClauseNode(AstNode uses, AstNode unitList, AstNode semicolon)
+        public UsesClauseNode(Token uses, ListNode<DelimitedItemNode<UsedUnitNode>> unitList, Token semicolon)
         {
             _uses = uses;
             _unitList = unitList;
             _semicolon = semicolon;
         }
 
-        public AstNode Semicolon
+        public Token Semicolon
         {
             get { return _semicolon; }
         }
-        public AstNode UnitList
+        public ListNode<DelimitedItemNode<UsedUnitNode>> UnitList
         {
             get { return _unitList; }
         }
-        public AstNode Uses
+        public Token Uses
         {
             get { return _uses; }
         }
@@ -3184,20 +3234,20 @@ namespace DGrok.DelphiNodes
     }
     public partial class VarSectionNode : NonterminalNode
     {
-        private AstNode _var;
-        private AstNode _varList;
+        private Token _var;
+        private ListNode<VarDeclNode> _varList;
 
-        public VarSectionNode(AstNode var, AstNode varList)
+        public VarSectionNode(Token var, ListNode<VarDeclNode> varList)
         {
             _var = var;
             _varList = varList;
         }
 
-        public AstNode Var
+        public Token Var
         {
             get { return _var; }
         }
-        public AstNode VarList
+        public ListNode<VarDeclNode> VarList
         {
             get { return _varList; }
         }
@@ -3213,20 +3263,20 @@ namespace DGrok.DelphiNodes
     }
     public partial class VisibilityNode : NonterminalNode
     {
-        private AstNode _strict;
-        private AstNode _visibility;
+        private Token _strict;
+        private Token _visibility;
 
-        public VisibilityNode(AstNode strict, AstNode visibility)
+        public VisibilityNode(Token strict, Token visibility)
         {
             _strict = strict;
             _visibility = visibility;
         }
 
-        public AstNode Strict
+        public Token Strict
         {
             get { return _strict; }
         }
-        public AstNode Visibility
+        public Token Visibility
         {
             get { return _visibility; }
         }
@@ -3242,20 +3292,20 @@ namespace DGrok.DelphiNodes
     }
     public partial class VisibilitySectionNode : NonterminalNode
     {
-        private AstNode _contents;
-        private AstNode _visibility;
+        private ListNode<AstNode> _contents;
+        private VisibilityNode _visibility;
 
-        public VisibilitySectionNode(AstNode visibility, AstNode contents)
+        public VisibilitySectionNode(VisibilityNode visibility, ListNode<AstNode> contents)
         {
             _visibility = visibility;
             _contents = contents;
         }
 
-        public AstNode Contents
+        public ListNode<AstNode> Contents
         {
             get { return _contents; }
         }
-        public AstNode Visibility
+        public VisibilityNode Visibility
         {
             get { return _visibility; }
         }

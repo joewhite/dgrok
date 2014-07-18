@@ -12,7 +12,7 @@ namespace DGrok.Framework
 {
     public class Frame : IFrame
     {
-        private IFrame _next = EofFrame.Instance;
+        private IFrame _next = null;
         private Token _token;
 
         public Frame(Token token)
@@ -28,14 +28,19 @@ namespace DGrok.Framework
         {
             get { return false; }
         }
+        public Location Location
+        {
+            get { return Token.Location; }
+        }
         public IFrame Next
         {
-            get { return _next; }
+            get
+            {
+                if (_next == null)
+                    _next = new EofFrame(Token.EndLocation);
+                return _next;
+            }
             set { _next = value; }
-        }
-        public int Offset
-        {
-            get { return _token.StartIndex; }
         }
         public Token Token
         {
@@ -54,7 +59,7 @@ namespace DGrok.Framework
         {
             if (CanParseToken(tokenSet))
                 return Token;
-            throw new ParseException("Expected " + tokenSet.Name + " but found " + Token.Type, Offset);
+            throw new ParseException("Expected " + tokenSet.Name + " but found " + Token.Type, Location);
         }
     }
 }

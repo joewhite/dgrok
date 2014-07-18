@@ -130,7 +130,7 @@ namespace DGrok.Tests
         }
         public void TestLookaheadRejectsLoneSemicolon()
         {
-            Parser parser = Parser.FromText(";", CompilerDefines.CreateEmpty());
+            Parser parser = CreateParser(";");
             Assert.That(parser.CanParseRule(RuleType), Is.False);
         }
     }

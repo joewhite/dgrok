@@ -47,17 +47,17 @@ namespace DGrok.Demo
         {
             try
             {
-                Parser parser = Parser.FromText(edtSource.Text, CompilerDefines.CreateStandard());
+                Parser parser = Parser.FromText(edtSource.Text, "input", CompilerDefines.CreateStandard(),
+                    new MemoryFileLoader());
                 AstNode tree = parser.ParseRule(_ruleType);
                 edtResults.Text = tree.Inspect();
             }
             catch (DGrokException ex)
             {
-                edtResults.Text = ex.Message;
-                if (ex.Offset >= 0)
-                    edtSource.SelectionStart = ex.Offset;
-                else
-                    edtSource.SelectionStart = edtSource.TextLength;
+                edtResults.Text = "Filename: " + ex.Location.FileName + Environment.NewLine +
+                    "Offset: " + ex.Location.Offset + Environment.NewLine +
+                    ex.Message;
+                edtSource.SelectionStart = ex.Location.Offset;
                 edtSource.Focus();
                 edtSource.ScrollToCaret();
                 return;

@@ -12,7 +12,7 @@ namespace DGrok.Framework
 {
     public class LexException : DGrokException
     {
-        public LexException(string message, int offset)
-            : base(message, offset) { }
+        public LexException(string message, Location location)
+            : base(message, location) { }
     }
 }

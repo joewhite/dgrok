@@ -10,9 +10,9 @@ using System.Text;
 
 namespace DGrok.Framework
 {
-    public class ParseException : DGrokException
+    public interface IFileLoader
     {
-        public ParseException(string message, Location location)
-            : base(message, location) { }
+        string ExpandFileName(string currentDirectory, string fileName);
+        string Load(string expandedFileName);
     }
 }

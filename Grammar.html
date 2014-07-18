@@ -15,7 +15,7 @@ that rule is completely implemented in my parser; broken
 underline means partly implemented; no underline means
 something I haven't started yet.</p>
 <p><b>Current status:</b> Completed 98 rules of 98 = 100% complete.</p>
-<p>Last updated Fri Sep 28 09:16:19 Central Daylight Time 2007.</p>
+<p>Last updated Sun Sep 30 20:54:20 Central Daylight Time 2007.</p>
 <p>&mdash; <a href='http://www.excastle.com/blog/'>Joe White</a></p>
 <h2><a name='toc'>Table of Contents</a></h2>
 <div class="toc">
@@ -118,7 +118,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> (<a href="#ConstantDecl" class="complete">ConstantDecl</a>)+</div>
 <h2 class="complete"><a name="ContainsClause"></a><a href="#ContainsClause" class="black">ContainsClause</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Package" class="complete">Package</a></div></h2>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> CONTAINS <a href="#IdentList" class="complete">IdentList</a> '<tt class=literal><b>;</b></tt>'</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> CONTAINS (<a href="#QualifiedIdent" class="complete">QualifiedIdent</a> ['<tt class=literal><b>,</b></tt>'])+ '<tt class=literal><b>;</b></tt>'</div>
 <h2 class="complete"><a name="Directive"></a><a href="#Directive" class="black">Directive</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#MethodHeading" class="complete">MethodHeading</a>, <a href="#ProcedureType" class="complete">ProcedureType</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> ['<tt class=literal><b>;</b></tt>'] ABSTRACT</div>
@@ -226,7 +226,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> '&amp;' &lt;semikeyword&gt;</div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> '&amp;' &lt;keyword&gt;</div>
 <h2 class="complete"><a name="IdentList"></a><a href="#IdentList" class="black">IdentList</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#ContainsClause" class="complete">ContainsClause</a>, <a href="#FieldDecl" class="complete">FieldDecl</a>, <a href="#Parameter" class="complete">Parameter</a>, <a href="#Program" class="complete">Program</a>, <a href="#RequiresClause" class="complete">RequiresClause</a>, <a href="#VarDecl" class="complete">VarDecl</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#FieldDecl" class="complete">FieldDecl</a>, <a href="#Parameter" class="complete">Parameter</a>, <a href="#Program" class="complete">Program</a>, <a href="#VarDecl" class="complete">VarDecl</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> (<a href="#Ident" class="complete">Ident</a> ['<tt class=literal><b>,</b></tt>'])+</div>
 <h2 class="complete"><a name="IfStatement"></a><a href="#IfStatement" class="black">IfStatement</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#SimpleStatement" class="complete">SimpleStatement</a></div></h2>
@@ -338,7 +338,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>&nbsp;&nbsp;</tt> ['<tt class=literal><b>=</b></tt>' <a href="#Expression" class="complete">Expression</a>]</div>
 <h2 class="complete"><a name="ParameterExpression"></a><a href="#ParameterExpression" class="black">ParameterExpression</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Atom" class="complete">Atom</a></div></h2>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Expression" class="complete">Expression</a> ['<tt class=literal><b>:</b></tt>' <a href="#Expression" class="complete">Expression</a>]</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Expression" class="complete">Expression</a> ['<tt class=literal><b>:</b></tt>' <a href="#Expression" class="complete">Expression</a> ['<tt class=literal><b>:</b></tt>' <a href="#Expression" class="complete">Expression</a>]]</div>
 <h2 class="complete"><a name="ParameterType"></a><a href="#ParameterType" class="black">ParameterType</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Parameter" class="complete">Parameter</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#QualifiedIdent" class="complete">QualifiedIdent</a></div>
@@ -402,7 +402,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> WRITE <a href="#Expression" class="complete">Expression</a></div>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> WRITEONLY</div>
 <h2 class="complete"><a name="QualifiedIdent"></a><a href="#QualifiedIdent" class="black">QualifiedIdent</a> <a href="#toc" class="backtotop">[^]</a>
-<div class="backlinks">Backlinks: <a href="#ClassHelperType" class="complete">ClassHelperType</a>, <a href="#ClassOfType" class="complete">ClassOfType</a>, <a href="#ClassType" class="complete">ClassType</a>, <a href="#ExceptionItem" class="complete">ExceptionItem</a>, <a href="#FileType" class="complete">FileType</a>, <a href="#InterfaceType" class="complete">InterfaceType</a>, <a href="#MethodHeading" class="complete">MethodHeading</a>, <a href="#MethodReturnType" class="complete">MethodReturnType</a>, <a href="#OpenArray" class="complete">OpenArray</a>, <a href="#ParameterType" class="complete">ParameterType</a>, <a href="#PointerType" class="complete">PointerType</a>, <a href="#PropertyDirective" class="complete">PropertyDirective</a>, <a href="#RecordHelperType" class="complete">RecordHelperType</a>, <a href="#TypedConstant" class="complete">TypedConstant</a>, <a href="#VariantSection" class="complete">VariantSection</a></div></h2>
+<div class="backlinks">Backlinks: <a href="#ClassHelperType" class="complete">ClassHelperType</a>, <a href="#ClassOfType" class="complete">ClassOfType</a>, <a href="#ClassType" class="complete">ClassType</a>, <a href="#ContainsClause" class="complete">ContainsClause</a>, <a href="#ExceptionItem" class="complete">ExceptionItem</a>, <a href="#FileType" class="complete">FileType</a>, <a href="#InterfaceType" class="complete">InterfaceType</a>, <a href="#MethodHeading" class="complete">MethodHeading</a>, <a href="#MethodReturnType" class="complete">MethodReturnType</a>, <a href="#OpenArray" class="complete">OpenArray</a>, <a href="#ParameterType" class="complete">ParameterType</a>, <a href="#PointerType" class="complete">PointerType</a>, <a href="#PropertyDirective" class="complete">PropertyDirective</a>, <a href="#RecordHelperType" class="complete">RecordHelperType</a>, <a href="#RequiresClause" class="complete">RequiresClause</a>, <a href="#TypedConstant" class="complete">TypedConstant</a>, <a href="#VariantSection" class="complete">VariantSection</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> <a href="#Ident" class="complete">Ident</a> ('<tt class=literal><b>.</b></tt>' <a href="#ExtendedIdent" class="complete">ExtendedIdent</a>)*</div>
 <h2 class="complete"><a name="RaiseStatement"></a><a href="#RaiseStatement" class="black">RaiseStatement</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#SimpleStatement" class="complete">SimpleStatement</a></div></h2>
@@ -434,7 +434,7 @@ in parentheses show how many places the rule is used.</p>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> REPEAT [<a href="#StatementList" class="complete">StatementList</a>] UNTIL <a href="#Expression" class="complete">Expression</a></div>
 <h2 class="complete"><a name="RequiresClause"></a><a href="#RequiresClause" class="black">RequiresClause</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Package" class="complete">Package</a></div></h2>
-<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> REQUIRES <a href="#IdentList" class="complete">IdentList</a> '<tt class=literal><b>;</b></tt>'</div>
+<div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> REQUIRES (<a href="#QualifiedIdent" class="complete">QualifiedIdent</a> ['<tt class=literal><b>,</b></tt>'])+ '<tt class=literal><b>;</b></tt>'</div>
 <h2 class="complete"><a name="SetLiteral"></a><a href="#SetLiteral" class="black">SetLiteral</a> <a href="#toc" class="backtotop">[^]</a>
 <div class="backlinks">Backlinks: <a href="#Particle" class="complete">Particle</a></div></h2>
 <div class="normal"><span class="completed">(Completed)</span> <tt class=arrow>-&gt;</tt> '<tt class=literal><b>[</b></tt>' [<a href="#ExpressionOrRangeList" class="complete">ExpressionOrRangeList</a>] '<tt class=literal><b>]</b></tt>'</div>

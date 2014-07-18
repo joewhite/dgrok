@@ -69,7 +69,7 @@ ConstSection:
     !    (ConstantDecl)+
 ContainsClause:
   Doc: |
-    ! -> CONTAINS IdentList ';'
+    ! -> CONTAINS (QualifiedIdent [','])+ ';'
 Directive:
   Doc: |
     ! -> [';'] ABSTRACT
@@ -290,7 +290,7 @@ Parameter:
     !    ['=' Expression]
 ParameterExpression:
   Doc: |
-    ! -> Expression [':' Expression]
+    ! -> Expression [':' Expression [':' Expression]]
 ParameterType:
   Doc: |
     ! -> QualifiedIdent
@@ -386,7 +386,7 @@ RepeatStatement:
     ! -> REPEAT [StatementList] UNTIL Expression
 RequiresClause:
   Doc: |
-    ! -> REQUIRES IdentList ';'
+    ! -> REQUIRES (QualifiedIdent [','])+ ';'
 SetLiteral:
   Doc: |
     ! -> '[' [ExpressionOrRangeList] ']'

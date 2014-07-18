@@ -35,10 +35,22 @@ namespace DGrok.Tests
         public void TestColon()
         {
             Assert.That("42:4", ParsesAs(
-                "BinaryOperationNode",
-                "  Left: Number |42|",
-                "  Operator: Colon |:|",
-                "  Right: Number |4|"));
+                "NumberFormatNode",
+                "  Value: Number |42|",
+                "  SizeColon: Colon |:|",
+                "  Size: Number |4|",
+                "  PrecisionColon: (none)",
+                "  Precision: (none)"));
+        }
+        public void TestColonColon()
+        {
+            Assert.That("42.0:4:2", ParsesAs(
+                "NumberFormatNode",
+                "  Value: Number |42.0|",
+                "  SizeColon: Colon |:|",
+                "  Size: Number |4|",
+                "  PrecisionColon: Colon |:|",
+                "  Precision: Number |2|"));
         }
     }
 }

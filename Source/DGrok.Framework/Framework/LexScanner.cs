@@ -42,16 +42,23 @@ namespace DGrok.Framework
             }
         }
 
+        private string _fileName;
         private int _index;
         private string _source;
         private Dictionary<string, TokenType> _wordTypes;
 
-        public LexScanner(string source)
+        public LexScanner(string source, string fileName)
         {
             _source = source;
+            _fileName = fileName;
             _wordTypes = new Dictionary<string, TokenType>(StringComparer.InvariantCultureIgnoreCase);
             AddWordTypes(TokenSets.Semikeyword, "Semikeyword".Length);
             AddWordTypes(TokenSets.Keyword, "Keyword".Length);
+        }
+
+        private Location Location
+        {
+            get { return new Location(_fileName, _index); }
         }
 
         private void AddWordTypes(IEnumerable<TokenType> tokenTypes, int suffixLength)
@@ -192,9 +199,9 @@ namespace DGrok.Framework
 
             Match match = NextMatch();
             if (match == null)
-                throw new LexException("Unrecognized character '" + _source[_index] + "'", _index);
+                throw new LexException("Unrecognized character '" + _source[_index] + "'", Location);
             string text = _source.Substring(_index, match.Length);
-            Token result = new Token(match.TokenType, _index, text, match.ParsedText);
+            Token result = new Token(match.TokenType, Location, text, match.ParsedText);
             _index += match.Length;
             return result;
         }
@@ -205,7 +212,7 @@ namespace DGrok.Framework
             int offset = 1;
             while (Char.IsNumber(Peek(offset)))
                 ++offset;
-            if (Peek(offset) == '.' && Char.IsNumber(Peek(offset + 1)))
+            if (Peek(offset) == '.' && Peek(offset + 1) != '.')
             {
                 ++offset;
                 while (Char.IsNumber(Peek(offset)))

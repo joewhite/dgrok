@@ -12,17 +12,15 @@ namespace DGrok.Framework
 {
     public class Token : AstNode
     {
+        private Location _location;
         private string _parsedText;
-        private int _startIndex;
         private string _text;
         private TokenType _type;
 
-        public Token(TokenType type, int startIndex, string text)
-            : this(type, startIndex, text, "") { }
-        public Token(TokenType type, int startIndex, string text, string parsedText)
+        public Token(TokenType type, Location location, string text, string parsedText)
         {
             _type = type;
-            _startIndex = startIndex;
+            _location = location;
             _text = text;
             _parsedText = parsedText;
         }
@@ -31,17 +29,17 @@ namespace DGrok.Framework
         {
             get { yield break; }
         }
-        public int NextIndex
+        public Location EndLocation
         {
-            get { return StartIndex + Text.Length; }
+            get { return new Location(Location.FileName, Location.Offset + Text.Length); }
+        }
+        public Location Location
+        {
+            get { return _location; }
         }
         public string ParsedText
         {
             get { return _parsedText; }
-        }
-        public int StartIndex
-        {
-            get { return _startIndex; }
         }
         public string Text
         {
@@ -67,7 +65,7 @@ namespace DGrok.Framework
         }
         public Token WithTokenType(TokenType newType)
         {
-            return new Token(newType, StartIndex, Text);
+            return new Token(newType, Location, Text, ParsedText);
         }
     }
 }

@@ -28,6 +28,17 @@ namespace DGrok.Tests
                 "  In: (none)",
                 "  FileName: (none)"));
         }
+        public void TestDottedName()
+        {
+            Assert.That("Foo.Bar", ParsesAs(
+                "UsedUnitNode",
+                "  Name: BinaryOperationNode",
+                "    Left: Identifier |Foo|",
+                "    Operator: Dot |.|",
+                "    Right: Identifier |Bar|",
+                "  In: (none)",
+                "  FileName: (none)"));
+        }
         public void TestInClause()
         {
             Assert.That("Foo in 'Foo.pas'", ParsesAs(

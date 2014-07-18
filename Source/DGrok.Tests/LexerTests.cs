@@ -124,6 +124,10 @@ namespace DGrok.Tests
         {
             Assert.That("42.42", LexesAs("Number |42.42|"));
         }
+        public void TestFloatWithNoDigitsAfterDecimalPoint()
+        {
+            Assert.That("42.", LexesAs("Number |42.|"));
+        }
         public void TestScientificNotation()
         {
             Assert.That("42e42", LexesAs("Number |42e42|"));

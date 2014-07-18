@@ -16,16 +16,25 @@ namespace DGrok.Tests
     [TestFixture]
     public class TokenFilterTests
     {
+        private CompilerDefines _defines;
+        private MemoryFileLoader _fileLoader;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _fileLoader = new MemoryFileLoader();
+            _defines = CompilerDefines.CreateEmpty();
+            _defines.DefineSymbol("TRUE");
+            _defines.UndefineSymbol("FALSE");
+            _defines.DefineDirectiveAsTrue("IF True");
+            _defines.DefineDirectiveAsFalse("IF False");
+        }
+
         private Constraint LexesAndFiltersAs(params string[] expected)
         {
             return new LexesAsConstraint(expected, delegate(IEnumerable<Token> tokens)
             {
-                CompilerDefines defines = CompilerDefines.CreateEmpty();
-                defines.DefineSymbol("TRUE");
-                defines.UndefineSymbol("FALSE");
-                defines.DefineDirectiveAsTrue("IF True");
-                defines.DefineDirectiveAsFalse("IF False");
-                TokenFilter filter = new TokenFilter(tokens, defines);
+                TokenFilter filter = new TokenFilter(tokens, _defines, _fileLoader);
                 return filter.Tokens;
             });
         }
@@ -49,12 +58,12 @@ namespace DGrok.Tests
         }
         public void TestParserUsesFilter()
         {
-            Parser parser = Parser.FromText("// Foo", CompilerDefines.CreateEmpty());
+            Parser parser = ParserTestCase.CreateParser("// Foo");
             Assert.That(parser.AtEof, Is.True);
         }
         public void TestSingleLetterCompilerDirectivesAreIgnored()
         {
-            Assert.That("{$I+}", LexesAndFiltersAs());
+            Assert.That("{$R+}", LexesAndFiltersAs());
             Assert.That("{$A8}", LexesAndFiltersAs());
         }
         public void TestCPlusPlusBuilderCompilerDirectivesAreIgnored()
@@ -191,6 +200,45 @@ namespace DGrok.Tests
                 "Number |0|",
                 "Number |3|",
                 "Number |4|"));
+        }
+        public void TestIPlusIsNotTreatedAsInclude()
+        {
+            Assert.That("{$I+}", LexesAndFiltersAs());
+        }
+        public void TestIMinusIsNotTreatedAsInclude()
+        {
+            Assert.That("{$I-}", LexesAndFiltersAs());
+        }
+        public void TestInclude()
+        {
+            _fileLoader.Files["bar.inc"] = "Bar";
+            Assert.That("Foo {$INCLUDE bar.inc} Baz", LexesAndFiltersAs(
+                "Identifier |Foo|",
+                "Identifier |Bar|",
+                "Identifier |Baz|"));
+        }
+        public void TestDefine()
+        {
+            _defines.UndefineSymbol("FOO");
+            Assert.That("{$DEFINE FOO} {$IFDEF FOO} Foo {$ENDIF}", LexesAndFiltersAs("Identifier |Foo|"));
+        }
+        public void TestUndefine()
+        {
+            _defines.DefineSymbol("FOO");
+            Assert.That("{$UNDEF FOO} {$IFDEF FOO} Foo {$ENDIF}", LexesAndFiltersAs(""));
+        }
+        public void TestDefineScopeDoesNotExtendToOtherFiles()
+        {
+            _defines.UndefineSymbol("FOO");
+            Assert.That("{$DEFINE FOO}", LexesAndFiltersAs(""));
+            Assert.That("{$IFDEF FOO} Foo {$ENDIF}", LexesAndFiltersAs(""));
+        }
+        public void TestDefineScopeDoesBubbleUpFromIncludeFiles()
+        {
+            _defines.UndefineSymbol("FOO");
+            _fileLoader.Files["defines.inc"] = "{$DEFINE FOO}";
+            Assert.That("{$I defines.inc} {$IFDEF FOO} Foo {$ENDIF}", LexesAndFiltersAs(
+                "Identifier |Foo|"));
         }
     }
 }

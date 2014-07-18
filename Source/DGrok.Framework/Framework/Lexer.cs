@@ -13,26 +13,26 @@ namespace DGrok.Framework
 {
     public class Lexer
     {
+        private string _fileName;
         private string _source;
 
-        public Lexer(string source)
+        public Lexer(string source, string fileName)
         {
             _source = source;
+            _fileName = fileName;
         }
 
         public IEnumerable<Token> Tokens
         {
             get
             {
-                LexScanner scanner = new LexScanner(_source);
-                int nextIndex = 0;
-                for (nextIndex = 0; ; )
+                LexScanner scanner = new LexScanner(_source, _fileName);
+                for (; ; )
                 {
                     Token token = scanner.NextToken();
                     if (token == null)
                         yield break;
                     yield return token;
-                    nextIndex = token.NextIndex;
                 }
             }
         }

@@ -25,7 +25,7 @@ namespace DGrok.Tests
         public override bool Matches(object actual)
         {
             string source = (string) actual;
-            Lexer lexer = new Lexer(source);
+            Lexer lexer = new Lexer(source, "");
             IEnumerable<Token> filteredTokens = _filter(lexer.Tokens);
             List<Token> lexedTokens = new List<Token>(filteredTokens);
             List<string> inspectedTokens = lexedTokens.ConvertAll<string>(

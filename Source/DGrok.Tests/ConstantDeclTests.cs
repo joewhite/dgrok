@@ -99,12 +99,12 @@ namespace DGrok.Tests
         }
         public void TestLookaheadRejectsVisibilitySpecifier()
         {
-            Parser parser = Parser.FromText("public", CompilerDefines.CreateEmpty());
+            Parser parser = CreateParser("public");
             Assert.That(parser.CanParseRule(RuleType), Is.False);
         }
         public void TestLookaheadRejectsStrictVisibilitySpecifier()
         {
-            Parser parser = Parser.FromText("strict private", CompilerDefines.CreateEmpty());
+            Parser parser = CreateParser("strict private");
             Assert.That(parser.CanParseRule(RuleType), Is.False);
         }
     }

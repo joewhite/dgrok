@@ -12,7 +12,7 @@ namespace DGrok.Framework
 {
     public class PreprocessorException : DGrokException
     {
-        public PreprocessorException(string message, int offset)
-            : base(message, offset) { }
+        public PreprocessorException(string message, Location location)
+            : base(message, location) { }
     }
 }

@@ -117,7 +117,7 @@ namespace DGrok.Tests
         }
         public void TestNoBody()
         {
-            Parser parser = Parser.FromText("class(Exception);", CompilerDefines.CreateEmpty());
+            Parser parser = CreateParser("class(Exception);");
             AstNode node = parser.ParseRule(RuleType.ClassType);
             parser.ParseToken(new TokenSet(TokenType.Semicolon));
             Assert.That(parser.AtEof, Is.True);

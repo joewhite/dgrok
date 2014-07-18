@@ -16,44 +16,46 @@ namespace DGrok.Tests
     public class CompilerDefinesTests
     {
         private CompilerDefines _defines;
+        private Location _location;
 
         [SetUp]
         public void SetUp()
         {
             _defines = CompilerDefines.CreateEmpty();
+            _location = new Location("", 0);
         }
 
         [ExpectedException(typeof(PreprocessorException))]
         public void TestExceptionIfUndefinedExpression()
         {
-            _defines.IsTrue("IFDEF FOO", 0);
+            _defines.IsTrue("IFDEF FOO", _location);
         }
         public void TestDefineDirectiveAsTrue()
         {
             _defines.DefineDirectiveAsTrue("IFDEF FOO");
-            Assert.That(_defines.IsTrue("IFDEF FOO", 0), Is.True);
+            Assert.That(_defines.IsTrue("IFDEF FOO", _location), Is.True);
         }
         public void TestDefineDirectiveAsFalse()
         {
             _defines.DefineDirectiveAsFalse("IFDEF FOO");
-            Assert.That(_defines.IsTrue("IFDEF FOO", 0), Is.False);
+            Assert.That(_defines.IsTrue("IFDEF FOO", _location), Is.False);
         }
         public void TestDefineSymbol()
         {
             _defines.DefineSymbol("FOO");
-            Assert.That(_defines.IsTrue("IFDEF FOO", 0), Is.True);
-            Assert.That(_defines.IsTrue("IFNDEF FOO", 0), Is.False);
+            Assert.That(_defines.IsTrue("IFDEF FOO", _location), Is.True);
+            Assert.That(_defines.IsTrue("IFNDEF FOO", _location), Is.False);
         }
         public void TestUndefineSymbol()
         {
             _defines.UndefineSymbol("FOO");
-            Assert.That(_defines.IsTrue("IFDEF FOO", 0), Is.False);
-            Assert.That(_defines.IsTrue("IFNDEF FOO", 0), Is.True);
+            Assert.That(_defines.IsTrue("IFDEF FOO", _location), Is.False);
+            Assert.That(_defines.IsTrue("IFNDEF FOO", _location), Is.True);
         }
         public void TestNotCaseSensitive()
         {
             _defines.DefineDirectiveAsTrue("IFDEF FOO");
-            Assert.That(_defines.IsTrue("IfDef Foo", 0), Is.True);
+            Assert.That(_defines.IsTrue("IfDef Foo", _location), Is.True);
         }
     }
 }

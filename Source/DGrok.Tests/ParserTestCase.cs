@@ -19,7 +19,7 @@ namespace DGrok.Tests
 
         protected void AssertDoesNotParse(string source)
         {
-            Parser parser = Parser.FromText(source, CompilerDefines.CreateStandard());
+            Parser parser = CreateParser(source);
             try
             {
                 parser.ParseRule(RuleType);
@@ -29,6 +29,11 @@ namespace DGrok.Tests
             {
                 Pass();
             }
+        }
+        public static Parser CreateParser(string source)
+        {
+            return Parser.FromText(source, "", CompilerDefines.CreateEmpty(),
+                new MemoryFileLoader());
         }
         protected Constraint ParsesAs(params string[] expected)
         {

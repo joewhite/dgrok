@@ -18,7 +18,7 @@ namespace DGrok.Tests
     {
         private Token MakeToken(TokenType type, string text)
         {
-            return new Token(type, 0, text);
+            return new Token(type, new Location("", 0), text, "");
         }
 
         public void TestInspectToken()
@@ -29,7 +29,7 @@ namespace DGrok.Tests
         public void TestInspectBinaryOperationNode()
         {
             AstNode left = MakeToken(TokenType.Number, "6");
-            AstNode op = MakeToken(TokenType.TimesSign, "*");
+            Token op = MakeToken(TokenType.TimesSign, "*");
             AstNode right = MakeToken(TokenType.Number, "9");
             AstNode node = new BinaryOperationNode(left, op, right);
             Assert.That(node.Inspect(), Is.EqualTo(
@@ -41,9 +41,9 @@ namespace DGrok.Tests
         public void TestInspectNestedBinaryOperationNodes()
         {
             AstNode leftLeft = MakeToken(TokenType.Number, "2");
-            AstNode leftOp = MakeToken(TokenType.TimesSign, "*");
+            Token leftOp = MakeToken(TokenType.TimesSign, "*");
             AstNode leftRight = MakeToken(TokenType.Number, "3");
-            AstNode op = MakeToken(TokenType.TimesSign, "*");
+            Token op = MakeToken(TokenType.TimesSign, "*");
             AstNode right = MakeToken(TokenType.Number, "9");
             AstNode left = new BinaryOperationNode(leftLeft, leftOp, leftRight);
             AstNode node = new BinaryOperationNode(left, op, right);

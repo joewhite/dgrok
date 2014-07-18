@@ -27,6 +27,16 @@ namespace DGrok.Tests
                 "  Name: Identifier |Foo|",
                 "  SpecifierList: ListNode"));
         }
+        public void TestDottedName()
+        {
+            Assert.That("Foo.Bar", ParsesAs(
+                "ExportsItemNode",
+                "  Name: BinaryOperationNode",
+                "    Left: Identifier |Foo|",
+                "    Operator: Dot |.|",
+                "    Right: Identifier |Bar|",
+                "  SpecifierList: ListNode"));
+        }
         public void TestIndex()
         {
             Assert.That("Foo index 42", ParsesAs(

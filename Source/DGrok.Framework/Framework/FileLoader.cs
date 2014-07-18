@@ -6,23 +6,20 @@
 // http://www.opensource.org/licenses/osl-3.0.php
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace DGrok.Framework
 {
-    public class DGrokException : Exception
+    public class FileLoader : IFileLoader
     {
-        private Location _location;
-
-        public DGrokException(string message, Location location)
-            : base(message)
+        public string ExpandFileName(string currentDirectory, string fileName)
         {
-            _location = location;
+            return Path.Combine(currentDirectory, fileName);
         }
-
-        public Location Location
+        public string Load(string fileName)
         {
-            get { return _location; }
+            return File.ReadAllText(fileName);
         }
     }
 }

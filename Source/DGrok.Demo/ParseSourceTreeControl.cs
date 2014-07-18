@@ -18,9 +18,14 @@ namespace DGrok.Demo
 {
     public partial class ParseSourceTreeControl : UserControl
     {
+        private delegate void Block();
+
+        private ParseSourceTreeRunner _runner = new ParseSourceTreeRunner();
+
         public ParseSourceTreeControl()
         {
             InitializeComponent();
+            ShowRunnerStatus();
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -29,38 +34,66 @@ namespace DGrok.Demo
             if (dlgBrowse.ShowDialog() == DialogResult.OK)
                 edtStartingDirectory.Text = dlgBrowse.SelectedPath;
         }
-        private void btnTestParser_Click(object sender, EventArgs e)
+        private void btnParseAll_Click(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.WaitCursor;
+            _runner.BeginExecute(edtStartingDirectory.Text, edtFileMasks.Text);
+            ShowRunnerStatus();
+        }
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            _runner.Canceled = true;
+        }
+        private TreeNode CreateNodeForFailingFile(Location errorLocation)
+        {
+            TreeNode node = new TreeNode(errorLocation.FileName + ":" + errorLocation.Offset);
+            node.Tag = new Block(delegate { ShowWindowForFailingFile(errorLocation); });
+            return node;
+        }
+        private TreeNode CreateNodeForPassingFile(string fileName)
+        {
+            TreeNode node = new TreeNode(fileName);
+            node.Tag = new Block(delegate { ShowWindowForPassingFile(fileName); });
+            return node;
+        }
+        private void ExecuteNodeAction(TreeNode node)
+        {
+            if (node == null)
+                return;
+            Block block = (Block) node.Tag;
+            if (block != null)
+                block();
+        }
+        private void ParseFormKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                ((Form) sender).Close();
+        }
+        private void ShowResultsInTree(IDictionary<string, Exception> results)
+        {
             trvSummary.BeginUpdate();
             try
             {
                 trvSummary.Nodes.Clear();
                 List<string> passed = new List<string>();
                 Dictionary<string, List<string>> failed = new Dictionary<string, List<string>>();
-                string[] fileNames = Directory.GetFiles(edtStartingDirectory.Text,
-                    "*.pas", SearchOption.AllDirectories);
                 int failingCount = 0;
-                foreach (string fileName in fileNames)
+                foreach (KeyValuePair<string, Exception> pair in results)
                 {
-                    try
+                    if (pair.Value == null)
+                        passed.Add(pair.Key);
+                    else
                     {
-                        string source = File.ReadAllText(fileName);
-                        Parser parser = Parser.FromText(source, CompilerDefines.CreateStandard());
-                        parser.ParseRule(RuleType.Goal);
-                        passed.Add(fileName);
-                    }
-                    catch (Exception ex)
-                    {
-                        if (!failed.ContainsKey(ex.Message))
-                            failed.Add(ex.Message, new List<string>());
-                        failed[ex.Message].Add(fileName);
+                        if (!failed.ContainsKey(pair.Value.Message))
+                            failed.Add(pair.Value.Message, new List<string>());
+                        failed[pair.Value.Message].Add(pair.Key);
                         ++failingCount;
                     }
                 }
+
                 TreeNode passingNode = trvSummary.Nodes.Add(String.Format("Passing ({0})", passed.Count));
-                foreach (string s in passed)
-                    passingNode.Nodes.Add(CreateFileNode(s));
+                passed.Sort(StringComparer.CurrentCultureIgnoreCase);
+                foreach (string fileName in passed)
+                    passingNode.Nodes.Add(CreateNodeForPassingFile(fileName));
                 List<string> messages = new List<string>(failed.Keys);
                 messages.Sort(StringComparer.CurrentCultureIgnoreCase);
                 TreeNode failingNode = trvSummary.Nodes.Add(String.Format("Failing ({0})", failingCount));
@@ -69,42 +102,79 @@ namespace DGrok.Demo
                     TreeNode failureNode = failingNode.Nodes.Add(
                         String.Format("{0} ({1})", message, failed[message].Count));
                     foreach (string fileName in failed[message])
-                        failureNode.Nodes.Add(CreateFileNode(fileName));
+                    {
+                        DGrokException ex = results[fileName] as DGrokException;
+                        Location errorLocation = ex != null ? ex.Location : new Location(fileName, 0);
+                        failureNode.Nodes.Add(CreateNodeForFailingFile(errorLocation));
+                    }
                 }
             }
             finally
             {
                 trvSummary.EndUpdate();
-                Cursor.Current = Cursors.Default;
             }
         }
-        private TreeNode CreateFileNode(string fileName)
+        private void ShowRunnerStatus()
         {
-            TreeNode node = new TreeNode(fileName);
-            node.Tag = fileName;
-            return node;
+            ParseSourceTreeStatus status = _runner.Status;
+            btnParseAll.Enabled = !status.IsRunning;
+            btnStop.Enabled = status.IsRunning;
+            tmrRunner.Enabled = status.IsRunning;
+            if (status.Error != null)
+                ShowSingleTreeNode(status.Error.Message);
+            else if (status.Progress != null)
+                ShowSingleTreeNode(status.Progress);
+            else
+                ShowResultsInTree(status.Results);
         }
-        private void ParseFormKeyDown(object sender, KeyEventArgs e)
+        private void ShowSingleTreeNode(string text)
         {
-            if (e.KeyCode == Keys.Escape)
-                ((Form) sender).Close();
+            if (trvSummary.Nodes.Count != 1 || trvSummary.Nodes[0].Nodes.Count != 0)
+            {
+                trvSummary.Nodes.Clear();
+                trvSummary.Nodes.Add("");
+            }
+            trvSummary.Nodes[0].Text = text;
         }
-        private void ShowWindowForNode(TreeNode selectedNode)
+        private Form CreateEmptyWindowForFile(string fileName)
         {
-            if (selectedNode == null)
-                return;
-
+            Form form = new Form();
+            form.Size = ParentForm.Size;
+            form.Text = fileName;
+            form.KeyPreview = true;
+            form.KeyDown += ParseFormKeyDown;
+            return form;
+        }
+        private void ShowWindowForFailingFile(Location errorLocation)
+        {
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                string fileName = selectedNode.Tag as string;
+                Form form = CreateEmptyWindowForFile(errorLocation.FileName);
+                TextBox textBox = new TextBox();
+                textBox.Multiline = true;
+                textBox.WordWrap = false;
+                textBox.ScrollBars = ScrollBars.Both;
+                textBox.Dock = DockStyle.Fill;
+                textBox.Text = File.ReadAllText(errorLocation.FileName);
+                textBox.SelectionStart = errorLocation.Offset;
+                form.Controls.Add(textBox);
+                form.Show();
+                textBox.ScrollToCaret();
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        }
+        private void ShowWindowForPassingFile(string fileName)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
                 if (fileName == null)
                     return;
-                Form form = new Form();
-                form.Size = ParentForm.Size;
-                form.Text = fileName;
-                form.KeyPreview = true;
-                form.KeyDown += ParseFormKeyDown;
+                Form form = CreateEmptyWindowForFile(fileName);
                 ParseTextControl control = new ParseTextControl();
                 control.RuleType = RuleType.Goal;
                 control.Dock = DockStyle.Fill;
@@ -117,18 +187,21 @@ namespace DGrok.Demo
                 Cursor.Current = Cursors.Default;
             }
         }
+        private void tmrRunner_Tick(object sender, EventArgs e)
+        {
+            ShowRunnerStatus();
+        }
         private void trvSummary_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
             {
                 e.Handled = true;
-                ShowWindowForNode(trvSummary.SelectedNode);
+                ExecuteNodeAction(trvSummary.SelectedNode);
             }
         }
         private void trvSummary_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            TreeNode selectedNode = e.Node;
-            ShowWindowForNode(selectedNode);
+            ExecuteNodeAction(e.Node);
         }
     }
 }
