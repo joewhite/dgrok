@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,7 +30,8 @@ namespace DGrok.Tests
             get { return RuleType.IfStatement; }
         }
 
-        public void TestEmptyThen()
+        [Test]
+        public void EmptyThen()
         {
             Assert.That("if Foo then", ParsesAs(
                 "IfStatementNode",
@@ -31,7 +42,8 @@ namespace DGrok.Tests
                 "  ElseKeywordNode: (none)",
                 "  ElseStatementNode: (none)"));
         }
-        public void TestPopulatedThen()
+        [Test]
+        public void PopulatedThen()
         {
             Assert.That("if Foo then Bar", ParsesAs(
                 "IfStatementNode",
@@ -42,7 +54,8 @@ namespace DGrok.Tests
                 "  ElseKeywordNode: (none)",
                 "  ElseStatementNode: (none)"));
         }
-        public void TestEmptyThenEmptyElse()
+        [Test]
+        public void EmptyThenEmptyElse()
         {
             Assert.That("if Foo then else", ParsesAs(
                 "IfStatementNode",
@@ -53,7 +66,8 @@ namespace DGrok.Tests
                 "  ElseKeywordNode: ElseKeyword |else|",
                 "  ElseStatementNode: (none)"));
         }
-        public void TestPopulatedThenAndElse()
+        [Test]
+        public void PopulatedThenAndElse()
         {
             Assert.That("if Foo then Bar else Baz", ParsesAs(
                 "IfStatementNode",
@@ -64,7 +78,8 @@ namespace DGrok.Tests
                 "  ElseKeywordNode: ElseKeyword |else|",
                 "  ElseStatementNode: Identifier |Baz|"));
         }
-        public void TestIfThenIfThenElse()
+        [Test]
+        public void IfThenIfThenElse()
         {
             Assert.That("if Foo then if Bar then else", ParsesAs(
                 "IfStatementNode",
@@ -81,7 +96,8 @@ namespace DGrok.Tests
                 "  ElseKeywordNode: (none)",
                 "  ElseStatementNode: (none)"));
         }
-        public void TestIfThenIfThenElseElse()
+        [Test]
+        public void IfThenIfThenElseElse()
         {
             Assert.That("if Foo then if Bar then else else", ParsesAs(
                 "IfStatementNode",

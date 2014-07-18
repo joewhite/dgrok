@@ -46,6 +46,9 @@ namespace DGrok.Demo
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.edtParserThreadCount = new System.Windows.Forms.NumericUpDown();
+            this.label13 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize) (this.edtParserThreadCount)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -221,10 +224,40 @@ namespace DGrok.Demo
             this.label12.TabIndex = 17;
             this.label12.Text = "Example: IF Foo or Bar;IF not Baz";
             // 
+            // edtParserThreadCount
+            // 
+            this.edtParserThreadCount.Location = new System.Drawing.Point(138, 237);
+            this.edtParserThreadCount.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
+            this.edtParserThreadCount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.edtParserThreadCount.Name = "edtParserThreadCount";
+            this.edtParserThreadCount.Size = new System.Drawing.Size(64, 20);
+            this.edtParserThreadCount.TabIndex = 18;
+            this.edtParserThreadCount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.edtParserThreadCount.ValueChanged += new System.EventHandler(this.edtParserThreadCount_ValueChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(2, 240);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(129, 13);
+            this.label13.TabIndex = 19;
+            this.label13.Text = "Number of parser threads:";
+            // 
             // CompilerOptionsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.edtParserThreadCount);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
@@ -244,7 +277,8 @@ namespace DGrok.Demo
             this.Controls.Add(this.edtDelphiVersionDefine);
             this.Controls.Add(this.label1);
             this.Name = "CompilerOptionsControl";
-            this.Size = new System.Drawing.Size(414, 273);
+            this.Size = new System.Drawing.Size(414, 295);
+            ((System.ComponentModel.ISupportInitialize) (this.edtParserThreadCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -270,5 +304,7 @@ namespace DGrok.Demo
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.NumericUpDown edtParserThreadCount;
+        private System.Windows.Forms.Label label13;
     }
 }

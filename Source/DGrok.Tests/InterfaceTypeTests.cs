@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,7 +30,8 @@ namespace DGrok.Tests
             get { return RuleType.InterfaceType; }
         }
 
-        public void TestEmptyInterface()
+        [Test]
+        public void EmptyInterface()
         {
             Assert.That("interface end", ParsesAs(
                 "InterfaceTypeNode",
@@ -34,7 +45,8 @@ namespace DGrok.Tests
                 "  MethodAndPropertyListNode: ListNode",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestBaseInterface()
+        [Test]
+        public void BaseInterface()
         {
             Assert.That("interface(IFoo) end", ParsesAs(
                 "InterfaceTypeNode",
@@ -48,7 +60,8 @@ namespace DGrok.Tests
                 "  MethodAndPropertyListNode: ListNode",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestGuid()
+        [Test]
+        public void Guid()
         {
             Assert.That("interface ['{5781334E-E121-4C2B-B7A4-0396A632F94F}'] end", ParsesAs(
                 "InterfaceTypeNode",
@@ -62,7 +75,8 @@ namespace DGrok.Tests
                 "  MethodAndPropertyListNode: ListNode",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestGuidExpression()
+        [Test]
+        public void GuidExpression()
         {
             Assert.That("interface [MyGuidConst] end", ParsesAs(
                 "InterfaceTypeNode",
@@ -76,7 +90,8 @@ namespace DGrok.Tests
                 "  MethodAndPropertyListNode: ListNode",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestMethod()
+        [Test]
+        public void Method()
         {
             Assert.That("interface procedure Foo; end", ParsesAs(
                 "InterfaceTypeNode",
@@ -101,7 +116,8 @@ namespace DGrok.Tests
                 "      SemicolonNode: Semicolon |;|",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestDispInterface()
+        [Test]
+        public void DispInterface()
         {
             Assert.That("dispinterface end", ParsesAs(
                 "InterfaceTypeNode",

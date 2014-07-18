@@ -1,9 +1,19 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -69,6 +79,13 @@ namespace DGrok.Demo
             }
         }
 
+        private void AppendNodeToStringBuilder(int indent, TreeNode node, StringBuilder sb)
+        {
+            sb.Append('\t', indent);
+            sb.AppendLine(node.Text);
+            foreach (TreeNode childNode in node.Nodes)
+                AppendNodeToStringBuilder(indent + 1, childNode, sb);
+        }
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             DoWorkDelegate doWork = (DoWorkDelegate) e.Argument;
@@ -92,8 +109,16 @@ namespace DGrok.Demo
                 ShowHitsInTree(actionResults);
             ShowRunnerStatus();
         }
+        private void btnCopyAllHits_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (TreeNode node in trvSummary.Nodes)
+                AppendNodeToStringBuilder(0, node, sb);
+            Clipboard.SetText(sb.ToString());
+        }
         private void btnParseAll_Click(object sender, EventArgs e)
         {
+            _codeBase = null;
             CodeBaseOptions options = _codeBaseOptions.Clone();
             RunBackground(delegate
             {

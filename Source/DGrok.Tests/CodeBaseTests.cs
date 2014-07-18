@@ -1,15 +1,26 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.DelphiNodes;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
+using NUnit.Framework.SyntaxHelpers;
 
 namespace DGrok.Tests
 {
@@ -24,91 +35,106 @@ namespace DGrok.Tests
             _codeBase = new CodeBase(CompilerDefines.CreateEmpty(), new MemoryFileLoader());
         }
 
-        public void TestAddError()
+        [Test]
+        public void AddError()
         {
             _codeBase.AddError(@"C:\Foo.pas", new Exception("Oops"));
             Assert.That(_codeBase.ErrorCount, Is.EqualTo(1));
         }
-        public void TestAddFileThatIsValidUnit()
+        [Test]
+        public void AddFileThatIsValidUnit()
         {
             _codeBase.AddFile("Foo.pas", "unit Foo; interface implementation end.");
             Assert.That(_codeBase.ParsedFileCount, Is.EqualTo(1));
             Assert.That(_codeBase.UnitCount, Is.EqualTo(1));
         }
-        public void TestAddFileThatIsValidProject()
+        [Test]
+        public void AddFileThatIsValidProject()
         {
             _codeBase.AddFile("Foo.dpr", "program Foo; end.");
             Assert.That(_codeBase.ParsedFileCount, Is.EqualTo(1));
             Assert.That(_codeBase.UnitCount, Is.EqualTo(0));
         }
-        public void TestAddFileWithError()
+        [Test]
+        public void AddFileWithError()
         {
             _codeBase.AddFile("Foo.pas", "");
             Assert.That(_codeBase.ParsedFileCount, Is.EqualTo(0));
             Assert.That(_codeBase.ErrorCount, Is.EqualTo(1));
         }
-        public void TestAddFileExpectingSuccessWithSuccess()
+        [Test]
+        public void AddFileExpectingSuccessWithSuccess()
         {
             _codeBase.AddFileExpectingSuccess("Foo.pas", "unit Foo; interface implementation end.");
             Assert.That(_codeBase.ParsedFileCount, Is.EqualTo(1));
         }
-        [ExpectedException(typeof(ParseException))]
-        public void TestAddFileExpectingSuccessWithError()
+        [Test, ExpectedException(typeof(ParseException))]
+        public void AddFileExpectingSuccessWithError()
         {
             _codeBase.AddFileExpectingSuccess("Foo.pas", "");
         }
-        public void TestAddParsedFile()
+        [Test]
+        public void AddParsedFile()
         {
             AstNode parseTree = new Token(TokenType.EndKeyword, null, "end", "");
             _codeBase.AddParsedFile("Foo.pas", "end", parseTree);
             Assert.That(_codeBase.ParsedFileCount, Is.EqualTo(1));
         }
-        public void TestErrorByFileName()
+        [Test]
+        public void ErrorByFileName()
         {
             Exception error = new Exception("Oops");
             _codeBase.AddError("Foo.pas", error);
             Assert.That(_codeBase.ErrorByFileName("Foo.pas"), Is.SameAs(error));
         }
-        public void TestParsedFileByFileNameWithUnit()
+        [Test]
+        public void ParsedFileByFileNameWithUnit()
         {
             _codeBase.AddFile("Foo.pas", "unit Foo; interface implementation end.");
             Assert.That(_codeBase.ParsedFileByFileName("Foo.pas"), Is.Not.Null);
         }
-        public void TestParsedFileByFileNameWithProject()
+        [Test]
+        public void ParsedFileByFileNameWithProject()
         {
             _codeBase.AddFile("Foo.dpr", "program Foo; end.");
             Assert.That(_codeBase.ParsedFileByFileName("Foo.dpr"), Is.Not.Null);
         }
-        public void TestUnitByName()
+        [Test]
+        public void UnitByName()
         {
             _codeBase.AddFile("Foo.pas", "unit Foo; interface implementation end.");
             Assert.That(_codeBase.UnitByName("Foo"), Is.Not.Null);
         }
-        public void TestUnitsGoIntoUnitList()
+        [Test]
+        public void UnitsGoIntoUnitList()
         {
             _codeBase.AddFile("Foo.pas", "unit Foo; interface implementation end.");
             Assert.That(_codeBase.UnitCount, Is.EqualTo(1), "UnitCount");
             Assert.That(_codeBase.ProjectCount, Is.EqualTo(0), "ProjectCount");
         }
-        public void TestProgramsGoIntoProjectList()
+        [Test]
+        public void ProgramsGoIntoProjectList()
         {
             _codeBase.AddFile("Foo.pas", "program Foo; end.");
             Assert.That(_codeBase.UnitCount, Is.EqualTo(0), "UnitCount");
             Assert.That(_codeBase.ProjectCount, Is.EqualTo(1), "ProjectCount");
         }
-        public void TestLibrariesGoIntoProjectList()
+        [Test]
+        public void LibrariesGoIntoProjectList()
         {
             _codeBase.AddFile("Foo.pas", "library Foo; end.");
             Assert.That(_codeBase.UnitCount, Is.EqualTo(0), "UnitCount");
             Assert.That(_codeBase.ProjectCount, Is.EqualTo(1), "ProjectCount");
         }
-        public void TestPackagesGoIntoProjectList()
+        [Test]
+        public void PackagesGoIntoProjectList()
         {
             _codeBase.AddFile("Foo.pas", "package Foo; end.");
             Assert.That(_codeBase.UnitCount, Is.EqualTo(0), "UnitCount");
             Assert.That(_codeBase.ProjectCount, Is.EqualTo(1), "ProjectCount");
         }
-        public void TestUnitsRememberOriginalPath()
+        [Test]
+        public void UnitsRememberOriginalPath()
         {
             _codeBase.AddFile(@"C:\Foo.pas", "unit Foo; interface implementation end.");
             List<NamedContent<UnitNode>> units = new List<NamedContent<UnitNode>>(_codeBase.Units);
@@ -116,7 +142,8 @@ namespace DGrok.Tests
             Assert.That(units[0].Name, Is.EqualTo("Foo"));
             Assert.That(units[0].FileName, Is.EqualTo(@"C:\Foo.pas"));
         }
-        public void TestProjectsRememberOriginalPath()
+        [Test]
+        public void ProjectsRememberOriginalPath()
         {
             _codeBase.AddFile(@"C:\Foo.dpr", "program Foo; end.");
             List<NamedContent<AstNode>> projects = new List<NamedContent<AstNode>>(_codeBase.Projects);
@@ -124,7 +151,8 @@ namespace DGrok.Tests
             Assert.That(projects[0].Name, Is.EqualTo("Foo"));
             Assert.That(projects[0].FileName, Is.EqualTo(@"C:\Foo.dpr"));
         }
-        public void TestErrorOnDuplicateUnitName()
+        [Test]
+        public void ErrorOnDuplicateUnitName()
         {
             _codeBase.AddFile(@"C:\Dir1\Foo.pas", "unit Foo; interface implementation end.");
             _codeBase.AddFile(@"C:\Dir2\foo.pas", "unit Foo; interface implementation end.");
@@ -135,7 +163,8 @@ namespace DGrok.Tests
             Assert.That(errors[0].Content.Message, Is.EqualTo(
                 @"File 'C:\Dir2\foo.pas' has the same name as 'C:\Dir1\Foo.pas'"));
         }
-        public void TestErrorOnDuplicateProjectName()
+        [Test]
+        public void ErrorOnDuplicateProjectName()
         {
             _codeBase.AddFile(@"C:\Dir1\Foo.dpr", "program Foo; end.");
             _codeBase.AddFile(@"C:\Dir2\foo.dpr", "library Foo; end.");

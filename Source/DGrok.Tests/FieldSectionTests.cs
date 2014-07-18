@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,7 +30,8 @@ namespace DGrok.Tests
             get { return RuleType.FieldSection; }
         }
 
-        public void TestFields()
+        [Test]
+        public void Fields()
         {
             Assert.That("Foo: Integer; Bar: Boolean;", ParsesAs(
                 "FieldSectionNode",
@@ -46,7 +57,8 @@ namespace DGrok.Tests
                 "      PortabilityDirectiveListNode: ListNode",
                 "      SemicolonNode: Semicolon |;|"));
         }
-        public void TestVarWithField()
+        [Test]
+        public void VarWithField()
         {
             Assert.That("var Foo: Integer;", ParsesAs(
                 "FieldSectionNode",
@@ -63,7 +75,8 @@ namespace DGrok.Tests
                 "      PortabilityDirectiveListNode: ListNode",
                 "      SemicolonNode: Semicolon |;|"));
         }
-        public void TestClassVarWithField()
+        [Test]
+        public void ClassVarWithField()
         {
             Assert.That("class var Foo: Integer;", ParsesAs(
                 "FieldSectionNode",
@@ -80,7 +93,8 @@ namespace DGrok.Tests
                 "      PortabilityDirectiveListNode: ListNode",
                 "      SemicolonNode: Semicolon |;|"));
         }
-        public void TestEmptyVarSection()
+        [Test]
+        public void EmptyVarSection()
         {
             Assert.That("var", ParsesAs(
                 "FieldSectionNode",
@@ -88,7 +102,8 @@ namespace DGrok.Tests
                 "  VarKeywordNode: VarKeyword |var|",
                 "  FieldListNode: ListNode"));
         }
-        public void TestEmptyClassVarSection()
+        [Test]
+        public void EmptyClassVarSection()
         {
             Assert.That("class var", ParsesAs(
                 "FieldSectionNode",
@@ -96,7 +111,8 @@ namespace DGrok.Tests
                 "  VarKeywordNode: VarKeyword |var|",
                 "  FieldListNode: ListNode"));
         }
-        public void TestClassAloneDoesNotParse()
+        [Test]
+        public void ClassAloneDoesNotParse()
         {
             AssertDoesNotParse("class");
         }

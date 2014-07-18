@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,7 +30,8 @@ namespace DGrok.Tests
             get { return RuleType.Program; }
         }
 
-        public void TestSimpleProgram()
+        [Test]
+        public void SimpleProgram()
         {
             Assert.That("program Foo; end.", ParsesAs(
                 "ProgramNode",
@@ -40,7 +51,8 @@ namespace DGrok.Tests
                 "    EndKeywordNode: EndKeyword |end|",
                 "  DotNode: Dot |.|"));
         }
-        public void TestSimpleLibrary()
+        [Test]
+        public void SimpleLibrary()
         {
             Assert.That("library Foo; end.", ParsesAs(
                 "ProgramNode",
@@ -60,7 +72,8 @@ namespace DGrok.Tests
                 "    EndKeywordNode: EndKeyword |end|",
                 "  DotNode: Dot |.|"));
         }
-        public void TestNoiseAfterProgramName()
+        [Test]
+        public void NoiseAfterProgramName()
         {
             Assert.That("program Foo(Input, Output); end.", ParsesAs(
                 "ProgramNode",
@@ -86,7 +99,8 @@ namespace DGrok.Tests
                 "    EndKeywordNode: EndKeyword |end|",
                 "  DotNode: Dot |.|"));
         }
-        public void TestUses()
+        [Test]
+        public void Uses()
         {
             Assert.That("program Foo; uses SysUtils; end.", ParsesAs(
                 "ProgramNode",
@@ -115,7 +129,8 @@ namespace DGrok.Tests
                 "    EndKeywordNode: EndKeyword |end|",
                 "  DotNode: Dot |.|"));
         }
-        public void TestDeclaration()
+        [Test]
+        public void Declaration()
         {
             Assert.That("program Foo; const Foo = 42; end.", ParsesAs(
                 "ProgramNode",
@@ -146,7 +161,8 @@ namespace DGrok.Tests
                 "    EndKeywordNode: EndKeyword |end|",
                 "  DotNode: Dot |.|"));
         }
-        public void TestAssemblyAttribute()
+        [Test]
+        public void AssemblyAttribute()
         {
             Assert.That("program Foo; [assembly: AssemblyVersion('0.0.0.0')] end.", ParsesAs(
                 "ProgramNode",
@@ -179,7 +195,8 @@ namespace DGrok.Tests
                 "    EndKeywordNode: EndKeyword |end|",
                 "  DotNode: Dot |.|"));
         }
-        public void TestInitialization()
+        [Test]
+        public void Initialization()
         {
             Assert.That("program Foo; initialization end.", ParsesAs(
                 "ProgramNode",
@@ -199,7 +216,8 @@ namespace DGrok.Tests
                 "    EndKeywordNode: EndKeyword |end|",
                 "  DotNode: Dot |.|"));
         }
-        public void TestBegin()
+        [Test]
+        public void Begin()
         {
             Assert.That("program Foo; begin end.", ParsesAs(
                 "ProgramNode",
@@ -219,7 +237,8 @@ namespace DGrok.Tests
                 "    EndKeywordNode: EndKeyword |end|",
                 "  DotNode: Dot |.|"));
         }
-        public void TestAsm()
+        [Test]
+        public void Asm()
         {
             Assert.That("program Foo; asm end.", ParsesAs(
                 "ProgramNode",

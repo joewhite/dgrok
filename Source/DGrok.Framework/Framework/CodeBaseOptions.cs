@@ -1,11 +1,22 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Microsoft.Win32;
 
@@ -15,24 +26,24 @@ namespace DGrok.Framework
     {
         public const string DefaultFileMasks = "*.pas;*.dpr;*.dpk;*.pp";
 
-        private string _compilerOptionsSetOff = "";
-        private string _compilerOptionsSetOn = "";
+        private CompilerOptions _compilerOptions = new CompilerOptions();
         private string _customDefines = "";
         private string _delphiVersionDefine = "";
         private string _falseIfConditions = "";
         private string _fileMasks = DefaultFileMasks;
+        private int _parserThreadCount = 1;
         private string _searchPaths = "";
         private string _trueIfConditions = "";
 
         public string CompilerOptionsSetOff
         {
-            get { return _compilerOptionsSetOff; }
-            set { _compilerOptionsSetOff = value; }
+            get { return _compilerOptions.OptionsSetOff; }
+            set { _compilerOptions.OptionsSetOff = value; }
         }
         public string CompilerOptionsSetOn
         {
-            get { return _compilerOptionsSetOn; }
-            set { _compilerOptionsSetOn = value; }
+            get { return _compilerOptions.OptionsSetOn; }
+            set { _compilerOptions.OptionsSetOn = value; }
         }
         public string CustomDefines
         {
@@ -53,6 +64,11 @@ namespace DGrok.Framework
         {
             get { return _fileMasks; }
             set { _fileMasks = value; }
+        }
+        public int ParserThreadCount
+        {
+            get { return _parserThreadCount; }
+            set { _parserThreadCount = value; }
         }
         public string SearchPaths
         {
@@ -81,15 +97,10 @@ namespace DGrok.Framework
         public CompilerDefines CreateCompilerDefines()
         {
             CompilerDefines result = CompilerDefines.CreateStandard();
-            foreach (char option in CompilerOptionsSetOff)
+            for (char option = 'A'; option <= 'Z'; ++option)
             {
-                result.DefineDirectiveAsFalse("IFOPT " + option + "+");
-                result.DefineDirectiveAsTrue("IFOPT " + option + "-");
-            }
-            foreach (char option in CompilerOptionsSetOn)
-            {
-                result.DefineDirectiveAsTrue("IFOPT " + option + "+");
-                result.DefineDirectiveAsFalse("IFOPT " + option + "-");
+                result.DefineDirective("IFOPT " + option + "-", _compilerOptions.IsOptionOff(option));
+                result.DefineDirective("IFOPT " + option + "+", _compilerOptions.IsOptionOn(option));
             }
             foreach (string define in CustomDefines.Split(';'))
                 result.DefineSymbol(define);
@@ -98,6 +109,35 @@ namespace DGrok.Framework
                 result.DefineDirectiveAsFalse(condition);
             foreach (string condition in TrueIfConditions.Split(';'))
                 result.DefineDirectiveAsTrue(condition);
+            return result;
+        }
+        public List<string> ListFiles()
+        {
+            List<string> result = new List<string>();
+            foreach (string searchPath in SearchPaths.Split(';'))
+            {
+                string directory;
+                SearchOption option;
+                if (Path.GetFileName(searchPath) == "**")
+                {
+                    directory = Path.GetDirectoryName(searchPath);
+                    option = SearchOption.AllDirectories;
+                }
+                else
+                {
+                    directory = searchPath;
+                    option = SearchOption.TopDirectoryOnly;
+                }
+                foreach (string fileMask in FileMasks.Split(';'))
+                {
+                    foreach (string fileName in Directory.GetFiles(directory, fileMask, option))
+                    {
+                        string extension = Path.GetExtension(fileName);
+                        if (!String.Equals(extension, ".dproj", StringComparison.InvariantCultureIgnoreCase))
+                            result.Add(fileName);
+                    }
+                }
+            }
             return result;
         }
         public void LoadFromRegistry()
@@ -112,6 +152,7 @@ namespace DGrok.Framework
                 DelphiVersionDefine = key.GetValue("DelphiVersionDefine", "").ToString();
                 FalseIfConditions = key.GetValue("FalseIfConditions", "").ToString();
                 FileMasks = key.GetValue("FileMasks", DefaultFileMasks).ToString();
+                ParserThreadCount = (int) key.GetValue("ParserThreadCount", Environment.ProcessorCount);
                 SearchPaths = key.GetValue("SearchPaths", "").ToString();
                 TrueIfConditions = key.GetValue("TrueIfConditions", "").ToString();
             }
@@ -126,6 +167,7 @@ namespace DGrok.Framework
                 key.SetValue("DelphiVersionDefine", DelphiVersionDefine);
                 key.SetValue("FalseIfConditions", FalseIfConditions);
                 key.SetValue("FileMasks", FileMasks);
+                key.SetValue("ParserThreadCount", ParserThreadCount);
                 key.SetValue("SearchPaths", SearchPaths);
                 key.SetValue("TrueIfConditions", TrueIfConditions);
             }

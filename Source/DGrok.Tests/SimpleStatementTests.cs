@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,18 +30,21 @@ namespace DGrok.Tests
             get { return RuleType.SimpleStatement; }
         }
 
-        public void TestBareInherited()
+        [Test]
+        public void BareInherited()
         {
             Assert.That("inherited", ParsesAs("InheritedKeyword |inherited|"));
         }
-        public void TestInheritedExpression()
+        [Test]
+        public void InheritedExpression()
         {
             Assert.That("inherited Foo", ParsesAs(
                 "UnaryOperationNode",
                 "  OperatorNode: InheritedKeyword |inherited|",
                 "  OperandNode: Identifier |Foo|"));
         }
-        public void TestAssignment()
+        [Test]
+        public void Assignment()
         {
             Assert.That("Foo := 42", ParsesAs(
                 "BinaryOperationNode",
@@ -39,14 +52,16 @@ namespace DGrok.Tests
                 "  OperatorNode: ColonEquals |:=|",
                 "  RightNode: Number |42|"));
         }
-        public void TestGoto()
+        [Test]
+        public void Goto()
         {
             Assert.That("goto 42", ParsesAs(
                 "GotoStatementNode",
                 "  GotoKeywordNode: GotoKeyword |goto|",
                 "  LabelIdNode: Number |42|"));
         }
-        public void TestBlock()
+        [Test]
+        public void Block()
         {
             Assert.That("begin end", ParsesAs(
                 "BlockNode",
@@ -54,7 +69,8 @@ namespace DGrok.Tests
                 "  StatementListNode: ListNode",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestIfStatement()
+        [Test]
+        public void IfStatement()
         {
             Assert.That("if Foo then Bar", ParsesAs(
                 "IfStatementNode",
@@ -65,7 +81,8 @@ namespace DGrok.Tests
                 "  ElseKeywordNode: (none)",
                 "  ElseStatementNode: (none)"));
         }
-        public void TestCase()
+        [Test]
+        public void Case()
         {
             Assert.That("case Foo of 1: end", ParsesAs(
                 "CaseStatementNode",
@@ -85,7 +102,8 @@ namespace DGrok.Tests
                 "  ElseStatementListNode: ListNode",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestRepeat()
+        [Test]
+        public void Repeat()
         {
             Assert.That("repeat until Doomsday", ParsesAs(
                 "RepeatStatementNode",
@@ -94,7 +112,8 @@ namespace DGrok.Tests
                 "  UntilKeywordNode: UntilKeyword |until|",
                 "  ConditionNode: Identifier |Doomsday|"));
         }
-        public void TestWhile()
+        [Test]
+        public void While()
         {
             Assert.That("while Foo do Bar", ParsesAs(
                 "WhileStatementNode",
@@ -103,7 +122,8 @@ namespace DGrok.Tests
                 "  DoKeywordNode: DoKeyword |do|",
                 "  StatementNode: Identifier |Bar|"));
         }
-        public void TestFor()
+        [Test]
+        public void For()
         {
             Assert.That("for I := 1 to 42 do", ParsesAs(
                 "ForStatementNode",
@@ -116,7 +136,8 @@ namespace DGrok.Tests
                 "  DoKeywordNode: DoKeyword |do|",
                 "  StatementNode: (none)"));
         }
-        public void TestWith()
+        [Test]
+        public void With()
         {
             Assert.That("with Foo do", ParsesAs(
                 "WithStatementNode",
@@ -128,7 +149,8 @@ namespace DGrok.Tests
                 "  DoKeywordNode: DoKeyword |do|",
                 "  StatementNode: (none)"));
         }
-        public void TestForIn()
+        [Test]
+        public void ForIn()
         {
             Assert.That("for Obj in List do", ParsesAs(
                 "ForInStatementNode",
@@ -139,7 +161,8 @@ namespace DGrok.Tests
                 "  DoKeywordNode: DoKeyword |do|",
                 "  StatementNode: (none)"));
         }
-        public void TestTryExcept()
+        [Test]
+        public void TryExcept()
         {
             Assert.That("try except end", ParsesAs(
                 "TryExceptNode",
@@ -151,7 +174,8 @@ namespace DGrok.Tests
                 "  ElseStatementListNode: ListNode",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestTryFinally()
+        [Test]
+        public void TryFinally()
         {
             Assert.That("try finally end", ParsesAs(
                 "TryFinallyNode",
@@ -161,7 +185,8 @@ namespace DGrok.Tests
                 "  FinallyStatementListNode: ListNode",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestRaise()
+        [Test]
+        public void Raise()
         {
             Assert.That("raise E", ParsesAs(
                 "RaiseStatementNode",

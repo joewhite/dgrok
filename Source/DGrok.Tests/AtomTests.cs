@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,15 +30,18 @@ namespace DGrok.Tests
             get { return RuleType.Atom; }
         }
 
-        public void TestParticle()
+        [Test]
+        public void Particle()
         {
             Assert.That("42", ParsesAs("Number |42|"));
         }
-        public void TestSemikeyword()
+        [Test]
+        public void Semikeyword()
         {
             Assert.That("Absolute", ParsesAs("Identifier |Absolute|"));
         }
-        public void TestDotOperator()
+        [Test]
+        public void DotOperator()
         {
             Assert.That("Foo.Bar", ParsesAs(
                 "BinaryOperationNode",
@@ -36,7 +49,8 @@ namespace DGrok.Tests
                 "  OperatorNode: Dot |.|",
                 "  RightNode: Identifier |Bar|"));
         }
-        public void TestTwoDotOperators()
+        [Test]
+        public void TwoDotOperators()
         {
             Assert.That("Foo.Bar.Baz", ParsesAs(
                 "BinaryOperationNode",
@@ -47,7 +61,8 @@ namespace DGrok.Tests
                 "  OperatorNode: Dot |.|",
                 "  RightNode: Identifier |Baz|"));
         }
-        public void TestDotFollowedByKeyword()
+        [Test]
+        public void DotFollowedByKeyword()
         {
             Assert.That("Should.Not", ParsesAs(
                 "BinaryOperationNode",
@@ -55,14 +70,16 @@ namespace DGrok.Tests
                 "  OperatorNode: Dot |.|",
                 "  RightNode: Identifier |Not|"));
         }
-        public void TestCaret()
+        [Test]
+        public void Caret()
         {
             Assert.That("Foo^", ParsesAs(
                 "PointerDereferenceNode",
                 "  OperandNode: Identifier |Foo|",
                 "  CaretNode: Caret |^|"));
         }
-        public void TestTwoCarets()
+        [Test]
+        public void TwoCarets()
         {
             Assert.That("Foo^^", ParsesAs(
                 "PointerDereferenceNode",
@@ -71,11 +88,13 @@ namespace DGrok.Tests
                 "    CaretNode: Caret |^|",
                 "  CaretNode: Caret |^|"));
         }
-        public void TestEmptyArrayIndexDoesNotParse()
+        [Test]
+        public void EmptyArrayIndexDoesNotParse()
         {
             AssertDoesNotParse("Foo[]");
         }
-        public void TestOneArrayIndex()
+        [Test]
+        public void OneArrayIndex()
         {
             Assert.That("Foo[42]", ParsesAs(
                 "ParameterizedNode",
@@ -87,7 +106,8 @@ namespace DGrok.Tests
                 "      DelimiterNode: (none)",
                 "  CloseDelimiterNode: CloseBracket |]|"));
         }
-        public void TestTwoArrayIndexes()
+        [Test]
+        public void TwoArrayIndexes()
         {
             Assert.That("Foo[24, 42]", ParsesAs(
                 "ParameterizedNode",
@@ -102,7 +122,8 @@ namespace DGrok.Tests
                 "      DelimiterNode: (none)",
                 "  CloseDelimiterNode: CloseBracket |]|"));
         }
-        public void TestNoParameters()
+        [Test]
+        public void NoParameters()
         {
             Assert.That("Foo()", ParsesAs(
                 "ParameterizedNode",
@@ -111,7 +132,8 @@ namespace DGrok.Tests
                 "  ParameterListNode: ListNode",
                 "  CloseDelimiterNode: CloseParenthesis |)|"));
         }
-        public void TestOneParameter()
+        [Test]
+        public void OneParameter()
         {
             Assert.That("Foo(42)", ParsesAs(
                 "ParameterizedNode",
@@ -123,7 +145,8 @@ namespace DGrok.Tests
                 "      DelimiterNode: (none)",
                 "  CloseDelimiterNode: CloseParenthesis |)|"));
         }
-        public void TestTwoParameters()
+        [Test]
+        public void TwoParameters()
         {
             Assert.That("Foo(24, 42)", ParsesAs(
                 "ParameterizedNode",
@@ -138,7 +161,8 @@ namespace DGrok.Tests
                 "      DelimiterNode: (none)",
                 "  CloseDelimiterNode: CloseParenthesis |)|"));
         }
-        public void TestStringCast()
+        [Test]
+        public void StringCast()
         {
             Assert.That("string('0')", ParsesAs(
                 "ParameterizedNode",
@@ -150,7 +174,8 @@ namespace DGrok.Tests
                 "      DelimiterNode: (none)",
                 "  CloseDelimiterNode: CloseParenthesis |)|"));
         }
-        public void TestFileCast()
+        [Test]
+        public void FileCast()
         {
             Assert.That("file(AUntypedVarParameter)", ParsesAs(
                 "ParameterizedNode",
@@ -162,7 +187,8 @@ namespace DGrok.Tests
                 "      DelimiterNode: (none)",
                 "  CloseDelimiterNode: CloseParenthesis |)|"));
         }
-        public void TestColonSyntax()
+        [Test]
+        public void ColonSyntax()
         {
             Assert.That("Str(X:0, S)", ParsesAs(
                 "ParameterizedNode",

@@ -1,14 +1,25 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
+using NUnit.Framework.SyntaxHelpers;
 
 namespace DGrok.Tests
 {
@@ -20,7 +31,8 @@ namespace DGrok.Tests
             get { return RuleType.PropertyDirective; }
         }
 
-        public void TestDefaultProperty()
+        [Test]
+        public void DefaultProperty()
         {
             Assert.That("; default", ParsesAs(
                 "DirectiveNode",
@@ -29,7 +41,8 @@ namespace DGrok.Tests
                 "  ValueNode: (none)",
                 "  DataNode: ListNode"));
         }
-        public void TestDefaultExpression()
+        [Test]
+        public void DefaultExpression()
         {
             Assert.That("default 42", ParsesAs(
                 "DirectiveNode",
@@ -38,7 +51,8 @@ namespace DGrok.Tests
                 "  ValueNode: Number |42|",
                 "  DataNode: ListNode"));
         }
-        public void TestDispId()
+        [Test]
+        public void DispId()
         {
             Assert.That("dispid 42", ParsesAs(
                 "DirectiveNode",
@@ -47,7 +61,8 @@ namespace DGrok.Tests
                 "  ValueNode: Number |42|",
                 "  DataNode: ListNode"));
         }
-        public void TestImplements()
+        [Test]
+        public void Implements()
         {
             Assert.That("implements IFoo.Bar, IBaz", ParsesAs(
                 "DirectiveNode",
@@ -65,7 +80,8 @@ namespace DGrok.Tests
                 "      DelimiterNode: (none)",
                 "  DataNode: ListNode"));
         }
-        public void TestIndex()
+        [Test]
+        public void Index()
         {
             Assert.That("index 42", ParsesAs(
                 "DirectiveNode",
@@ -74,7 +90,8 @@ namespace DGrok.Tests
                 "  ValueNode: Number |42|",
                 "  DataNode: ListNode"));
         }
-        public void TestNoDefault()
+        [Test]
+        public void NoDefault()
         {
             Assert.That("nodefault", ParsesAs(
                 "DirectiveNode",
@@ -83,7 +100,8 @@ namespace DGrok.Tests
                 "  ValueNode: (none)",
                 "  DataNode: ListNode"));
         }
-        public void TestRead()
+        [Test]
+        public void Read()
         {
             Assert.That("read FFoo", ParsesAs(
                 "DirectiveNode",
@@ -92,7 +110,8 @@ namespace DGrok.Tests
                 "  ValueNode: Identifier |FFoo|",
                 "  DataNode: ListNode"));
         }
-        public void TestReadOnly()
+        [Test]
+        public void ReadOnly()
         {
             Assert.That("readonly", ParsesAs(
                 "DirectiveNode",
@@ -101,7 +120,8 @@ namespace DGrok.Tests
                 "  ValueNode: (none)",
                 "  DataNode: ListNode"));
         }
-        public void TestStored()
+        [Test]
+        public void Stored()
         {
             Assert.That("stored GetStored", ParsesAs(
                 "DirectiveNode",
@@ -110,7 +130,8 @@ namespace DGrok.Tests
                 "  ValueNode: Identifier |GetStored|",
                 "  DataNode: ListNode"));
         }
-        public void TestWrite()
+        [Test]
+        public void Write()
         {
             Assert.That("write FFoo", ParsesAs(
                 "DirectiveNode",
@@ -119,7 +140,8 @@ namespace DGrok.Tests
                 "  ValueNode: Identifier |FFoo|",
                 "  DataNode: ListNode"));
         }
-        public void TestWriteOnly()
+        [Test]
+        public void WriteOnly()
         {
             Assert.That("writeonly", ParsesAs(
                 "DirectiveNode",
@@ -128,7 +150,8 @@ namespace DGrok.Tests
                 "  ValueNode: (none)",
                 "  DataNode: ListNode"));
         }
-        public void TestLookaheadRejectsLoneSemicolon()
+        [Test]
+        public void LookaheadRejectsLoneSemicolon()
         {
             Parser parser = CreateParser(";");
             Assert.That(parser.CanParseRule(RuleType), Is.False);

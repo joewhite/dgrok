@@ -1,15 +1,25 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Constraints;
-using NUnitLite.Framework;
+using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace DGrok.Tests
 {
@@ -25,765 +35,948 @@ namespace DGrok.Tests
         }
 
         // Baseline tests
-        public void TestBlankSource()
+        [Test]
+        public void BlankSource()
         {
             Assert.That("", LexesAs());
         }
-        public void TestOnlyWhitespace()
+        [Test]
+        public void OnlyWhitespace()
         {
             Assert.That("  \r\n  ", LexesAs());
         }
-        public void TestTwoTimesSigns()
+        [Test]
+        public void TwoTimesSigns()
         {
             Assert.That("**", LexesAs("TimesSign |*|", "TimesSign |*|"));
         }
-        public void TestLeadingWhitespaceIsIgnored()
+        [Test]
+        public void LeadingWhitespaceIsIgnored()
         {
             Assert.That("  \r\n  *", LexesAs("TimesSign |*|"));
         }
 
         // Comment tests
-        public void TestSingleLineCommentAtEof()
+        [Test]
+        public void SingleLineCommentAtEof()
         {
             Assert.That("// Foo", LexesAs("SingleLineComment |// Foo|"));
         }
-        public void TestSingleLineCommentFollowedByCrlf()
+        [Test]
+        public void SingleLineCommentFollowedByCrlf()
         {
             Assert.That("// Foo\r\n", LexesAs("SingleLineComment |// Foo|"));
         }
-        public void TestSingleLineCommentFollowedByLf()
+        [Test]
+        public void SingleLineCommentFollowedByLf()
         {
             Assert.That("// Foo\n", LexesAs("SingleLineComment |// Foo|"));
         }
-        public void TestTwoSingleLineComments()
+        [Test]
+        public void TwoSingleLineComments()
         {
             Assert.That("// Foo\r\n// Bar", LexesAs(
                 "SingleLineComment |// Foo|",
                 "SingleLineComment |// Bar|"));
         }
-        public void TestCurlyBraceComment()
+        [Test]
+        public void CurlyBraceComment()
         {
             Assert.That("{ Foo }", LexesAs("CurlyBraceComment |{ Foo }|"));
         }
-        public void TestCurlyBraceCommentWithEmbeddedNewline()
+        [Test]
+        public void CurlyBraceCommentWithEmbeddedNewline()
         {
             Assert.That("{ Foo\r\n  Bar }", LexesAs("CurlyBraceComment |{ Foo\r\n  Bar }|"));
         }
-        public void TestTwoCurlyBraceComments()
+        [Test]
+        public void TwoCurlyBraceComments()
         {
             Assert.That("{Foo}{Bar}", LexesAs(
                 "CurlyBraceComment |{Foo}|",
                 "CurlyBraceComment |{Bar}|"));
         }
-        public void TestParenStarComment()
+        [Test]
+        public void ParenStarComment()
         {
             Assert.That("(* Foo *)", LexesAs("ParenStarComment |(* Foo *)|"));
         }
-        public void TestParenStarCommentWithEmbeddedNewline()
+        [Test]
+        public void ParenStarCommentWithEmbeddedNewline()
         {
             Assert.That("(* Foo\r\n   Bar *)", LexesAs("ParenStarComment |(* Foo\r\n   Bar *)|"));
         }
-        public void TestTwoParenStarComments()
+        [Test]
+        public void TwoParenStarComments()
         {
             Assert.That("(*Foo*)(*Bar*)", LexesAs(
                 "ParenStarComment |(*Foo*)|",
                 "ParenStarComment |(*Bar*)|"));
         }
         // Compiler-directive tests
-        public void TestCurlyBraceCompilerDirective()
+        [Test]
+        public void CurlyBraceCompilerDirective()
         {
             Assert.That("{$DEFINE FOO}", LexesAs(
                 "CompilerDirective |{$DEFINE FOO}|, parsed=|DEFINE FOO|"));
         }
-        public void TestCurlyBraceCompilerDirectiveTrimsTrailing()
+        [Test]
+        public void CurlyBraceCompilerDirectiveTrimsTrailing()
         {
             Assert.That("{$DEFINE FOO }", LexesAs(
                 "CompilerDirective |{$DEFINE FOO }|, parsed=|DEFINE FOO|"));
         }
-        public void TestParenStarCompilerDirective()
+        [Test]
+        public void ParenStarCompilerDirective()
         {
             Assert.That("(*$DEFINE FOO*)", LexesAs(
                 "CompilerDirective |(*$DEFINE FOO*)|, parsed=|DEFINE FOO|"));
         }
-        public void TestParenStarCompilerDirectiveTrimsTrailing()
+        [Test]
+        public void ParenStarCompilerDirectiveTrimsTrailing()
         {
             Assert.That("(*$DEFINE FOO *)", LexesAs(
                 "CompilerDirective |(*$DEFINE FOO *)|, parsed=|DEFINE FOO|"));
         }
 
         // Number tests
-        public void TestDigit()
+        [Test]
+        public void Digit()
         {
             Assert.That("0", LexesAs("Number |0|"));
         }
-        public void TestInteger()
+        [Test]
+        public void Integer()
         {
             Assert.That("42", LexesAs("Number |42|"));
         }
-        public void TestFloat()
+        [Test]
+        public void Float()
         {
             Assert.That("42.42", LexesAs("Number |42.42|"));
         }
-        public void TestFloatWithNoDigitsAfterDecimalPoint()
+        [Test]
+        public void FloatWithNoDigitsAfterDecimalPoint()
         {
             Assert.That("42.", LexesAs("Number |42.|"));
         }
-        public void TestScientificNotation()
+        [Test]
+        public void ScientificNotation()
         {
             Assert.That("42e42", LexesAs("Number |42e42|"));
         }
-        public void TestScientificNotationWithCapitalLetter()
+        [Test]
+        public void ScientificNotationWithCapitalLetter()
         {
             Assert.That("42E42", LexesAs("Number |42E42|"));
         }
-        public void TestNegativeExponent()
+        [Test]
+        public void NegativeExponent()
         {
             Assert.That("42e-42", LexesAs("Number |42e-42|"));
         }
-        public void TestExplicitlyPositiveExponent()
+        [Test]
+        public void ExplicitlyPositiveExponent()
         {
             Assert.That("42e+42", LexesAs("Number |42e+42|"));
         }
-        public void TestExplicitlyPositiveNumberLexesAsUnaryOperator()
+        [Test]
+        public void ExplicitlyPositiveNumberLexesAsUnaryOperator()
         {
             Assert.That("+42", LexesAs("PlusSign |+|", "Number |42|"));
         }
-        public void TestNegativeNumberLexesAsUnaryOperator()
+        [Test]
+        public void NegativeNumberLexesAsUnaryOperator()
         {
             Assert.That("-42", LexesAs("MinusSign |-|", "Number |42|"));
         }
-        public void TestHex()
+        [Test]
+        public void Hex()
         {
             Assert.That("$2A", LexesAs("Number |$2A|"));
         }
 
         // String literal tests
-        public void TestEmptyString()
+        [Test]
+        public void EmptyString()
         {
             Assert.That("''", LexesAs("StringLiteral |''|"));
         }
-        public void TestSimpleString()
+        [Test]
+        public void SimpleString()
         {
             Assert.That("'abc'", LexesAs("StringLiteral |'abc'|"));
         }
-        public void TestStringWithEmbeddedApostrophe()
+        [Test]
+        public void StringWithEmbeddedApostrophe()
         {
             Assert.That("'Bob''s'", LexesAs("StringLiteral |'Bob''s'|"));
         }
-        public void TestCharacter()
+        [Test]
+        public void Character()
         {
             Assert.That("#32", LexesAs("StringLiteral |#32|"));
         }
-        public void TestHexCharacter()
+        [Test]
+        public void HexCharacter()
         {
             Assert.That("#$1A", LexesAs("StringLiteral |#$1A|"));
         }
-        public void TestMixed()
+        [Test]
+        public void Mixed()
         {
             Assert.That("'Foo'#13#10'Bar'", LexesAs("StringLiteral |'Foo'#13#10'Bar'|"));
         }
-        public void TestDoubleQuotedCharacter()
+        [Test]
+        public void DoubleQuotedCharacter()
         {
             // This is valid only in asm blocks, but valid nonetheless.
             Assert.That("\"'\"", LexesAs("StringLiteral |\"'\"|"));
         }
 
         // Identifier tests
-        public void TestIdentifier()
+        [Test]
+        public void Identifier()
         {
             Assert.That("Foo", LexesAs("Identifier |Foo|"));
         }
-        public void TestLeadingUnderscore()
+        [Test]
+        public void LeadingUnderscore()
         {
             Assert.That("_Foo", LexesAs("Identifier |_Foo|"));
         }
-        public void TestEmbeddedUnderscore()
+        [Test]
+        public void EmbeddedUnderscore()
         {
             Assert.That("Foo_Bar", LexesAs("Identifier |Foo_Bar|"));
         }
-        public void TestEmbeddedDigits()
+        [Test]
+        public void EmbeddedDigits()
         {
             Assert.That("Foo42", LexesAs("Identifier |Foo42|"));
         }
-        public void TestAmpersandIdentifier()
+        [Test]
+        public void AmpersandIdentifier()
         {
             Assert.That("&Foo", LexesAs("Identifier |&Foo|"));
         }
-        public void TestAmpersandSemikeyword()
+        [Test]
+        public void AmpersandSemikeyword()
         {
             Assert.That("&Absolute", LexesAs("Identifier |&Absolute|"));
         }
-        public void TestAmpersandKeyword()
+        [Test]
+        public void AmpersandKeyword()
         {
             Assert.That("&And", LexesAs("Identifier |&And|"));
         }
 
         // Keyword tests
         #region Semikeyword tests
-        public void TestSemikeywordsAreCaseInsensitive()
+        [Test]
+        public void SemikeywordsAreCaseInsensitive()
         {
             Assert.That("Absolute", LexesAs("AbsoluteSemikeyword |Absolute|"));
         }
-        public void TestAbsoluteSemikeyword()
+        [Test]
+        public void AbsoluteSemikeyword()
         {
             Assert.That("absolute", LexesAs("AbsoluteSemikeyword |absolute|"));
         }
-        public void TestAbstractSemikeyword()
+        [Test]
+        public void AbstractSemikeyword()
         {
             Assert.That("abstract", LexesAs("AbstractSemikeyword |abstract|"));
         }
-        public void TestAssemblerSemikeyword()
+        [Test]
+        public void AssemblerSemikeyword()
         {
             Assert.That("assembler", LexesAs("AssemblerSemikeyword |assembler|"));
         }
-        public void TestAssemblySemikeyword()
+        [Test]
+        public void AssemblySemikeyword()
         {
             Assert.That("assembly", LexesAs("AssemblySemikeyword |assembly|"));
         }
-        public void TestAtSemikeyword()
+        [Test]
+        public void AtSemikeyword()
         {
             Assert.That("at", LexesAs("AtSemikeyword |at|"));
         }
-        public void TestAutomatedSemikeyword()
+        [Test]
+        public void AutomatedSemikeyword()
         {
             Assert.That("automated", LexesAs("AutomatedSemikeyword |automated|"));
         }
-        public void TestCdeclSemikeyword()
+        [Test]
+        public void CdeclSemikeyword()
         {
             Assert.That("cdecl", LexesAs("CdeclSemikeyword |cdecl|"));
         }
-        public void TestContainsSemikeyword()
+        [Test]
+        public void ContainsSemikeyword()
         {
             Assert.That("contains", LexesAs("ContainsSemikeyword |contains|"));
         }
-        public void TestDefaultSemikeyword()
+        [Test]
+        public void DefaultSemikeyword()
         {
             Assert.That("default", LexesAs("DefaultSemikeyword |default|"));
         }
-        public void TestDeprecatedSemikeyword()
+        [Test]
+        public void DeprecatedSemikeyword()
         {
             Assert.That("deprecated", LexesAs("DeprecatedSemikeyword |deprecated|"));
         }
-        public void TestDispIdSemikeyword()
+        [Test]
+        public void DispIdSemikeyword()
         {
             Assert.That("dispid", LexesAs("DispIdSemikeyword |dispid|"));
         }
-        public void TestDynamicSemikeyword()
+        [Test]
+        public void DynamicSemikeyword()
         {
             Assert.That("dynamic", LexesAs("DynamicSemikeyword |dynamic|"));
         }
-        public void TestExportSemikeyword()
+        [Test]
+        public void ExportSemikeyword()
         {
             Assert.That("export", LexesAs("ExportSemikeyword |export|"));
         }
-        public void TestExternalSemikeyword()
+        [Test]
+        public void ExternalSemikeyword()
         {
             Assert.That("external", LexesAs("ExternalSemikeyword |external|"));
         }
-        public void TestFarSemikeyword()
+        [Test]
+        public void FarSemikeyword()
         {
             Assert.That("far", LexesAs("FarSemikeyword |far|"));
         }
-        public void TestFinalSemikeyword()
+        [Test]
+        public void FinalSemikeyword()
         {
             Assert.That("final", LexesAs("FinalSemikeyword |final|"));
         }
-        public void TestForwardSemikeyword()
+        [Test]
+        public void ForwardSemikeyword()
         {
             Assert.That("forward", LexesAs("ForwardSemikeyword |forward|"));
         }
-        public void TestHelperSemikeyword()
+        [Test]
+        public void HelperSemikeyword()
         {
             Assert.That("helper", LexesAs("HelperSemikeyword |helper|"));
         }
-        public void TestImplementsSemikeyword()
+        [Test]
+        public void ImplementsSemikeyword()
         {
             Assert.That("implements", LexesAs("ImplementsSemikeyword |implements|"));
         }
-        public void TestIndexSemikeyword()
+        [Test]
+        public void IndexSemikeyword()
         {
             Assert.That("index", LexesAs("IndexSemikeyword |index|"));
         }
-        public void TestLocalSemikeyword()
+        [Test]
+        public void LocalSemikeyword()
         {
             Assert.That("local", LexesAs("LocalSemikeyword |local|"));
         }
-        public void TestMessageSemikeyword()
+        [Test]
+        public void MessageSemikeyword()
         {
             Assert.That("message", LexesAs("MessageSemikeyword |message|"));
         }
-        public void TestNameSemikeyword()
+        [Test]
+        public void NameSemikeyword()
         {
             Assert.That("name", LexesAs("NameSemikeyword |name|"));
         }
-        public void TestNearSemikeyword()
+        [Test]
+        public void NearSemikeyword()
         {
             Assert.That("near", LexesAs("NearSemikeyword |near|"));
         }
-        public void TestNoDefaultSemikeyword()
+        [Test]
+        public void NoDefaultSemikeyword()
         {
             Assert.That("nodefault", LexesAs("NoDefaultSemikeyword |nodefault|"));
         }
-        public void TestOnSemikeyword()
+        [Test]
+        public void OnSemikeyword()
         {
             Assert.That("on", LexesAs("OnSemikeyword |on|"));
         }
-        public void TestOperatorSemikeyword()
+        [Test]
+        public void OperatorSemikeyword()
         {
             Assert.That("operator", LexesAs("OperatorSemikeyword |operator|"));
         }
-        public void TestOutSemikeyword()
+        [Test]
+        public void OutSemikeyword()
         {
             Assert.That("out", LexesAs("OutSemikeyword |out|"));
         }
-        public void TestOverloadSemikeyword()
+        [Test]
+        public void OverloadSemikeyword()
         {
             Assert.That("overload", LexesAs("OverloadSemikeyword |overload|"));
         }
-        public void TestOverrideSemikeyword()
+        [Test]
+        public void OverrideSemikeyword()
         {
             Assert.That("override", LexesAs("OverrideSemikeyword |override|"));
         }
-        public void TestPackageSemikeyword()
+        [Test]
+        public void PackageSemikeyword()
         {
             Assert.That("package", LexesAs("PackageSemikeyword |package|"));
         }
-        public void TestPascalSemikeyword()
+        [Test]
+        public void PascalSemikeyword()
         {
             Assert.That("pascal", LexesAs("PascalSemikeyword |pascal|"));
         }
-        public void TestPlatformSemikeyword()
+        [Test]
+        public void PlatformSemikeyword()
         {
             Assert.That("platform", LexesAs("PlatformSemikeyword |platform|"));
         }
-        public void TestPrivateSemikeyword()
+        [Test]
+        public void PrivateSemikeyword()
         {
             Assert.That("private", LexesAs("PrivateSemikeyword |private|"));
         }
-        public void TestProtectedSemikeyword()
+        [Test]
+        public void ProtectedSemikeyword()
         {
             Assert.That("protected", LexesAs("ProtectedSemikeyword |protected|"));
         }
-        public void TestPublicSemikeyword()
+        [Test]
+        public void PublicSemikeyword()
         {
             Assert.That("public", LexesAs("PublicSemikeyword |public|"));
         }
-        public void TestPublishedSemikeyword()
+        [Test]
+        public void PublishedSemikeyword()
         {
             Assert.That("published", LexesAs("PublishedSemikeyword |published|"));
         }
-        public void TestReadSemikeyword()
+        [Test]
+        public void ReadSemikeyword()
         {
             Assert.That("read", LexesAs("ReadSemikeyword |read|"));
         }
-        public void TestReadOnlySemikeyword()
+        [Test]
+        public void ReadOnlySemikeyword()
         {
             Assert.That("readonly", LexesAs("ReadOnlySemikeyword |readonly|"));
         }
-        public void TestRegisterSemikeyword()
+        [Test]
+        public void RegisterSemikeyword()
         {
             Assert.That("register", LexesAs("RegisterSemikeyword |register|"));
         }
-        public void TestReintroduceSemikeyword()
+        [Test]
+        public void ReintroduceSemikeyword()
         {
             Assert.That("reintroduce", LexesAs("ReintroduceSemikeyword |reintroduce|"));
         }
-        public void TestRequiresSemikeyword()
+        [Test]
+        public void RequiresSemikeyword()
         {
             Assert.That("requires", LexesAs("RequiresSemikeyword |requires|"));
         }
-        public void TestResidentSemikeyword()
+        [Test]
+        public void ResidentSemikeyword()
         {
             Assert.That("resident", LexesAs("ResidentSemikeyword |resident|"));
         }
-        public void TestSafecallSemikeyword()
+        [Test]
+        public void SafecallSemikeyword()
         {
             Assert.That("safecall", LexesAs("SafecallSemikeyword |safecall|"));
         }
-        public void TestSealedSemikeyword()
+        [Test]
+        public void SealedSemikeyword()
         {
             Assert.That("sealed", LexesAs("SealedSemikeyword |sealed|"));
         }
-        public void TestStdcallSemikeyword()
+        [Test]
+        public void StdcallSemikeyword()
         {
             Assert.That("stdcall", LexesAs("StdcallSemikeyword |stdcall|"));
         }
-        public void TestStoredSemikeyword()
+        [Test]
+        public void StoredSemikeyword()
         {
             Assert.That("stored", LexesAs("StoredSemikeyword |stored|"));
         }
-        public void TestStrictSemikeyword()
+        [Test]
+        public void StrictSemikeyword()
         {
             Assert.That("strict", LexesAs("StrictSemikeyword |strict|"));
         }
-        public void TestVarArgsSemikeyword()
+        [Test]
+        public void VarArgsSemikeyword()
         {
             Assert.That("varargs", LexesAs("VarArgsSemikeyword |varargs|"));
         }
-        public void TestVirtualSemikeyword()
+        [Test]
+        public void VirtualSemikeyword()
         {
             Assert.That("virtual", LexesAs("VirtualSemikeyword |virtual|"));
         }
-        public void TestWriteSemikeyword()
+        [Test]
+        public void WriteSemikeyword()
         {
             Assert.That("write", LexesAs("WriteSemikeyword |write|"));
         }
-        public void TestWriteOnlySemikeyword()
+        [Test]
+        public void WriteOnlySemikeyword()
         {
             Assert.That("writeonly", LexesAs("WriteOnlySemikeyword |writeonly|"));
         }
         #endregion
         #region Keyword tests
-        public void TestKeywordsAreCaseInsensitive()
+        [Test]
+        public void KeywordsAreCaseInsensitive()
         {
             Assert.That("And", LexesAs("AndKeyword |And|"));
         }
-        public void TestAndKeyword()
+        [Test]
+        public void AndKeyword()
         {
             Assert.That("and", LexesAs("AndKeyword |and|"));
         }
-        public void TestArrayKeyword()
+        [Test]
+        public void ArrayKeyword()
         {
             Assert.That("array", LexesAs("ArrayKeyword |array|"));
         }
-        public void TestAsKeyword()
+        [Test]
+        public void AsKeyword()
         {
             Assert.That("as", LexesAs("AsKeyword |as|"));
         }
-        public void TestAsmKeyword()
+        [Test]
+        public void AsmKeyword()
         {
             Assert.That("asm", LexesAs("AsmKeyword |asm|"));
         }
-        public void TestBeginKeyword()
+        [Test]
+        public void BeginKeyword()
         {
             Assert.That("begin", LexesAs("BeginKeyword |begin|"));
         }
-        public void TestCaseKeyword()
+        [Test]
+        public void CaseKeyword()
         {
             Assert.That("case", LexesAs("CaseKeyword |case|"));
         }
-        public void TestClassKeyword()
+        [Test]
+        public void ClassKeyword()
         {
             Assert.That("class", LexesAs("ClassKeyword |class|"));
         }
-        public void TestConstKeyword()
+        [Test]
+        public void ConstKeyword()
         {
             Assert.That("const", LexesAs("ConstKeyword |const|"));
         }
-        public void TestConstructorKeyword()
+        [Test]
+        public void ConstructorKeyword()
         {
             Assert.That("constructor", LexesAs("ConstructorKeyword |constructor|"));
         }
-        public void TestDestructorKeyword()
+        [Test]
+        public void DestructorKeyword()
         {
             Assert.That("destructor", LexesAs("DestructorKeyword |destructor|"));
         }
-        public void TestDispInterfaceKeyword()
+        [Test]
+        public void DispInterfaceKeyword()
         {
             Assert.That("dispinterface", LexesAs("DispInterfaceKeyword |dispinterface|"));
         }
-        public void TestDivKeyword()
+        [Test]
+        public void DivKeyword()
         {
             Assert.That("div", LexesAs("DivKeyword |div|"));
         }
-        public void TestDoKeyword()
+        [Test]
+        public void DoKeyword()
         {
             Assert.That("do", LexesAs("DoKeyword |do|"));
         }
-        public void TestDownToKeyword()
+        [Test]
+        public void DownToKeyword()
         {
             Assert.That("downto", LexesAs("DownToKeyword |downto|"));
         }
-        public void TestElseKeyword()
+        [Test]
+        public void ElseKeyword()
         {
             Assert.That("else", LexesAs("ElseKeyword |else|"));
         }
-        public void TestEndKeyword()
+        [Test]
+        public void EndKeyword()
         {
             Assert.That("end", LexesAs("EndKeyword |end|"));
         }
-        public void TestExceptKeyword()
+        [Test]
+        public void ExceptKeyword()
         {
             Assert.That("except", LexesAs("ExceptKeyword |except|"));
         }
-        public void TestExportsKeyword()
+        [Test]
+        public void ExportsKeyword()
         {
             Assert.That("exports", LexesAs("ExportsKeyword |exports|"));
         }
-        public void TestFileKeyword()
+        [Test]
+        public void FileKeyword()
         {
             Assert.That("file", LexesAs("FileKeyword |file|"));
         }
-        public void TestFinalizationKeyword()
+        [Test]
+        public void FinalizationKeyword()
         {
             Assert.That("finalization", LexesAs("FinalizationKeyword |finalization|"));
         }
-        public void TestFinallyKeyword()
+        [Test]
+        public void FinallyKeyword()
         {
             Assert.That("finally", LexesAs("FinallyKeyword |finally|"));
         }
-        public void TestForKeyword()
+        [Test]
+        public void ForKeyword()
         {
             Assert.That("for", LexesAs("ForKeyword |for|"));
         }
-        public void TestFunctionKeyword()
+        [Test]
+        public void FunctionKeyword()
         {
             Assert.That("function", LexesAs("FunctionKeyword |function|"));
         }
-        public void TestGotoKeyword()
+        [Test]
+        public void GotoKeyword()
         {
             Assert.That("goto", LexesAs("GotoKeyword |goto|"));
         }
-        public void TestIfKeyword()
+        [Test]
+        public void IfKeyword()
         {
             Assert.That("if", LexesAs("IfKeyword |if|"));
         }
-        public void TestImplementationKeyword()
+        [Test]
+        public void ImplementationKeyword()
         {
             Assert.That("implementation", LexesAs("ImplementationKeyword |implementation|"));
         }
-        public void TestInKeyword()
+        [Test]
+        public void InKeyword()
         {
             Assert.That("in", LexesAs("InKeyword |in|"));
         }
-        public void TestInheritedKeyword()
+        [Test]
+        public void InheritedKeyword()
         {
             Assert.That("inherited", LexesAs("InheritedKeyword |inherited|"));
         }
-        public void TestInitializationKeyword()
+        [Test]
+        public void InitializationKeyword()
         {
             Assert.That("initialization", LexesAs("InitializationKeyword |initialization|"));
         }
-        public void TestInlineKeyword()
+        [Test]
+        public void InlineKeyword()
         {
             Assert.That("inline", LexesAs("InlineKeyword |inline|"));
         }
-        public void TestInterfaceKeyword()
+        [Test]
+        public void InterfaceKeyword()
         {
             Assert.That("interface", LexesAs("InterfaceKeyword |interface|"));
         }
-        public void TestIsKeyword()
+        [Test]
+        public void IsKeyword()
         {
             Assert.That("is", LexesAs("IsKeyword |is|"));
         }
-        public void TestLabelKeyword()
+        [Test]
+        public void LabelKeyword()
         {
             Assert.That("label", LexesAs("LabelKeyword |label|"));
         }
-        public void TestLibraryKeyword()
+        [Test]
+        public void LibraryKeyword()
         {
             Assert.That("library", LexesAs("LibraryKeyword |library|"));
         }
-        public void TestModKeyword()
+        [Test]
+        public void ModKeyword()
         {
             Assert.That("mod", LexesAs("ModKeyword |mod|"));
         }
-        public void TestNilKeyword()
+        [Test]
+        public void NilKeyword()
         {
             Assert.That("nil", LexesAs("NilKeyword |nil|"));
         }
-        public void TestNotKeyword()
+        [Test]
+        public void NotKeyword()
         {
             Assert.That("not", LexesAs("NotKeyword |not|"));
         }
-        public void TestObjectKeyword()
+        [Test]
+        public void ObjectKeyword()
         {
             Assert.That("object", LexesAs("ObjectKeyword |object|"));
         }
-        public void TestOfKeyword()
+        [Test]
+        public void OfKeyword()
         {
             Assert.That("of", LexesAs("OfKeyword |of|"));
         }
-        public void TestOrKeyword()
+        [Test]
+        public void OrKeyword()
         {
             Assert.That("or", LexesAs("OrKeyword |or|"));
         }
-        public void TestPackedKeyword()
+        [Test]
+        public void PackedKeyword()
         {
             Assert.That("packed", LexesAs("PackedKeyword |packed|"));
         }
-        public void TestProcedureKeyword()
+        [Test]
+        public void ProcedureKeyword()
         {
             Assert.That("procedure", LexesAs("ProcedureKeyword |procedure|"));
         }
-        public void TestProgramKeyword()
+        [Test]
+        public void ProgramKeyword()
         {
             Assert.That("program", LexesAs("ProgramKeyword |program|"));
         }
-        public void TestPropertyKeyword()
+        [Test]
+        public void PropertyKeyword()
         {
             Assert.That("property", LexesAs("PropertyKeyword |property|"));
         }
-        public void TestRaiseKeyword()
+        [Test]
+        public void RaiseKeyword()
         {
             Assert.That("raise", LexesAs("RaiseKeyword |raise|"));
         }
-        public void TestRecordKeyword()
+        [Test]
+        public void RecordKeyword()
         {
             Assert.That("record", LexesAs("RecordKeyword |record|"));
         }
-        public void TestRepeatKeyword()
+        [Test]
+        public void RepeatKeyword()
         {
             Assert.That("repeat", LexesAs("RepeatKeyword |repeat|"));
         }
-        public void TestResourceStringKeyword()
+        [Test]
+        public void ResourceStringKeyword()
         {
             Assert.That("resourcestring", LexesAs("ResourceStringKeyword |resourcestring|"));
         }
-        public void TestSetKeyword()
+        [Test]
+        public void SetKeyword()
         {
             Assert.That("set", LexesAs("SetKeyword |set|"));
         }
-        public void TestShlKeyword()
+        [Test]
+        public void ShlKeyword()
         {
             Assert.That("shl", LexesAs("ShlKeyword |shl|"));
         }
-        public void TestShrKeyword()
+        [Test]
+        public void ShrKeyword()
         {
             Assert.That("shr", LexesAs("ShrKeyword |shr|"));
         }
-        public void TestStringKeyword()
+        [Test]
+        public void StringKeyword()
         {
             Assert.That("string", LexesAs("StringKeyword |string|"));
         }
-        public void TestThenKeyword()
+        [Test]
+        public void ThenKeyword()
         {
             Assert.That("then", LexesAs("ThenKeyword |then|"));
         }
-        public void TestThreadVarKeyword()
+        [Test]
+        public void ThreadVarKeyword()
         {
             Assert.That("threadvar", LexesAs("ThreadVarKeyword |threadvar|"));
         }
-        public void TestToKeyword()
+        [Test]
+        public void ToKeyword()
         {
             Assert.That("to", LexesAs("ToKeyword |to|"));
         }
-        public void TestTryKeyword()
+        [Test]
+        public void TryKeyword()
         {
             Assert.That("try", LexesAs("TryKeyword |try|"));
         }
-        public void TestTypeKeyword()
+        [Test]
+        public void TypeKeyword()
         {
             Assert.That("type", LexesAs("TypeKeyword |type|"));
         }
-        public void TestUnitKeyword()
+        [Test]
+        public void UnitKeyword()
         {
             Assert.That("unit", LexesAs("UnitKeyword |unit|"));
         }
-        public void TestUntilKeyword()
+        [Test]
+        public void UntilKeyword()
         {
             Assert.That("until", LexesAs("UntilKeyword |until|"));
         }
-        public void TestUsesKeyword()
+        [Test]
+        public void UsesKeyword()
         {
             Assert.That("uses", LexesAs("UsesKeyword |uses|"));
         }
-        public void TestVarKeyword()
+        [Test]
+        public void VarKeyword()
         {
             Assert.That("var", LexesAs("VarKeyword |var|"));
         }
-        public void TestWhileKeyword()
+        [Test]
+        public void WhileKeyword()
         {
             Assert.That("while", LexesAs("WhileKeyword |while|"));
         }
-        public void TestWithKeyword()
+        [Test]
+        public void WithKeyword()
         {
             Assert.That("with", LexesAs("WithKeyword |with|"));
         }
-        public void TestXorKeyword()
+        [Test]
+        public void XorKeyword()
         {
             Assert.That("xor", LexesAs("XorKeyword |xor|"));
         }
         #endregion
 
         // Equality / inequality / assignment tests
-        public void TestColonEquals()
+        [Test]
+        public void ColonEquals()
         {
             Assert.That(":=", LexesAs("ColonEquals |:=|"));
         }
-        public void TestEqualSign()
+        [Test]
+        public void EqualSign()
         {
             Assert.That("=", LexesAs("EqualSign |=|"));
         }
-        public void TestGreaterThan()
+        [Test]
+        public void GreaterThan()
         {
             Assert.That(">", LexesAs("GreaterThan |>|"));
         }
-        public void TestLessThan()
+        [Test]
+        public void LessThan()
         {
             Assert.That("<", LexesAs("LessThan |<|"));
         }
-        public void TestLessOrEqual()
+        [Test]
+        public void LessOrEqual()
         {
             Assert.That("<=", LexesAs("LessOrEqual |<=|"));
         }
-        public void TestGreaterOrEqual()
+        [Test]
+        public void GreaterOrEqual()
         {
             Assert.That(">=", LexesAs("GreaterOrEqual |>=|"));
         }
-        public void TestNotEqual()
+        [Test]
+        public void NotEqual()
         {
             Assert.That("<>", LexesAs("NotEqual |<>|"));
         }
 
         // Punctuation tests
-        public void TestAtSign()
+        [Test]
+        public void AtSign()
         {
             Assert.That("@", LexesAs("AtSign |@|"));
         }
-        public void TestCaret()
+        [Test]
+        public void Caret()
         {
             Assert.That("^", LexesAs("Caret |^|"));
         }
-        public void TestCloseBracket()
+        [Test]
+        public void CloseBracket()
         {
             Assert.That("]", LexesAs("CloseBracket |]|"));
         }
-        public void TestCloseParenthesis()
+        [Test]
+        public void CloseParenthesis()
         {
             Assert.That(")", LexesAs("CloseParenthesis |)|"));
         }
-        public void TestColon()
+        [Test]
+        public void Colon()
         {
             Assert.That(":", LexesAs("Colon |:|"));
         }
-        public void TestComma()
+        [Test]
+        public void Comma()
         {
             Assert.That(",", LexesAs("Comma |,|"));
         }
-        public void TestDivideBySign()
+        [Test]
+        public void DivideBySign()
         {
             Assert.That("/", LexesAs("DivideBySign |/|"));
         }
-        public void TestDot()
+        [Test]
+        public void Dot()
         {
             Assert.That(".", LexesAs("Dot |.|"));
         }
-        public void TestDotDot()
+        [Test]
+        public void DotDot()
         {
             Assert.That("..", LexesAs("DotDot |..|"));
         }
-        public void TestMinusSign()
+        [Test]
+        public void MinusSign()
         {
             Assert.That("-", LexesAs("MinusSign |-|"));
         }
-        public void TestOpenBracket()
+        [Test]
+        public void OpenBracket()
         {
             Assert.That("[", LexesAs("OpenBracket |[|"));
         }
-        public void TestOpenParenthesis()
+        [Test]
+        public void OpenParenthesis()
         {
             Assert.That("(", LexesAs("OpenParenthesis |(|"));
         }
-        public void TestPlusSign()
+        [Test]
+        public void PlusSign()
         {
             Assert.That("+", LexesAs("PlusSign |+|"));
         }
-        public void TestSemicolon()
+        [Test]
+        public void Semicolon()
         {
             Assert.That(";", LexesAs("Semicolon |;|"));
         }
-        public void TestTimesSign()
+        [Test]
+        public void TimesSign()
         {
             Assert.That("*", LexesAs("TimesSign |*|"));
         }

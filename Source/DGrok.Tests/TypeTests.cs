@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,11 +30,13 @@ namespace DGrok.Tests
             get { return RuleType.Type; }
         }
 
-        public void TestEmptyEnumDoesNotParse()
+        [Test]
+        public void EmptyEnumDoesNotParse()
         {
             AssertDoesNotParse("()");
         }
-        public void TestEnum()
+        [Test]
+        public void Enum()
         {
             Assert.That("(fooBar)", ParsesAs(
                 "EnumeratedTypeNode",
@@ -38,7 +50,8 @@ namespace DGrok.Tests
                 "      DelimiterNode: (none)",
                 "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
-        public void TestQualifiedIdentifier()
+        [Test]
+        public void QualifiedIdentifier()
         {
             Assert.That("System.Integer", ParsesAs(
                 "BinaryOperationNode",
@@ -46,7 +59,8 @@ namespace DGrok.Tests
                 "  OperatorNode: Dot |.|",
                 "  RightNode: Identifier |Integer|"));
         }
-        public void TestRange()
+        [Test]
+        public void Range()
         {
             Assert.That("24..42", ParsesAs(
                 "BinaryOperationNode",
@@ -54,7 +68,8 @@ namespace DGrok.Tests
                 "  OperatorNode: DotDot |..|",
                 "  RightNode: Number |42|"));
         }
-        public void TestArray()
+        [Test]
+        public void Array()
         {
             Assert.That("array of Integer", ParsesAs(
                 "ArrayTypeNode",
@@ -65,7 +80,8 @@ namespace DGrok.Tests
                 "  OfKeywordNode: OfKeyword |of|",
                 "  TypeNode: Identifier |Integer|"));
         }
-        public void TestSet()
+        [Test]
+        public void Set()
         {
             Assert.That("set of Byte", ParsesAs(
                 "SetOfNode",
@@ -73,7 +89,8 @@ namespace DGrok.Tests
                 "  OfKeywordNode: OfKeyword |of|",
                 "  TypeNode: Identifier |Byte|"));
         }
-        public void TestFile()
+        [Test]
+        public void File()
         {
             Assert.That("file", ParsesAs(
                 "FileTypeNode",
@@ -81,7 +98,8 @@ namespace DGrok.Tests
                 "  OfKeywordNode: (none)",
                 "  TypeNode: (none)"));
         }
-        public void TestRecordHelper()
+        [Test]
+        public void RecordHelper()
         {
             Assert.That("record helper for TPoint end", ParsesAs(
                 "TypeHelperNode",
@@ -95,7 +113,8 @@ namespace DGrok.Tests
                 "  ContentListNode: ListNode",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestRecord()
+        [Test]
+        public void Record()
         {
             Assert.That("record end", ParsesAs(
                 "RecordTypeNode",
@@ -104,14 +123,16 @@ namespace DGrok.Tests
                 "  VariantSectionNode: (none)",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestPointer()
+        [Test]
+        public void Pointer()
         {
             Assert.That("^TFoo", ParsesAs(
                 "PointerTypeNode",
                 "  CaretNode: Caret |^|",
                 "  TypeNode: Identifier |TFoo|"));
         }
-        public void TestString()
+        [Test]
+        public void String()
         {
             Assert.That("string[42]", ParsesAs(
                 "StringOfLengthNode",
@@ -120,7 +141,8 @@ namespace DGrok.Tests
                 "  LengthNode: Number |42|",
                 "  CloseBracketNode: CloseBracket |]|"));
         }
-        public void TestProcedureType()
+        [Test]
+        public void ProcedureType()
         {
             Assert.That("procedure of object", ParsesAs(
                 "ProcedureTypeNode",
@@ -135,7 +157,8 @@ namespace DGrok.Tests
                 "  ObjectKeywordNode: ObjectKeyword |object|",
                 "  SecondDirectiveListNode: ListNode"));
         }
-        public void TestClassHelper()
+        [Test]
+        public void ClassHelper()
         {
             Assert.That("class helper for TObject end", ParsesAs(
                 "TypeHelperNode",
@@ -149,7 +172,8 @@ namespace DGrok.Tests
                 "  ContentListNode: ListNode",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestClassOf()
+        [Test]
+        public void ClassOf()
         {
             Assert.That("class of TObject", ParsesAs(
                 "ClassOfNode",
@@ -157,7 +181,8 @@ namespace DGrok.Tests
                 "  OfKeywordNode: OfKeyword |of|",
                 "  TypeNode: Identifier |TObject|"));
         }
-        public void TestClass()
+        [Test]
+        public void Class()
         {
             Assert.That("class end", ParsesAs(
                 "ClassTypeNode",
@@ -169,7 +194,8 @@ namespace DGrok.Tests
                 "  ContentListNode: ListNode",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestInterface()
+        [Test]
+        public void Interface()
         {
             Assert.That("interface end", ParsesAs(
                 "InterfaceTypeNode",
@@ -183,7 +209,8 @@ namespace DGrok.Tests
                 "  MethodAndPropertyListNode: ListNode",
                 "  EndKeywordNode: EndKeyword |end|"));
         }
-        public void TestPackedType()
+        [Test]
+        public void PackedType()
         {
             Assert.That("packed array of Byte", ParsesAs(
                 "PackedTypeNode",

@@ -43,6 +43,7 @@ namespace DGrok.Demo
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRunAction = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.btnCopyAllHits = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -74,10 +75,12 @@ namespace DGrok.Demo
             // 
             // trvSummary
             // 
-            this.trvSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trvSummary.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.trvSummary.Location = new System.Drawing.Point(0, 0);
             this.trvSummary.Name = "trvSummary";
-            this.trvSummary.Size = new System.Drawing.Size(356, 182);
+            this.trvSummary.Size = new System.Drawing.Size(356, 153);
             this.trvSummary.TabIndex = 7;
             this.trvSummary.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvSummary_NodeMouseDoubleClick);
             this.trvSummary.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.trvSummary_KeyPress);
@@ -129,9 +132,11 @@ namespace DGrok.Demo
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.btnCopyAllHits);
             this.splitContainer1.Panel2.Controls.Add(this.trvSummary);
             this.splitContainer1.Size = new System.Drawing.Size(516, 182);
             this.splitContainer1.SplitterDistance = 156;
+            this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 8;
             // 
             // splitContainer2
@@ -225,6 +230,18 @@ namespace DGrok.Demo
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             // 
+            // btnCopyAllHits
+            // 
+            this.btnCopyAllHits.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCopyAllHits.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnCopyAllHits.Location = new System.Drawing.Point(0, 159);
+            this.btnCopyAllHits.Name = "btnCopyAllHits";
+            this.btnCopyAllHits.Size = new System.Drawing.Size(124, 23);
+            this.btnCopyAllHits.TabIndex = 8;
+            this.btnCopyAllHits.Text = "Copy All to Clipboard";
+            this.btnCopyAllHits.UseVisualStyleBackColor = true;
+            this.btnCopyAllHits.Click += new System.EventHandler(this.btnCopyAllHits_Click);
+            // 
             // ParseSourceTreeControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -267,5 +284,6 @@ namespace DGrok.Demo
         private System.Windows.Forms.TreeView trvActions;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TextBox edtActionDescription;
+        private System.Windows.Forms.Button btnCopyAllHits;
     }
 }

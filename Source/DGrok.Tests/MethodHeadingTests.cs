@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,7 +30,8 @@ namespace DGrok.Tests
             get { return RuleType.MethodHeading; }
         }
 
-        public void TestProcedure()
+        [Test]
+        public void Procedure()
         {
             Assert.That("procedure Foo;", ParsesAs(
                 "MethodHeadingNode",
@@ -35,7 +46,8 @@ namespace DGrok.Tests
                 "  DirectiveListNode: ListNode",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestFunctionWithoutReturnType()
+        [Test]
+        public void FunctionWithoutReturnType()
         {
             Assert.That("function Foo;", ParsesAs(
                 "MethodHeadingNode",
@@ -50,7 +62,8 @@ namespace DGrok.Tests
                 "  DirectiveListNode: ListNode",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestConstructor()
+        [Test]
+        public void Constructor()
         {
             Assert.That("constructor Foo;", ParsesAs(
                 "MethodHeadingNode",
@@ -65,7 +78,8 @@ namespace DGrok.Tests
                 "  DirectiveListNode: ListNode",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestDestructor()
+        [Test]
+        public void Destructor()
         {
             Assert.That("destructor Foo; override;", ParsesAs(
                 "MethodHeadingNode",
@@ -85,7 +99,8 @@ namespace DGrok.Tests
                 "      DataNode: ListNode",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestMultipleDirectives()
+        [Test]
+        public void MultipleDirectives()
         {
             Assert.That("procedure Foo; virtual; abstract; deprecated;", ParsesAs(
                 "MethodHeadingNode",
@@ -115,7 +130,8 @@ namespace DGrok.Tests
                 "      DataNode: ListNode",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestDirectiveWithoutTrailingSemicolon()
+        [Test]
+        public void DirectiveWithoutTrailingSemicolon()
         {
             Assert.That("procedure Foo; deprecated", ParsesAs(
                 "MethodHeadingNode",
@@ -135,7 +151,8 @@ namespace DGrok.Tests
                 "      DataNode: ListNode",
                 "  SemicolonNode: (none)"));
         }
-        public void TestQualifiedName()
+        [Test]
+        public void QualifiedName()
         {
             Assert.That("procedure TFoo.Bar;", ParsesAs(
                 "MethodHeadingNode",
@@ -153,7 +170,8 @@ namespace DGrok.Tests
                 "  DirectiveListNode: ListNode",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestEmptyParameterList()
+        [Test]
+        public void EmptyParameterList()
         {
             Assert.That("procedure Foo();", ParsesAs(
                 "MethodHeadingNode",
@@ -168,7 +186,8 @@ namespace DGrok.Tests
                 "  DirectiveListNode: ListNode",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestParameters()
+        [Test]
+        public void Parameters()
         {
             Assert.That("procedure Foo(Sender: TObject; var CanClose: Boolean);", ParsesAs(
                 "MethodHeadingNode",
@@ -207,7 +226,8 @@ namespace DGrok.Tests
                 "  DirectiveListNode: ListNode",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestReturnType()
+        [Test]
+        public void ReturnType()
         {
             Assert.That("function Foo: Boolean;", ParsesAs(
                 "MethodHeadingNode",
@@ -222,7 +242,8 @@ namespace DGrok.Tests
                 "  DirectiveListNode: ListNode",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestClassProcedure()
+        [Test]
+        public void ClassProcedure()
         {
             Assert.That("class procedure Foo;", ParsesAs(
                 "MethodHeadingNode",
@@ -237,7 +258,8 @@ namespace DGrok.Tests
                 "  DirectiveListNode: ListNode",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestClassFunction()
+        [Test]
+        public void ClassFunction()
         {
             Assert.That("class function Foo: Integer;", ParsesAs(
                 "MethodHeadingNode",
@@ -252,7 +274,8 @@ namespace DGrok.Tests
                 "  DirectiveListNode: ListNode",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestMethodResolution()
+        [Test]
+        public void MethodResolution()
         {
             Assert.That("procedure IFoo.Bar = Baz;", ParsesAs(
                 "MethodResolutionNode",
@@ -265,7 +288,8 @@ namespace DGrok.Tests
                 "  ImplementationMethodNode: Identifier |Baz|",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestOperator()
+        [Test]
+        public void Operator()
         {
             Assert.That("class operator Implicit(Value: Integer): TValue;", ParsesAs(
                 "MethodHeadingNode",

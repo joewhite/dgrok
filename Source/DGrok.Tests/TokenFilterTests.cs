@@ -1,15 +1,26 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Constraints;
-using NUnitLite.Framework;
+using NUnit.Framework;
+using NUnit.Framework.Constraints;
+using NUnit.Framework.SyntaxHelpers;
 
 namespace DGrok.Tests
 {
@@ -39,54 +50,64 @@ namespace DGrok.Tests
             });
         }
 
-        public void TestPassThrough()
+        [Test]
+        public void PassThrough()
         {
             Assert.That("Foo", LexesAndFiltersAs(
                 "Identifier |Foo|"));
         }
-        public void TestSingleLineCommentIsIgnored()
+        [Test]
+        public void SingleLineCommentIsIgnored()
         {
             Assert.That("// Foo", LexesAndFiltersAs());
         }
-        public void TestCurlyBraceCommentIsIgnored()
+        [Test]
+        public void CurlyBraceCommentIsIgnored()
         {
             Assert.That("{ Foo }", LexesAndFiltersAs());
         }
-        public void TestParenStarCommentIsIgnored()
+        [Test]
+        public void ParenStarCommentIsIgnored()
         {
             Assert.That("(* Foo *)", LexesAndFiltersAs());
         }
-        public void TestParserUsesFilter()
+        [Test]
+        public void ParserUsesFilter()
         {
             Parser parser = ParserTestCase.CreateParser("// Foo");
             Assert.That(parser.AtEof, Is.True);
         }
-        public void TestSingleLetterCompilerDirectivesAreIgnored()
+        [Test]
+        public void SingleLetterCompilerDirectivesAreIgnored()
         {
             Assert.That("{$R+}", LexesAndFiltersAs());
             Assert.That("{$A8}", LexesAndFiltersAs());
         }
-        public void TestCPlusPlusBuilderCompilerDirectivesAreIgnored()
+        [Test]
+        public void CPlusPlusBuilderCompilerDirectivesAreIgnored()
         {
             Assert.That("{$EXTERNALSYM Foo}", LexesAndFiltersAs());
             Assert.That("{$HPPEMIT '#pragma Foo'}", LexesAndFiltersAs());
             Assert.That("{$NODEFINE Foo}", LexesAndFiltersAs());
             Assert.That("{$NOINCLUDE Foo}", LexesAndFiltersAs());
         }
-        public void TestIfDefTrue()
+        [Test]
+        public void IfDefTrue()
         {
             Assert.That("0{$IFDEF TRUE}1{$ENDIF}2", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |1|",
                 "Number |2|"));
         }
-        public void TestIfDefFalse()
+        [Test]
+        public void IfDefFalse()
         {
             Assert.That("0{$IFDEF FALSE}1{$ENDIF}2", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |2|"));
         }
-        public void TestIfDefTrueTrue()
+        [Test]
+        public void IfDefTrueTrue()
         {
             Assert.That("0{$IFDEF TRUE}1{$IFDEF TRUE}2{$ENDIF}3{$ENDIF}4", LexesAndFiltersAs(
                 "Number |0|",
@@ -95,7 +116,8 @@ namespace DGrok.Tests
                 "Number |3|",
                 "Number |4|"));
         }
-        public void TestIfDefTrueFalse()
+        [Test]
+        public void IfDefTrueFalse()
         {
             Assert.That("0{$IFDEF TRUE}1{$IFDEF FALSE}2{$ENDIF}3{$ENDIF}4", LexesAndFiltersAs(
                 "Number |0|",
@@ -103,45 +125,52 @@ namespace DGrok.Tests
                 "Number |3|",
                 "Number |4|"));
         }
-        public void TestIfDefFalseTrue()
+        [Test]
+        public void IfDefFalseTrue()
         {
             Assert.That("0{$IFDEF FALSE}1{$IFDEF TRUE}2{$ENDIF}3{$ENDIF}4", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |4|"));
         }
-        public void TestIfDefFalseFalse()
+        [Test]
+        public void IfDefFalseFalse()
         {
             Assert.That("0{$IFDEF FALSE}1{$IFDEF FALSE}2{$ENDIF}3{$ENDIF}4", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |4|"));
         }
-        public void TestIfDefFalseUnknown()
+        [Test]
+        public void IfDefFalseUnknown()
         {
             Assert.That("0{$IFDEF FALSE}1{$IFDEF UNKNOWN}2{$ENDIF}3{$ENDIF}4", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |4|"));
         }
-        public void TestIfEnd()
+        [Test]
+        public void IfEnd()
         {
             Assert.That("0{$IF False}1{$IFEND}2", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |2|"));
         }
-        public void TestIfDefTrueWithElse()
+        [Test]
+        public void IfDefTrueWithElse()
         {
             Assert.That("0{$IFDEF TRUE}1{$ELSE}2{$ENDIF}3", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |1|",
                 "Number |3|"));
         }
-        public void TestIfDefFalseWithElse()
+        [Test]
+        public void IfDefFalseWithElse()
         {
             Assert.That("0{$IFDEF FALSE}1{$ELSE}2{$ENDIF}3", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |2|",
                 "Number |3|"));
         }
-        public void TestIfDefTrueTrueWithElses()
+        [Test]
+        public void IfDefTrueTrueWithElses()
         {
             Assert.That("0{$IFDEF TRUE}1{$IFDEF TRUE}2{$ELSE}3{$ENDIF}4{$ELSE}5{$ENDIF}6", LexesAndFiltersAs(
                 "Number |0|",
@@ -150,7 +179,8 @@ namespace DGrok.Tests
                 "Number |4|",
                 "Number |6|"));
         }
-        public void TestIfDefTrueFalseWithElses()
+        [Test]
+        public void IfDefTrueFalseWithElses()
         {
             Assert.That("0{$IFDEF TRUE}1{$IFDEF FALSE}2{$ELSE}3{$ENDIF}4{$ELSE}5{$ENDIF}6", LexesAndFiltersAs(
                 "Number |0|",
@@ -159,57 +189,66 @@ namespace DGrok.Tests
                 "Number |4|",
                 "Number |6|"));
         }
-        public void TestIfDefFalseTrueWithElses()
+        [Test]
+        public void IfDefFalseTrueWithElses()
         {
             Assert.That("0{$IFDEF FALSE}1{$IFDEF TRUE}2{$ELSE}3{$ENDIF}4{$ELSE}5{$ENDIF}6", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |5|",
                 "Number |6|"));
         }
-        public void TestIfDefFalseFalseWithElses()
+        [Test]
+        public void IfDefFalseFalseWithElses()
         {
             Assert.That("0{$IFDEF FALSE}1{$IFDEF FALSE}2{$ELSE}3{$ENDIF}4{$ELSE}5{$ENDIF}6", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |5|",
                 "Number |6|"));
         }
-        public void TestIfTrueElseIfTrue()
+        [Test]
+        public void IfTrueElseIfTrue()
         {
             Assert.That("0{$IF True}1{$ELSEIF True}2{$ELSE}3{$IFEND}4", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |1|",
                 "Number |4|"));
         }
-        public void TestIfTrueElseIfFalse()
+        [Test]
+        public void IfTrueElseIfFalse()
         {
             Assert.That("0{$IF True}1{$ELSEIF False}2{$ELSE}3{$IFEND}4", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |1|",
                 "Number |4|"));
         }
-        public void TestIfFalseElseIfTrue()
+        [Test]
+        public void IfFalseElseIfTrue()
         {
             Assert.That("0{$IF False}1{$ELSEIF True}2{$ELSE}3{$IFEND}4", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |2|",
                 "Number |4|"));
         }
-        public void TestIfFalseElseIfFalse()
+        [Test]
+        public void IfFalseElseIfFalse()
         {
             Assert.That("0{$IF False}1{$ELSEIF False}2{$ELSE}3{$IFEND}4", LexesAndFiltersAs(
                 "Number |0|",
                 "Number |3|",
                 "Number |4|"));
         }
-        public void TestIPlusIsNotTreatedAsInclude()
+        [Test]
+        public void IPlusIsNotTreatedAsInclude()
         {
             Assert.That("{$I+}", LexesAndFiltersAs());
         }
-        public void TestIMinusIsNotTreatedAsInclude()
+        [Test]
+        public void IMinusIsNotTreatedAsInclude()
         {
             Assert.That("{$I-}", LexesAndFiltersAs());
         }
-        public void TestInclude()
+        [Test]
+        public void Include()
         {
             _fileLoader.Files["bar.inc"] = "Bar";
             Assert.That("Foo {$INCLUDE bar.inc} Baz", LexesAndFiltersAs(
@@ -217,48 +256,55 @@ namespace DGrok.Tests
                 "Identifier |Bar|",
                 "Identifier |Baz|"));
         }
-        public void TestDefine()
+        [Test]
+        public void Define()
         {
             _defines.UndefineSymbol("FOO");
             Assert.That("{$DEFINE FOO} {$IFDEF FOO} Foo {$ENDIF}", LexesAndFiltersAs("Identifier |Foo|"));
         }
-        public void TestUndefine()
+        [Test]
+        public void Undefine()
         {
             _defines.DefineSymbol("FOO");
             Assert.That("{$UNDEF FOO} {$IFDEF FOO} Foo {$ENDIF}", LexesAndFiltersAs(""));
         }
-        public void TestDefineScopeDoesNotExtendToOtherFiles()
+        [Test]
+        public void DefineScopeDoesNotExtendToOtherFiles()
         {
             _defines.UndefineSymbol("FOO");
             Assert.That("{$DEFINE FOO}", LexesAndFiltersAs(""));
             Assert.That("{$IFDEF FOO} Foo {$ENDIF}", LexesAndFiltersAs(""));
         }
-        public void TestDefineScopeDoesBubbleUpFromIncludeFiles()
+        [Test]
+        public void DefineScopeDoesBubbleUpFromIncludeFiles()
         {
             _defines.UndefineSymbol("FOO");
             _fileLoader.Files["defines.inc"] = "{$DEFINE FOO}";
             Assert.That("{$I defines.inc} {$IFDEF FOO} Foo {$ENDIF}", LexesAndFiltersAs(
                 "Identifier |Foo|"));
         }
-        public void TestDefineIgnoredInFalseIf()
+        [Test]
+        public void DefineIgnoredInFalseIf()
         {
             _defines.UndefineSymbol("FOO");
             Assert.That("{$IF False}{$DEFINE FOO}{$IFEND} {$IFDEF FOO}Foo{$ENDIF}", LexesAndFiltersAs(""));
         }
-        public void TestUndefineIgnoredInFalseIf()
+        [Test]
+        public void UndefineIgnoredInFalseIf()
         {
             _defines.DefineSymbol("FOO");
             Assert.That("{$IF False}{$UNDEF FOO}{$IFEND} {$IFDEF FOO}Foo{$ENDIF}", LexesAndFiltersAs(
                 "Identifier |Foo|"));
         }
-        [ExpectedException(typeof(LexException))]
-        public void TestThrowOnUnrecognizedDirective()
+        [Test, ExpectedException(typeof(LexException))]
+        public void ThrowOnUnrecognizedDirective()
         {
             Lexer lexer = new Lexer("{$FOO}", "");
             TokenFilter filter = new TokenFilter(lexer.Tokens, _defines, _fileLoader);
             new List<Token>(filter.Tokens);
         }
-        public void TestUnrecognizedIsIgnoredInFalseIf()
+        [Test]
+        public void UnrecognizedIsIgnoredInFalseIf()
         {
             Assert.That("{$IF False}{$FOO}{$IFEND}", LexesAndFiltersAs(""));
         }

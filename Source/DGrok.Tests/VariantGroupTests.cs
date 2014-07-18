@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,7 +30,8 @@ namespace DGrok.Tests
             get { return RuleType.VariantGroup; }
         }
 
-        public void TestEmpty()
+        [Test]
+        public void Empty()
         {
             Assert.That("1: ()", ParsesAs(
                 "VariantGroupNode",
@@ -35,7 +46,8 @@ namespace DGrok.Tests
                 "  CloseParenthesisNode: CloseParenthesis |)|",
                 "  SemicolonNode: (none)"));
         }
-        public void TestTrailingSemicolon()
+        [Test]
+        public void TrailingSemicolon()
         {
             Assert.That("1: ();", ParsesAs(
                 "VariantGroupNode",
@@ -50,7 +62,8 @@ namespace DGrok.Tests
                 "  CloseParenthesisNode: CloseParenthesis |)|",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestMultipleValues()
+        [Test]
+        public void MultipleValues()
         {
             Assert.That("fooBar, fooBaz: ()", ParsesAs(
                 "VariantGroupNode",
@@ -68,7 +81,8 @@ namespace DGrok.Tests
                 "  CloseParenthesisNode: CloseParenthesis |)|",
                 "  SemicolonNode: (none)"));
         }
-        public void TestOneFieldWithoutSemicolon()
+        [Test]
+        public void OneFieldWithoutSemicolon()
         {
             Assert.That("1: (Foo: Integer)", ParsesAs(
                 "VariantGroupNode",
@@ -92,7 +106,8 @@ namespace DGrok.Tests
                 "  CloseParenthesisNode: CloseParenthesis |)|",
                 "  SemicolonNode: (none)"));
         }
-        public void TestOneFieldWithSemicolon()
+        [Test]
+        public void OneFieldWithSemicolon()
         {
             Assert.That("1: (Foo: Integer;)", ParsesAs(
                 "VariantGroupNode",
@@ -116,7 +131,8 @@ namespace DGrok.Tests
                 "  CloseParenthesisNode: CloseParenthesis |)|",
                 "  SemicolonNode: (none)"));
         }
-        public void TestTwoFieldsWithSemicolon()
+        [Test]
+        public void TwoFieldsWithSemicolon()
         {
             Assert.That("1: (Foo: Integer; Bar: Boolean;)", ParsesAs(
                 "VariantGroupNode",
@@ -149,7 +165,8 @@ namespace DGrok.Tests
                 "  CloseParenthesisNode: CloseParenthesis |)|",
                 "  SemicolonNode: (none)"));
         }
-        public void TestVariantSection()
+        [Test]
+        public void VariantSection()
         {
             Assert.That("1: (Foo: Integer; case Byte of 1: ())", ParsesAs(
                 "VariantGroupNode",

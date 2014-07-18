@@ -1,15 +1,26 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Constraints;
-using NUnitLite.Framework;
+using NUnit.Framework;
+using NUnit.Framework.Constraints;
+using NUnit.Framework.SyntaxHelpers;
 
 namespace DGrok.Tests
 {
@@ -31,23 +42,28 @@ namespace DGrok.Tests
                 "  DataNode: ListNode");
         }
 
-        public void TestAbstract()
+        [Test]
+        public void Abstract()
         {
             Assert.That("abstract", ParsesAsSimpleDirective("AbstractSemikeyword |abstract|"));
         }
-        public void TestAssembler()
+        [Test]
+        public void Assembler()
         {
             Assert.That("assembler", ParsesAsSimpleDirective("AssemblerSemikeyword |assembler|"));
         }
-        public void TestCdecl()
+        [Test]
+        public void Cdecl()
         {
             Assert.That("cdecl", ParsesAsSimpleDirective("CdeclSemikeyword |cdecl|"));
         }
-        public void TestDispIdAloneDoesNotParse()
+        [Test]
+        public void DispIdAloneDoesNotParse()
         {
             AssertDoesNotParse("dispid");
         }
-        public void TestDispIdWithValue()
+        [Test]
+        public void DispIdWithValue()
         {
             Assert.That("dispid 42", ParsesAs(
                 "DirectiveNode",
@@ -56,15 +72,18 @@ namespace DGrok.Tests
                 "  ValueNode: Number |42|",
                 "  DataNode: ListNode"));
         }
-        public void TestDynamic()
+        [Test]
+        public void Dynamic()
         {
             Assert.That("dynamic", ParsesAsSimpleDirective("DynamicSemikeyword |dynamic|"));
         }
-        public void TestExport()
+        [Test]
+        public void Export()
         {
             Assert.That("export", ParsesAsSimpleDirective("ExportSemikeyword |export|"));
         }
-        public void TestExternal()
+        [Test]
+        public void External()
         {
             Assert.That("external", ParsesAs(
                 "DirectiveNode",
@@ -73,7 +92,8 @@ namespace DGrok.Tests
                 "  ValueNode: (none)",
                 "  DataNode: ListNode"));
         }
-        public void TestExternalDll()
+        [Test]
+        public void ExternalDll()
         {
             Assert.That("external 'Foo.dll'", ParsesAs(
                 "DirectiveNode",
@@ -82,7 +102,8 @@ namespace DGrok.Tests
                 "  ValueNode: StringLiteral |'Foo.dll'|",
                 "  DataNode: ListNode"));
         }
-        public void TestExternalIndexAndName()
+        [Test]
+        public void ExternalIndexAndName()
         {
             Assert.That("external 'Foo.dll' index 42 name 'Bar'", ParsesAs(
                 "DirectiveNode",
@@ -97,31 +118,38 @@ namespace DGrok.Tests
                 "      KeywordNode: NameSemikeyword |name|",
                 "      ValueNode: StringLiteral |'Bar'|"));
         }
-        public void TestFar()
+        [Test]
+        public void Far()
         {
             Assert.That("far", ParsesAsSimpleDirective("FarSemikeyword |far|"));
         }
-        public void TestFinal()
+        [Test]
+        public void Final()
         {
             Assert.That("final", ParsesAsSimpleDirective("FinalSemikeyword |final|"));
         }
-        public void TestForward()
+        [Test]
+        public void Forward()
         {
             Assert.That("forward", ParsesAsSimpleDirective("ForwardSemikeyword |forward|"));
         }
-        public void TestInline()
+        [Test]
+        public void Inline()
         {
             Assert.That("inline", ParsesAsSimpleDirective("InlineKeyword |inline|"));
         }
-        public void TestLocal()
+        [Test]
+        public void Local()
         {
             Assert.That("local", ParsesAsSimpleDirective("LocalSemikeyword |local|"));
         }
-        public void TestMessageAloneDoesNotParse()
+        [Test]
+        public void MessageAloneDoesNotParse()
         {
             AssertDoesNotParse("message");
         }
-        public void TestMessageWithValue()
+        [Test]
+        public void MessageWithValue()
         {
             Assert.That("message WM_ULTIMATEANSWER", ParsesAs(
                 "DirectiveNode",
@@ -130,63 +158,78 @@ namespace DGrok.Tests
                 "  ValueNode: Identifier |WM_ULTIMATEANSWER|",
                 "  DataNode: ListNode"));
         }
-        public void TestNear()
+        [Test]
+        public void Near()
         {
             Assert.That("near", ParsesAsSimpleDirective("NearSemikeyword |near|"));
         }
-        public void TestOverload()
+        [Test]
+        public void Overload()
         {
             Assert.That("overload", ParsesAsSimpleDirective("OverloadSemikeyword |overload|"));
         }
-        public void TestOverride()
+        [Test]
+        public void Override()
         {
             Assert.That("override", ParsesAsSimpleDirective("OverrideSemikeyword |override|"));
         }
-        public void TestPascal()
+        [Test]
+        public void Pascal()
         {
             Assert.That("pascal", ParsesAsSimpleDirective("PascalSemikeyword |pascal|"));
         }
-        public void TestRegister()
+        [Test]
+        public void Register()
         {
             Assert.That("register", ParsesAsSimpleDirective("RegisterSemikeyword |register|"));
         }
-        public void TestReintroduce()
+        [Test]
+        public void Reintroduce()
         {
             Assert.That("reintroduce", ParsesAsSimpleDirective("ReintroduceSemikeyword |reintroduce|"));
         }
-        public void TestSafecall()
+        [Test]
+        public void Safecall()
         {
             Assert.That("safecall", ParsesAsSimpleDirective("SafecallSemikeyword |safecall|"));
         }
-        public void TestStatic()
+        [Test]
+        public void Static()
         {
             Assert.That("static", ParsesAsSimpleDirective("StaticSemikeyword |static|"));
         }
-        public void TestStdcall()
+        [Test]
+        public void Stdcall()
         {
             Assert.That("stdcall", ParsesAsSimpleDirective("StdcallSemikeyword |stdcall|"));
         }
-        public void TestVarArgs()
+        [Test]
+        public void VarArgs()
         {
             Assert.That("varargs", ParsesAsSimpleDirective("VarArgsSemikeyword |varargs|"));
         }
-        public void TestVirtual()
+        [Test]
+        public void Virtual()
         {
             Assert.That("virtual", ParsesAsSimpleDirective("VirtualSemikeyword |virtual|"));
         }
-        public void TestPlatform()
+        [Test]
+        public void Platform()
         {
             Assert.That("platform", ParsesAsSimpleDirective("PlatformSemikeyword |platform|"));
         }
-        public void TestDeprecated()
+        [Test]
+        public void Deprecated()
         {
             Assert.That("deprecated", ParsesAsSimpleDirective("DeprecatedSemikeyword |deprecated|"));
         }
-        public void TestLibrary()
+        [Test]
+        public void Library()
         {
             Assert.That("library", ParsesAsSimpleDirective("LibraryKeyword |library|"));
         }
-        public void TestSingleWordWithLeadingSemicolon()
+        [Test]
+        public void SingleWordWithLeadingSemicolon()
         {
             Assert.That("; abstract", ParsesAs(
                 "DirectiveNode",
@@ -195,7 +238,8 @@ namespace DGrok.Tests
                 "  ValueNode: (none)",
                 "  DataNode: ListNode"));
         }
-        public void TestMessageWithLeadingSemicolon()
+        [Test]
+        public void MessageWithLeadingSemicolon()
         {
             Assert.That("; message WM_ULTIMATEANSWER", ParsesAs(
                 "DirectiveNode",
@@ -204,7 +248,8 @@ namespace DGrok.Tests
                 "  ValueNode: Identifier |WM_ULTIMATEANSWER|",
                 "  DataNode: ListNode"));
         }
-        public void TestExternalWithLeadingSemicolon()
+        [Test]
+        public void ExternalWithLeadingSemicolon()
         {
             Assert.That("; external", ParsesAs(
                 "DirectiveNode",
@@ -213,7 +258,8 @@ namespace DGrok.Tests
                 "  ValueNode: (none)",
                 "  DataNode: ListNode"));
         }
-        public void TestLookaheadRejectsLoneSemicolon()
+        [Test]
+        public void LookaheadRejectsLoneSemicolon()
         {
             Parser parser = CreateParser(";");
             Assert.That(parser.CanParseRule(RuleType), Is.False);

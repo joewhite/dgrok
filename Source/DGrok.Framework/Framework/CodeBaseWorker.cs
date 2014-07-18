@@ -1,9 +1,19 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +28,7 @@ namespace DGrok.Framework
     {
         private BackgroundWorker _backgroundWorker;
         private CodeBase _codeBase;
-        private List<string> _fileList = new List<string>();
+        private List<string> _fileList;
         private CodeBaseOptions _options;
 
         private CodeBaseWorker(CodeBase codeBase, CodeBaseOptions options, BackgroundWorker backgroundWorker)
@@ -30,31 +40,9 @@ namespace DGrok.Framework
 
         private void BuildFileList()
         {
-            ReportProgress("Building file list...");
-            foreach (string searchPath in _options.SearchPaths.Split(';'))
-            {
-                string directory;
-                SearchOption option;
-                if (Path.GetFileName(searchPath) == "**")
-                {
-                    directory = Path.GetDirectoryName(searchPath);
-                    option = SearchOption.AllDirectories;
-                }
-                else
-                {
-                    directory = searchPath;
-                    option = SearchOption.TopDirectoryOnly;
-                }
-                foreach (string fileMask in _options.FileMasks.Split(';'))
-                {
-                    foreach (string fileName in Directory.GetFiles(directory, fileMask, option))
-                    {
-                        string extension = Path.GetExtension(fileName);
-                        if (!String.Equals(extension, ".dproj", StringComparison.InvariantCultureIgnoreCase))
-                            _fileList.Add(fileName);
-                    }
-                }
-            }
+            CheckForCancel();
+            _backgroundWorker.ReportProgress(0, "Building file list...");
+            _fileList = _options.ListFiles();
         }
         private void CheckForCancel()
         {
@@ -83,32 +71,17 @@ namespace DGrok.Framework
             BuildFileList();
             ParseFiles();
         }
-        private void ParseFile(int fileNumber, string fileName)
+        private void ParseFile(string fileName)
         {
-            ReportProgress("Parsing " + fileNumber + " of " + _fileList.Count + ": " + fileName);
-            try
-            {
-                string text = File.ReadAllText(fileName);
-                _codeBase.AddFile(fileName, text);
-            }
-            catch (IOException ex)
-            {
-                _codeBase.AddError(fileName, ex);
-            }
+            CheckForCancel();
+            string text = File.ReadAllText(fileName);
+            _codeBase.AddFile(fileName, text);
         }
         private void ParseFiles()
         {
-            int fileNumber = 0;
-            foreach (string fileName in _fileList)
-            {
-                fileNumber += 1;
-                ParseFile(fileNumber, fileName);
-            }
-        }
-        private void ReportProgress(string message)
-        {
-            CheckForCancel();
-            _backgroundWorker.ReportProgress(0, message);
+            ConsumerScheduler<string> scheduler = new ConsumerScheduler<string>(_backgroundWorker,
+                _fileList, ParseFile, _options.ParserThreadCount, "Parsing files");
+            scheduler.Execute();
         }
     }
 }

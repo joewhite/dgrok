@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,27 +30,33 @@ namespace DGrok.Tests
             get { return RuleType.Particle; }
         }
 
-        public void TestNil()
+        [Test]
+        public void Nil()
         {
             Assert.That("nil", ParsesAs("NilKeyword |nil|"));
         }
-        public void TestStringLiteral()
+        [Test]
+        public void StringLiteral()
         {
             Assert.That("'Foo'", ParsesAs("StringLiteral |'Foo'|"));
         }
-        public void TestNumber()
+        [Test]
+        public void Number()
         {
             Assert.That("42", ParsesAs("Number |42|"));
         }
-        public void TestIdentifier()
+        [Test]
+        public void Identifier()
         {
             Assert.That("Foo", ParsesAs("Identifier |Foo|"));
         }
-        public void TestSemikeyword()
+        [Test]
+        public void Semikeyword()
         {
             Assert.That("Absolute", ParsesAs("Identifier |Absolute|"));
         }
-        public void TestParenthesizedExpression()
+        [Test]
+        public void ParenthesizedExpression()
         {
             Assert.That("(Foo)", ParsesAs(
                 "ParenthesizedExpressionNode",
@@ -48,7 +64,8 @@ namespace DGrok.Tests
                 "  ExpressionNode: Identifier |Foo|",
                 "  CloseParenthesisNode: CloseParenthesis |)|"));
         }
-        public void TestSetLiteral()
+        [Test]
+        public void SetLiteral()
         {
             Assert.That("[1, 3..4]", ParsesAs(
                 "SetLiteralNode",
@@ -65,11 +82,13 @@ namespace DGrok.Tests
                 "      DelimiterNode: (none)",
                 "  CloseBracketNode: CloseBracket |]|"));
         }
-        public void TestStringKeyword()
+        [Test]
+        public void StringKeyword()
         {
             Assert.That("string", ParsesAs("StringKeyword |string|"));
         }
-        public void TestFileKeyword()
+        [Test]
+        public void FileKeyword()
         {
             Assert.That("file", ParsesAs("FileKeyword |file|"));
         }

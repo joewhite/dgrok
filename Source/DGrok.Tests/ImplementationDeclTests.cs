@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,7 +30,8 @@ namespace DGrok.Tests
             get { return RuleType.ImplementationDecl; }
         }
 
-        public void TestLabelSection()
+        [Test]
+        public void LabelSection()
         {
             Assert.That("label 42;", ParsesAs(
                 "LabelDeclSectionNode",
@@ -31,7 +42,8 @@ namespace DGrok.Tests
                 "      DelimiterNode: (none)",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestConstSection()
+        [Test]
+        public void ConstSection()
         {
             Assert.That("const Foo = 24; Bar = 42;", ParsesAs(
                 "ConstSectionNode",
@@ -54,7 +66,8 @@ namespace DGrok.Tests
                 "      PortabilityDirectiveListNode: ListNode",
                 "      SemicolonNode: Semicolon |;|"));
         }
-        public void TestTypeSection()
+        [Test]
+        public void TypeSection()
         {
             Assert.That("type TFoo = Integer; TBar = Byte;", ParsesAs(
                 "TypeSectionNode",
@@ -75,7 +88,8 @@ namespace DGrok.Tests
                 "      PortabilityDirectiveListNode: ListNode",
                 "      SemicolonNode: Semicolon |;|"));
         }
-        public void TestVarSection()
+        [Test]
+        public void VarSection()
         {
             Assert.That("var Foo: Integer;", ParsesAs(
                 "VarSectionNode",
@@ -96,7 +110,8 @@ namespace DGrok.Tests
                 "      SecondPortabilityDirectiveListNode: ListNode",
                 "      SemicolonNode: Semicolon |;|"));
         }
-        public void TestMethodImplementation()
+        [Test]
+        public void MethodImplementation()
         {
             Assert.That("procedure Foo; begin end;", ParsesAs(
                 "MethodImplementationNode",
@@ -119,7 +134,8 @@ namespace DGrok.Tests
                 "      EndKeywordNode: EndKeyword |end|",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestExportsStatement()
+        [Test]
+        public void ExportsStatement()
         {
             Assert.That("exports Foo;", ParsesAs(
                 "ExportsStatementNode",
@@ -132,7 +148,8 @@ namespace DGrok.Tests
                 "      DelimiterNode: (none)",
                 "  SemicolonNode: Semicolon |;|"));
         }
-        public void TestAssemblyAttribute()
+        [Test]
+        public void AssemblyAttribute()
         {
             Assert.That("[assembly: AssemblyVersion('0.0.0.0')]", ParsesAs(
                 "AttributeNode",

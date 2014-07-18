@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,7 +30,8 @@ namespace DGrok.Tests
             get { return RuleType.OpenArray; }
         }
 
-        public void TestArrayOfIdentifier()
+        [Test]
+        public void ArrayOfIdentifier()
         {
             Assert.That("array of TFoo", ParsesAs(
                 "OpenArrayNode",
@@ -28,7 +39,8 @@ namespace DGrok.Tests
                 "  OfKeywordNode: OfKeyword |of|",
                 "  TypeNode: Identifier |TFoo|"));
         }
-        public void TestArrayOfAtom()
+        [Test]
+        public void ArrayOfAtom()
         {
             Assert.That("array of Foo.TBar", ParsesAs(
                 "OpenArrayNode",
@@ -39,7 +51,8 @@ namespace DGrok.Tests
                 "    OperatorNode: Dot |.|",
                 "    RightNode: Identifier |TBar|"));
         }
-        public void TestArrayOfString()
+        [Test]
+        public void ArrayOfString()
         {
             Assert.That("array of string", ParsesAs(
                 "OpenArrayNode",
@@ -47,7 +60,8 @@ namespace DGrok.Tests
                 "  OfKeywordNode: OfKeyword |of|",
                 "  TypeNode: StringKeyword |string|"));
         }
-        public void TestArrayOfFile()
+        [Test]
+        public void ArrayOfFile()
         {
             Assert.That("array of file", ParsesAs(
                 "OpenArrayNode",
@@ -55,7 +69,8 @@ namespace DGrok.Tests
                 "  OfKeywordNode: OfKeyword |of|",
                 "  TypeNode: FileKeyword |file|"));
         }
-        public void TestArrayOfConst()
+        [Test]
+        public void ArrayOfConst()
         {
             Assert.That("array of const", ParsesAs(
                 "OpenArrayNode",

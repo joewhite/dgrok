@@ -1,14 +1,24 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
 using DGrok.Framework;
-using NUnitLite.Framework;
+using NUnit.Framework;
 
 namespace DGrok.Tests
 {
@@ -20,7 +30,8 @@ namespace DGrok.Tests
             get { return RuleType.ExpressionList; }
         }
 
-        public void TestNumbers()
+        [Test]
+        public void Numbers()
         {
             Assert.That("24, 42", ParsesAs(
                 "ListNode",
@@ -31,7 +42,8 @@ namespace DGrok.Tests
                 "    ItemNode: Number |42|",
                 "    DelimiterNode: (none)"));
         }
-        public void TestStringLiterals()
+        [Test]
+        public void StringLiterals()
         {
             Assert.That("'foo', 'bar'", ParsesAs(
                 "ListNode",
@@ -42,7 +54,8 @@ namespace DGrok.Tests
                 "    ItemNode: StringLiteral |'bar'|",
                 "    DelimiterNode: (none)"));
         }
-        public void TestIdentifiers()
+        [Test]
+        public void Identifiers()
         {
             Assert.That("Foo, Bar", ParsesAs(
                 "ListNode",
@@ -53,7 +66,8 @@ namespace DGrok.Tests
                 "    ItemNode: Identifier |Bar|",
                 "    DelimiterNode: (none)"));
         }
-        public void TestSemikeywords()
+        [Test]
+        public void Semikeywords()
         {
             Assert.That("Absolute, Index", ParsesAs(
                 "ListNode",
@@ -64,7 +78,8 @@ namespace DGrok.Tests
                 "    ItemNode: Identifier |Index|",
                 "    DelimiterNode: (none)"));
         }
-        public void TestNils()
+        [Test]
+        public void Nils()
         {
             Assert.That("nil, nil", ParsesAs(
                 "ListNode",
@@ -75,7 +90,8 @@ namespace DGrok.Tests
                 "    ItemNode: NilKeyword |nil|",
                 "    DelimiterNode: (none)"));
         }
-        public void TestParenthesizedExpressions()
+        [Test]
+        public void ParenthesizedExpressions()
         {
             Assert.That("(24), (42)", ParsesAs(
                 "ListNode",
@@ -92,7 +108,8 @@ namespace DGrok.Tests
                 "      CloseParenthesisNode: CloseParenthesis |)|",
                 "    DelimiterNode: (none)"));
         }
-        public void TestSetLiterals()
+        [Test]
+        public void SetLiterals()
         {
             Assert.That("[], []", ParsesAs(
                 "ListNode",

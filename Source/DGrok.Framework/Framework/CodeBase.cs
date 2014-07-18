@@ -1,9 +1,19 @@
-// DGrok Delphi parser
-// Copyright (C) 2007 Joe White
-// http://www.excastle.com/dgrok
+// Copyright 2007, 2008 Joe White
 //
-// Licensed under the Open Software License version 3.0
-// http://www.opensource.org/licenses/osl-3.0.php
+// This file is part of DGrok <http://www.excastle.com/dgrok/>.
+//
+// DGrok is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DGrok is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DGrok.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +27,7 @@ namespace DGrok.Framework
         private CompilerDefines _compilerDefines;
         private Dictionary<string, NamedContent<Exception>> _errors;
         private IFileLoader _fileLoader;
+        private object _mutex = new object();
         private Dictionary<string, NamedContent<AstNode>> _parsedFiles;
         private TimeSpan _parseDuration;
         private Dictionary<string, NamedContent<AstNode>> _projects;
@@ -77,7 +88,8 @@ namespace DGrok.Framework
         public void AddError(string fileName, Exception exception)
         {
             NamedContent<Exception> namedError = new NamedContent<Exception>(fileName, exception);
-            _errors.Add(namedError.FileName, namedError);
+            lock (_mutex)
+                _errors.Add(namedError.FileName, namedError);
         }
         public void AddFile(string fileName, string text)
         {
@@ -108,22 +120,28 @@ namespace DGrok.Framework
                 AddParsedFileToCollection(_units, fileName, fileSource, unit);
             else
                 AddParsedFileToCollection(_projects, fileName, fileSource, parseTree);
-            _parsedFiles.Add(namedParseTree.FileName, namedParseTree);
         }
         private void AddParsedFileToCollection<T>(Dictionary<string, NamedContent<T>> collection,
             string fileName, string fileSource, T content)
             where T : AstNode
         {
             NamedContent<T> namedContent = new NamedContent<T>(fileName, content);
-            if (!collection.ContainsKey(namedContent.Name))
-                collection.Add(namedContent.Name, namedContent);
-            else
+            NamedContent<AstNode> baseContent = new NamedContent<AstNode>(fileName, content);
+            string existingName;
+            lock (_mutex)
             {
-                string message = "File '" + fileName + "' has the same name as '" +
-                    collection[namedContent.Name].FileName + "'";
-                Location location = new Location(fileName, fileSource, 0);
-                throw new DuplicateFileNameException(message, location);
+                if (!collection.ContainsKey(namedContent.Name))
+                {
+                    collection.Add(namedContent.Name, namedContent);
+                    _parsedFiles.Add(fileName, baseContent);
+                    return;
+                }
+                else
+                    existingName = collection[namedContent.Name].FileName;
             }
+            string message = "File '" + fileName + "' has the same name as '" + existingName + "'";
+            Location location = new Location(fileName, fileSource, 0);
+            throw new DuplicateFileNameException(message, location);
         }
         public Exception ErrorByFileName(string fileName)
         {

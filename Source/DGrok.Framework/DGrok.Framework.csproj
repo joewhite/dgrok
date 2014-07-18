@@ -52,6 +52,8 @@
     <Compile Include="Framework\CodeBaseActionProxy.cs" />
     <Compile Include="Framework\CodeBaseOptions.cs" />
     <Compile Include="Framework\CodeBaseWorker.cs" />
+    <Compile Include="Framework\CompilerOptions.cs" />
+    <Compile Include="Framework\ConsumerScheduler.cs" />
     <Compile Include="Framework\DelimitedItemNode.cs" />
     <Compile Include="Framework\DuplicateFileNameException.cs" />
     <Compile Include="Framework\GeneratedVisitor.cs" />
