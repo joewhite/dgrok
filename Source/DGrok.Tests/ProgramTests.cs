@@ -146,5 +146,103 @@ namespace DGrok.Tests
                 "    End: EndKeyword |end|",
                 "  Dot: Dot |.|"));
         }
+        public void TestAssemblyAttribute()
+        {
+            Assert.That("program Foo; [assembly: AssemblyVersion('0.0.0.0')] end.", ParsesAs(
+                "ProgramNode",
+                "  Program: ProgramKeyword |program|",
+                "  Name: Identifier |Foo|",
+                "  NoiseOpenParenthesis: (none)",
+                "  NoiseContents: ListNode",
+                "  NoiseCloseParenthesis: (none)",
+                "  Semicolon: Semicolon |;|",
+                "  UsesClause: (none)",
+                "  DeclarationList: ListNode",
+                "    Items[0]: AttributeNode",
+                "      OpenBracket: OpenBracket |[|",
+                "      Scope: AssemblySemikeyword |assembly|",
+                "      Colon: Colon |:|",
+                "      Value: ParameterizedNode",
+                "        Left: Identifier |AssemblyVersion|",
+                "        OpenDelimiter: OpenParenthesis |(|",
+                "        ParameterList: ListNode",
+                "          Items[0]: DelimitedItemNode",
+                "            Item: StringLiteral |'0.0.0.0'|",
+                "            Delimiter: (none)",
+                "        CloseDelimiter: CloseParenthesis |)|",
+                "      CloseBracket: CloseBracket |]|",
+                "  InitSection: InitSectionNode",
+                "    InitializationHeader: (none)",
+                "    InitializationStatements: ListNode",
+                "    FinalizationHeader: (none)",
+                "    FinalizationStatements: ListNode",
+                "    End: EndKeyword |end|",
+                "  Dot: Dot |.|"));
+        }
+        public void TestInitialization()
+        {
+            Assert.That("program Foo; initialization end.", ParsesAs(
+                "ProgramNode",
+                "  Program: ProgramKeyword |program|",
+                "  Name: Identifier |Foo|",
+                "  NoiseOpenParenthesis: (none)",
+                "  NoiseContents: ListNode",
+                "  NoiseCloseParenthesis: (none)",
+                "  Semicolon: Semicolon |;|",
+                "  UsesClause: (none)",
+                "  DeclarationList: ListNode",
+                "  InitSection: InitSectionNode",
+                "    InitializationHeader: InitializationKeyword |initialization|",
+                "    InitializationStatements: ListNode",
+                "    FinalizationHeader: (none)",
+                "    FinalizationStatements: ListNode",
+                "    End: EndKeyword |end|",
+                "  Dot: Dot |.|"));
+        }
+        public void TestBegin()
+        {
+            Assert.That("program Foo; begin end.", ParsesAs(
+                "ProgramNode",
+                "  Program: ProgramKeyword |program|",
+                "  Name: Identifier |Foo|",
+                "  NoiseOpenParenthesis: (none)",
+                "  NoiseContents: ListNode",
+                "  NoiseCloseParenthesis: (none)",
+                "  Semicolon: Semicolon |;|",
+                "  UsesClause: (none)",
+                "  DeclarationList: ListNode",
+                "  InitSection: InitSectionNode",
+                "    InitializationHeader: BeginKeyword |begin|",
+                "    InitializationStatements: ListNode",
+                "    FinalizationHeader: (none)",
+                "    FinalizationStatements: ListNode",
+                "    End: EndKeyword |end|",
+                "  Dot: Dot |.|"));
+        }
+        public void TestAsm()
+        {
+            Assert.That("program Foo; asm end.", ParsesAs(
+                "ProgramNode",
+                "  Program: ProgramKeyword |program|",
+                "  Name: Identifier |Foo|",
+                "  NoiseOpenParenthesis: (none)",
+                "  NoiseContents: ListNode",
+                "  NoiseCloseParenthesis: (none)",
+                "  Semicolon: Semicolon |;|",
+                "  UsesClause: (none)",
+                "  DeclarationList: ListNode",
+                "  InitSection: InitSectionNode",
+                "    InitializationHeader: (none)",
+                "    InitializationStatements: ListNode",
+                "      Items[0]: DelimitedItemNode",
+                "        Item: AssemblerStatementNode",
+                "          Asm: AsmKeyword |asm|",
+                "          End: EndKeyword |end|",
+                "        Delimiter: (none)",
+                "    FinalizationHeader: (none)",
+                "    FinalizationStatements: ListNode",
+                "    End: (none)",
+                "  Dot: Dot |.|"));
+        }
     }
 }

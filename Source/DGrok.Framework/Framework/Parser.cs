@@ -54,6 +54,17 @@ namespace DGrok.Framework
                 return new AssemblerStatementNode(asm, end);
             });
             #endregion
+            #region AssemblyAttribute
+            AddRule(RuleType.AssemblyAttribute, LookAhead(TokenType.OpenBracket), delegate
+            {
+                Token openBracket = ParseToken(TokenType.OpenBracket);
+                Token scope = ParseToken(TokenType.AssemblySemikeyword);
+                Token colon = ParseToken(TokenType.Colon);
+                AstNode value = ParseRule(RuleType.Expression);
+                Token closeBracket = ParseToken(TokenType.CloseBracket);
+                return new AttributeNode(openBracket, scope, colon, value, closeBracket);
+            });
+            #endregion
             #region Atom
             AddRule(RuleType.Atom, delegate
             {
@@ -263,16 +274,6 @@ namespace DGrok.Framework
                 return new ConstSectionNode(theConst, constList);
             });
             #endregion
-            #region ContainsClause
-            AddRule(RuleType.ContainsClause, LookAhead(TokenType.ContainsSemikeyword), delegate
-            {
-                Token contains = ParseToken(TokenType.ContainsSemikeyword);
-                ListNode<DelimitedItemNode<AstNode>> unitList =
-                    ParseDelimitedList<AstNode>(RuleType.QualifiedIdent, TokenType.Comma);
-                Token semicolon = ParseToken(TokenType.Semicolon);
-                return new ContainsClauseNode(contains, unitList, semicolon);
-            });
-            #endregion
             #region Directive
             TokenSet parameterizedDirectives = new TokenSet("'dispid' or 'message'");
             parameterizedDirectives.Add(TokenType.DispIdSemikeyword);
@@ -437,7 +438,7 @@ namespace DGrok.Framework
             #region ExtendedIdent
             AddRule(RuleType.ExtendedIdent, TokenSets.ExtendedIdent.LookAhead, delegate
             {
-                Token token = (Token) ParseToken(TokenSets.ExtendedIdent);
+                Token token = ParseToken(TokenSets.ExtendedIdent);
                 return token.WithTokenType(TokenType.Identifier);
             });
             #endregion
@@ -602,6 +603,7 @@ namespace DGrok.Framework
             #endregion
             #region ImplementationDecl
             Alternator implementationDeclAlternator = new Alternator();
+            implementationDeclAlternator.AddRule(RuleType.AssemblyAttribute);
             implementationDeclAlternator.AddRule(RuleType.ConstSection);
             implementationDeclAlternator.AddRule(RuleType.ExportsStatement);
             implementationDeclAlternator.AddRule(RuleType.LabelDeclSection);
@@ -627,25 +629,42 @@ namespace DGrok.Framework
             #region InitSection
             AddRule(RuleType.InitSection, TokenSets.InitSection.LookAhead, delegate
             {
-                if (CanParseRule(RuleType.Block))
-                    return ParseRule(RuleType.Block);
                 Token initializationHeader = null;
                 ListNode<DelimitedItemNode<AstNode>> initializationStatements =
                     CreateEmptyListNode<DelimitedItemNode<AstNode>>();
                 Token finalizationHeader = null;
                 ListNode<DelimitedItemNode<AstNode>> finalizationStatements =
                     CreateEmptyListNode<DelimitedItemNode<AstNode>>();
-                if (CanParseToken(TokenType.InitializationKeyword))
+                Token end = null;
+                if (CanParseToken(TokenType.BeginKeyword))
                 {
-                    initializationHeader = ParseToken(TokenType.InitializationKeyword);
-                    initializationStatements = ParseOptionalStatementList();
-                    if (CanParseToken(TokenType.FinalizationKeyword))
-                    {
-                        finalizationHeader = ParseToken(TokenType.FinalizationKeyword);
-                        finalizationStatements = ParseOptionalStatementList();
-                    }
+                    BlockNode block = (BlockNode) ParseRule(RuleType.Block);
+                    initializationHeader = block.Begin;
+                    initializationStatements = block.StatementList;
+                    end = block.End;
                 }
-                Token end = ParseToken(TokenType.EndKeyword);
+                else if (CanParseToken(TokenType.AsmKeyword))
+                {
+                    AssemblerStatementNode asm =
+                        (AssemblerStatementNode) ParseRule(RuleType.AssemblerStatement);
+                    DelimitedItemNode<AstNode> item = new DelimitedItemNode<AstNode>(asm, null);
+                    initializationStatements = new ListNode<DelimitedItemNode<AstNode>>(
+                        new DelimitedItemNode<AstNode>[] { item });
+                }
+                else
+                {
+                    if (CanParseToken(TokenType.InitializationKeyword))
+                    {
+                        initializationHeader = ParseToken(TokenType.InitializationKeyword);
+                        initializationStatements = ParseOptionalStatementList();
+                        if (CanParseToken(TokenType.FinalizationKeyword))
+                        {
+                            finalizationHeader = ParseToken(TokenType.FinalizationKeyword);
+                            finalizationStatements = ParseOptionalStatementList();
+                        }
+                    }
+                    end = ParseToken(TokenType.EndKeyword);
+                }
                 return new InitSectionNode(initializationHeader, initializationStatements,
                     finalizationHeader, finalizationStatements, end);
             });
@@ -831,14 +850,14 @@ namespace DGrok.Framework
             AddRule(RuleType.Package, LookAhead(TokenType.PackageSemikeyword), delegate
             {
                 Token package = ParseToken(TokenType.PackageSemikeyword);
-                Token name = ParseIdent();
+                AstNode name = ParseRule(RuleType.QualifiedIdent);
                 Token semicolon = ParseToken(TokenType.Semicolon);
                 RequiresClauseNode requiresClause = null;
                 if (CanParseRule(RuleType.RequiresClause))
                     requiresClause = (RequiresClauseNode) ParseRule(RuleType.RequiresClause);
-                ContainsClauseNode containsClause = null;
-                if (CanParseRule(RuleType.ContainsClause))
-                    containsClause = (ContainsClauseNode) ParseRule(RuleType.ContainsClause);
+                UsesClauseNode containsClause = null;
+                if (CanParseRule(RuleType.UsesClause))
+                    containsClause = (UsesClauseNode) ParseRule(RuleType.UsesClause);
                 Token end = ParseToken(TokenType.EndKeyword);
                 Token dot = ParseToken(TokenType.Dot);
                 return new PackageNode(package, name, semicolon,
@@ -923,6 +942,7 @@ namespace DGrok.Framework
             #endregion
             #region Particle
             Alternator particleAlternator = new Alternator();
+            particleAlternator.AddToken(TokenType.FileKeyword);
             particleAlternator.AddToken(TokenType.NilKeyword);
             particleAlternator.AddToken(TokenType.Number);
             particleAlternator.AddToken(TokenType.StringKeyword);
@@ -939,7 +959,7 @@ namespace DGrok.Framework
             AddRule(RuleType.PointerType, LookAhead(TokenType.Caret), delegate
             {
                 Token caret = ParseToken(TokenType.Caret);
-                AstNode type = ParseRule(RuleType.QualifiedIdent);
+                AstNode type = ParseRule(RuleType.Type);
                 return new PointerTypeNode(caret, type);
             });
             #endregion
@@ -1339,9 +1359,7 @@ namespace DGrok.Framework
                 else
                 {
                     Token theFinally = ParseToken(TokenType.FinallyKeyword);
-                    ListNode<DelimitedItemNode<AstNode>> finallyStatements =
-                        CreateEmptyListNode<DelimitedItemNode<AstNode>>();
-                    finallyStatements = ParseOptionalStatementList();
+                    ListNode<DelimitedItemNode<AstNode>> finallyStatements = ParseOptionalStatementList();
                     Token end = ParseToken(TokenType.EndKeyword);
                     return new TryFinallyNode(theTry, tryStatements, theFinally, finallyStatements, end);
                 }
@@ -1349,6 +1367,7 @@ namespace DGrok.Framework
             #endregion
             #region Type
             Alternator typeAlternator = new Alternator();
+            typeAlternator.AddRule(RuleType.FileType);
             typeAlternator.AddRule(RuleType.StringType);
             typeAlternator.AddRule(RuleType.ArrayType);
             typeAlternator.AddRule(RuleType.ClassHelperType);
@@ -1356,7 +1375,6 @@ namespace DGrok.Framework
             typeAlternator.AddRule(RuleType.ClassType);
             typeAlternator.AddRule(RuleType.EnumeratedType);
             typeAlternator.AddRule(RuleType.ExpressionOrRange);
-            typeAlternator.AddRule(RuleType.FileType);
             typeAlternator.AddRule(RuleType.InterfaceType);
             typeAlternator.AddRule(RuleType.PackedType);
             typeAlternator.AddRule(RuleType.PointerType);
@@ -1464,9 +1482,9 @@ namespace DGrok.Framework
             });
             #endregion
             #region UsesClause
-            AddRule(RuleType.UsesClause, LookAhead(TokenType.UsesKeyword), delegate
+            AddRule(RuleType.UsesClause, TokenSets.Uses.LookAhead, delegate
             {
-                Token uses = ParseToken(TokenType.UsesKeyword);
+                Token uses = ParseToken(TokenSets.Uses);
                 ListNode<DelimitedItemNode<UsedUnitNode>> unitList =
                     ParseDelimitedList<UsedUnitNode>(RuleType.UsedUnit, TokenType.Comma);
                 Token semicolon = ParseToken(TokenType.Semicolon);

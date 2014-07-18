@@ -27,6 +27,7 @@ namespace DGrok.Framework
         AbsoluteSemikeyword,
         AbstractSemikeyword,
         AssemblerSemikeyword,
+        AssemblySemikeyword,
         AtSemikeyword,
         AutomatedSemikeyword,
         CdeclSemikeyword,

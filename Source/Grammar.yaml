@@ -13,6 +13,9 @@ AssemblerStatement:
     ! -> ASM
     !    <assemblylanguage>
     !    END
+AssemblyAttribute:
+  Doc: |
+    ! -> '[' ASSEMBLY ':' Expression ']'
 Atom:
   Doc: |
     ! -> Particle
@@ -67,9 +70,6 @@ ConstSection:
   Doc: |
     ! -> (CONST|RESOURCESTRING)
     !    (ConstantDecl)+
-ContainsClause:
-  Doc: |
-    ! -> CONTAINS (QualifiedIdent [','])+ ';'
 Directive:
   Doc: |
     ! -> [';'] ABSTRACT
@@ -192,6 +192,7 @@ ImplementationDecl:
     ! -> VarSection
     ! -> MethodImplementation
     ! -> ExportsStatement
+    ! -> AssemblyAttribute
 ImplementationSection:
   Doc: |
     ! -> IMPLEMENTATION
@@ -275,9 +276,9 @@ OpenArray:
     ! -> ARRAY OF CONST
 Package:
   Doc: |
-    ! -> PACKAGE Ident ';'
+    ! -> PACKAGE QualifiedIdent ';'
     !    [RequiresClause]
-    !    [ContainsClause]
+    !    [UsesClause]
     !    END '.'
 PackedType:
   Doc: |
@@ -309,9 +310,10 @@ Particle:
     ! -> ParenthesizedExpression
     ! -> SetLiteral
     ! -> STRING
+    ! -> FILE
 PointerType:
   Doc: |
-    ! -> '^' QualifiedIdent
+    ! -> '^' Type
 PortabilityDirective:
   Doc: |
     ! -> platform
@@ -481,7 +483,8 @@ Unit:
     !    InitSection '.'
 UsesClause:
   Doc: |
-    ! -> USES (UsedUnit [','])+ ';'
+    ! -> (USES | CONTAINS)
+    !    (UsedUnit [','])+ ';'
 UsedUnit:
   Doc: |
     ! -> Ident

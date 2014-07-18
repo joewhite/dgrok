@@ -42,6 +42,7 @@
     <Compile Include="AlternatorTests.cs" />
     <Compile Include="ArrayTypeTests.cs" />
     <Compile Include="AssemblerStatementTests.cs" />
+    <Compile Include="AssemblyAttributeTests.cs" />
     <Compile Include="AstNodeTests.cs" />
     <Compile Include="BareInheritedTests.cs" />
     <Compile Include="BlockTests.cs" />
@@ -107,7 +108,6 @@
     <Compile Include="TypeTests.cs" />
     <Compile Include="StringTypeTests.cs" />
     <Compile Include="TokenFilterTests.cs" />
-    <Compile Include="ContainsClauseTests.cs" />
     <Compile Include="ParticleTests.cs" />
     <Compile Include="DirectiveTests.cs" />
     <Compile Include="ExtendedIdentTests.cs" />

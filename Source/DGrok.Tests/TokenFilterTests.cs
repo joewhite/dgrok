@@ -240,5 +240,27 @@ namespace DGrok.Tests
             Assert.That("{$I defines.inc} {$IFDEF FOO} Foo {$ENDIF}", LexesAndFiltersAs(
                 "Identifier |Foo|"));
         }
+        public void TestDefineIgnoredInFalseIf()
+        {
+            _defines.UndefineSymbol("FOO");
+            Assert.That("{$IF False}{$DEFINE FOO}{$IFEND} {$IFDEF FOO}Foo{$ENDIF}", LexesAndFiltersAs(""));
+        }
+        public void TestUndefineIgnoredInFalseIf()
+        {
+            _defines.DefineSymbol("FOO");
+            Assert.That("{$IF False}{$UNDEF FOO}{$IFEND} {$IFDEF FOO}Foo{$ENDIF}", LexesAndFiltersAs(
+                "Identifier |Foo|"));
+        }
+        [ExpectedException(typeof(LexException))]
+        public void TestThrowOnUnrecognized()
+        {
+            Lexer lexer = new Lexer("{$FOO}", "");
+            TokenFilter filter = new TokenFilter(lexer.Tokens, _defines, _fileLoader);
+            new List<Token>(filter.Tokens);
+        }
+        public void TestUnrecognizedIsIgnoredInFalseIf()
+        {
+            Assert.That("{$IF False}{$FOO}{$IFEND}", LexesAndFiltersAs(""));
+        }
     }
 }

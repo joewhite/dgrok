@@ -50,6 +50,10 @@ namespace DGrok.Framework
             get { return _type; }
         }
 
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitToken(this);
+        }
         public override void InspectTo(StringBuilder builder, int currentIndentCount)
         {
             builder.Append(Type.ToString());

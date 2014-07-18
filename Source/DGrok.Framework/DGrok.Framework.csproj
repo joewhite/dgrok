@@ -39,10 +39,12 @@
     <Compile Include="DelphiNodes\GeneratedNodes.cs" />
     <Compile Include="DelphiNodes\MethodHeadingNode.cs" />
     <Compile Include="Framework\DelimitedItemNode.cs" />
+    <Compile Include="Framework\GeneratedVisitor.cs" />
     <Compile Include="Framework\IFileLoader.cs" />
     <Compile Include="Framework\FileLoader.cs" />
     <Compile Include="Framework\Location.cs" />
     <Compile Include="Framework\MemoryFileLoader.cs" />
+    <Compile Include="Framework\Visitor.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Framework\Alternator.cs" />
     <Compile Include="Framework\AstNode.cs" />

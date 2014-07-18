@@ -40,6 +40,7 @@ namespace DGrok.Framework
         private static TokenSet _semikeyword;
         private static TokenSet _simpleParameterType;
         private static TokenSet _unaryOperator;
+        private static TokenSet _uses;
         private static TokenSet _varHeader;
         private static TokenSet _visibility;
         private static TokenSet _visibilitySingleWord;
@@ -240,6 +241,7 @@ namespace DGrok.Framework
             _semikeyword.Add(TokenType.AbsoluteSemikeyword);
             _semikeyword.Add(TokenType.AbstractSemikeyword);
             _semikeyword.Add(TokenType.AssemblerSemikeyword);
+            _semikeyword.Add(TokenType.AssemblySemikeyword);
             _semikeyword.Add(TokenType.AtSemikeyword);
             _semikeyword.Add(TokenType.AutomatedSemikeyword);
             _semikeyword.Add(TokenType.CdeclSemikeyword);
@@ -299,6 +301,10 @@ namespace DGrok.Framework
             _unaryOperator.Add(TokenType.NotKeyword);
             _unaryOperator.Add(TokenType.PlusSign);
 
+            _uses = new TokenSet("uses clause");
+            _uses.Add(TokenType.UsesKeyword);
+            _uses.Add(TokenType.ContainsSemikeyword);
+
             _varHeader = new TokenSet("var section");
             _varHeader.Add(TokenType.VarKeyword);
             _varHeader.Add(TokenType.ThreadVarKeyword);
@@ -315,6 +321,7 @@ namespace DGrok.Framework
 
             _directive.AddRange(_portabilityDirective);
             _particle = new TokenSet("expression");
+            _particle.Add(TokenType.FileKeyword);
             _particle.Add(TokenType.NilKeyword);
             _particle.Add(TokenType.Number);
             _particle.Add(TokenType.OpenBracket);
@@ -454,6 +461,10 @@ namespace DGrok.Framework
         public static TokenSet UnaryOperator
         {
             get { return _unaryOperator; }
+        }
+        public static TokenSet Uses
+        {
+            get { return _uses; }
         }
         public static TokenSet VarHeader
         {

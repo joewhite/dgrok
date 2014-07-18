@@ -37,5 +37,12 @@ namespace DGrok.Tests
                 "    Operator: Dot |.|",
                 "    Right: Identifier |TBar|"));
         }
+        public void TestString()
+        {
+            Assert.That("^string", ParsesAs(
+                "PointerTypeNode",
+                "  Caret: Caret |^|",
+                "  Type: StringKeyword |string|"));
+        }
     }
 }

@@ -236,6 +236,10 @@ namespace DGrok.Tests
         {
             Assert.That("assembler", LexesAs("AssemblerSemikeyword |assembler|"));
         }
+        public void TestAssemblySemikeyword()
+        {
+            Assert.That("assembly", LexesAs("AssemblySemikeyword |assembly|"));
+        }
         public void TestAtSemikeyword()
         {
             Assert.That("at", LexesAs("AtSemikeyword |at|"));

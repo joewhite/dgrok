@@ -91,31 +91,43 @@ namespace DGrok.Tests
         public void TestEmptyBlock()
         {
             Assert.That("begin end", ParsesAs(
-                "BlockNode",
-                "  Begin: BeginKeyword |begin|",
-                "  StatementList: ListNode",
+                "InitSectionNode",
+                "  InitializationHeader: BeginKeyword |begin|",
+                "  InitializationStatements: ListNode",
+                "  FinalizationHeader: (none)",
+                "  FinalizationStatements: ListNode",
                 "  End: EndKeyword |end|"));
         }
         public void TestPopulatedBlock()
         {
             Assert.That("begin Foo; Bar; end", ParsesAs(
-                "BlockNode",
-                "  Begin: BeginKeyword |begin|",
-                "  StatementList: ListNode",
+                "InitSectionNode",
+                "  InitializationHeader: BeginKeyword |begin|",
+                "  InitializationStatements: ListNode",
                 "    Items[0]: DelimitedItemNode",
                 "      Item: Identifier |Foo|",
                 "      Delimiter: Semicolon |;|",
                 "    Items[1]: DelimitedItemNode",
                 "      Item: Identifier |Bar|",
                 "      Delimiter: Semicolon |;|",
+                "  FinalizationHeader: (none)",
+                "  FinalizationStatements: ListNode",
                 "  End: EndKeyword |end|"));
         }
         public void TestAsmBlock()
         {
             Assert.That("asm end", ParsesAs(
-                "AssemblerStatementNode",
-                "  Asm: AsmKeyword |asm|",
-                "  End: EndKeyword |end|"));
+                "InitSectionNode",
+                "  InitializationHeader: (none)",
+                "  InitializationStatements: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: AssemblerStatementNode",
+                "        Asm: AsmKeyword |asm|",
+                "        End: EndKeyword |end|",
+                "      Delimiter: (none)",
+                "  FinalizationHeader: (none)",
+                "  FinalizationStatements: ListNode",
+                "  End: (none)"));
         }
     }
 }

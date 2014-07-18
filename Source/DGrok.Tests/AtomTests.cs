@@ -150,6 +150,18 @@ namespace DGrok.Tests
                 "      Delimiter: (none)",
                 "  CloseDelimiter: CloseParenthesis |)|"));
         }
+        public void TestFileCast()
+        {
+            Assert.That("file(AUntypedVarParameter)", ParsesAs(
+                "ParameterizedNode",
+                "  Left: FileKeyword |file|",
+                "  OpenDelimiter: OpenParenthesis |(|",
+                "  ParameterList: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: Identifier |AUntypedVarParameter|",
+                "      Delimiter: (none)",
+                "  CloseDelimiter: CloseParenthesis |)|"));
+        }
         public void TestColonSyntax()
         {
             Assert.That("Str(X:0, S)", ParsesAs(

@@ -24,6 +24,14 @@ namespace DGrok.Framework
         {
             get { return _items; }
         }
+        public IEnumerable<AstNode> ItemsAsBase
+        {
+            get
+            {
+                foreach (AstNode node in Items)
+                    yield return node;
+            }
+        }
         public override IEnumerable<KeyValuePair<string, AstNode>> Properties
         {
             get
@@ -31,6 +39,11 @@ namespace DGrok.Framework
                 for (int i = 0; i < _items.Count; ++i)
                     yield return new KeyValuePair<string, AstNode>("Items[" + i + "]", Items[i]);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitListNode(this, ItemsAsBase);
         }
     }
 }

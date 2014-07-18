@@ -32,6 +32,21 @@ namespace DGrok.Tests
                 "  End: EndKeyword |end|",
                 "  Dot: Dot |.|"));
         }
+        public void TestDottedName()
+        {
+            Assert.That("package Foo.Bar; end.", ParsesAs(
+                "PackageNode",
+                "  Package: PackageSemikeyword |package|",
+                "  Name: BinaryOperationNode",
+                "    Left: Identifier |Foo|",
+                "    Operator: Dot |.|",
+                "    Right: Identifier |Bar|",
+                "  Semicolon: Semicolon |;|",
+                "  RequiresClause: (none)",
+                "  ContainsClause: (none)",
+                "  End: EndKeyword |end|",
+                "  Dot: Dot |.|"));
+        }
         public void TestRequiresAndContains()
         {
             Assert.That("package Foo; requires Bar; contains Baz; end.", ParsesAs(
@@ -46,11 +61,14 @@ namespace DGrok.Tests
                 "        Item: Identifier |Bar|",
                 "        Delimiter: (none)",
                 "    Semicolon: Semicolon |;|",
-                "  ContainsClause: ContainsClauseNode",
-                "    Contains: ContainsSemikeyword |contains|",
+                "  ContainsClause: UsesClauseNode",
+                "    Uses: ContainsSemikeyword |contains|",
                 "    UnitList: ListNode",
                 "      Items[0]: DelimitedItemNode",
-                "        Item: Identifier |Baz|",
+                "        Item: UsedUnitNode",
+                "          Name: Identifier |Baz|",
+                "          In: (none)",
+                "          FileName: (none)",
                 "        Delimiter: (none)",
                 "    Semicolon: Semicolon |;|",
                 "  End: EndKeyword |end|",

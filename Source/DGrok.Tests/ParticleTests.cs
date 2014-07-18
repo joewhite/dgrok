@@ -69,5 +69,9 @@ namespace DGrok.Tests
         {
             Assert.That("string", ParsesAs("StringKeyword |string|"));
         }
+        public void TestFileKeyword()
+        {
+            Assert.That("file", ParsesAs("FileKeyword |file|"));
+        }
     }
 }

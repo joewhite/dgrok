@@ -132,5 +132,22 @@ namespace DGrok.Tests
                 "      Delimiter: (none)",
                 "  Semicolon: Semicolon |;|"));
         }
+        public void TestAssemblyAttribute()
+        {
+            Assert.That("[assembly: AssemblyVersion('0.0.0.0')]", ParsesAs(
+                "AttributeNode",
+                "  OpenBracket: OpenBracket |[|",
+                "  Scope: AssemblySemikeyword |assembly|",
+                "  Colon: Colon |:|",
+                "  Value: ParameterizedNode",
+                "    Left: Identifier |AssemblyVersion|",
+                "    OpenDelimiter: OpenParenthesis |(|",
+                "    ParameterList: ListNode",
+                "      Items[0]: DelimitedItemNode",
+                "        Item: StringLiteral |'0.0.0.0'|",
+                "        Delimiter: (none)",
+                "    CloseDelimiter: CloseParenthesis |)|",
+                "  CloseBracket: CloseBracket |]|"));
+        }
     }
 }

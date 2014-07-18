@@ -39,5 +39,10 @@ namespace DGrok.Framework
                 yield return new KeyValuePair<string, AstNode>("Delimiter", Delimiter);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitDelimitedItemNode(this, Item, Delimiter);
+        }
     }
 }

@@ -68,5 +68,36 @@ namespace DGrok.Tests
                 "      Delimiter: (none)",
                 "  Semicolon: Semicolon |;|"));
         }
+        public void TestDottedName()
+        {
+            Assert.That("uses Foo.Bar;", ParsesAs(
+                "UsesClauseNode",
+                "  Uses: UsesKeyword |uses|",
+                "  UnitList: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: UsedUnitNode",
+                "        Name: BinaryOperationNode",
+                "          Left: Identifier |Foo|",
+                "          Operator: Dot |.|",
+                "          Right: Identifier |Bar|",
+                "        In: (none)",
+                "        FileName: (none)",
+                "      Delimiter: (none)",
+                "  Semicolon: Semicolon |;|"));
+        }
+        public void TestContains()
+        {
+            Assert.That("contains Foo;", ParsesAs(
+                "UsesClauseNode",
+                "  Uses: ContainsSemikeyword |contains|",
+                "  UnitList: ListNode",
+                "    Items[0]: DelimitedItemNode",
+                "      Item: UsedUnitNode",
+                "        Name: Identifier |Foo|",
+                "        In: (none)",
+                "        FileName: (none)",
+                "      Delimiter: (none)",
+                "  Semicolon: Semicolon |;|"));
+        }
     }
 }

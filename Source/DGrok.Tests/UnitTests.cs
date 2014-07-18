@@ -70,5 +70,82 @@ namespace DGrok.Tests
                 "    End: EndKeyword |end|",
                 "  Dot: Dot |.|"));
         }
+        public void TestInitialization()
+        {
+            Assert.That("unit Foo; interface implementation initialization end.", ParsesAs(
+                "UnitNode",
+                "  Unit: UnitKeyword |unit|",
+                "  UnitName: Identifier |Foo|",
+                "  PortabilityDirectives: ListNode",
+                "  Semicolon: Semicolon |;|",
+                "  InterfaceSection: UnitSectionNode",
+                "    HeaderKeyword: InterfaceKeyword |interface|",
+                "    UsesClause: (none)",
+                "    Contents: ListNode",
+                "  ImplementationSection: UnitSectionNode",
+                "    HeaderKeyword: ImplementationKeyword |implementation|",
+                "    UsesClause: (none)",
+                "    Contents: ListNode",
+                "  InitSection: InitSectionNode",
+                "    InitializationHeader: InitializationKeyword |initialization|",
+                "    InitializationStatements: ListNode",
+                "    FinalizationHeader: (none)",
+                "    FinalizationStatements: ListNode",
+                "    End: EndKeyword |end|",
+                "  Dot: Dot |.|"));
+        }
+        public void TestBegin()
+        {
+            Assert.That("unit Foo; interface implementation begin end.", ParsesAs(
+                "UnitNode",
+                "  Unit: UnitKeyword |unit|",
+                "  UnitName: Identifier |Foo|",
+                "  PortabilityDirectives: ListNode",
+                "  Semicolon: Semicolon |;|",
+                "  InterfaceSection: UnitSectionNode",
+                "    HeaderKeyword: InterfaceKeyword |interface|",
+                "    UsesClause: (none)",
+                "    Contents: ListNode",
+                "  ImplementationSection: UnitSectionNode",
+                "    HeaderKeyword: ImplementationKeyword |implementation|",
+                "    UsesClause: (none)",
+                "    Contents: ListNode",
+                "  InitSection: InitSectionNode",
+                "    InitializationHeader: BeginKeyword |begin|",
+                "    InitializationStatements: ListNode",
+                "    FinalizationHeader: (none)",
+                "    FinalizationStatements: ListNode",
+                "    End: EndKeyword |end|",
+                "  Dot: Dot |.|"));
+        }
+        public void TestAsm()
+        {
+            Assert.That("unit Foo; interface implementation asm end.", ParsesAs(
+                "UnitNode",
+                "  Unit: UnitKeyword |unit|",
+                "  UnitName: Identifier |Foo|",
+                "  PortabilityDirectives: ListNode",
+                "  Semicolon: Semicolon |;|",
+                "  InterfaceSection: UnitSectionNode",
+                "    HeaderKeyword: InterfaceKeyword |interface|",
+                "    UsesClause: (none)",
+                "    Contents: ListNode",
+                "  ImplementationSection: UnitSectionNode",
+                "    HeaderKeyword: ImplementationKeyword |implementation|",
+                "    UsesClause: (none)",
+                "    Contents: ListNode",
+                "  InitSection: InitSectionNode",
+                "    InitializationHeader: (none)",
+                "    InitializationStatements: ListNode",
+                "      Items[0]: DelimitedItemNode",
+                "        Item: AssemblerStatementNode",
+                "          Asm: AsmKeyword |asm|",
+                "          End: EndKeyword |end|",
+                "        Delimiter: (none)",
+                "    FinalizationHeader: (none)",
+                "    FinalizationStatements: ListNode",
+                "    End: (none)",
+                "  Dot: Dot |.|"));
+        }
     }
 }

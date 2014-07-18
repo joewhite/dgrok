@@ -15,6 +15,7 @@ namespace DGrok.Framework
     {
         private enum DirectiveType
         {
+            Unrecognized,
             Ignored,
             PossibleInclude,
             Include,
@@ -58,22 +59,60 @@ namespace DGrok.Framework
             _directiveTypes["IFEND"] = DirectiveType.EndIf;
             // Delphi compiler directives
             _directiveTypes["ALIGN"] = DirectiveType.Ignored;
+            _directiveTypes["APPTYPE"] = DirectiveType.Ignored;
+            _directiveTypes["ASSERTIONS"] = DirectiveType.Ignored;
+            _directiveTypes["AUTOBOX"] = DirectiveType.Ignored;
             _directiveTypes["BOOLEVAL"] = DirectiveType.Ignored;
+            _directiveTypes["DEBUGINFO"] = DirectiveType.Ignored;
             _directiveTypes["DEFINE"] = DirectiveType.Define;
+            _directiveTypes["DEFINITIONINFO"] = DirectiveType.Ignored;
             _directiveTypes["DENYPACKAGEUNIT"] = DirectiveType.Ignored;
+            _directiveTypes["DESCRIPTION"] = DirectiveType.Ignored;
+            _directiveTypes["DESIGNONLY"] = DirectiveType.Ignored;
+            _directiveTypes["ENDREGION"] = DirectiveType.Ignored;
+            _directiveTypes["EXTENDEDSYNTAX"] = DirectiveType.Ignored;
+            _directiveTypes["EXTENSION"] = DirectiveType.Ignored;
+            _directiveTypes["FINITEFLOAT"] = DirectiveType.Ignored;
+            _directiveTypes["HINTS"] = DirectiveType.Ignored;
             _directiveTypes["I"] = DirectiveType.PossibleInclude;
             _directiveTypes["IMAGEBASE"] = DirectiveType.Ignored;
+            _directiveTypes["IMPLICITBUILD"] = DirectiveType.Ignored;
+            _directiveTypes["IMPORTEDDATA"] = DirectiveType.Ignored;
             _directiveTypes["INCLUDE"] = DirectiveType.Include;
+            _directiveTypes["IOCHECKS"] = DirectiveType.Ignored;
+            _directiveTypes["LIBPREFIX"] = DirectiveType.Ignored;
+            _directiveTypes["LIBSUFFIX"] = DirectiveType.Ignored;
+            _directiveTypes["LIBVERSION"] = DirectiveType.Ignored;
+            _directiveTypes["LINK"] = DirectiveType.Ignored;
+            _directiveTypes["LOCALSYMBOLS"] = DirectiveType.Ignored;
             _directiveTypes["LONGSTRINGS"] = DirectiveType.Ignored;
+            _directiveTypes["MAXSTACKSIZE"] = DirectiveType.Ignored;
             _directiveTypes["MESSAGE"] = DirectiveType.Ignored;
+            _directiveTypes["METHODINFO"] = DirectiveType.Ignored;
             _directiveTypes["MINENUMSIZE"] = DirectiveType.Ignored;
+            _directiveTypes["MINSTACKSIZE"] = DirectiveType.Ignored;
+            _directiveTypes["OBJEXPORTALL"] = DirectiveType.Ignored;
+            _directiveTypes["OPENSTRINGS"] = DirectiveType.Ignored;
             _directiveTypes["OPTIMIZATION"] = DirectiveType.Ignored;
+            _directiveTypes["OVERFLOWCHECKS"] = DirectiveType.Ignored;
             _directiveTypes["RANGECHECKS"] = DirectiveType.Ignored;
+            _directiveTypes["REALCOMPATIBILITY"] = DirectiveType.Ignored;
+            _directiveTypes["REFERENCEINFO"] = DirectiveType.Ignored;
+            _directiveTypes["REGION"] = DirectiveType.Ignored;
+            _directiveTypes["RESOURCE"] = DirectiveType.Ignored;
+            _directiveTypes["RESOURCERESERVE"] = DirectiveType.Ignored;
+            _directiveTypes["RUNONLY"] = DirectiveType.Ignored;
+            _directiveTypes["SAFEDIVIDE"] = DirectiveType.Ignored;
+            _directiveTypes["SETPEFLAGS"] = DirectiveType.Ignored;
             _directiveTypes["STACKFRAMES"] = DirectiveType.Ignored;
             _directiveTypes["TYPEDADDRESS"] = DirectiveType.Ignored;
+            _directiveTypes["TYPEINFO"] = DirectiveType.Ignored;
             _directiveTypes["UNDEF"] = DirectiveType.Undefine;
+            _directiveTypes["UNSAFECODE"] = DirectiveType.Ignored;
             _directiveTypes["VARPROPSETTER"] = DirectiveType.Ignored;
+            _directiveTypes["VARSTRINGCHECKS"] = DirectiveType.Ignored;
             _directiveTypes["WARN"] = DirectiveType.Ignored;
+            _directiveTypes["WARNINGS"] = DirectiveType.Ignored;
             _directiveTypes["WEAKPACKAGEUNIT"] = DirectiveType.Ignored;
             _directiveTypes["WRITEABLECONST"] = DirectiveType.Ignored;
             // Directives for generation of C++Builder .hpp files
@@ -121,13 +160,13 @@ namespace DGrok.Framework
             Match match = _findFirstWordRegex.Match(s);
             return match.Value;
         }
-        private DirectiveType GetDirectiveType(string firstWord, Location location)
+        private DirectiveType GetDirectiveType(string firstWord)
         {
             if (_directiveTypes.ContainsKey(firstWord))
                 return _directiveTypes[firstWord];
             if (firstWord.Length == 1)
                 return DirectiveType.Ignored;
-            throw new LexException("Unrecognized compiler directive '" + firstWord + "'", location);
+            return DirectiveType.Unrecognized;
         }
         private IEnumerable<Token> GetSourceTokensForInclude(Token token, string baseName)
         {
@@ -142,8 +181,16 @@ namespace DGrok.Framework
             string directive = token.ParsedText;
             string firstWord = FirstWordOf(directive);
             string parameter = directive.Substring(firstWord.Length).Trim();
-            switch (GetDirectiveType(firstWord, token.Location))
+            switch (GetDirectiveType(firstWord))
             {
+                case DirectiveType.Unrecognized:
+                    if (ifDefStack.Peek() == IfDefTruth.True)
+                    {
+                        throw new LexException("Unrecognized compiler directive '" + firstWord + "'",
+                            token.Location);
+                    }
+                    break;
+
                 case DirectiveType.Ignored:
                     break;
 
@@ -167,15 +214,17 @@ namespace DGrok.Framework
                     break;
 
                 case DirectiveType.Define:
-                    _compilerDefines.DefineSymbol(parameter);
+                    if (ifDefStack.Peek() == IfDefTruth.True)
+                        _compilerDefines.DefineSymbol(parameter);
                     break;
 
                 case DirectiveType.Undefine:
-                    _compilerDefines.UndefineSymbol(parameter);
+                    if (ifDefStack.Peek() == IfDefTruth.True)
+                        _compilerDefines.UndefineSymbol(parameter);
                     break;
 
                 case DirectiveType.If:
-                    HandleIf(ifDefStack, token, directive);
+                    HandleIf(ifDefStack, directive);
                     break;
 
                 case DirectiveType.Else:
@@ -183,7 +232,7 @@ namespace DGrok.Framework
                     break;
 
                 case DirectiveType.ElseIf:
-                    HandleElseIf(ifDefStack, token, directive);
+                    HandleElseIf(ifDefStack, directive);
                     break;
 
                 case DirectiveType.EndIf:
@@ -199,7 +248,7 @@ namespace DGrok.Framework
             else
                 ifDefStack.Push(IfDefTruth.ForeverFalse);
         }
-        private void HandleElseIf(Stack<IfDefTruth> ifDefStack, Token token, string directive)
+        private void HandleElseIf(Stack<IfDefTruth> ifDefStack, string directive)
         {
             IfDefTruth truth = ifDefStack.Pop();
             if (truth == IfDefTruth.True || truth == IfDefTruth.ForeverFalse)
@@ -207,17 +256,17 @@ namespace DGrok.Framework
             else
             {
                 string trimmedDirective = directive.Substring(4);
-                if (_compilerDefines.IsTrue(trimmedDirective, token.Location))
+                if (_compilerDefines.IsTrue(trimmedDirective))
                     ifDefStack.Push(IfDefTruth.True);
                 else
                     ifDefStack.Push(IfDefTruth.InitiallyFalse);
             }
         }
-        private void HandleIf(Stack<IfDefTruth> ifDefStack, Token token, string directive)
+        private void HandleIf(Stack<IfDefTruth> ifDefStack, string directive)
         {
             if (ifDefStack.Peek() == IfDefTruth.True)
             {
-                if (_compilerDefines.IsTrue(directive, token.Location))
+                if (_compilerDefines.IsTrue(directive))
                     ifDefStack.Push(IfDefTruth.True);
                 else
                     ifDefStack.Push(IfDefTruth.InitiallyFalse);

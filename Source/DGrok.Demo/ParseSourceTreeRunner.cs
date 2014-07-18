@@ -53,8 +53,13 @@ namespace DGrok.Demo
             List<string> fileNames = new List<string>();
             foreach (string mask in fileMasks.Split(';'))
             {
-                fileNames.AddRange(
-                    Directory.GetFiles(startingDirectory, mask, SearchOption.AllDirectories));
+                string[] searchResults =
+                    Directory.GetFiles(startingDirectory, mask, SearchOption.AllDirectories);
+                foreach (string fileName in searchResults)
+                {
+                    if (!ShouldIgnoreFile(fileName))
+                        fileNames.Add(fileName);
+                }
             }
 
             IDictionary<string, Exception> results = new Dictionary<string, Exception>();
@@ -88,6 +93,11 @@ namespace DGrok.Demo
         private void ReportProgress(string progress)
         {
             _status = ParseSourceTreeStatus.CreateRunning(progress);
+        }
+        private static bool ShouldIgnoreFile(string fileName)
+        {
+            return String.Equals(Path.GetExtension(fileName), ".dproj",
+                StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

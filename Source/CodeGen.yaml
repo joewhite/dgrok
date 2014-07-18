@@ -9,6 +9,12 @@ NodeTypes:
   AssemblerStatementNode:
     - {Name: Asm, Type: Token}
     - {Name: End, Type: Token}
+  AttributeNode:
+    - {Name: OpenBracket, Type: Token}
+    - {Name: Scope, Type: Token}
+    - {Name: Colon, Type: Token}
+    - {Name: Value, Type: AstNode}
+    - {Name: CloseBracket, Type: Token}
   BinaryOperationNode:
     - {Name: Left, Type: AstNode}
     - {Name: Operator, Type: Token}
@@ -57,10 +63,6 @@ NodeTypes:
   ConstSectionNode:
     - {Name: Const, Type: Token}
     - {Name: ConstList, Type: ListNode<ConstantDeclNode>}
-  ContainsClauseNode:
-    - {Name: Contains, Type: Token}
-    - {Name: UnitList, Type: ListNode<DelimitedItemNode<AstNode>>}
-    - {Name: Semicolon, Type: Token}
   DirectiveNode:
     - {Name: Semicolon, Type: Token}
     - {Name: Directive, Type: Token}
@@ -192,10 +194,10 @@ NodeTypes:
     - {Name: Type, Type: AstNode}
   PackageNode:
     - {Name: Package, Type: Token}
-    - {Name: Name, Type: Token}
+    - {Name: Name, Type: AstNode}
     - {Name: Semicolon, Type: Token}
     - {Name: RequiresClause, Type: RequiresClauseNode}
-    - {Name: ContainsClause, Type: ContainsClauseNode}
+    - {Name: ContainsClause, Type: UsesClauseNode}
     - {Name: End, Type: Token}
     - {Name: Dot, Type: Token}
   PackedTypeNode:

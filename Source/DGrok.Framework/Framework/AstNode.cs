@@ -14,6 +14,7 @@ namespace DGrok.Framework
     {
         public abstract IEnumerable<KeyValuePair<string, AstNode>> Properties { get; }
 
+        public abstract void Accept(Visitor visitor);
         public string Inspect()
         {
             StringBuilder builder = new StringBuilder();

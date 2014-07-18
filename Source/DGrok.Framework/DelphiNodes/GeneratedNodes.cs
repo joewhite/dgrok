@@ -70,6 +70,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Type", Type);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitArrayTypeNode(this);
+        }
     }
     public partial class AssemblerStatementNode : NonterminalNode
     {
@@ -98,6 +103,66 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Asm", Asm);
                 yield return new KeyValuePair<string, AstNode>("End", End);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitAssemblerStatementNode(this);
+        }
+    }
+    public partial class AttributeNode : NonterminalNode
+    {
+        private Token _closeBracket;
+        private Token _colon;
+        private Token _openBracket;
+        private Token _scope;
+        private AstNode _value;
+
+        public AttributeNode(Token openBracket, Token scope, Token colon, AstNode value, Token closeBracket)
+        {
+            _openBracket = openBracket;
+            _scope = scope;
+            _colon = colon;
+            _value = value;
+            _closeBracket = closeBracket;
+        }
+
+        public Token CloseBracket
+        {
+            get { return _closeBracket; }
+        }
+        public Token Colon
+        {
+            get { return _colon; }
+        }
+        public Token OpenBracket
+        {
+            get { return _openBracket; }
+        }
+        public Token Scope
+        {
+            get { return _scope; }
+        }
+        public AstNode Value
+        {
+            get { return _value; }
+        }
+
+        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
+        {
+            get
+            {
+                yield return new KeyValuePair<string, AstNode>("OpenBracket", OpenBracket);
+                yield return new KeyValuePair<string, AstNode>("Scope", Scope);
+                yield return new KeyValuePair<string, AstNode>("Colon", Colon);
+                yield return new KeyValuePair<string, AstNode>("Value", Value);
+                yield return new KeyValuePair<string, AstNode>("CloseBracket", CloseBracket);
+            }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitAttributeNode(this);
         }
     }
     public partial class BinaryOperationNode : NonterminalNode
@@ -135,6 +200,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Right", Right);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitBinaryOperationNode(this);
+        }
     }
     public partial class BlockNode : NonterminalNode
     {
@@ -170,6 +240,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("StatementList", StatementList);
                 yield return new KeyValuePair<string, AstNode>("End", End);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitBlockNode(this);
         }
     }
     public partial class CaseSelectorNode : NonterminalNode
@@ -213,6 +288,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Statement", Statement);
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitCaseSelectorNode(this);
         }
     }
     public partial class CaseStatementNode : NonterminalNode
@@ -278,6 +358,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("End", End);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitCaseStatementNode(this);
+        }
     }
     public partial class ClassOfNode : NonterminalNode
     {
@@ -313,6 +398,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Of", Of);
                 yield return new KeyValuePair<string, AstNode>("Type", Type);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitClassOfNode(this);
         }
     }
     public partial class ClassTypeNode : NonterminalNode
@@ -378,6 +468,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("End", End);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitClassTypeNode(this);
+        }
     }
     public partial class ConstantDeclNode : NonterminalNode
     {
@@ -442,6 +537,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitConstantDeclNode(this);
+        }
     }
     public partial class ConstantListNode : NonterminalNode
     {
@@ -478,6 +578,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitConstantListNode(this);
+        }
     }
     public partial class ConstSectionNode : NonterminalNode
     {
@@ -507,41 +612,10 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("ConstList", ConstList);
             }
         }
-    }
-    public partial class ContainsClauseNode : NonterminalNode
-    {
-        private Token _contains;
-        private Token _semicolon;
-        private ListNode<DelimitedItemNode<AstNode>> _unitList;
 
-        public ContainsClauseNode(Token contains, ListNode<DelimitedItemNode<AstNode>> unitList, Token semicolon)
+        public override void Accept(Visitor visitor)
         {
-            _contains = contains;
-            _unitList = unitList;
-            _semicolon = semicolon;
-        }
-
-        public Token Contains
-        {
-            get { return _contains; }
-        }
-        public Token Semicolon
-        {
-            get { return _semicolon; }
-        }
-        public ListNode<DelimitedItemNode<AstNode>> UnitList
-        {
-            get { return _unitList; }
-        }
-
-        public override IEnumerable<KeyValuePair<string, AstNode>> Properties
-        {
-            get
-            {
-                yield return new KeyValuePair<string, AstNode>("Contains", Contains);
-                yield return new KeyValuePair<string, AstNode>("UnitList", UnitList);
-                yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
-            }
+            visitor.VisitConstSectionNode(this);
         }
     }
     public partial class DirectiveNode : NonterminalNode
@@ -586,6 +660,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Data", Data);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitDirectiveNode(this);
+        }
     }
     public partial class EnumeratedTypeElementNode : NonterminalNode
     {
@@ -622,6 +701,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Value", Value);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitEnumeratedTypeElementNode(this);
+        }
     }
     public partial class EnumeratedTypeNode : NonterminalNode
     {
@@ -657,6 +741,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("ItemList", ItemList);
                 yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitEnumeratedTypeNode(this);
         }
     }
     public partial class ExceptionItemNode : NonterminalNode
@@ -722,6 +811,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitExceptionItemNode(this);
+        }
     }
     public partial class ExportsItemNode : NonterminalNode
     {
@@ -751,6 +845,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("SpecifierList", SpecifierList);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitExportsItemNode(this);
+        }
     }
     public partial class ExportsSpecifierNode : NonterminalNode
     {
@@ -779,6 +878,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Keyword", Keyword);
                 yield return new KeyValuePair<string, AstNode>("Value", Value);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitExportsSpecifierNode(this);
         }
     }
     public partial class ExportsStatementNode : NonterminalNode
@@ -816,6 +920,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitExportsStatementNode(this);
+        }
     }
     public partial class FancyBlockNode : NonterminalNode
     {
@@ -844,6 +953,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("DeclList", DeclList);
                 yield return new KeyValuePair<string, AstNode>("Block", Block);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitFancyBlockNode(this);
         }
     }
     public partial class FieldDeclNode : NonterminalNode
@@ -895,6 +1009,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitFieldDeclNode(this);
+        }
     }
     public partial class FieldSectionNode : NonterminalNode
     {
@@ -931,6 +1050,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("FieldList", FieldList);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitFieldSectionNode(this);
+        }
     }
     public partial class FileTypeNode : NonterminalNode
     {
@@ -966,6 +1090,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Of", Of);
                 yield return new KeyValuePair<string, AstNode>("Type", Type);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitFileTypeNode(this);
         }
     }
     public partial class ForInStatementNode : NonterminalNode
@@ -1023,6 +1152,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Do", Do);
                 yield return new KeyValuePair<string, AstNode>("Statement", Statement);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitForInStatementNode(this);
         }
     }
     public partial class ForStatementNode : NonterminalNode
@@ -1095,6 +1229,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Statement", Statement);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitForStatementNode(this);
+        }
     }
     public partial class GotoStatementNode : NonterminalNode
     {
@@ -1123,6 +1262,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Goto", Goto);
                 yield return new KeyValuePair<string, AstNode>("LabelId", LabelId);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitGotoStatementNode(this);
         }
     }
     public partial class IfStatementNode : NonterminalNode
@@ -1181,6 +1325,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("ElseStatement", ElseStatement);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitIfStatementNode(this);
+        }
     }
     public partial class InitSectionNode : NonterminalNode
     {
@@ -1230,6 +1379,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("FinalizationStatements", FinalizationStatements);
                 yield return new KeyValuePair<string, AstNode>("End", End);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitInitSectionNode(this);
         }
     }
     public partial class InterfaceTypeNode : NonterminalNode
@@ -1309,6 +1463,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("End", End);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitInterfaceTypeNode(this);
+        }
     }
     public partial class LabelDeclSectionNode : NonterminalNode
     {
@@ -1345,6 +1504,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitLabelDeclSectionNode(this);
+        }
     }
     public partial class LabeledStatementNode : NonterminalNode
     {
@@ -1380,6 +1544,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Colon", Colon);
                 yield return new KeyValuePair<string, AstNode>("Statement", Statement);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitLabeledStatementNode(this);
         }
     }
     public partial class MethodHeadingNode : NonterminalNode
@@ -1466,6 +1635,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitMethodHeadingNode(this);
+        }
     }
     public partial class MethodImplementationNode : NonterminalNode
     {
@@ -1501,6 +1675,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("FancyBlock", FancyBlock);
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitMethodImplementationNode(this);
         }
     }
     public partial class MethodResolutionNode : NonterminalNode
@@ -1552,6 +1731,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitMethodResolutionNode(this);
+        }
     }
     public partial class NumberFormatNode : NonterminalNode
     {
@@ -1602,6 +1786,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Precision", Precision);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitNumberFormatNode(this);
+        }
     }
     public partial class OpenArrayNode : NonterminalNode
     {
@@ -1638,18 +1827,23 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Type", Type);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitOpenArrayNode(this);
+        }
     }
     public partial class PackageNode : NonterminalNode
     {
-        private ContainsClauseNode _containsClause;
+        private UsesClauseNode _containsClause;
         private Token _dot;
         private Token _end;
-        private Token _name;
+        private AstNode _name;
         private Token _package;
         private RequiresClauseNode _requiresClause;
         private Token _semicolon;
 
-        public PackageNode(Token package, Token name, Token semicolon, RequiresClauseNode requiresClause, ContainsClauseNode containsClause, Token end, Token dot)
+        public PackageNode(Token package, AstNode name, Token semicolon, RequiresClauseNode requiresClause, UsesClauseNode containsClause, Token end, Token dot)
         {
             _package = package;
             _name = name;
@@ -1660,7 +1854,7 @@ namespace DGrok.DelphiNodes
             _dot = dot;
         }
 
-        public ContainsClauseNode ContainsClause
+        public UsesClauseNode ContainsClause
         {
             get { return _containsClause; }
         }
@@ -1672,7 +1866,7 @@ namespace DGrok.DelphiNodes
         {
             get { return _end; }
         }
-        public Token Name
+        public AstNode Name
         {
             get { return _name; }
         }
@@ -1702,6 +1896,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Dot", Dot);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitPackageNode(this);
+        }
     }
     public partial class PackedTypeNode : NonterminalNode
     {
@@ -1730,6 +1929,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Packed", Packed);
                 yield return new KeyValuePair<string, AstNode>("Type", Type);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitPackedTypeNode(this);
         }
     }
     public partial class ParameterizedNode : NonterminalNode
@@ -1773,6 +1977,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("ParameterList", ParameterList);
                 yield return new KeyValuePair<string, AstNode>("CloseDelimiter", CloseDelimiter);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitParameterizedNode(this);
         }
     }
     public partial class ParameterNode : NonterminalNode
@@ -1831,6 +2040,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("DefaultValue", DefaultValue);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitParameterNode(this);
+        }
     }
     public partial class ParenthesizedExpressionNode : NonterminalNode
     {
@@ -1867,6 +2081,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("CloseParenthesis", CloseParenthesis);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitParenthesizedExpressionNode(this);
+        }
     }
     public partial class PointerDereferenceNode : NonterminalNode
     {
@@ -1896,6 +2115,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Caret", Caret);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitPointerDereferenceNode(this);
+        }
     }
     public partial class PointerTypeNode : NonterminalNode
     {
@@ -1924,6 +2148,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Caret", Caret);
                 yield return new KeyValuePair<string, AstNode>("Type", Type);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitPointerTypeNode(this);
         }
     }
     public partial class ProcedureTypeNode : NonterminalNode
@@ -2010,6 +2239,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("SecondDirectives", SecondDirectives);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitProcedureTypeNode(this);
+        }
     }
     public partial class ProgramNode : NonterminalNode
     {
@@ -2094,6 +2328,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("InitSection", InitSection);
                 yield return new KeyValuePair<string, AstNode>("Dot", Dot);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitProgramNode(this);
         }
     }
     public partial class PropertyNode : NonterminalNode
@@ -2180,6 +2419,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitPropertyNode(this);
+        }
     }
     public partial class RaiseStatementNode : NonterminalNode
     {
@@ -2223,6 +2467,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Address", Address);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitRaiseStatementNode(this);
+        }
     }
     public partial class RecordFieldConstantNode : NonterminalNode
     {
@@ -2258,6 +2507,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Colon", Colon);
                 yield return new KeyValuePair<string, AstNode>("Value", Value);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitRecordFieldConstantNode(this);
         }
     }
     public partial class RecordTypeNode : NonterminalNode
@@ -2302,6 +2556,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("End", End);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitRecordTypeNode(this);
+        }
     }
     public partial class RepeatStatementNode : NonterminalNode
     {
@@ -2345,6 +2604,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Condition", Condition);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitRepeatStatementNode(this);
+        }
     }
     public partial class RequiresClauseNode : NonterminalNode
     {
@@ -2380,6 +2644,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("PackageList", PackageList);
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitRequiresClauseNode(this);
         }
     }
     public partial class SetLiteralNode : NonterminalNode
@@ -2417,6 +2686,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("CloseBracket", CloseBracket);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitSetLiteralNode(this);
+        }
     }
     public partial class SetOfNode : NonterminalNode
     {
@@ -2452,6 +2726,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Of", Of);
                 yield return new KeyValuePair<string, AstNode>("Type", Type);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitSetOfNode(this);
         }
     }
     public partial class StringOfLengthNode : NonterminalNode
@@ -2495,6 +2774,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Length", Length);
                 yield return new KeyValuePair<string, AstNode>("CloseBracket", CloseBracket);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitStringOfLengthNode(this);
         }
     }
     public partial class TryExceptNode : NonterminalNode
@@ -2560,6 +2844,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("End", End);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitTryExceptNode(this);
+        }
     }
     public partial class TryFinallyNode : NonterminalNode
     {
@@ -2609,6 +2898,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("FinallyStatements", FinallyStatements);
                 yield return new KeyValuePair<string, AstNode>("End", End);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitTryFinallyNode(this);
         }
     }
     public partial class TypeDeclNode : NonterminalNode
@@ -2667,6 +2961,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitTypeDeclNode(this);
+        }
     }
     public partial class TypeForwardDeclarationNode : NonterminalNode
     {
@@ -2709,6 +3008,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Type", Type);
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitTypeForwardDeclarationNode(this);
         }
     }
     public partial class TypeHelperNode : NonterminalNode
@@ -2788,6 +3092,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("End", End);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitTypeHelperNode(this);
+        }
     }
     public partial class TypeSectionNode : NonterminalNode
     {
@@ -2817,6 +3126,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("TypeList", TypeList);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitTypeSectionNode(this);
+        }
     }
     public partial class UnaryOperationNode : NonterminalNode
     {
@@ -2845,6 +3159,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Operator", Operator);
                 yield return new KeyValuePair<string, AstNode>("Operand", Operand);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitUnaryOperationNode(this);
         }
     }
     public partial class UnitNode : NonterminalNode
@@ -2917,6 +3236,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Dot", Dot);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitUnitNode(this);
+        }
     }
     public partial class UnitSectionNode : NonterminalNode
     {
@@ -2952,6 +3276,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("UsesClause", UsesClause);
                 yield return new KeyValuePair<string, AstNode>("Contents", Contents);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitUnitSectionNode(this);
         }
     }
     public partial class UsedUnitNode : NonterminalNode
@@ -2989,6 +3318,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("FileName", FileName);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitUsedUnitNode(this);
+        }
     }
     public partial class UsesClauseNode : NonterminalNode
     {
@@ -3024,6 +3358,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("UnitList", UnitList);
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitUsesClauseNode(this);
         }
     }
     public partial class VarDeclNode : NonterminalNode
@@ -3110,6 +3449,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitVarDeclNode(this);
+        }
     }
     public partial class VariantGroupNode : NonterminalNode
     {
@@ -3174,6 +3518,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Semicolon", Semicolon);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitVariantGroupNode(this);
+        }
     }
     public partial class VariantSectionNode : NonterminalNode
     {
@@ -3231,6 +3580,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("VariantGroupList", VariantGroupList);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitVariantSectionNode(this);
+        }
     }
     public partial class VarSectionNode : NonterminalNode
     {
@@ -3259,6 +3613,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Var", Var);
                 yield return new KeyValuePair<string, AstNode>("VarList", VarList);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitVarSectionNode(this);
         }
     }
     public partial class VisibilityNode : NonterminalNode
@@ -3289,6 +3648,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Visibility", Visibility);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitVisibilityNode(this);
+        }
     }
     public partial class VisibilitySectionNode : NonterminalNode
     {
@@ -3317,6 +3681,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Visibility", Visibility);
                 yield return new KeyValuePair<string, AstNode>("Contents", Contents);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitVisibilitySectionNode(this);
         }
     }
     public partial class WhileStatementNode : NonterminalNode
@@ -3361,6 +3730,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Statement", Statement);
             }
         }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitWhileStatementNode(this);
+        }
     }
     public partial class WithStatementNode : NonterminalNode
     {
@@ -3403,6 +3777,11 @@ namespace DGrok.DelphiNodes
                 yield return new KeyValuePair<string, AstNode>("Do", Do);
                 yield return new KeyValuePair<string, AstNode>("Statement", Statement);
             }
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitWithStatementNode(this);
         }
     }
 }
