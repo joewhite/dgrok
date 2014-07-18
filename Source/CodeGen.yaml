@@ -1,0 +1,248 @@
+NodeTypes:
+  ArrayTypeNode:
+    - Array
+    - OpenBracket
+    - IndexList
+    - CloseBracket
+    - Of
+    - Type
+  AssemblerStatementNode:
+    - Asm
+    - End
+  BinaryOperationNode:
+    - Left
+    - Operator
+    - Right
+  ConstantDeclNode:
+    - Name
+    - Colon
+    - Type
+    - EqualSign
+    - Value
+    - PortabilityDirectiveList
+    - Semicolon
+  ConstantListNode:
+    - OpenParenthesis
+    - ItemList
+    - CloseParenthesis
+  ConstSectionNode:
+    - Const
+    - ConstList
+  ContainsClauseNode:
+    - Contains
+    - IdentList
+    - Semicolon
+  DelimitedItemNode:
+    - Item
+    - Delimiter
+  EnumeratedTypeNode:
+    - OpenParenthesis
+    - ItemList
+    - CloseParenthesis
+  EnumeratedTypeElementNode:
+    - Name
+    - EqualSign
+    - Value
+  ExportsItemNode:
+    - Name
+    - SpecifierList
+  ExportsStatementNode:
+    - Exports
+    - ItemList
+    - Semicolon
+  ExternalNode:
+    - External
+    - DllName
+    - SpecifierList
+  FieldDeclNode:
+    - NameList
+    - Colon
+    - Type
+    - PortabilityDirectiveList
+    - Semicolon
+  FieldSectionNode:
+    - Class
+    - Var
+    - FieldList
+  FileTypeNode:
+    - File
+    - Of
+    - Type
+  GotoStatementNode:
+    - Goto
+    - LabelId
+  InitSectionNode:
+    - InitializationHeader
+    - InitializationStatements
+    - FinalizationHeader
+    - FinalizationStatements
+    - End
+  InterfaceTypeNode:
+    - Interface
+    - OpenParenthesis
+    - BaseInterface
+    - CloseParenthesis
+    - OpenBracket
+    - Guid
+    - CloseBracket
+    - MethodAndPropertyList
+    - End
+  LabelDeclSectionNode:
+    - Label
+    - LabelList
+    - Semicolon
+  MethodHeadingNode:
+    - Class
+    - MethodType
+    - Name
+    - OpenParenthesis
+    - ParameterList
+    - CloseParenthesis
+    - Colon
+    - ReturnType
+    - Semicolon
+    - DirectiveList
+  OpenArrayNode:
+    - Array
+    - Of
+    - Type
+  PackageNode:
+    - Package
+    - Name
+    - Semicolon
+    - RequiresClause
+    - ContainsClause
+    - End
+    - Dot
+  ParameterizedDirectiveNode:
+    - Keyword
+    - Value
+  ParameterizedNode:
+    - Left
+    - OpenDelimiter
+    - ParameterList
+    - CloseDelimiter
+  ParameterNode:
+    - Modifier
+    - Names
+    - Colon
+    - Type
+    - EqualSign
+    - DefaultValue
+  ParenthesizedExpressionNode:
+    - OpenParenthesis
+    - Expression
+    - CloseParenthesis
+  PointerDereferenceNode:
+    - Operand
+    - Caret
+  PointerTypeNode:
+    - Caret
+    - Type
+  ProcedureTypeNode:
+    - MethodType
+    - OpenParenthesis
+    - ParameterList
+    - CloseParenthesis
+    - Colon
+    - ReturnType
+    - Of
+    - Object
+  PropertyNode:
+    - Class
+    - Property
+    - Name
+    - OpenBracket
+    - ParameterList
+    - CloseBracket
+    - Colon
+    - Type
+    - Index
+    - IndexValue
+    - Read
+    - ReadSpecifier
+    - Write
+    - WriteSpecifier
+    - Stored
+    - StoredSpecifier
+    - Default
+    - DefaultValue
+    - Implements
+    - ImplementsSpecifier
+    - Semicolon
+  RaiseStatementNode:
+    - Raise
+    - Exception
+    - At
+    - Address
+  RecordFieldConstantNode:
+    - Name
+    - Colon
+    - Value
+  RequiresClauseNode:
+    - Requires
+    - IdentList
+    - Semicolon
+  SetLiteralNode:
+    - OpenBracket
+    - ItemList
+    - CloseBracket
+  SetOfNode:
+    - Set
+    - Of
+    - Type
+  StringOfLengthNode:
+    - String
+    - OpenBracket
+    - Length
+    - CloseBracket
+  TypeDeclNode:
+    - Name
+    - EqualSign
+    - TypeKeyword
+    - Type
+    - PortabilityDirectiveList
+    - Semicolon
+  TypeSectionNode:
+    - Type
+    - TypeList
+  UnaryOperationNode:
+    - Operator
+    - Operand
+  UnitNode:
+    - Unit
+    - UnitName
+    - PortabilityDirectives
+    - Semicolon
+    - InterfaceSection
+    - ImplementationSection
+    - InitSection
+    - Dot
+  UnitSectionNode:
+    - HeaderKeyword
+    - UsesClause
+    - Contents
+  UsedUnitNode:
+    - Name
+    - In
+    - FileName
+  UsesClauseNode:
+    - Uses
+    - UnitList
+    - Semicolon
+  VarDeclNode:
+    - Names
+    - Colon
+    - Type
+    - Absolute
+    - AbsoluteAddress
+    - EqualSign
+    - Value
+    - PortabilityDirectiveList
+    - Semicolon
+  VarSectionNode:
+    - Var
+    - VarList
+  VisibilityNode:
+    - Strict
+    - Visibility

@@ -1,0 +1,85 @@
+// DGrok Delphi parser
+// Copyright (C) 2007 Joe White
+// http://www.excastle.com/dgrok
+//
+// Licensed under the Open Software License version 3.0
+// http://www.opensource.org/licenses/osl-3.0.php
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DGrok.Framework
+{
+    public enum RuleType
+    {
+        AddOp,
+        ArrayType,
+        AssemblerStatement,
+        Atom,
+        ConstantDecl,
+        ConstSection,
+        ContainsClause,
+        Directive,
+        EnumeratedType,
+        EnumeratedTypeElement,
+        ExportsItem,
+        ExportsSpecifier,
+        ExportsStatement,
+        Expression,
+        ExpressionList,
+        ExpressionOrRange,
+        ExpressionOrRangeList,
+        ExtendedIdent,
+        Factor,
+        FieldDecl,
+        FieldSection,
+        FileType,
+        Goal,
+        GotoStatement,
+        Ident,
+        IdentList,
+        ImplementationSection,
+        InitSection,
+        InterfaceDecl,
+        InterfaceSection,
+        InterfaceType,
+        LabelDeclSection,
+        LabelId,
+        MethodHeading,
+        MethodOrProperty,
+        MethodReturnType,
+        MethodSection,
+        MulOp,
+        OpenArray,
+        Package,
+        Parameter,
+        ParameterType,
+        ParenthesizedExpression,
+        Particle,
+        PointerType,
+        PortabilityDirective,
+        ProcedureType,
+        Property,
+        QualifiedIdent,
+        RaiseStatement,
+        RecordFieldConstant,
+        RelOp,
+        RequiresClause,
+        SetLiteral,
+        SetType,
+        SimpleExpression,
+        StringType,
+        Term,
+        Type,
+        TypedConstant,
+        TypeDecl,
+        TypeSection,
+        UnaryOperator,
+        Unit,
+        UsedUnit,
+        UsesClause,
+        VarDecl,
+        VarSection,
+        Visibility,
+    }
+}

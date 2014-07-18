@@ -1,0 +1,125 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4694D59A-F469-4A4E-9940-5F000777F79C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NUnitLite</RootNamespace>
+    <AssemblyName>NUnitLite</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constraints\BinaryOperations.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\CollectionConstraints.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\ComparisonConstraints.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\Constraint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\ConstraintBuilder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\EmptyConstraint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\EqualConstraint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\NotConstraint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\SameAsConstraint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\StringConstraints.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constraints\TypeConstraints.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Framework\Attributes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Framework\Exceptions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Framework\IExpectException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Framework\InvalidTestCase.cs" />
+    <Compile Include="Framework\MsgUtils.cs" />
+    <Compile Include="Framework\Reflect.cs" />
+    <Compile Include="Framework\SyntaxHelpers.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MessageWriter.cs" />
+    <Compile Include="Framework\Assert.cs" />
+    <Compile Include="Framework\StackFilter.cs" />
+    <Compile Include="Framework\TextMessageWriter.cs" />
+    <Compile Include="Framework\NullListener.cs" />
+    <Compile Include="Framework\ProxyTestCase.cs" />
+    <Compile Include="Msgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Runner\CommandLineOptions.cs" />
+    <Compile Include="Runner\ResultSummary.cs" />
+    <Compile Include="Framework\TestListener.cs" />
+    <Compile Include="Framework\TestProgressListener.cs" />
+    <Compile Include="Runner\TestLoader.cs" />
+    <Compile Include="Runner\TestRunner.cs" />
+    <Compile Include="Framework\TestSuite.cs" />
+    <Compile Include="Framework\ITest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Framework\TestCase.cs" />
+    <Compile Include="Framework\TestResult.cs" />
+    <Compile Include="Runner\ConsoleUI.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

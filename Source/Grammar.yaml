@@ -1,0 +1,513 @@
+# First column: .=unfinished, !=finished and working
+AddOp:
+  Doc: |
+    ! -> '+'
+    ! -> '-'
+    ! -> OR
+    ! -> XOR
+ArrayType:
+  Doc: |
+    ! -> ARRAY ['[' (Type [','])+ ']'] OF Type
+AssemblerStatement:
+  Doc: |
+    ! -> ASM
+    !    <assemblylanguage>
+    !    END
+Atom:
+  Doc: |
+    ! -> Particle
+    !    ( '.' ExtendedIdent
+    !      | '[' ExpressionList ']'
+    !      | '^'
+    !      | '(' [ExpressionList] ')'
+    !    )*
+Block:
+  Doc: |
+    . -> BEGIN [StatementList] END
+    . -> AssemblerStatement
+CaseSelector:
+  Doc: |
+    . -> ExpressionOrRangeList ':' [Statement] [';']
+CaseSelectorList:
+  Doc: |
+    . -> (CaseSelector)+
+CaseStatement:
+  Doc: |
+    . -> CASE Expression OF
+    .    CaseSelectorList
+    .    [ELSE [StatementList]]
+    .    END
+ClassType:
+  Doc: |
+    . -> CLASS
+    .    [ABSTRACT | SEALED]
+    .    ['(' Ident [',' IdentList] ')']
+    .    (VisibilitySection)*
+    .    END
+    . -> CLASS OF QualifiedIdent
+    . -> CLASS HELPER
+    .    ['(' Ident ')']
+    .    FOR QualifiedIdent
+    .    (VisibilitySection)*
+    .    END
+ConstantDecl:
+  Doc: |
+    ! -> Ident
+    !    [':' QualifiedIdent]
+    !    '=' TypedConstant
+    !    (PortabilityDirective)*
+    !    ';'
+ConstSection:
+  Doc: |
+    ! -> (CONST|RESOURCESTRING)
+    !    (ConstantDecl)+
+ContainsClause:
+  Doc: |
+    ! -> CONTAINS IdentList ';'
+DeclSection:
+  Doc: |
+    . -> LabelDeclSection
+    . -> ConstSection
+    . -> TypeSection
+    . -> VarSection
+    . -> MethodDecl
+    . -> ExportsStatement
+Directive:
+  Doc: |
+    ! -> ABSTRACT
+    ! -> ASSEMBLER
+    ! -> CDECL
+    ! -> DISPID Expression
+    ! -> DYNAMIC
+    ! -> EXPORT
+    ! -> EXTERNAL [Expression (ExportsSpecifier)*]
+    ! -> FAR
+    ! -> FINAL
+    ! -> FORWARD
+    ! -> INLINE
+    ! -> LOCAL
+    ! -> MESSAGE Expression
+    ! -> NEAR
+    ! -> OVERLOAD
+    ! -> OVERRIDE
+    ! -> PASCAL
+    ! -> REGISTER
+    ! -> REINTRODUCE
+    ! -> SAFECALL
+    ! -> STATIC
+    ! -> STDCALL
+    ! -> VARARGS
+    ! -> VIRTUAL
+    ! -> PortabilityDirective
+EnumeratedType:
+  Doc: |
+    ! -> '(' (EnumeratedTypeElement [','])+ ')'
+EnumeratedTypeElement:
+  Doc: |
+    ! -> Ident [ '=' Expression ]
+ExceptionItem:
+  Doc: |
+    . -> ON [Ident ':'] QualifiedIdent DO [Statement] [';']
+ExceptionItemList:
+  Doc: |
+    . -> (ExceptionItem)+
+ExportsItem:
+  Doc: |
+    ! -> Ident (ExportsSpecifier)*
+ExportsSpecifier:
+  Doc: |
+    ! -> (INDEX | NAME) Expression
+ExportsStatement:
+  Doc: |
+    ! -> EXPORTS (ExportsItem [','])+ ';'
+Expression:
+  Doc: |
+    ! -> SimpleExpression (RelOp SimpleExpression)*
+ExpressionList:
+  Doc: |
+    ! -> (Expression [','])+
+ExpressionOrRange:
+  Doc: |
+    ! -> SimpleExpression ['..' SimpleExpression]
+ExpressionOrRangeList:
+  Doc: |
+    ! -> (ExpressionOrRange [','])+
+ExtendedIdent:
+  Doc: |
+    ! -> Ident
+    ! -> <keyword>
+Factor:
+  Doc: |
+    ! -> Atom
+    ! -> UnaryOperator Factor
+FancyBlock:
+  Doc: |
+    . -> (DeclSection)*
+    .    Block
+FieldDecl:
+  Doc: |
+    ! -> IdentList ':' Type (PortabilityDirective)* ';'
+FieldSection:
+  Doc: |
+    ! -> [[CLASS] VAR]
+    !    (FieldDecl)*
+FileType:
+  Doc: |
+    ! -> FILE
+    ! -> FILE OF QualifiedIdent
+ForStatement:
+  Doc: |
+    . -> FOR Ident ':=' Expression (TO | DOWNTO) Expression DO [Statement]
+Goal:
+  Doc: |
+    . -> Program
+    ! -> Package
+    ! -> Unit
+GotoStatement:
+  Doc: |
+    ! -> GOTO LabelId
+Ident:
+  Doc: |
+    ! -> <identifier>
+    ! -> <semikeyword>
+    ! -> '&' <identifier>
+    ! -> '&' <semikeyword>
+    ! -> '&' <keyword>
+IdentList:
+  Doc: |
+    ! -> (Ident [','])+
+IfStatement:
+  Doc: |
+    . -> IF Expression THEN [Statement]
+    .    [ELSE [Statement]]
+ImplementationSection:
+  Doc: |
+    ! -> IMPLEMENTATION
+    !    [UsesClause]
+    .    (DeclSection)*
+InitSection:
+  Doc: |
+    ! -> INITIALIZATION
+    .    [StatementList]
+    !    [FINALIZATION
+    .    [StatementList]]
+    !    END
+    ! -> BEGIN
+    .    [StatementList]
+    !    END
+    . -> AssemblerStatement
+    ! -> END
+InterfaceDecl:
+  Doc: |
+    ! -> ConstSection
+    ! -> TypeSection
+    ! -> VarSection
+    ! -> MethodHeading
+InterfaceSection:
+  Doc: |
+    ! -> INTERFACE
+    !    [UsesClause]
+    !    (InterfaceDecl)*
+InterfaceType:
+  Doc: |
+    ! -> INTERFACE
+    !    ['(' QualifiedIdent ')']
+    !    ['[' <stringliteral> ']']
+    !    (MethodOrProperty)*
+    !    END
+LabelDeclSection:
+  Doc: |
+    ! -> LABEL (LabelId [','])+ ';'
+LabelId:
+  Doc: |
+    ! -> <number>
+    ! -> Ident
+MethodDecl:
+  Doc: |
+    // If the MethodHeading does not include 'external' or 'forward':
+    . -> MethodHeading
+    .    FancyBlock ';'
+    // If the MethodHeading does include 'external' or 'forward':
+    . -> MethodHeading
+MethodHeading:
+  Doc: |
+    ! -> [CLASS]
+    !    (PROCEDURE | FUNCTION | CONSTRUCTOR | DESTRUCTOR)
+    !    QualifiedIdent
+    !    ['(' (Parameter [';'])* ')']
+    !    [':' MethodReturnType]
+    !    ';'
+    !    (Directive ';')*
+MethodOrProperty:
+  Doc: |
+    ! -> MethodHeading
+    ! -> Property
+MethodReturnType:
+  Doc: |
+    ! -> QualifiedIdent
+    ! -> STRING
+MethodSection:
+  Doc: |
+    ! -> (MethodOrProperty)*
+MulOp:
+  Doc: |
+    ! -> '*'
+    ! -> '/'
+    ! -> DIV
+    ! -> MOD
+    ! -> AND
+    ! -> SHL
+    ! -> SHR
+OpenArray:
+  Doc: |
+    ! -> ARRAY OF QualifiedIdent
+    ! -> ARRAY OF STRING
+    ! -> ARRAY OF FILE
+    ! -> ARRAY OF CONST
+Package:
+  Doc: |
+    ! -> PACKAGE Ident ';'
+    !    [RequiresClause]
+    !    [ContainsClause]
+    !    END '.'
+PackedType:
+  Doc: |
+    . -> PACKED Type
+Parameter:
+  Doc: |
+    ! -> [VAR | CONST | OUT]
+    !    IdentList
+    !    [':' ParameterType]
+    !    ['=' Expression]
+ParameterType:
+  Doc: |
+    ! -> QualifiedIdent
+    ! -> STRING
+    ! -> FILE
+    ! -> OpenArray
+ParenthesizedExpression:
+  Doc: |
+    ! -> '(' Expression ')'
+Particle:
+  Doc: |
+    ! -> <number>
+    ! -> <stringliteral>
+    ! -> Ident
+    ! -> NIL
+    ! -> ParenthesizedExpression
+    ! -> SetLiteral
+PointerType:
+  Doc: |
+    ! -> '^' QualifiedIdent
+PortabilityDirective:
+  Doc: |
+    ! -> platform
+    ! -> deprecated
+    ! -> library
+    ! -> experimental
+ProcedureType:
+  Doc: |
+    ! -> (PROCEDURE | FUNCTION)
+    !    ['(' (Parameter [';'])* ')']
+    !    [':' MethodReturnType]
+    !    [OF OBJECT]
+Program:
+  Doc: |
+    . -> (PROGRAM | LIBRARY) Ident ['(' IdentList ')'] ';'
+    . -> [UsesClause]
+    .    FancyBlock '.'
+Property:
+  Doc: |
+    ! -> [CLASS]
+    !    PROPERTY Ident
+    !    ['[' (Parameter [';'])+ ']']
+    !    [':' MethodReturnType]
+    !    [INDEX Expression]
+    !    [READ Ident]
+    !    [WRITE Ident]
+    !    [STORED Ident]
+    !    [(DEFAULT Expression) | NODEFAULT]
+    !    [IMPLEMENTS QualifiedIdent]
+    !    ';'
+QualifiedIdent:
+  Doc: |
+    ! -> Ident ('.' ExtendedIdent)*
+RaiseStatement:
+  Doc: |
+    ! -> RAISE [Expression [AT Expression]]
+RecordType:
+  Doc: |
+    . -> RECORD
+    .    (VisibilitySection)*
+    .    [VariantSection]
+    .    END
+    . -> RECORD HELPER FOR QualifiedIdent
+    .    (VisibilitySection)*
+    .    END
+RecVariant:
+  Doc: |
+    . -> ExpressionList ':'
+    .    '('
+    . -> (FieldDecl)*
+    .    [VariantSection]
+    .    [';']
+    .    ')'
+RelOp:
+  Doc: |
+    ! -> '='
+    ! -> '>'
+    ! -> '<'
+    ! -> '<='
+    ! -> '>='
+    ! -> '<>'
+    ! -> IN
+    ! -> IS
+    ! -> AS
+RepeatStatement:
+  Doc: |
+    . -> REPEAT [StatementList] UNTIL Expression
+RequiresClause:
+  Doc: |
+    ! -> REQUIRES IdentList ';'
+SetLiteral:
+  Doc: |
+    ! -> '[' [ExpressionOrRangeList] ']'
+SetType:
+  Doc: |
+    ! -> SET OF Type
+SimpleExpression:
+  Doc: |
+    ! -> Term (AddOp Term)*
+SimpleStatement:
+  Doc: |
+    . -> Expression
+    . -> Expression ':=' Expression
+    . -> INHERITED
+    . -> GotoStatement
+    . -> Block
+    . -> IfStatement
+    . -> CaseStatement
+    . -> RepeatStatement
+    . -> WhileStatement
+    . -> ForStatement
+    . -> WithStatement
+    . -> TryExceptStatement
+    . -> TryFinallyStatement
+    . -> RaiseStatement
+    . -> AssemblerStatement
+Statement:
+  Doc: |
+    . -> LabelId ':' SimpleStatement
+    . -> SimpleStatement
+StatementList:
+  Doc: |
+    . -> (Statement [';'])+
+StringType:
+  Doc: |
+    ! -> STRING
+    ! -> STRING '[' Expression ']'
+Term:
+  Doc: |
+    ! -> Factor (MulOp Factor)*
+ToBeDetermined:
+  Doc: |
+    . -> ToBeDetermined
+TryExceptStatement:
+  Doc: |
+    . -> TRY
+    .      [StatementList]
+    .    EXCEPT
+    .    (
+    .      [StatementList] |
+    .      ExceptionItemList [ELSE [StatementList]]
+    .    )
+    .    END
+TryFinallyStatement:
+  Doc: |
+    . -> TRY
+    .      [StatementList]
+    .    FINALLY
+    .      [StatementList]
+    .    END
+Type:
+  Doc: |
+    // Note: Delphi assumes that a Type starting with '(' is an enum, not an expression.
+    ! -> EnumeratedType
+    ! -> ExpressionOrRange
+    . -> ArrayType
+    . -> SetType
+    . -> FileType
+    . -> RecordType
+    . -> PointerType
+    . -> StringType
+    . -> ProcedureType
+    . -> ClassType
+    . -> InterfaceType
+    . -> PackedType
+TypedConstant:
+  Doc: |
+    ! -> Expression
+    ! -> '(' (QualifiedIdent ':' TypedConstant [';'])* ')'
+    ! -> '(' (TypedConstant [','])+ ')'
+TypeDecl:
+  Doc: |
+    ! -> Ident '=' [TYPE] Type (PortabilityDirective)* ';'
+TypeSection:
+  Doc: |
+    ! -> TYPE (TypeDecl)+
+UnaryOperator:
+  Doc: |
+    ! -> NOT
+    ! -> '+'
+    ! -> '-'
+    ! -> '@'
+    ! -> INHERITED
+Unit:
+  Doc: |
+    ! -> UNIT Ident (PortabilityDirective)* ';'
+    !    InterfaceSection
+    !    ImplementationSection
+    !    InitSection '.'
+UsesClause:
+  Doc: |
+    ! -> USES (UsedUnit [','])+ ';'
+UsedUnit:
+  Doc: |
+    ! -> Ident
+    ! -> Ident IN <stringliteral>
+VarDecl:
+  Doc: |
+    ! -> IdentList ':' Type
+    !    [ABSOLUTE Expression | '=' Expression]
+    !    (PortabilityDirective)*
+    !    ';'
+VariantSection:
+  Doc: |
+    . -> CASE [Ident ':'] QualifiedIdent OF RecVariant ';'...
+    .    ToBeDetermined
+VarSection:
+  Doc: |
+    ! -> VAR (VarDecl)+
+Visibility:
+  Doc: |
+    ! -> STRICT PRIVATE
+    ! -> STRICT PROTECTED
+    ! -> PRIVATE
+    ! -> PROTECTED
+    ! -> PUBLIC
+    ! -> PUBLISHED
+VisibilitySection:
+  Doc: |
+    . -> [Visibility]
+    .    (
+    .      FieldSection |
+    .      MethodSection |
+    .      ConstSection |
+    .      TypeSection
+    .    )*
+WhileStatement:
+  Doc: |
+    . -> WHILE Expression DO [Statement]
+WithStatement:
+  Doc: |
+    . -> WITH ExpressionList DO [Statement]

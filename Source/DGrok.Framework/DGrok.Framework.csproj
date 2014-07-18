@@ -1,0 +1,73 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DFB43477-AB65-4108-B880-928816A347E4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DGrok</RootNamespace>
+    <AssemblyName>DGrok.Framework</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyVersion.cs" />
+    <Compile Include="Framework\Alternator.cs" />
+    <Compile Include="Framework\AstNode.cs" />
+    <Compile Include="Framework\CompilerDefines.cs" />
+    <Compile Include="Framework\DGrokException.cs" />
+    <Compile Include="Framework\Frame.cs" />
+    <Compile Include="Framework\Parser.cs" />
+    <Compile Include="Framework\GeneratedNodes.cs" />
+    <Compile Include="Framework\ListNode.cs" />
+    <Compile Include="Framework\IFrame.cs" />
+    <Compile Include="Framework\LexException.cs" />
+    <Compile Include="Framework\LexScanner.cs" />
+    <Compile Include="Framework\Lexer.cs" />
+    <Compile Include="Framework\NonterminalNode.cs" />
+    <Compile Include="Framework\EofFrame.cs" />
+    <Compile Include="Framework\ParseException.cs" />
+    <Compile Include="Framework\PreprocessorException.cs" />
+    <Compile Include="Framework\RuleType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Framework\Token.cs" />
+    <Compile Include="Framework\TokenFilter.cs" />
+    <Compile Include="Framework\TokenSet.cs" />
+    <Compile Include="Framework\TokenSets.cs" />
+    <Compile Include="Framework\TokenType.cs" />
+    <Compile Include="Framework\Rule.cs" />
+    <Compile Include="Framework\RuleDelegate.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
