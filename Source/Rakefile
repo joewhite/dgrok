@@ -54,7 +54,7 @@ task :image => :default do
   sh %Q|svn export . "#{IMAGE_SOURCE}"|
   cp "DGrok.Framework/DelphiNodes/GeneratedNodes.cs", File.join(IMAGE_SOURCE, "DGrok.Framework/DelphiNodes")
   cp "DGrok.Framework/Framework/GeneratedVisitor.cs", File.join(IMAGE_SOURCE, "DGrok.Framework/Framework")
-  cp ["Grammar.html", "Grammar.css", "README.html", "License.txt"], IMAGE_DIR
+  cp ["Grammar.html", "Grammar.css", "README", "License.txt"], IMAGE_DIR
   bin = FileList.new("Bin/*")
   bin.exclude "**/DGrok.Tests.*"
   bin.exclude "**/nunit.framework.*"
