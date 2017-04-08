@@ -1445,7 +1445,10 @@ namespace DGrok.Framework
             });
             #endregion
             #region TypeDecl
-            AddRule(RuleType.TypeDecl, TokenSets.Ident.LookAhead, delegate
+            AddRule(RuleType.TypeDecl, delegate
+            {
+                return TokenSets.Ident.LookAhead(this) && !TokenSets.Visibility.LookAhead(this);
+            }, delegate
             {
                 Token name = ParseIdent();
                 Token equalSign = ParseToken(TokenType.EqualSign);
