@@ -18,6 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.IO;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using DGrok.Framework;
 
@@ -28,8 +30,21 @@ namespace DGrok.Demo
         [STAThread]
         public static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.Run(new MainForm());
+            //Application.EnableVisualStyles();
+            //Application.Run(new MainForm());
+
+            CodeBaseOptions options = new CodeBaseOptions();
+            options.LoadFromRegistry();
+            options.SearchPaths = "C:\\Users\\Tuyet Anh\\Desktop\\test-parser";
+            CodeBase codeBase = new CodeBase(options.CreateCompilerDefines(), new FileLoader());
+            List<String> filePaths = options.ListFiles();
+            foreach (var filePath in filePaths)
+            {
+                String text = File.ReadAllText(filePath);
+                codeBase.AddFile(filePath, text);
+            }
+
+            System.Diagnostics.Debug.WriteLine(codeBase.UnitByName("1").ToCSharpCode());
         }
     }
 }

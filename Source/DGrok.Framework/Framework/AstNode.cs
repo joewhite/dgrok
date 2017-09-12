@@ -71,5 +71,10 @@ namespace DGrok.Framework
                 return "<code spans include files>";
             return first.FileSource.Substring(first.Offset, last.Offset - first.Offset);
         }
+
+        public virtual String ToCSharpCode()
+        {
+            return "//TODO: implement [" + this.GetType().Name + "] in convert tool.";
+        }
     }
 }

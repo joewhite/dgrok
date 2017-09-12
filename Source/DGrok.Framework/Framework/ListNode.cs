@@ -66,5 +66,15 @@ namespace DGrok.Framework
         {
             visitor.VisitListNode(this, ItemsAsBase);
         }
+        public override String ToCSharpCode()
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach (var item in ChildNodes)
+            {
+                builder.Append(item.ToCSharpCode());
+                builder.Append(" ");
+            }
+            return builder.ToString();
+        }
     }
 }

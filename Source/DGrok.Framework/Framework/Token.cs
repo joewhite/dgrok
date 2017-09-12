@@ -88,5 +88,10 @@ namespace DGrok.Framework
         {
             return new Token(newType, Location, Text, ParsedText);
         }
+
+        public override String ToCSharpCode()
+        {
+            return "//TODO: implement [" + this.GetType().Name + "] in convert tool.";
+        }
     }
 }
