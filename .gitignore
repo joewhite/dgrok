@@ -6,3 +6,5 @@ Source/Grammar.html
 Source/TestResult.xml
 obj
 *.cache
+Source/DGrok.Demo/bin/
+Source/DGrok.Tests/bin/Debug/nunit.framework.xml

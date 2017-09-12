@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C# Express 2005
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DGrok.Tests", "DGrok.Tests\DGrok.Tests.csproj", "{2D898097-646E-4A26-BE9B-7FF85315F314}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DGrok.Framework", "DGrok.Framework\DGrok.Framework.csproj", "{DFB43477-AB65-4108-B880-928816A347E4}"
