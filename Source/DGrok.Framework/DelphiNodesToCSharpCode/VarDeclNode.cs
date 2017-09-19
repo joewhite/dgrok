@@ -5,9 +5,8 @@ using DGrok.Converter;
 
 namespace DGrok.DelphiNodes
 {
-    public partial class ConstantDeclNode
+    public partial class VarDeclNode
     {
-        // A statement that declares a constant
         public override String ToCSharpCode()
         {
             StringBuilder builder = new StringBuilder();
@@ -23,10 +22,13 @@ namespace DGrok.DelphiNodes
                 typeName = Mapper.getTypeOfValue(rawValue);
             }
 
-            builder.Append("const " + typeName + " ");
+            builder.Append(typeName +  " ");
+            foreach (var _varName in _nameListNode.ChildNodes)
+            {
+                builder.Append(_varName.ToCSharpCode() + ", ");
+            }
 
-            String constName = _nameNode.ToCSharpCode();
-            builder.Append(constName);
+            builder.Length -= 2;
 
             if (!rawValue.Equals("WOMhRHdyOH__NULL"))
             {
@@ -34,7 +36,12 @@ namespace DGrok.DelphiNodes
                 builder.Append(rawValue);
             }
             builder.Append(";");
+            builder.Append("\n");
 
+            //System.Diagnostics.Debug.WriteLine("BEGIN DUMP [" + this.GetType().Name + "] NODE");
+            //System.Diagnostics.Debug.WriteLine(builder.ToString());
+            //System.Diagnostics.Debug.WriteLine("END DUMP [" + this.GetType().Name + "] NODE");
+            //System.Diagnostics.Debug.WriteLine("======================================================");
             return builder.ToString();
         }
     }

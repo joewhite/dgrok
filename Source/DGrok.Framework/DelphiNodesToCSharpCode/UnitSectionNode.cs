@@ -8,7 +8,14 @@ namespace DGrok.DelphiNodes
     {
         public override String ToCSharpCode()
         {
-            return _contentListNode.ToCSharpCode();
+            StringBuilder builder = new StringBuilder();
+            builder.Append(_contentListNode.ToCSharpCode(" "));
+
+            //System.Diagnostics.Debug.WriteLine("BEGIN DUMP [" + this.GetType().Name + "] NODE");
+            //System.Diagnostics.Debug.WriteLine(builder.ToString());
+            //System.Diagnostics.Debug.WriteLine("END DUMP [" + this.GetType().Name + "] NODE");
+            //System.Diagnostics.Debug.WriteLine("======================================================");
+            return builder.ToString();
         }
     }
 }

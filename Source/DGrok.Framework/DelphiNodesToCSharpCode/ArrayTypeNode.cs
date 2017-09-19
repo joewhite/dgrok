@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DGrok.Converter;
 
 namespace DGrok.DelphiNodes
 {
-    public partial class UnitNode
+    public partial class ArrayTypeNode
     {
         public override String ToCSharpCode()
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append(_implementationSectionNode.ToCSharpCode());
+
+            builder.Append("List<" + Mapper.getMappedType(_typeNode.ToCSharpCode()) + ">");
 
             //System.Diagnostics.Debug.WriteLine("BEGIN DUMP [" + this.GetType().Name + "] NODE");
             //System.Diagnostics.Debug.WriteLine(builder.ToString());

@@ -9,12 +9,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DGrok</RootNamespace>
     <AssemblyName>DGrok.Framework</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,6 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,12 +44,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CSharpNodes\ConstantDeclCSharpNode.cs" />
-    <Compile Include="CSharpNodes\VariableDeclCSharpNode.cs" />
     <Compile Include="Converter\Mapper.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\ArrayTypeNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\BinaryOperationNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\BlockNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\CaseSelectorNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\CaseStatementNode.cs" />
     <Compile Include="DelphiNodesToCSharpCode\ConstantDeclNode.cs" />
-    <Compile Include="DelphiNodesToCSharpCode\DelimitedItemNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\FancyBlockNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\ForStatementNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\IfStatementNode.cs" />
     <Compile Include="DelphiNodesToCSharpCode\MethodHeadingNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\ParameterizedNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\ParenthesizedExpressionNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\SetLiteralNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\TryExceptNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\UnaryOperationNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\VarDeclNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\VarSectionNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\WhileStatementNode.cs" />
+    <Compile Include="DelphiNodesToCSharpCode\WithStatementNode.cs" />
     <Compile Include="DelphiNodes\ConstantDeclNode.cs" />
     <Compile Include="DelphiNodesToCSharpCode\ConstSectionNode.cs" />
     <Compile Include="DelphiNodes\DirectiveNode.cs" />
@@ -113,6 +130,9 @@
     <Compile Include="Visitors\FindNestedMethods.cs" />
     <Compile Include="Visitors\FindVariantRecords.cs" />
     <Compile Include="Visitors\FindWithStatements.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CSharpNodes\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

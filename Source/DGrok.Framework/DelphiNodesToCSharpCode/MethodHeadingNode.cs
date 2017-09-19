@@ -8,13 +8,20 @@ namespace DGrok.DelphiNodes
 {
     public partial class MethodHeadingNode
     {
-
+        // The method's signature
         public override String ToCSharpCode()
         {
             StringBuilder builder = new StringBuilder();
             builder.Append("public ");
-            builder.Append(Mapper.getMappedType(_returnTypeNode.ToCode()) + " ");
-            builder.Append(_nameNode.ToCode().Replace(".", "_"));
+            if (_returnTypeNode != null)
+            {
+                builder.Append(Mapper.getMappedType(_returnTypeNode.ToCSharpCode()) + " ");
+            } else
+            {
+                builder.Append("void ");
+            }
+
+            builder.Append(_nameNode.ToCSharpCode().Replace(".", "_"));
             builder.Append("(");
             foreach (var _paramNode in _parameterListNode.ChildNodes)
             {
@@ -22,7 +29,7 @@ namespace DGrok.DelphiNodes
                 foreach (var _nameNode in paramNode.NameListNode.ChildNodes)
                 {
                     Token nameNode = ((DelimitedItemNode<Token>)_nameNode).ItemNode;
-                    builder.Append(Mapper.getMappedType(paramNode.TypeNode.ToCode()));
+                    builder.Append(Mapper.getMappedType(paramNode.TypeNode.ToCSharpCode()));
                     builder.Append(" " + nameNode.Text + ", ");
                 }
                 builder.Length -= 2;
@@ -30,6 +37,11 @@ namespace DGrok.DelphiNodes
             }
             builder.Length -= 2;
             builder.Append(")");
+
+            //System.Diagnostics.Debug.WriteLine("BEGIN DUMP [" + this.GetType().Name + "] NODE");
+            //System.Diagnostics.Debug.WriteLine(builder.ToString());
+            //System.Diagnostics.Debug.WriteLine("END DUMP [" + this.GetType().Name + "] NODE");
+            //System.Diagnostics.Debug.WriteLine("======================================================");
             return builder.ToString();
         }
     }

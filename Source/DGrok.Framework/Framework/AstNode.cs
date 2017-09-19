@@ -74,7 +74,7 @@ namespace DGrok.Framework
 
         public virtual String ToCSharpCode()
         {
-            return "//TODO: implement [" + this.GetType().Name + "] in convert tool.";
+            return "//TODO: implement [" + this.GetType().Name + "] in convert tool.\n";
         }
     }
 }

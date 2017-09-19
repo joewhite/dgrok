@@ -68,12 +68,23 @@ namespace DGrok.Framework
         }
         public override String ToCSharpCode()
         {
+            throw new Exception("Don't use this method");
+        }
+
+        public String ToCSharpCode(String spliter)
+        {
+            if (_items == null || _items.Count == 0)
+            {
+                return "";
+            }
+
             StringBuilder builder = new StringBuilder();
-            foreach (var item in ChildNodes)
+            foreach (var item in _items)
             {
                 builder.Append(item.ToCSharpCode());
-                builder.Append(" ");
+                builder.Append(spliter);
             }
+            builder.Length -= spliter.Length;
             return builder.ToString();
         }
     }

@@ -91,7 +91,27 @@ namespace DGrok.Framework
 
         public override String ToCSharpCode()
         {
-            return "//TODO: implement [" + this.GetType().Name + "] in convert tool.";
+            switch (_type)
+            {
+                case TokenType.ColonEquals:
+                    return "=";
+
+                case TokenType.EqualSign:
+                    return "==";
+
+                case TokenType.StringLiteral:
+                    if (_text.StartsWith("'") && _text.EndsWith("'"))
+                    {
+                        int len = _text.Length;
+                        return '"' + _text.Substring(1, len - 2) + '"';
+                    }
+                    else
+                    {
+                        return _text;
+                    }
+            }
+
+            return _text;
         }
     }
 }

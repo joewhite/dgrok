@@ -66,5 +66,22 @@ namespace DGrok.Framework
         {
             visitor.VisitDelimitedItemNode(this, ItemNode, DelimiterNode);
         }
+
+        public override String ToCSharpCode()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(_itemNode.ToCSharpCode());
+
+            if (_delimiterNode != null)
+            {
+                builder.Append(_delimiterNode.ToCSharpCode());
+            }
+
+            //System.Diagnostics.Debug.WriteLine("BEGIN DUMP [" + this.GetType().Name + "] NODE");
+            //System.Diagnostics.Debug.WriteLine(builder.ToString());
+            //System.Diagnostics.Debug.WriteLine("END DUMP [" + this.GetType().Name + "] NODE");
+            //System.Diagnostics.Debug.WriteLine("======================================================");
+            return builder.ToString();
+        }
     }
 }

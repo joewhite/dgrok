@@ -4,12 +4,16 @@ using System.Text;
 
 namespace DGrok.DelphiNodes
 {
-    public partial class UnitNode
+    public partial class WhileStatementNode
     {
         public override String ToCSharpCode()
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append(_implementationSectionNode.ToCSharpCode());
+            builder.Append("while");
+            builder.Append("(");
+            builder.Append(_conditionNode.ToCSharpCode());
+            builder.Append(")");
+            builder.Append(_statementNode.ToCSharpCode());
 
             //System.Diagnostics.Debug.WriteLine("BEGIN DUMP [" + this.GetType().Name + "] NODE");
             //System.Diagnostics.Debug.WriteLine(builder.ToString());

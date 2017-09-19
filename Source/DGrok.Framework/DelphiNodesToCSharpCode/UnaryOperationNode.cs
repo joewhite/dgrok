@@ -1,32 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using DGrok.Framework;
 
 namespace DGrok.DelphiNodes
 {
-    public partial class MethodImplementationNode
+    public partial class UnaryOperationNode
     {
         public override String ToCSharpCode()
         {
-            StringBuilder builder = new StringBuilder();
-            // These general methods should be converted manually
-            if (_methodHeadingNode.NameNode.ToCode().ToLower().Equals("TDM.SetSqlConnection".ToLower()) ||
-                _methodHeadingNode.NameNode.ToCode().ToLower().Equals("TDM.DataModuleCreate".ToLower()))
+            if (_operatorNode.Type == TokenType.NotKeyword)
             {
-                return "";
+                return "(!" + _operandNode.ToCSharpCode() + ")";
             }
 
-            builder.Append(_methodHeadingNode.ToCSharpCode() + "\n");
-            builder.Append("{\n");
-            builder.Append(_fancyBlockNode.ToCSharpCode() + "\n");
-            builder.Append("}\n");
+            if (_operatorNode.Type == TokenType.MinusSign)
+            {
+                return _operatorNode.ToCSharpCode() + _operandNode.ToCSharpCode();
+            }
 
+            throw new Exception("Unkown unary operator type: " + _operatorNode);
+
+            //StringBuilder builder = new StringBuilder();
             //builder.Append("//+++++++++++++++++++++ implementing [" + this.GetType().Name + "] ...\n");
             //System.Diagnostics.Debug.WriteLine("BEGIN DUMP [" + this.GetType().Name + "] NODE");
             //System.Diagnostics.Debug.WriteLine(builder.ToString());
             //System.Diagnostics.Debug.WriteLine("END DUMP [" + this.GetType().Name + "] NODE");
             //System.Diagnostics.Debug.WriteLine("======================================================");
-            return builder.ToString();
+            //return builder.ToString();
         }
     }
 }

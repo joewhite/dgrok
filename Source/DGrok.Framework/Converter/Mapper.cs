@@ -1,34 +1,43 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DGrok.Converter
 {
-    class Mapper
+    public class Mapper
     {
+        public static ArrayList allDelphiTypes = new ArrayList();
+
+        public static Dictionary<string, string> typeMap = new Dictionary<string, string>()
+        {
+            {"LongWord", "uint"},
+            {"Integer", "int"},
+            {"integer", "int"},
+            {"Currency", "decimal"},
+            {"Boolean", "bool"},
+            {"boolean", "bool"},
+            {"WordBool", "bool"},
+            {"WideString", "String"},
+            {"String", "String"},
+            {"string", "String"},
+            {"TObject", "Object"},
+            {"OleVariant", "DataTable"},
+            {"TFDQuery", "ClientDataSet"},
+            {"Exception", "Exception"},
+            {"exception", "Exception"},
+            {"TStringList", "List<String>"},
+            {"List<String>", "List<String>"}
+        };
+
         public static String getMappedType(String delphiType)
         {
-            if (delphiType.Equals("Integer"))
+            if (!typeMap.ContainsKey(delphiType))
             {
-                return "int";
+                throw new Exception("Unsupported delphiType: " + delphiType);
             }
 
-            if (delphiType.Equals("String"))
-            {
-                return "String";
-            }
-
-            if (delphiType.Equals("OleVariant"))
-            {
-                return "DataTable";
-            }
-
-            if (delphiType.Equals("WideString"))
-            {
-                return "String";
-            }
-
-            throw new Exception("Unsupported delphiType: " + delphiType);
+            return typeMap[delphiType];
         }
 
         public static String getTypeOfValue(String value)

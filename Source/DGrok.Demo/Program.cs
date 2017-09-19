@@ -20,8 +20,10 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.IO.MemoryMappedFiles;
 using System.Windows.Forms;
 using DGrok.Framework;
+using DGrok.Converter;
 
 namespace DGrok.Demo
 {
@@ -44,7 +46,10 @@ namespace DGrok.Demo
                 codeBase.AddFile(filePath, text);
             }
 
-            System.Diagnostics.Debug.WriteLine(codeBase.UnitByName("1").ToCSharpCode());
+            String outputFile = "C:\\Users\\Tuyet Anh\\Desktop\\test-parser\\converted.cs";
+            System.IO.StreamWriter file = new System.IO.StreamWriter(outputFile);
+            file.WriteLine(codeBase.UnitByName("aidbAccInf").ToCSharpCode());
+            file.Close();
         }
     }
 }
