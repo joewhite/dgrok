@@ -95,6 +95,12 @@ namespace DGrok.Tests
             Assert.That("{$NOINCLUDE Foo}", LexesAndFiltersAs());
         }
         [Test]
+        public void HighCharUnicodeCompilerDirectivesAreIgnored()
+        {
+            Assert.That("{$HIGHCHARUNICODE ON}", LexesAndFiltersAs());
+            Assert.That("{$HIGHCHARUNICODE OFF}", LexesAndFiltersAs());
+        }
+        [Test]
         public void IfDefTrue()
         {
             Assert.That("0{$IFDEF TRUE}1{$ENDIF}2", LexesAndFiltersAs(
