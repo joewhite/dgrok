@@ -86,6 +86,7 @@ namespace DGrok.Framework
             _directiveTypes["EXTENDEDSYNTAX"] = DirectiveType.Ignored;
             _directiveTypes["EXTENSION"] = DirectiveType.Ignored;
             _directiveTypes["FINITEFLOAT"] = DirectiveType.Ignored;
+            _directiveTypes["HIGHCHARUNICODE"] = DirectiveType.Ignored;
             _directiveTypes["HINTS"] = DirectiveType.Ignored;
             _directiveTypes["I"] = DirectiveType.PossibleInclude;
             _directiveTypes["IMAGEBASE"] = DirectiveType.Ignored;
