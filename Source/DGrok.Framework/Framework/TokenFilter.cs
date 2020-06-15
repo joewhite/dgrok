@@ -133,6 +133,7 @@ namespace DGrok.Framework
             _directiveTypes["WARNINGS"] = DirectiveType.Ignored;
             _directiveTypes["WEAKPACKAGEUNIT"] = DirectiveType.Ignored;
             _directiveTypes["WRITEABLECONST"] = DirectiveType.Ignored;
+            _directiveTypes["ZEROBASEDSTRINGS"] = DirectiveType.Ignored;
             // Directives for generation of C++Builder .hpp files
             _directiveTypes["EXTERNALSYM"] = DirectiveType.Ignored;
             _directiveTypes["HPPEMIT"] = DirectiveType.Ignored;
